@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Jongmin Mun"
 title_separator          : "-"
 name                     : &name "Jongmin Mun"
-description              : &description "USC Data Sciences and Operations PhD"
+description              : &description "PhD student in Data Sciences and Operations \\ at the University of Southern California"
 url                      : https://jong-min-moon.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "Jong-Min-Moon/Jong-Min-Moon.github.io"
@@ -103,7 +103,7 @@ author:
 #  impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
 #  lastfm           :
 #  linkedin         : "Jiyoung-park-b13469191"
-#  orcid            : "http://orcid.org/yourorcidurl"
+  orcid            : "https://orcid.org/0000-0003-1096-2994"
 #  pinterest        :
 #  soundcloud       :
 #  stackoverflow    : # http://stackoverflow.com/users/123456/username
