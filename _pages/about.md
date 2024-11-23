@@ -16,7 +16,7 @@ I completed my Master's in Statistics, advised by [Prof. Ilmun Kim](https://ilmu
 ## Privacy-preserving A/B testing
 
 * Minimax Optimal Two-Sample Testing under Local Differential Privacy <br />
-<small><u>Jongmin Mun</u>, Seungwoo Kwak, Ilmun Kim (2024). **Preprint**. [(arxiv)](https://arxiv.org/abs/2411.09064)</small>
+<small><u>Jongmin Mun</u>, Seungwoo Kwak, Ilmun Kim (2024). submitted to **Journal of Machine Learning Research**. [(arxiv)](https://arxiv.org/abs/2411.09064)</small>
 
 ## Statistical learning under class imbalance
 * Weighted support vector machine for extremely imbalanced data
