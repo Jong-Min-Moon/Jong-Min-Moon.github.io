@@ -21,7 +21,7 @@ I completed my Master's in Statistics, advised by [Prof. Ilmun Kim](https://ilmu
 ## Statistical learning under class imbalance
 * Weighted support vector machine for extremely imbalanced data
 <br />
-<small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2024). **Computational Statistics & Data Analysis**. [(paper)](https://www.sciencedirect.com/science/article/pii/S0167947324001622)
+<small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(paper)](https://www.sciencedirect.com/science/article/pii/S0167947324001622)
 [(preprint)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
 </small>
 
