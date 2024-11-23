@@ -7,9 +7,9 @@ redirect_from:
   - /about/
   - /about.html
 ---
-I am a 2nd year PhD student in the [Data Sciences and Operations Department](https://www.marshall.usc.edu/departments/data-sciences-and-operations) at the [Marshall School of Business](https://www.marshall.usc.edu/) at the University of Southern California. My current research focuses on high-dimensional clustering using semi-definite programming, advised by [Prof. Yingying Fan](https://faculty.marshall.usc.edu/yingying-fan/) and [Prof. Paromita Dubey](https://www.paromitadubey.com/).
-
-I completed my Master's in Statistics, advised by [Prof. Ilmun Kim](https://ilmunk.github.io/), where I explored theoretical guarantees for privacy-preserving two-sample (A/B) testing. Previously, I served as a research assistant at the [Center for Army Analysis and Simulations (CAAS)](https://www.army.mil.kr/english/357/subview.do) of the Republic of Korea Army, working on class imbalance problem in binary classification with [Prof. Jaeoh Kim](https://sites.google.com/inha.ac.kr/pcrl/members/professor?authuser=0).
+I am a 2nd year PhD student in the [Data Sciences and Operations Department](https://www.marshall.usc.edu/departments/data-sciences-and-operations)
+at the University of Southern California. My current research focuses on high-dimensional clustering using semi-definite programming, advised by [Prof. Yingying Fan](https://faculty.marshall.usc.edu/yingying-fan/) and [Prof. Paromita Dubey](https://www.paromitadubey.com/).
+ I investigated  the privacy-utility trade-off in private two-sample (A/B) testing using minimax statistical theory under the guidance of [Prof. Ilmun Kim](https://ilmunk.github.io/), during  my Master's  in Statistics from Yonsei University in Seoul, South Korea. Prior to that, I served as an artificial intelligence researcher at the [Center for Army Analysis and Simulations (CAAS)](https://www.army.mil.kr/english/357/subview.do) for the Republic of Korea Army, focusing on class imbalance issues in statistical learning, advised [Prof. Jaeoh Kim](https://sites.google.com/inha.ac.kr/pcrl/members/professor?authuser=0). I also completed my Bachelor's degree in Statistics at Yonsei University.
 
 # Publications
 
