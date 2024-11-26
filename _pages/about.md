@@ -21,8 +21,7 @@ at the University of Southern California. My current research focuses on high-di
 ## Statistical learning under class imbalance
 * Weighted support vector machine for extremely imbalanced data
 <br />
-<small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(paper)](https://www.sciencedirect.com/science/article/pii/S0167947324001622)
-[(preprint)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
+<small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(published version)](https://www.sciencedirect.com/science/article/pii/S0167947324001622) [(preprint)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
 </small>
 
 * Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data
@@ -30,7 +29,7 @@ at the University of Southern California. My current research focuses on high-di
 <small>Ji Hyun Nam
 <sup>\*</sup>, 
 <u>Jongmin Mun</u>
-<sup>\*</sup> , Seongil Jo, Jaeoh Kim (2024). **Journal of Classification**. [(paper)](https://link.springer.com/article/10.1007/s00357-024-09467-1) [(preprint)](http://Jong-Min-Moon.github.io/files/manuscript_joc.pdf)</small>
+<sup>\*</sup> , Seongil Jo, Jaeoh Kim (2024). **Journal of Classification**. [(published version)](https://link.springer.com/article/10.1007/s00357-024-09467-1) [(preprint)](http://Jong-Min-Moon.github.io/files/manuscript_joc.pdf)</small>
 
 * Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity
 <br />
@@ -42,7 +41,7 @@ at the University of Southern California. My current research focuses on high-di
 * In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium
 <br />
 <small>
-Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature communications**.  [(paper; open-access)](https://www.nature.com/articles/s41467-024-45768-0).</small>
+Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature communications**.  [(published version; open-access)](https://www.nature.com/articles/s41467-024-45768-0).</small>
 
 
 <br />
