@@ -18,7 +18,7 @@ at the University of Southern California. My current research focuses on high-di
 * Minimax Optimal Two-Sample Testing under Local Differential Privacy <br />
 <small><u>Jongmin Mun</u>, Seungwoo Kwak, Ilmun Kim (2024). submitted to **Journal of Machine Learning Research**. [(arxiv)](https://arxiv.org/abs/2411.09064)</small>
 
-## Statistical learning under class imbalance
+## Statistical learning under class imbalance <small>^*:Co-first author.</small>
 * Weighted support vector machine for extremely imbalanced data
 <br />
 <small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(published version)](https://www.sciencedirect.com/science/article/pii/S0167947324001622) [(preprint)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
@@ -45,5 +45,4 @@ Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <
 
 
 <br />
-<small>
-*Co-first author.</small>
+
