@@ -36,6 +36,7 @@ at the University of Southern California. My current research focuses on high-di
 <small>
  Jong Young Namgung<sup>\*</sup>, 
 <u>Jongmin Mun</u><sup>\*</sup>,Yeongjun Park,  Jaeoh Kim, Bo-yong Park (2024). **Neuroimage**. [(published version; open-access)](https://doi.org/10.1016/j.neuroimage.2024.120956)</small>
+\\
 <a href="https://www.scimagojr.com/journalsearch.php?q=17495&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=17495" alt="SCImago Journal &amp; Country Rank"  /></a>
 ## Scientific collaboration
 * In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium
