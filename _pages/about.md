@@ -23,14 +23,16 @@ at the University of Southern California. My current research focuses on high-di
 <br />
 <small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(published version)](https://www.sciencedirect.com/science/article/pii/S0167947324001622) [(preprint)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
 </small>
-
+\\
+<a href="https://www.scimagojr.com/journalsearch.php?q=28461&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=28461" alt="SCImago Journal &amp; Country Rank"  /></a>
 * Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data
 <br />
 <small>Ji Hyun Nam
 <sup>\*</sup>, 
 <u>Jongmin Mun</u>
 <sup>\*</sup> , Seongil Jo, Jaeoh Kim (2024). **Journal of Classification**. [(published version)](https://link.springer.com/article/10.1007/s00357-024-09467-1) [(preprint)](http://Jong-Min-Moon.github.io/files/manuscript_joc.pdf)</small>
-
+\\
+<a href="https://www.scimagojr.com/journalsearch.php?q=23842&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=23842" alt="SCImago Journal &amp; Country Rank"  /></a>
 * Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity
 <br />
 <small>
