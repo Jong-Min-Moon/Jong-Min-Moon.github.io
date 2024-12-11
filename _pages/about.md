@@ -9,7 +9,7 @@ redirect_from:
 ---
 I am a 2nd year PhD student in the [Data Sciences and Operations Department](https://www.marshall.usc.edu/departments/data-sciences-and-operations)
 at the University of Southern California. My current research focuses on high-dimensional clustering using semi-definite programming, advised by [Prof. Yingying Fan](https://faculty.marshall.usc.edu/yingying-fan/) and [Prof. Paromita Dubey](https://www.paromitadubey.com/).
- I investigated  the privacy-utility trade-off in private two-sample (A/B) testing using minimax statistical theory under the guidance of [Prof. Ilmun Kim](https://ilmunk.github.io/), during  my Master's  in Statistics from Yonsei University in Seoul, South Korea. Prior to that, I served as an artificial intelligence researcher at the [Center for Army Analysis and Simulations (CAAS)](https://www.army.mil.kr/english/357/subview.do) for the Republic of Korea Army, focusing on class imbalance issues in statistical learning, advised [Prof. Jaeoh Kim](https://sites.google.com/inha.ac.kr/pcrl/members/professor?authuser=0). I also completed my Bachelor's degree in Statistics at Yonsei University.
+ I investigated  the privacy-utility trade-off in private two-sample (A/B) testing using minimax statistical theory under the guidance of [Prof. Ilmun Kim](https://ilmunk.github.io/), during  my Master's  in Statistics from Yonsei University in Seoul, South Korea. Prior to that, I served as an artificial intelligence researcher at the [Center for Army Analysis and Simulations (CAAS)](https://www.army.mil.kr/english/357/subview.do) for the Republic of Korea Army, focusing on class imbalance issues in statistical learning, advised by [Prof. Jaeoh Kim](https://sites.google.com/inha.ac.kr/pcrl/members/professor?authuser=0). I also completed my Bachelor's degree in Statistics at Yonsei University.
 
 # Publications
 
@@ -58,7 +58,7 @@ Our method combines dimension reduction via diffusion map embedding with Gaussia
 
 <summary><a href="https://doi.org/10.1038/s41467-024-45768-0">In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium</a></summary>
 
-We present a soft, conformable neural interface system for long-term, stable monitoring of single-unit neural activity in freely moving subjects. The system integrates soft neural probes in the brain with liquid metal-based electronics printed on the cranial surface. In -vivo mouse studies, leveraging dimension reduction, clustering analysis and goodness-of-fit testing, statistically demonstrate stable 33-week neural recording and behavior-induced activation across multiple brain regions during T-maze tests.
+We present a soft, conformable neural interface system for long-term, stable monitoring of single-unit neural activity in freely moving subjects. The system integrates soft neural probes in the brain with liquid metal-based electronics printed on the cranial surface. In-vivo mouse studies, leveraging dimension reduction, clustering analysis and goodness-of-fit testing, statistically demonstrate stable 33-week neural recording and behavior-induced activation across multiple brain regions during T-maze tests.
 
 </details>
 <small>
