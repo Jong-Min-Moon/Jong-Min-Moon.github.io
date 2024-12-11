@@ -14,34 +14,37 @@ at the University of Southern California. My current research focuses on high-di
 # Publications
 
 ## Privacy-preserving A/B testing
+<details>
 
-* Minimax Optimal Two-Sample Testing under Local Differential Privacy <br />
-<small><u>Jongmin Mun</u>, Seungwoo Kwak, Ilmun Kim (2024). submitted to **Journal of Machine Learning Research**. [(arxiv)](https://arxiv.org/abs/2411.09064)</small>
+<summary><a href="https://arxiv.org/abs/2411.09064">Minimax optimal two-sample testing under local differential privacy</a></summary>
+
+</details>
+<small><u>Jongmin Mun</u>, Seungwoo Kwak, Ilmun Kim (2024). submitted to **Journal of Machine Learning Research**.</small>
 
 ## Statistical learning under class imbalance <small>$^*$:Co-first author.</small>
-* Weighted support vector machine for extremely imbalanced data
-<br />
-<small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(published version)](https://www.sciencedirect.com/science/article/pii/S0167947324001622) [(preprint)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
+<details>
+
+<summary><a href="https://doi.org/10.1016/j.csda.2024.108078">Weighted support vector machine for extremely imbalanced data</a></summary>
+
+</details>
+<small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(distributable version)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
 </small>
-\\
-<a href="https://www.scimagojr.com/journalsearch.php?q=28461&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=28461" alt="SCImago Journal &amp; Country Rank"  /></a>
-* Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data
-<br />
+<br /><br />
+<details>
+
+<summary><a href="https://doi.org/10.1007/s00357-024-09467-1">Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data</a></summary>
+
+</details>
 <small>Ji Hyun Nam
 <sup>\*</sup>, 
 <u>Jongmin Mun</u>
-<sup>\*</sup> , Seongil Jo, Jaeoh Kim (2024). **Journal of Classification**. [(published version)](https://link.springer.com/article/10.1007/s00357-024-09467-1) [(preprint)](http://Jong-Min-Moon.github.io/files/manuscript_joc.pdf)</small>
-\\
-<a href="https://www.scimagojr.com/journalsearch.php?q=23842&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=23842" alt="SCImago Journal &amp; Country Rank"  /></a>
-
-
+<sup>\*</sup> , Seongil Jo, Jaeoh Kim (2024). **Journal of Classification**.  [(distributable version)](http://Jong-Min-Moon.github.io/files/manuscript_joc.pdf)</small>
+<br /><br />
 <details>
 
-<summary><a href="https://doi.org/10.1016/j.neuroimage.2024.120956">Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity.</a></summary>
+<summary><a href="https://doi.org/10.1016/j.neuroimage.2024.120956">Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity</a></summary>
 
-Detecting sex differences in brain connectome organization in autism spectrum disorder (ASD) through statistical hypothesis testing is challenging. This challenge arises from the reliance of statistical power on the smaller group size, coupled with the significant imbalance in diagnostic ratios of ASD between males and females. While 
-<a href="https://doi.org/10.1080/01621459.2013.800763">Chen et al. (2013, Journal of the American Statistical Association)</a>
- addressed this issue using an ensemble of undersampling approaches, we take an alternative approach: oversampling. 
+Detecting sex differences in brain connectome organization in autism spectrum disorder (ASD) through statistical hypothesis testing is challenging. This challenge arises from the reliance of statistical power on the smaller group size, coupled with the significant imbalance in diagnostic ratios of ASD between males and females. While <a href="https://doi.org/10.1080/01621459.2013.800763">Chen et al. (2013, Journal of the American Statistical Association)</a> addressed this issue using an ensemble of undersampling approaches, we take an alternative approach: oversampling. 
 
 Our method combines dimension reduction via diffusion map embedding with Gaussian mixture model-based oversampling to balance the sex ratio in functional connectivity data. This approach reveals significant sex-related differences in the sensorimotor, attention, and default mode networks, with gradients linked to higher-order cognitive control. Transcriptomic analysis identifies gene enrichment in the cortex, thalamus, and striatum. Notably, gradient-symptom associations differ by sex, with stronger effects observed in females. These findings highlight the sex heterogeneity in ASD's large-scale brain networks.
 
@@ -51,10 +54,13 @@ Our method combines dimension reduction via diffusion map embedding with Gaussia
 <u>Jongmin Mun</u><sup>\*</sup>,Yeongjun Park,  Jaeoh Kim, Bo-yong Park (2024). **Neuroimage**.</small>
 
 ## Scientific collaboration
-* In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium
-<br />
+<details>
+
+<summary><a href="https://doi.org/10.1038/s41467-024-45768-0">In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium</a></summary>
+
+</details>
 <small>
-Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature communications**.  [(published version; open-access)](https://www.nature.com/articles/s41467-024-45768-0).</small>
+Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature communications**.</small>
 
 
 <br />
