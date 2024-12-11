@@ -33,15 +33,23 @@ at the University of Southern California. My current research focuses on high-di
 <sup>\*</sup> , Seongil Jo, Jaeoh Kim (2024). **Journal of Classification**. [(published version)](https://link.springer.com/article/10.1007/s00357-024-09467-1) [(preprint)](http://Jong-Min-Moon.github.io/files/manuscript_joc.pdf)</small>
 \\
 <a href="https://www.scimagojr.com/journalsearch.php?q=23842&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=23842" alt="SCImago Journal &amp; Country Rank"  /></a>
-* Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity
-<br />
+
+
+<details>
+
+<summary><a href="https://doi.org/10.1016/j.neuroimage.2024.120956">Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity.</a></summary>
+
+Detecting sex differences in brain connectome organization in autism spectrum disorder (ASD) through statistical hypothesis testing is challenging. This challenge arises from the reliance of statistical power on the smaller group size, coupled with the significant imbalance in diagnostic ratios of ASD between males and females. While 
+<a href="https://doi.org/10.1080/01621459.2013.800763">Chen et al. (2013, Journal of the American Statistical Association)</a>
+ addressed this issue using an ensemble of undersampling approaches, we take an alternative approach: oversampling. 
+
+Our method combines dimension reduction via diffusion map embedding with Gaussian mixture model-based oversampling to balance the sex ratio in functional connectivity data. This approach reveals significant sex-related differences in the sensorimotor, attention, and default mode networks, with gradients linked to higher-order cognitive control. Transcriptomic analysis identifies gene enrichment in the cortex, thalamus, and striatum. Notably, gradient-symptom associations differ by sex, with stronger effects observed in females. These findings highlight the sex heterogeneity in ASD's large-scale brain networks.
+
+</details>
 <small>
  Jong Young Namgung<sup>\*</sup>, 
-<u>Jongmin Mun</u><sup>\*</sup>,Yeongjun Park,  Jaeoh Kim, Bo-yong Park (2024). **Neuroimage**. [(published version; open-access)](https://doi.org/10.1016/j.neuroimage.2024.120956)</small>
-\\
-<details><summary>Does work</summary>
-[hi](https://hello.ca)
-</details>
+<u>Jongmin Mun</u><sup>\*</sup>,Yeongjun Park,  Jaeoh Kim, Bo-yong Park (2024). **Neuroimage**.</small>
+
 ## Scientific collaboration
 * In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium
 <br />
