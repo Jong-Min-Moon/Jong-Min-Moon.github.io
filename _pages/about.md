@@ -25,7 +25,7 @@ at the University of Southern California. My current research focuses on high-di
 <details>
 
 <summary><a href="https://doi.org/10.1016/j.csda.2024.108078">Weighted support vector machine for extremely imbalanced data</a></summary>
-
+Data augmentation and loss function adjustments are two common techniques for imbalanced classification. In cases of extreme class imbalance, it is often standard practice to combine these two approaches. However, determining the optimal oversampling ratio and the degree of asymmetry in the loss function typically relies on heuristics. We further consider the scenario where the minority class consists of subgroups and propose a straightforward method for combining data augmentation and loss function adjustments. This method serves as a sample-based approximation of the population-level asymptotically Bayes optimal oracle procedure.
 </details>
 <small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(distributable version)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
 </small>
@@ -33,7 +33,7 @@ at the University of Southern California. My current research focuses on high-di
 <details>
 
 <summary><a href="https://doi.org/10.1007/s00357-024-09467-1">Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data</a></summary>
-
+Artillery training inherently poses wildfire risks. Predictive modeling of these wildfires faces two key challenges: the scarcity of wildfire cases and the limited granularity of meteorological data during training. We address the first challenge by augmenting the data using a Gaussian mixture generative model and adjusting the loss function of a support vector machine. To tackle the second challenge, we integrate the Republic of Korea Army (ROKA) dataset with the Korea Meteorological Administration database. Our resulting model achieves a 99% improvement in balanced classification metrics compared to previous models.
 </details>
 <small>Ji Hyun Nam
 <sup>\*</sup>, 
@@ -60,7 +60,7 @@ Our method combines dimension reduction via diffusion map embedding with Gaussia
 
 </details>
 <small>
-Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature communications**.</small>
+Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature Communications**.</small>
 
 
 <br />
