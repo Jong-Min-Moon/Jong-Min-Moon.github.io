@@ -13,11 +13,8 @@ author_profile: true
 
 
 ## Privacy-preserving A/B testing
-<details>
-
-<summary><a href="https://arxiv.org/abs/2411.09064">Minimax optimal two-sample testing under local differential privacy</a></summary>
-
-</details>
+<a href="https://arxiv.org/abs/2411.09064">Minimax optimal two-sample testing under local differential privacy</a>
+<br />
 <small><u>Jongmin Mun</u>, Seungwoo Kwak, Ilmun Kim (2024). submitted to **Journal of Machine Learning Research**.</small>
 
 ## Statistical learning under class imbalance <small>$^*$:Co-first author.</small>
