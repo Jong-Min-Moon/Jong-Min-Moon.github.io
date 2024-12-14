@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Jongmin Mun"
 title_separator          : "-"
 name                     : &name "Jongmin Mun"
-description              : &description "PhD student in Data Sciences and Operations \\ at the University of Southern California"
+description              : &description "PhD student in Data Sciences and Operations \\ @  University of Southern California"
 url                      : https://jong-min-moon.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "Jong-Min-Moon/Jong-Min-Moon.github.io"
@@ -82,10 +82,10 @@ analytics:
 author:
   name             : "Jongmin Mun"
   avatar           : "profile3.jpg"
-  bio              : "USC Data Sciences and Operations PhD Student"
+  bio              : "PhD student in Data Sciences and Operations  @  University of Southern California"
   location         : "Los Angeles, CA, US"
   employer         :
-#  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           : "https://pubmed.ncbi.nlm.nih.gov/?term=jongmin+mun&sort=date&ac=no"
   googlescholar    : "https://scholar.google.com/citations?hl=en&user=ZYoKWAgAAAAJ"
   email            : "jongmin.mun@marshall.usc.edu"
 #  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
@@ -102,7 +102,7 @@ author:
 #  instagram        :
 #  impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
 #  lastfm           :
-#  linkedin         : "Jiyoung-park-b13469191"
+  linkedin         : "jongmin-mun-a123b6338"
   orcid            : "https://orcid.org/0000-0003-1096-2994"
 #  pinterest        :
 #  soundcloud       :
@@ -221,7 +221,7 @@ defaults:
   # _publications
   - scope:
       path: ""
-      type: publications
+      type: research
     values:
       layout: single
       author_profile: true
@@ -255,7 +255,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: America/Chicago # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/Los_Angeles # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins
