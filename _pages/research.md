@@ -53,10 +53,13 @@ Our method combines dimension reduction via diffusion map embedding with Gaussia
 ## Scientific collaboration
 
 
-<a href="https://doi.org/10.1038/s41467-024-45768-0">In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium</a>
+
 <br />
 <small>
 Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature Communications**.</small>
 
 
-{% include module.html image_path="http://Jong-Min-Moon.github.io/files/image_nature_comm.png"  description="We present a soft, conformable neural interface system for long-term, stable monitoring of single-unit neural activity in freely moving subjects. The system integrates soft neural probes in the brain with liquid metal-based electronics printed on the cranial surface. In-vivo mouse studies, leveraging dimension reduction, clustering analysis and goodness-of-fit testing, statistically demonstrate stable 33-week neural recording and behavior-induced activation across multiple brain regions during T-maze tests." %}
+{% include module.html 
+image_path="http://Jong-Min-Moon.github.io/files/image_nature_comm.png"  
+title="<a href="https://doi.org/10.1038/s41467-024-45768-0">In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium</a>"
+description="We present a soft, conformable neural interface system for long-term, stable monitoring of single-unit neural activity in freely moving subjects. The system integrates soft neural probes in the brain with liquid metal-based electronics printed on the cranial surface. In-vivo mouse studies, leveraging dimension reduction, clustering analysis and goodness-of-fit testing, statistically demonstrate stable 33-week neural recording and behavior-induced activation across multiple brain regions during T-maze tests." %}
