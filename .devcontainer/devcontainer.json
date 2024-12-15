@@ -1,22 +1,31 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/jekyll
 {
-	"name": "Jekyll",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/jekyll:2-bullseye"
+  "name": "Jekyll",
+  "image": "mcr.microsoft.com/devcontainers/jekyll",
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+      "packages": "build-essential,imagemagick,inotify-tools,jupyter-nbconvert,procps,ruby-full,zlib1g-dev"
+    },
+    "ghcr.io/devcontainers-contrib/features/prettier:1": {}
+  },
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+  // Optionally: run jekyll serve automatically on container entering using the Docker entrypoint
+  "postAttachCommand": "./bin/entry_point.sh",
 
-	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "jekyll --version"
+  "customizations": {
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode", "sissel.shopify-liquid", "yzhang.markdown-all-in-one"],
+      "settings": {
+        // use prettier code formatter as default formatter
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "prettier.configPath": ".prettierrc",
+        "editor.formatOnSave": true
+      }
+    }
+  },
 
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  "remoteUser": "vscode"
 }
