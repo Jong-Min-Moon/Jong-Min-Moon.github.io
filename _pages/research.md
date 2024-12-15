@@ -20,6 +20,7 @@ author_profile: true
 ## Statistical learning under class imbalance <small>$^*$:Co-first author.</small>
 
 <a href="https://doi.org/10.1016/j.csda.2024.108078">Weighted support vector machine for extremely imbalanced data</a>
+<br />
 <small><u>Jongmin Mun</u>, Sungwan Bang, Jaeoh Kim (2025). **Computational Statistics & Data Analysis**. [(distributable version)](http://Jong-Min-Moon.github.io/files/preprint_gswsvm.pdf)
 </small>
 <br />
@@ -28,6 +29,7 @@ Data augmentation and loss function adjustments are two common techniques for im
 <br />
 
 <a href="https://doi.org/10.1007/s00357-024-09467-1">Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data</a>
+<br />
 <small>Ji Hyun Nam<sup>\*</sup>, 
 <u>Jongmin Mun</u>
 <sup>\*</sup> , Seongil Jo, Jaeoh Kim (2024). **Journal of Classification**.  [(distributable version)](http://Jong-Min-Moon.github.io/files/manuscript_joc.pdf)</small>
@@ -37,6 +39,7 @@ Artillery training inherently poses wildfire risks. Predictive modeling of these
 <br />
 
 <a href="https://doi.org/10.1016/j.neuroimage.2024.120956">Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity</a>
+<br />
 <small>
  Jong Young Namgung<sup>\*</sup>, 
 <u>Jongmin Mun</u><sup>\*</sup>,Yeongjun Park,  Jaeoh Kim, Bo-yong Park (2024). **Neuroimage**.</small>
@@ -50,6 +53,7 @@ Our method combines dimension reduction via diffusion map embedding with Gaussia
 
 
 <a href="https://doi.org/10.1038/s41467-024-45768-0">In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium</a>
+<br />
 <small>
 Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature Communications**.</small>
 We present a soft, conformable neural interface system for long-term, stable monitoring of single-unit neural activity in freely moving subjects. The system integrates soft neural probes in the brain with liquid metal-based electronics printed on the cranial surface. In-vivo mouse studies, leveraging dimension reduction, clustering analysis and goodness-of-fit testing, statistically demonstrate stable 33-week neural recording and behavior-induced activation across multiple brain regions during T-maze tests.
