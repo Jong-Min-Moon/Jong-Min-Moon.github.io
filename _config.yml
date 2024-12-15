@@ -2,138 +2,30 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: "Your Website Title" 
+title: "Your Website Title"
 first_name: "Jong-Min"
 middle_name: "R."
 last_name: "Moon"
-contact_note: "You can add a note about the best way to reach you."
 description: "A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design."
-footer_text: "Powered by <a href='https://jekyllrb.com/' target='_blank'>Jekyll</a> with <a href='https://github.com/alshedivat/al-folio'>al-folio</a> theme. Hosted by <a href='https://pages.github.com/' target='_blank'>GitHub Pages</a>."
+footer_text: "Powered by <a href='https://jekyllrb.com/' target='_blank'>Jekyll</a> with <a href='https://github.com/alshedivat/al-folio'>al-folio</a> theme."
 keywords: "jekyll, jekyll-theme, academic-website, portfolio-website" 
 lang: en 
 icon: "⚛️" 
-
 url: "https://jong-min-moon.github.io" 
 baseurl: "" 
 last_updated: false 
-impressum_path: "" 
 back_to_top: true 
 
 # -----------------------------------------------------------------------------
-# Theme
+# Plugins
 # -----------------------------------------------------------------------------
 
-repo_theme_light: "default" 
-repo_theme_dark: "dark" 
-repo_trophies:
-  enabled: true
-  theme_light: "flat"
-  theme_dark: "gitdimmed"
-
-# -----------------------------------------------------------------------------
-# RSS Feed
-# -----------------------------------------------------------------------------
-
-rss_icon: true
-
-# -----------------------------------------------------------------------------
-# Layout
-# -----------------------------------------------------------------------------
-
-navbar_fixed: true
-footer_fixed: true
-search_enabled: true
-socials_in_search: true
-bib_search: true
-
-# Dimensions
-max_width: "930px"
-
-# -----------------------------------------------------------------------------
-# Open Graph & Schema.org
-# -----------------------------------------------------------------------------
-
-serve_og_meta: false 
-serve_schema_org: false 
-og_image: "" 
-
-# -----------------------------------------------------------------------------
-# Analytics and search engine verification
-# -----------------------------------------------------------------------------
-
-google_analytics: "" 
-cronitor_analytics: "" 
-pirsch_analytics: "" 
-openpanel_analytics: "" 
-google_site_verification: "" 
-bing_site_verification: "" 
-
-# -----------------------------------------------------------------------------
-# Blog
-# -----------------------------------------------------------------------------
-
-blog_name: "al-folio" 
-blog_description: "A simple whitespace theme for academics"
-permalink: /blog/:year/:title/
-lsi: false 
-
-pagination:
-  enabled: true
-
-related_blog_posts:
-  enabled: true
-  max_related: 5
-
-giscus:
-  repo: "" 
-  repo_id: "" 
-  category: "Comments" 
-  category_id: "" 
-  mapping: "title" 
-  strict: 1 
-  reactions_enabled: 1 
-  input_position: "bottom" 
-  theme: "preferred_color_scheme" 
-  emit_metadata: 0 
-  lang: "en" 
-
-disqus_shortname: "al-folio" 
-
-external_sources:
-  - name: "medium.com"
-    rss_url: "https://medium.com/@al-folio/feed"
-
-# -----------------------------------------------------------------------------
-# Newsletter
-# -----------------------------------------------------------------------------
-
-newsletter:
-  enabled: false 
-  endpoint: "" 
-
-# -----------------------------------------------------------------------------
-# Collections
-# -----------------------------------------------------------------------------
-
-collections:
-  news:
-    defaults:
-      layout: post
-    output: true
-    permalink: /:collection/:title/
-  projects:
-    output: true
-    permalink: /:collection/:title/
-
-announcements:
-  enabled: true
-  scrollable: true
-  limit: 5 
-
-latest_posts:
-  enabled: true
-  scrollable: true
-  limit: 3 
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jemoji
+  - jekyll-toc # Required for {% toc %} tag
+  - jekyll-github-metadata
 
 # -----------------------------------------------------------------------------
 # Jekyll settings
@@ -175,100 +67,3 @@ exclude:
 keep_files:
   - "CNAME"
   - ".nojekyll"
-
-# -----------------------------------------------------------------------------
-# Plugins
-# -----------------------------------------------------------------------------
-
-plugins:
-  - jekyll-archives
-  - jekyll-feed
-  - jekyll-sitemap
-  - jemoji
-  - jekyll-toc
-
-# -----------------------------------------------------------------------------
-# Sitemap
-# -----------------------------------------------------------------------------
-
-defaults:
-  - scope:
-      path: "assets"
-    values:
-      sitemap: false
-
-sass:
-  style: compressed
-
-# -----------------------------------------------------------------------------
-# Jekyll Archives
-# -----------------------------------------------------------------------------
-
-jekyll-archives:
-  enabled: [year, tags, categories] 
-  layouts:
-    year: archive-year
-    tag: archive-tag
-    category: archive-category
-  permalinks:
-    year: "/blog/:year/"
-    tag: "/blog/tag/:name/"
-    category: "/blog/category/:name/"
-
-display_tags: ["formatting", "images", "links", "math", "code", "blockquotes"] 
-display_categories: ["external-services"] 
-
-# -----------------------------------------------------------------------------
-# Jekyll Scholar
-# -----------------------------------------------------------------------------
-
-scholar:
-  last_name: [Einstein]
-  first_name: [Albert, A.]
-  style: apa
-  locale: en
-  source: /_bibliography/
-  bibliography: papers.bib
-  bibtex_filters: [latex, smallcaps, superscript]
-
-# -----------------------------------------------------------------------------
-# Jekyll Link Attributes
-# -----------------------------------------------------------------------------
-
-external_links:
-  enabled: true
-  rel: "external nofollow noopener"
-  target: "_blank"
-
-# -----------------------------------------------------------------------------
-# Responsive WebP Images
-# -----------------------------------------------------------------------------
-
-imagemagick:
-  enabled: true 
-  widths: 
-    - 480
-    - 800
-    - 1400
-  input_directories:
-    - "assets/img/"
-
-# -----------------------------------------------------------------------------
-# Optional Features
-# -----------------------------------------------------------------------------
-
-enable_google_analytics: false 
-enable_cronitor_analytics: false 
-enable_pirsch_analytics: false 
-enable_openpanel_analytics: false 
-enable_google_verification: false 
-enable_bing_verification: false 
-enable_masonry: true 
-enable_math: true 
-enable_tooltips: false 
-enable_darkmode: true 
-enable_navbar_social: false 
-enable_project_categories: true 
-enable_medium_zoom: true 
-enable_progressbar: true 
-enable_video_embedding: false 
