@@ -6,8 +6,6 @@ permalink: /
 cv: CV.pdf
 google_scholar: https://scholar.google.com/citations?hl=en&user=ZYoKWAgAAAAJ
 linkedin: https://www.linkedin.com/in/jongmin-mun-a123b6338/
-orcid            : https://orcid.org/0000-0003-1096-2994
-  pubmed           : https://pubmed.ncbi.nlm.nih.gov/?term=jongmin+mun&sort=date&ac=no
 profile:
   align: right
   image: headshot.png
