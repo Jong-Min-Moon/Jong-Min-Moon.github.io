@@ -32,6 +32,8 @@ nav_order: 1
               {% endif %}
             </li>
           {% endfor %}
+        {% else %}
+          <p>No publications in this category.</p>
         {% endif %}
       </ul>
     {% endif %}
