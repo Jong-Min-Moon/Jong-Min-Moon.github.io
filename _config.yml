@@ -6,7 +6,7 @@ title: blank # the website title (if blank, full name will be used instead)
 first_name: Jongmin
 middle_name: 
 last_name: Mun
-email: yw3076@nyu.edu
+email: jongmin.mun@marshall.usc.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Personal website of Jongmin Mun.
 footer_text: >
@@ -69,16 +69,16 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # Social integration
 # -----------------------------------------------------------------------------
 
-github_username: YingWANGG # your GitHub user name
+github_username: Jong-Min-Moon # your GitHub user name
 gitlab_username: # your GitLab user name
-twitter_username: yingwww_ # your Twitter handle
+twitter_username: #yingwww_ # your Twitter handle
 mastodon_username: # your mastodon instance+username in the format instance.tld/@username
-linkedin_username: ying-wang-90611714a # your LinkedIn user name
+linkedin_username: jongmin-mun-a123b6338 # your LinkedIn user name
 telegram_username: # your Telegram user name
-scholar_userid: 5BN__1MAAAAJ # your Google Scholar ID
+scholar_userid: ZYoKWAgAAAAJ # your Google Scholar ID
 semanticscholar_id: # your Semantic Scholar ID
 whatsapp_number: # your WhatsApp number (full phone number in international format. Omit any zeroes, brackets, or dashes when adding the phone number in international format.)
-orcid_id: # your ORCID ID
+orcid_id: 0000-0003-1096-2994
 medium_username: # your Medium username
 quora_username: # your Quora username
 publons_id: # your ID on Publons
@@ -98,7 +98,7 @@ lastfm_id: # your lastfm id
 spotify_id: # your spotify id
 pinterest_id: # your pinterest id
 unsplash_id: # your unsplash id
-instagram_id: a_window_facing_west # your instagram id
+instagram_id: #a_window_facing_west # your instagram id
 facebook_id: # your facebook id
 youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 discord_id: # your discord id (18-digit unique numerical identifier)
