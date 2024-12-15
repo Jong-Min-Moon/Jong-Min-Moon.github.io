@@ -10,7 +10,7 @@ twitter: https://x.com/yingwww_
 
 profile:
   align: right
-  image: headshot.jpg
+  image: headshot.png
   image_circular: true # crops the image to make it circular
 
 
