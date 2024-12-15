@@ -4,12 +4,13 @@ title: "Research"
 permalink: /research/
 author_profile: true
 ---
-<!---
+
 {% if author.googlescholar %}
   You can also find my articles on <u><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</u>
 {% endif %}
---->
+
 {% include base_path %}
+
 
 
 ## Privacy-preserving A/B testing
@@ -56,4 +57,6 @@ Our method combines dimension reduction via diffusion map embedding with Gaussia
 <br />
 <small>
 Young-Geun Park, Yong Won Kwon, Chin Su Koh, Enji Kim, Dong Ha Lee, Sumin Kim, <u>Jongmin Mun</u>, Yeon-Mi Hong, Sanghoon Lee, Ju-Young Kim, Jae-Hyun Lee, Hyun Ho Jung, Jinwoo Cheon, Jin Woo Chang, Jang-Ung Park (2024). **Nature Communications**.</small>
-We present a soft, conformable neural interface system for long-term, stable monitoring of single-unit neural activity in freely moving subjects. The system integrates soft neural probes in the brain with liquid metal-based electronics printed on the cranial surface. In-vivo mouse studies, leveraging dimension reduction, clustering analysis and goodness-of-fit testing, statistically demonstrate stable 33-week neural recording and behavior-induced activation across multiple brain regions during T-maze tests.
+
+
+{% include module.html image_path="http://Jong-Min-Moon.github.io/files/image_nature_comm.png" title="Some title text" description="We present a soft, conformable neural interface system for long-term, stable monitoring of single-unit neural activity in freely moving subjects. The system integrates soft neural probes in the brain with liquid metal-based electronics printed on the cranial surface. In-vivo mouse studies, leveraging dimension reduction, clustering analysis and goodness-of-fit testing, statistically demonstrate stable 33-week neural recording and behavior-induced activation across multiple brain regions during T-maze tests." %}
