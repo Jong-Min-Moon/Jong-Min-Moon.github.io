@@ -8,7 +8,7 @@ google_scholar: https://scholar.google.com/citations?hl=en&user=ZYoKWAgAAAAJ
 linkedin: https://www.linkedin.com/in/jongmin-mun-a123b6338/
 profile:
   align: right
-  image: headshot.png
+  image: headshot.jpg
   image_circular: true # crops the image to make it circular
 
 
