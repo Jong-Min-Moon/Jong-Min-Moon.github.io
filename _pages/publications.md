@@ -10,7 +10,7 @@ nav_order: 1
 <!-- _pages/publications.md -->
 <div class="publications">
 
-  {% assign categories = site.scholar.bibliography | group_by_exp: "item.fields.category" %}
+  {% assign categories = site.scholar.bibliography | group_by_exp: "category", "item.fields.category" %}
   
   {% for category in categories %}
     <h2>{{ category.name }} ({{ category.items | size }})</h2>
