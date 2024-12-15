@@ -10,33 +10,6 @@ nav_order: 1
 <!-- _pages/publications.md -->
 <div class="publications">
 
-  {% assign categories = site.scholar.bibliography | group_by_exp: "category", "item.fields.category | default: 'Uncategorized'" %}
-  
-  {% for category in categories %}
-    {% if category.name %}
-      <h2>{{ category.name }} ({{ category.items | size }})</h2>
-      
-      <ul>
-        {% if category.items %}
-          {% assign sorted_entries = category.items | sort: "year" | reverse %}
-          {% for entry in sorted_entries %}
-            <li>
-              <strong>{{ entry.title }}</strong> 
-              <br>
-              {{ entry.author }} ({{ entry.year }}) 
-              {% if entry.journal %} 
-                <em>{{ entry.journal }}</em> 
-              {% endif %}
-              {% if entry.booktitle %}
-                <em>{{ entry.booktitle }}</em> 
-              {% endif %}
-            </li>
-          {% endfor %}
-        {% else %}
-          <p>No publications in this category.</p>
-        {% endif %}
-      </ul>
-    {% endif %}
-  {% endfor %}
+ {% bibliography -f {{ site.scholar.bibliography }} %}
   
 </div>

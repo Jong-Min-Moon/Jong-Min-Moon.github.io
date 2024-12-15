@@ -271,8 +271,8 @@ display_categories: ['blockquotes'] # these categories will be displayed on the 
 
 scholar:
 
-  last_name: [Wang]
-  first_name: [Ying]
+  last_name: [Jongmin]
+  first_name: [Mun]
 
   style: apa
   locale: en
@@ -293,7 +293,7 @@ scholar:
   details_link: Details
 
   query: "@*"
-  group_by: year
+  group_by: category, ear
   group_order: descending
 
 badges: # Display different badges for your publications
