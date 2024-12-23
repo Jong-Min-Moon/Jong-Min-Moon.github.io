@@ -6,5 +6,5 @@ related_posts: false
 ---
 
 Attended the fully funded 
-[machine learning theory summer school hosted by Princeton ORFE](https://mlschool.princeton.edu/)
+[Princeton Machine Learning Theory Summer School](https://mlschool.princeton.edu/) hosted by Department of Operations Research & Financial Engineering
 .
