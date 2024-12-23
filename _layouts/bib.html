@@ -133,7 +133,19 @@
         <div class="periodical">
           {{ entry.note | strip }}
         </div>
-
+        {% if entry.type == "article" -%}
+          {%- if entry.conference -%}
+            {%- capture entrytype -%}<em>{{entry.conference}}</em>{%- endcapture -%}
+          {%- endif -%}
+          {%- if entry.month_conference -%}
+            {%- capture entrymonth_conference -%}{{ " " }}{{ entry.month_conference | capitalize }}{%- endcapture -%}
+          {%- endif -%}
+          {%- if entry.year_conference -%}
+            {%- capture entryyear_conference -%}{{ " " }}{{entry.year_conference}}{%- endcapture -%}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+      
           <!-- Links/Buttons -->
           <div class="links">
           {%- if entry.abstract %}
