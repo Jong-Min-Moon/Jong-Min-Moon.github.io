@@ -2,9 +2,8 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
+      value: Jongmin Mun
+
     - name: Languages
       value: English, German
 
@@ -28,38 +27,22 @@
         - Description 1.
         - Description 2.
 
-- title: Experience
+- title: Work
   type: time_table
   contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
-      year: 1933 - 1955
+    - title: Artificial Intelligence Researcher
+      institution: Center for Army Analysis and Simulations, Republic of Korea Army
+      year: 2020 - 2021
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
+        - Solved data science challenges for various departments within the Republic of Korea Army.
+        - My primary project focused on developing a predictive model for forest fires triggered by artillery training sessions, leveraging meteorological data.
+        -  A key challenge was addressing the severe class imbalance in the dataset. To overcome this, I integrated generative model-based oversampling with a weighted support vector machine (SVM).
+        - This approach achieved a 99% improvement in prediction accuracy compared to previous models.
+        - title: Publications.
           contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Visiting Professor
-      institution: California Institute of Technology, Pasadena, California, US
-      year: 1933
-      description:
-        - Description 1.
-        - Description 2.
-
-    - title: Director
-      institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
-      year: 1917-1933
-
-    - title: Professor of Theoretical Physics
-      institution: Karl-Ferdinand University, Prague, Czechoslovakia
-      year: 1911 - 1917
-      description:
-
-    - title: Associate Professor of Theoretical Physics
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1909 - 1911
+            - <a href="https://doi.org/10.1007/s00357-024-09467-1">Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data</a>
+            - <a href="https://doi.org/10.1016/j.csda.2024.108078">Weighted support vector machine for extremely imbalanced data</a>
+ 
 
 - title: Open Source Projects
   type: time_table
