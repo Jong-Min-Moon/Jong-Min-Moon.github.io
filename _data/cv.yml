@@ -20,14 +20,11 @@
           contents:
             - Sub-description 1.
             - Sub-description 2.
-    - title: M.A. in Statistics
+    - title: M.A. and B.A. in Statistics
       institution: Yonsei University, Seoul, South Korea
       year: 2023
       description:
-        - Advisor: Ilmun Kim
-    - title: B.A. in Statistics
-      institution: Yonsei University, Seoul, South Korea
-      year: 2019
+        - Advisor Ilmun Kim
 - title: Work
   type: time_table
   contents:
