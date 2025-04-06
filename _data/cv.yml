@@ -11,7 +11,8 @@
   type: time_table
   contents:
     - title: PhD in Data Sciences and Operations
-      institution: University of Southern California, Los Anageles, United States
+      institution: <a href="https://www.marshall.usc.edu/departments/data-sciences-and-operations"> Marshall School of Business, University of Southern California </a> , Los Anageles, United States
+      
       year: 2023-
       description:
         - Advised by Advised by <a href="https://faculty.marshall.usc.edu/yingying-fan/"> Yingying Fan </a>  and <a href="https://www.paromitadubey.com/"> Paromita Dubey </a> 
