@@ -10,23 +10,24 @@
 - title: Education
   type: time_table
   contents:
-    - title: PhD
+    - title: PhD in Data Sciences and Operations
       institution: University of Southern California, Los Anageles, United States
       year: 2023-
       description:
-        - Description 1.
+        - Advisor: Yingying Fan and Paromita Dubey
         - Description 2.
         - title: Description 3.
           contents:
             - Sub-description 1.
             - Sub-description 2.
-    - title: Master
+    - title: M.A. in Statistics
       institution: Yonsei University, Seoul, South Korea
-      year: 1900
+      year: 2023
       description:
-        - Description 1.
-        - Description 2.
-
+        - Advisor: Ilmun Kim
+    - title: B.A. in Statistics
+      institution: Yonsei University, Seoul, South Korea
+      year: 2019
 - title: Work
   type: time_table
   contents:
