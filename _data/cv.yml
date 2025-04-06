@@ -20,9 +20,9 @@
         - title: Description 3.
           contents:
             - Sub-description 1.
-            - Sub-description 2.
+            - Sub-description 2. 
     - title: M.A. and B.A. in Statistics
-      institution: Yonsei University, Seoul, South Korea
+      institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a> , Seoul, South Korea
       year: 2023
       description:
         - Advised by <a href="https://ilmunk.github.io/index.html"> Ilmun Kim </a>
