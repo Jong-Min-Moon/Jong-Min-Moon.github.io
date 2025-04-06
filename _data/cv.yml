@@ -11,21 +11,21 @@
   type: time_table
   contents:
     - title: PhD in Data Sciences and Operations
-      institution: <a href="https://www.marshall.usc.edu/departments/data-sciences-and-operations"> Marshall School of Business, University of Southern California </a> , Los Anageles, United States
+      institution: <a href="https://www.marshall.usc.edu/departments/data-sciences-and-operations">Marshall School of Business, University of Southern California</a>, Los Anageles, United States
       
       year: 2023-
       description:
-        - Advised by Advised by <a href="https://faculty.marshall.usc.edu/yingying-fan/"> Yingying Fan </a>  and <a href="https://www.paromitadubey.com/"> Paromita Dubey </a> 
+        - Advised by Advised by <a href="https://faculty.marshall.usc.edu/yingying-fan/">Yingying Fan</a>  and <a href="https://www.paromitadubey.com/">Paromita Dubey</a> 
         - Description 2.
         - title: Description 3.
           contents:
             - Sub-description 1.
             - Sub-description 2. 
     - title: M.A. and B.A. in Statistics
-      institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a> , Seoul, South Korea
+      institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a>, Seoul, South Korea
       year: 2023
       description:
-        - Advised by <a href="https://ilmunk.github.io/index.html"> Ilmun Kim </a>
+        - Advised by <a href="https://ilmunk.github.io/index.html">Ilmun Kim</a>
 - title: Work
   type: time_table
   contents:
