@@ -14,7 +14,7 @@
       institution: University of Southern California, Los Anageles, United States
       year: 2023-
       description:
-        - Advisor: Yingying Fan and Paromita Dubey
+        - Advised by Advised by <a href="https://faculty.marshall.usc.edu/yingying-fan/"> Yingying Fan </a>  and <a href="https://www.paromitadubey.com/"> Paromita Dubey </a> 
         - Description 2.
         - title: Description 3.
           contents:
@@ -24,7 +24,7 @@
       institution: Yonsei University, Seoul, South Korea
       year: 2023
       description:
-        - Advisor Ilmun Kim
+        - Advised by <a href="https://ilmunk.github.io/index.html"> Ilmun Kim </a>
 - title: Work
   type: time_table
   contents:
