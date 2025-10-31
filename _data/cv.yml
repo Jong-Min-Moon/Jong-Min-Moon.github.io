@@ -53,14 +53,17 @@
       year: 2025.05–2025.08
       institution: USC JumpStart Program
       description: Mentored Hein Win (undergraduate student at Calstate Polytechnique Pomona) on time series analysis
-- title: Academic Interests
+      
+- title: Publications
   type: nested_list
   contents:
-    - title: Topic 1.
+    - title: Mun J., Bang, S., and Kim, J. (2025) Weighted support vector machine for extremely imbalanced
+data, Computational Statistics & Data Analysis, 203, 108078.
       items:
         - Description 1.
         - Description 2.
-    - title: Topic 2.
+    - title: Namgung, J.Y.∗, Mun, J.∗, Park, Y., Kim, J., and Park, B.-Y (2024) Sex differences in autism spectrum
+disorder using class imbalance adjusted functional connectivity, NeuroImage, 304, 120956
       items:
         - Description 1.
         - Description 2.
