@@ -11,12 +11,12 @@
   contents:
     - title: PhD in Data Sciences and Operations
       institution: <a href="https://www.marshall.usc.edu/departments/data-sciences-and-operations">University of Southern California</a>, Los Angeles, United States
-      year: 2023--2027
+      year: 2023.08-2027/05
       description:
         - Adviser: <a href="https://faculty.marshall.usc.edu/yingying-fan/">Yingying Fan</a>  and <a href="https://www.paromitadubey.com/">Paromita Dubey</a>
     - title: M.A. and B.A. in Statistics
       institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a>, Seoul, South Korea
-      year: 2014--2023
+      year: 2014.03-2023.02
       description:
         - Adviser: <a href="https://ilmunk.github.io/index.html">Ilmun Kim</a>
 
@@ -42,7 +42,17 @@
     - year: 2024
       items:
         - Fully-funded <a href="https://mlschool.princeton.edu/">machine learning theory summer school</a> hosted by Princton University
-
+        
+- title: Services
+  type: time_table
+  contents:
+    - title: Peer Reviewer
+      year: 2025.10-2026.01
+      institution: Twenty-Ninth Annual Conference on Artificial Intelligence and Statistics (AISTATS)
+    - title: Research Mentor
+      year: 2025.05–2025.08
+      institution: USC JumpStart Program
+      description: Mentored Hein Win (undergraduate student at Calstate Polytechnique Pomona) on time series analysis
 - title: Academic Interests
   type: nested_list
   contents:
@@ -55,7 +65,4 @@
         - Description 1.
         - Description 2.
 
-- title: Other Interests
-  type: list
-  contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+
