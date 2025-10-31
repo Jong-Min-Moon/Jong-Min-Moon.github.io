@@ -34,12 +34,7 @@
         - Pipeline development and data analysis results <a href="https://doi.org/10.1007/s00357-024-09467-1">published in Journal of Classification</a> as co–first author, collaborating with Army officers; contributed to pipeline implementation and real-data analysis
         - Enhanced pipeline with cost-sensitive training and derived theoretical guarantee, leading to <a href="https://doi.org/10.1016/j.csda.2024.108078">first-author publication in Computational Statistics \& Data Analysis</a>; contributed to theory development, experiments, and writing
 
-- title: Open Source Projects
-  type: time_table
-  contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
+
 
 - title: Honors and Awards
   type: time_table
