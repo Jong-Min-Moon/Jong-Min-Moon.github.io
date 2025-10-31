@@ -3,7 +3,6 @@
   contents:
     - name: Full Name
       value: Jongmin Mun
-
     - name: Languages
       value: English, Korean, Japanese
 
@@ -12,15 +11,15 @@
   contents:
     - title: PhD in Data Sciences and Operations
       institution: <a href="https://www.marshall.usc.edu/departments/data-sciences-and-operations">University of Southern California</a>, Los Angeles, United States
-      
       year: 2023--2027
       description:
-        - Adviser: <a href="https://faculty.marshall.usc.edu/yingying-fan/">Yingying Fan</a>  and <a href="https://www.paromitadubey.com/">Paromita Dubey</a> 
+        - Adviser: <a href="https://faculty.marshall.usc.edu/yingying-fan/">Yingying Fan</a>  and <a href="https://www.paromitadubey.com/">Paromita Dubey</a>
     - title: M.A. and B.A. in Statistics
       institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a>, Seoul, South Korea
       year: 2014--2023
       description:
         - Adviser: <a href="https://ilmunk.github.io/index.html">Ilmun Kim</a>
+
 - title: Work
   type: time_table
   contents:
@@ -28,17 +27,12 @@
       institution: Center for Army Analysis and Simulations, Republic of Korea Army
       year: 2020 - 2021
       description:
-          - title: Built data integration and oversampling pipeline using R and SQL to augment Army training data, mitigate class
-imbalance, and train SVM classifier enabling internal wildfire risk modeling in place of external indices
+        - title: Built data integration and oversampling pipeline using R and SQL to augment Army training data, mitigate class imbalance, and train SVM classifier enabling internal wildfire risk modeling in place of external indices
           contents:
-            - Resolved meteorological data deficiencies by integrating Army training data with Korea Meteorological Administration
-(KMA) databases via temporal and geospatial variables using SQL queries
+            - Resolved meteorological data deficiencies by integrating Army training data with Korea Meteorological Administration (KMA) databases via temporal and geospatial variables using SQL queries
             - Addressed severe class imbalance using generative model–based synthetic oversampling of wildfire cases
-        - Pipeline development and data analysis results  <a href="https://doi.org/10.1007/s00357-024-09467-1">published in Journal of Classification</a> as co–first author, collaborating
-with Army officers; contributed to pipeline implementation and real-data analysis
-        - Enhanced pipeline with cost-sensitive training and derived theoretical guarantee, leading to <a href="https://doi.org/10.1016/j.csda.2024.108078">first-author publication in Computational Statistics \& Data Analysis</a>
-; contributed to theory development, experiments, and writing
-      
+        - Pipeline development and data analysis results <a href="https://doi.org/10.1007/s00357-024-09467-1">published in Journal of Classification</a> as co–first author, collaborating with Army officers; contributed to pipeline implementation and real-data analysis
+        - Enhanced pipeline with cost-sensitive training and derived theoretical guarantee, leading to <a href="https://doi.org/10.1016/j.csda.2024.108078">first-author publication in Computational Statistics \& Data Analysis</a>; contributed to theory development, experiments, and writing
 
 - title: Open Source Projects
   type: time_table
@@ -51,15 +45,14 @@ with Army officers; contributed to pipeline implementation and real-data analysi
   type: time_table
   contents:
     - year: 2024
-      items: 
-        - Fully-funded  <a href="https://mlschool.princeton.edu/">machine learning theory summer school</a> hosted by Princton University 
-
+      items:
+        - Fully-funded <a href="https://mlschool.princeton.edu/">machine learning theory summer school</a> hosted by Princton University
 
 - title: Academic Interests
   type: nested_list
   contents:
     - title: Topic 1.
-      items: 
+      items:
         - Description 1.
         - Description 2.
     - title: Topic 2.
