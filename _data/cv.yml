@@ -31,7 +31,7 @@
           contents:
             - Resolved meteorological data deficiencies by integrating Army training data with Korea Meteorological Administration (KMA) databases via temporal and geospatial variables using SQL queries
             - Addressed severe class imbalance using generative model–based synthetic oversampling of wildfire cases
-        - Pipeline development and data analysis results <a href="https://doi.org/10.1007/s00357-024-09467-1">published in Journal of Classification</a> as co–first author, collaborating with Army officers; contributed to pipeline implementation and real-data analysis
+        - Pipeline development and data analysis results <a href="https://doi.org/10.1007/s00357-024-09467-1">published in Journal of Classification as co–first author</a>, collaborating with Army officers; contributed to pipeline implementation and real-data analysis
         - Enhanced pipeline with cost-sensitive training and derived theoretical guarantee, leading to <a href="https://doi.org/10.1016/j.csda.2024.108078">first-author publication in Computational Statistics \& Data Analysis</a>; contributed to theory development, experiments, and writing
 
 
