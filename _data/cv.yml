@@ -53,7 +53,18 @@
       year: 2025.05–2025.08
       institution: USC JumpStart Program
       description: Mentored Hein Win (undergraduate student at Calstate Polytechnique Pomona) on time series analysis
-      
+
+- title: Teaching Experience
+  type: time_table
+  contents:
+    - title: Graduate Teaching Assistant
+      institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a>, Seoul, South Korea
+      year: 2022.03-2022.12
+      description:
+        - STA3109 Mathematical Statistics II (Spring 2022, Fall 2022)
+        - STA3102 Multivariate Analysis (Fall 2022)
+
+        
 - title: Publications
   type: nested_list
   contents:
