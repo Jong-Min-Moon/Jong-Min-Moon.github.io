@@ -66,10 +66,10 @@
   type: nested_list
   contents:
     - title: Mun J., Bang, S., and Kim, J. (2025) Weighted support vector machine for extremely imbalanced data, Computational Statistics & Data Analysis, 203, 108078.
-      items:
-        - Description 1.
-        - Description 2.
-    - title: Namgung, J.Y.∗, Mun, J.∗, Park, Y., Kim, J., and Park, B.-Y (2024) Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity, NeuroImage, 304, 120956
-      items:
-        - Description 1.
-        - Description 2.
+    - title: **Mun, J., Bang, S., and Kim, J. (2025)**. *Weighted support vector machine for extremely imbalanced data.* **Computational Statistics & Data Analysis**, 203, 108078.  
+    - title: **Namgung, J.Y.∗, Mun, J.∗, Park, Y., Kim, J., and Park, B.-Y. (2024)**. *Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity.* **NeuroImage**, 304, 120956.  
+    - title: **Mun, J., Kwak, S., and Kim, I. (2024)**. *Minimax optimal two-sample testing under local differential privacy.* Under revision, **Journal of Machine Learning Research**.  
+    - title: **Nam, J.∗, Mun, J.∗, Jo, S., and Kim, J. (2024)**. *Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data.* **Journal of Classification.**    
+    - title: **Park, Y., Kwon, Y., Lee, D., Kim, S., Mun, J., Kim, J., Jung, H., Cheon, J., Chang, J., and Park, J. (2024)**. *In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium.* **Nature Communications.**  
+    - title: **Mun, J., Dubey, P., and Fan, Y. (2025)**. *High-dimensional sparse clustering via iterative semidefinite programming relaxed K-means.* **arXiv preprint arXiv:2505.20478.**  
+    - title: **Mun, J., Dubey, P., and Fan, Y. (2025)**. *Offline dynamic pricing under covariate shift and local differential privacy via twofold pessimism.* Accepted at **Advances in Neural Information Processing Systems (NeurIPS) 2025 MLxOR Workshop** [preprint].  
