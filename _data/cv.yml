@@ -62,7 +62,21 @@
         - STA3109 Mathematical Statistics II (Spring 2022, Fall 2022)
         - STA3102 Multivariate Analysis (Fall 2022)
 
+
+
 - title: Publications
+  type: nested_list
+  contents:
+    - title: Mun J., Bang, S., and Kim, J. (2025) Weighted support vector machine for extremely imbalanced data, Computational Statistics & Data Analysis, 203, 108078.
+
+      items:
+        - Description 1.
+        - Description 2.
+    - title: Namgung, J.Y.∗, Mun, J.∗, Park, Y., Kim, J., and Park, B.-Y (2024) Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity, NeuroImage, 304, 120956
+
+
+    
+- title: Preprints
   type: list
   contents:
     - title: Mun, J., Bang, S., and Kim, J. (2025). Weighted support vector machine for extremely imbalanced data. Computational Statistics & Data Analysis, 203, 108078.
