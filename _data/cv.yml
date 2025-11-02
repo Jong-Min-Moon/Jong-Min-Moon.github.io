@@ -65,8 +65,8 @@
 - title: Publications
   type: list
   contents:
-    - title: "<b>Mun, J.</b>, Bang, S., and Kim, J. (2025). <i>Weighted support vector machine for extremely imbalanced data.</i> <b>Computational Statistics & Data Analysis</b>, 203, 108078."
-    - title: "<b>Namgung, J.Y.*</b>, <b>Mun, J.*</b>, Park, Y., Kim, J., and Park, B.-Y. (2024). <i>Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity.</i> <b>NeuroImage</b>, 304, 120956."
+    - title: Mun, J., Bang, S., and Kim, J. (2025). Weighted support vector machine for extremely imbalanced data. Computational Statistics & Data Analysis, 203, 108078.
+    - title: <b>Namgung, J.Y.*</b>, <b>Mun, J.*</b>, Park, Y., Kim, J., and Park, B.-Y. (2024). <i>Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity.</i> <b>NeuroImage</b>, 304, 120956.
     - title: "<b>Mun, J.</b>, Kwak, S., and Kim, I. (2024). <i>Minimax optimal two-sample testing under local differential privacy.</i> Under revision, <b>Journal of Machine Learning Research</b>."
     - title: "<b>Nam, J.*</b>, <b>Mun, J.*</b>, Jo, S., and Kim, J. (2024). <i>Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data.</i> <b>Journal of Classification</b>."
     - title: "<b>Park, Y.</b>, Kwon, Y., Lee, D., Kim, S., Mun, J., Kim, J., Jung, H., Cheon, J., Chang, J., and Park, J. (2024). <i>In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium.</i> <b>Nature Communications</b>."
