@@ -2,7 +2,7 @@
 layout: page
 title: Private and Scalable Hash Kernel Bit-flip Two-Sample Testing
 description: We propose using Hash Kernels to compress high-dimensional data before bit-flip privatization, making locally private A/B testing viable for massive, unknown alphabets.
-img: assets/img/hash.jpg
+img: assets/img/hash.png
 importance: 2
 category: work
 ---
