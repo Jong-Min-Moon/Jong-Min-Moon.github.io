@@ -1,8 +1,8 @@
 ---
 layout: page
-title: projects
+title: working papers
 permalink: /projects/
-description: A growing collection of your cool projects.
+description: Working papers that have not yet been published in journals, conferences, or on arXiv, often originating as course projects or personal explorations.
 nav: true
 nav_order: 2
 display_categories: [work, fun]
