@@ -13,6 +13,7 @@ The resulting multinomial distribution implies that the entry-wise perturbation 
 
 Since the test statistic relies on the Euclidean inner product—a simple linear kernel—we propose utilizing the hash kernel approximation from **Shi et al. (2009)** to enhance scalability. We present a modified LDP algorithm that projects high-dimensional data into a lower-dimensional sketch before noise injection. This approach enables efficient computation and handles unknown alphabet sizes while preserving the core geometric structure required for the two-sample test.
 
+This project began as the final assignment for CSCI-699: Privacy-Preserving Machine Learning, offered at USC in Fall 2024. The core idea of using hashing  was suggested by Sai Praneeth Karimireddy, the lecturer of the course and an assistant professor of computer science at USC.
 You can also check out the full paper [here](https://jong-min.org/assets/pdf/preprint_hash.pdf).
 
 ### References
