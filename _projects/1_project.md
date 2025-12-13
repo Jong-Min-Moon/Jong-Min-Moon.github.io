@@ -16,7 +16,7 @@ importance-weighted gradients. In simulations motivated by glucose regulation, o
 achieves higher estimated policy values than naive gradient ascent. These
 results underscore the importance of geometry-aware optimization in offpolicy learning under partial observability.
 
-You can also check out the full paper [here](https://github.com/Jong-Min-Moon/Jong-Min-Moon.github.io/assets/pdf/preprint_pricing.pdf).
+You can also check out the full paper [here](https://jong-min.org/assets/pdf/preprint_pomdp.pdf).
 
 This project began as the final assignment for DSO-603: Causal Inference with Modern Machine Learning Methods, offered at USC in Fall 2025. The core idea of transitioning from POMDP OPE to learning was suggested by Donggyu Derek Cho, a PhD student in Statistics at Duke University.
  
