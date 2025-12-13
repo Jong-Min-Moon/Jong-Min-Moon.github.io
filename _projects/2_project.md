@@ -1,80 +1,22 @@
 ---
 layout: page
-title: project 2
-description: a project with a background image
-img: assets/img/3.jpg
+title: Private and Scalable Hash Kernel Bit-flip Two-Sample Testing
+description: We propose using Hash Kernels to compress high-dimensional data before bit-flip privatization, making locally private A/B testing viable for massive, unknown alphabets.
+img: assets/img/hash.jpg
 importance: 2
 category: work
 ---
+ 
+**Mun et al. (2025)** proposed a minimax optimal two-sample (A/B) testing algorithm under local differential privacy (LDP). However, a key challenge arises when dealing with high-dimensional datasets, such as images or text, where the domain size $k$ is massive or unknown.
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+The resulting multinomial distribution implies that the entry-wise perturbation method of **Mun et al. (2025)**, which relies on a variant of **Erlingsson et al. (2014)**, introduces excessive noise relative to the signal, significantly reducing testing power. Furthermore, conventional dimension reduction methods like PCA are not directly applicable in the LDP setting, as individual data owners cannot access the global covariance structure.
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+Since the test statistic relies on the Euclidean inner product—a simple linear kernel—we propose utilizing the hash kernel approximation from **Shi et al. (2009)** to enhance scalability. We present a modified LDP algorithm that projects high-dimensional data into a lower-dimensional sketch before noise injection. This approach enables efficient computation and handles unknown alphabet sizes while preserving the core geometric structure required for the two-sample test.
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+You can also check out the full paper [here](https://jong-min.org/assets/pdf/preprint_hash.pdf).
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
+### References
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, *bled* for your project, and then... you reveal its glory in the next row of images.
-
-
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
-
-
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
-
-{% raw %}
-```html
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-```
-{% endraw %}
+* **Mun, J., Kwak, M., & Kim, I.** (2025). Minimax optimal two-sample testing under local differential privacy. *Journal of Machine Learning Research*.
+* **Erlingsson, Ú., Pihur, V., & Korolova, A.** (2014). RAPPOR: Randomized aggregatable privacy-preserving ordinal response. *ACM CCS*.
+* **Shi, Q., Petterson, J., Drezde, G., Li, X., Smola, A., & Vishwanathan, S.** (2009). Hash kernels for structured data. *Journal of Machine Learning Research*.
