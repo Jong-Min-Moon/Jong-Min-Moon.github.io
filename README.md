@@ -1,1 +1,1 @@
-- CV: `_data/CV.yml`
+- CV: `_data/cv.yml`
