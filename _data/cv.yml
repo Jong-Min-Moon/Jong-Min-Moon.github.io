@@ -65,7 +65,7 @@
 - title: Publications
   type: nested_list
   contents:
-    - title: "<b>Mun, J.</b>, Kwak, S., and Kim, I. (2025). Minimax optimal two-sample testing under local differential privacy. **Journal of Machine Learning Research 26(252).**"
+    - title: "<b>Mun, J.</b>, Kwak, S., and Kim, I. (2025). Minimax optimal two-sample testing under local differential privacy. **Journal of Machine Learning Research 26(252), 1-79.**"
     - title: "**Mun J.**, Bang, S., and Kim, J. (2025). Weighted support vector machine for extremely imbalanced data. **Computational Statistics & Data Analysis**, 203, 108078."
     - title: "Namgung, J., **Mun, J.**, Park, Y., Kim, J., and Park, B.-Y (2024). Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity, **NeuroImage**, 304, 120956."
       items:
