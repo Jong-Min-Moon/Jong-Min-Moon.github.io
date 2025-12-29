@@ -64,17 +64,16 @@
 
 
 
-- title: Publications (*: co-first author)
+- title: Publications (<sup>†</sup>: co-first author)
   type: nested_list
   contents:
-    - title: <b>Mun, J.</b>, Kwak, S., and Kim, I. (2025). Minimax optimal two-sample testing under local differential privacy.  <b>Journal of Machine Learning Research 26(252).</b>
-    - title: <b>Mun J.</b>, Bang, S., and Kim, J. (2025). Weighted support vector machine for extremely imbalanced data. <b>Computational Statistics & Data Analysis</b>, 203, 108078.
-    - title: Namgung, J.Y.*, <b>Mun, J.*</b>, Park, Y., Kim, J., and Park, B.-Y (2024). Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity, <b>NeuroImage</b>, 304, 120956.
-          items:
+    - title: **Mun, J.**, Kwak, S., and Kim, I. (2025). Minimax optimal two-sample testing under local differential privacy. **Journal of Machine Learning Research 26(252).**
+    - title: **Mun J.**, Bang, S., and Kim, J. (2025). Weighted support vector machine for extremely imbalanced data. **Computational Statistics & Data Analysis**, 203, 108078.
+    - title: Namgung, J.<sup>†</sup>, **Mun, J.**<sup>†</sup>, Park, Y., Kim, J., and Park, B.-Y (2024). Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity, **NeuroImage**, 304, 120956.
+      items:
         - Preliminary version presented at the 2024 International Conference of the IEEE Engineering in Medicine and Biology Society
-    - title: Nam, J.*, <b>Mun, J.*</b>, Jo, S., and Kim, J. (2024). Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data. <b>Journal of Classification</b>, 41, 170-189.
-    - title: Park, Y., Kwon, Y., Lee, D., Kim, S., <b>Mun, J.</b>, Kim, J., Jung, H., Cheon, J., Chang, J., and Park, J. (2024). In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium. <b>Nature Communications</b>, 15, 1772.
-
+    - title: Nam, J.<sup>†</sup>, **Mun, J.**<sup>†</sup>, Jo, S., and Kim, J. (2024). Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data. **Journal of Classification**, 41, 170-189.
+    - title: Park, Y., Kwon, Y., Lee, D., Kim, S., **Mun, J.**, Kim, J., Jung, H., Cheon, J., Chang, J., and Park, J. (2024). In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium. **Nature Communications**, 15, 1772.
 
 
     
