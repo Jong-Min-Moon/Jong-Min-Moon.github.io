@@ -10,15 +10,15 @@
   type: time_table
   contents:
     - title: PhD in Data Sciences and Operations
-      institution: <a href="https://www.marshall.usc.edu/departments/data-sciences-and-operations">University of Southern California</a>, Los Angeles, United States
+      institution: "<a href='https://www.marshall.usc.edu/departments/data-sciences-and-operations'>University of Southern California</a>, Los Angeles, United States"
       year: 2023.08-2027/05
       description:
-        - Adviser: <a href="https://faculty.marshall.usc.edu/yingying-fan/">Yingying Fan</a> and <a href="https://www.paromitadubey.com/">Paromita Dubey</a>
+        - Adviser: "<a href='https://faculty.marshall.usc.edu/yingying-fan/'>Yingying Fan</a> and <a href='https://www.paromitadubey.com/'>Paromita Dubey</a>"
     - title: M.A. and B.A. in Statistics
-      institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a>, Seoul, South Korea
+      institution: "<a href='https://www.yonsei.ac.kr/en_sc/index.jsp'>Yonsei University </a>, Seoul, South Korea"
       year: 2014.03-2023.02
       description:
-        - Adviser: <a href="https://ilmunk.github.io/index.html">Ilmun Kim</a>
+        - Adviser: "<a href='https://ilmunk.github.io/index.html'>Ilmun Kim</a>"
 
 - title: Work
   type: time_table
@@ -27,19 +27,19 @@
       institution: Center for Army Analysis and Simulations, Republic of Korea Army
       year: 2020 - 2021
       description:
-        - title: Built data integration and oversampling pipeline using R and SQL to augment Army training data, mitigate class imbalance, and train SVM classifier enabling internal wildfire risk modeling in place of external indices
+        - title: "Built data integration and oversampling pipeline using R and SQL to augment Army training data, mitigate class imbalance, and train SVM classifier enabling internal wildfire risk modeling in place of external indices"
           contents:
-            - Resolved meteorological data deficiencies by integrating Army training data with Korea Meteorological Administration (KMA) databases via temporal and geospatial variables using SQL queries
-            - Addressed severe class imbalance using generative model–based synthetic oversampling of wildfire cases
-        - Pipeline development and data analysis results <a href="https://doi.org/10.1007/s00357-024-09467-1">published in Journal of Classification as co–first author</a>, collaborating with Army officers; contributed to pipeline implementation and real-data analysis
-        - Enhanced pipeline with cost-sensitive training and derived theoretical guarantee, leading to <a href="https://doi.org/10.1016/j.csda.2024.108078">first-author publication in "Computational Statistics & Data Analysis"</a>; contributed to theory development, experiments, and writing
+            - "Resolved meteorological data deficiencies by integrating Army training data with Korea Meteorological Administration (KMA) databases via temporal and geospatial variables using SQL queries"
+            - "Addressed severe class imbalance using generative model–based synthetic oversampling of wildfire cases"
+        - "Pipeline development and data analysis results <a href='https://doi.org/10.1007/s00357-024-09467-1'>published in Journal of Classification as co–first author</a>, collaborating with Army officers; contributed to pipeline implementation and real-data analysis"
+        - "Enhanced pipeline with cost-sensitive training and derived theoretical guarantee, leading to <a href='https://doi.org/10.1016/j.csda.2024.108078'>first-author publication in 'Computational Statistics & Data Analysis'</a>; contributed to theory development, experiments, and writing"
 
 - title: Honors and Awards
   type: time_table
   contents:
     - year: 2024
       items:
-        - Fully-funded <a href="https://mlschool.princeton.edu/">machine learning theory summer school</a> hosted by Princton University
+        - "Fully-funded <a href='https://mlschool.princeton.edu/'>machine learning theory summer school</a> hosted by Princeton University"
 
 - title: Services
   type: time_table
@@ -50,37 +50,33 @@
     - title: Research Mentor
       year: 2025.05–2025.08
       institution: USC JumpStart Program
-      description: Mentored Hein Win (undergraduate student at Calstate Polytechnique Pomona) on time series analysis
+      description: "Mentored Hein Win (undergraduate student at Calstate Polytechnique Pomona) on time series analysis"
 
 - title: Teaching Experience
   type: time_table
   contents:
     - title: Graduate Teaching Assistant
-      institution: <a href="https://www.yonsei.ac.kr/en_sc/index.jsp">Yonsei University </a>, Seoul, South Korea
+      institution: "<a href='https://www.yonsei.ac.kr/en_sc/index.jsp'>Yonsei University </a>, Seoul, South Korea"
       year: 2022.03-2022.12
       description:
         - STA3109 Mathematical Statistics II (Spring 2022, Fall 2022)
         - STA3102 Multivariate Analysis (Fall 2022)
 
-
-
 - title: Publications (<sup>†</sup>: co-first author)
   type: nested_list
   contents:
-    - title: **Mun, J.**, Kwak, S., and Kim, I. (2025). Minimax optimal two-sample testing under local differential privacy. **Journal of Machine Learning Research 26(252).**
-    - title: **Mun J.**, Bang, S., and Kim, J. (2025). Weighted support vector machine for extremely imbalanced data. **Computational Statistics & Data Analysis**, 203, 108078.
-    - title: Namgung, J.<sup>†</sup>, **Mun, J.**<sup>†</sup>, Park, Y., Kim, J., and Park, B.-Y (2024). Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity, **NeuroImage**, 304, 120956.
+    - title: "**Mun, J.**, Kwak, S., and Kim, I. (2025). Minimax optimal two-sample testing under local differential privacy. **Journal of Machine Learning Research 26(252).**"
+    - title: "**Mun J.**, Bang, S., and Kim, J. (2025). Weighted support vector machine for extremely imbalanced data. **Computational Statistics & Data Analysis**, 203, 108078."
+    - title: "Namgung, J.<sup>†</sup>, **Mun, J.**<sup>†</sup>, Park, Y., Kim, J., and Park, B.-Y (2024). Sex differences in autism spectrum disorder using class imbalance adjusted functional connectivity, **NeuroImage**, 304, 120956."
       items:
-        - Preliminary version presented at the 2024 International Conference of the IEEE Engineering in Medicine and Biology Society
-    - title: Nam, J.<sup>†</sup>, **Mun, J.**<sup>†</sup>, Jo, S., and Kim, J. (2024). Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data. **Journal of Classification**, 41, 170-189.
-    - title: Park, Y., Kwon, Y., Lee, D., Kim, S., **Mun, J.**, Kim, J., Jung, H., Cheon, J., Chang, J., and Park, J. (2024). In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium. **Nature Communications**, 15, 1772.
+        - "Preliminary version presented at the 2024 International Conference of the IEEE Engineering in Medicine and Biology Society"
+    - title: "Nam, J.<sup>†</sup>, **Mun, J.**<sup>†</sup>, Jo, S., and Kim, J. (2024). Prediction of forest fire risk for artillery military training using weighted support vector machine for imbalanced data. **Journal of Classification**, 41, 170-189."
+    - title: "Park, Y., Kwon, Y., Lee, D., Kim, S., **Mun, J.**, Kim, J., Jung, H., Cheon, J., Chang, J., and Park, J. (2024). In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium. **Nature Communications**, 15, 1772."
 
-
-    
 - title: Preprints
   type: nested_list
   contents:
-    - title: <b>Mun, J.</b>, Dubey, P., and Fan, Y. (2025). High-dimensional sparse clustering via iterative semidefinite programming relaxed K-means. <b>arXiv preprint arXiv:2505.20478</b>.
-    - title: <b>Mun, J.</b>, Xu, X., and Fan, Y. (2025). Offline dynamic pricing under covariate shift and local differential privacy via twofold pessimism.
+    - title: "**Mun, J.**, Dubey, P., and Fan, Y. (2025). High-dimensional sparse clustering via iterative semidefinite programming relaxed K-means. **arXiv preprint arXiv:2505.20478**."
+    - title: "**Mun, J.**, Xu, X., and Fan, Y. (2025). Offline dynamic pricing under covariate shift and local differential privacy via twofold pessimism."
       items:
-        - Preliminary version presented at the <b>Advances in Neural Information Processing Systems (NeurIPS) 2025 MLxOR Workshop
+        - "Preliminary version presented at the **Advances in Neural Information Processing Systems (NeurIPS) 2025 MLxOR Workshop**"
