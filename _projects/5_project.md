@@ -2,7 +2,7 @@
 layout: page
 title:  Bayesian Spatial Modeling of Cancer Incidence (BYM2 Model)
 description: a project with a background image
-img: assets/img/spatial.jpg
+img: assets/img/spatial.png
 importance: 3
 category: fun
 ---
