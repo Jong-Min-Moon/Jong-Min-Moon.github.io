@@ -1,8 +1,8 @@
 ---
 layout: page
-title: working papers
+title: Projects
 permalink: /projects/
-description: Working papers that have not yet been published in journals, conferences, or on arXiv, often originating as course projects or personal explorations.
+description: Working papers that have not yet been published in journals, conferences, or on arXiv, often originating from course projects or personal explorations.  Also includes data analysis projects that are featured in the published research.
 nav: true
 nav_order: 2
 display_categories: [work, fun]
