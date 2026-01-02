@@ -2,7 +2,7 @@
 layout: page
 title:  Bayesian Spatial Modeling of Cancer Incidence (BYM2 Model)
 description: a project with a background image
-img: assets/img/1.jpg
+img: assets/img/spatial.jpg
 importance: 3
 category: fun
 ---
@@ -38,18 +38,31 @@ $$\log(\lambda_i) = \log(E_i) + \alpha + \mathbf{X}_i\boldsymbol{\beta} + \psi_i
 
 ### 3. Spatial Random Effects (The BYM Model)
 
-Geographical data is rarely independent; high-cancer areas tend to cluster. To capture this **spatial dependence**, we introduce a random effect term  into the linear predictor.
+Random effects or hierarchical models model correlations across units. They arise in linear modeling to avoid **pseudo-replication**: the error of treating units that are non-IID (independent and identically distributed) as if they were IID.
+Units often have a hierarchically clustered structure, such as students belonging to classes, schools, and districts. Students in the same class are distinct entities, but they share common environmental factors, so they are not fully independent. Another example is spatial correlation: adjacent states, such as California and Oregon, are distinct entities but share common geographical features, meaning they are not truly IID.
 
-In the **Besag-York-Mollié (BYM)** framework, this term is split into two components:
+Hierarchical models address this by assigning regression coefficients (random effects) to the indicator variables for this correlation structure (e.g., the specific group or region). Crucially, these coefficients share the same nontrivial hyperparameter (e.g. variance).
+This shared distribution allows the model to **borrow strength** within groups. Estimates for groups with sparse data are stabilized by being pulled toward the group mean, effectively using information from the wider population to improve unit inference with small data.
+
+Through this mechanism, the model achieves **partial pooling**. It is a good compromise between two extremes:
+
+- **no pooling**: assuming independece and non-identity across units, just include indicator variables as predictors, without hieararchical structure. This corresponds to setting the variance of prior as $$\infty$$.
+- **complete pooling**: assuming iid across units. Not inclduing indicator variables as predictors. This corresponds to setting the variance of effects as zero.
+
+Geographical data is rarely independent; high-cancer areas tend to cluster. To capture this **spatial dependence**, we introduce a random effect term  into the linear predictor.
+In the **Besag-York-Mollié (BYM)** framework, this random effect is split into two components:
 
 $$\psi_i = \underbrace{u_i}_{\text{Spatial (Structured)}} + \underbrace{v_i}_{\text{Noise (Unstructured)}}$$
+ 
 
 #### The Spatial Component ($u_i$)
 
 The spatial component is modeled using a **Conditional Autoregressive (CAR)** prior. This allows each area to "borrow strength" from its neighbors.
 
 * **Conditional Specification:**
-$$u_i \mid \mathbf{u}_{-i} \sim \mathcal{N} \left( \frac{\sum_{j \in \text{ne}(i)} u_j}{n_i}, \frac{\tau^2}{n_i} \right)$$
+
+$$u_i  \mid \mathbf{u}_{-i}\sim \mathcal{N} \left( \frac{\sum_{j \in \text{ne}(i)} u_j}{n_i}, \frac{\tau^2}{n_i} \right)$$
+ 
 
 * **Mean:** The conditional expectation of an area's risk is the average of its neighbors' risks.
 * **Variance:** Variance is inversely proportional to the number of neighbors (). Areas with more neighbors have lower variance (more information).
