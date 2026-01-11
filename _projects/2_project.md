@@ -4,7 +4,7 @@ title: Private and Scalable Hash Kernel Bit-flip Two-Sample Testing
 description: We propose using Hash Kernels to compress high-dimensional data before bit-flip privatization, making locally private A/B testing viable for massive, unknown alphabets.
 img: assets/img/hash.png
 importance: 2
-category: work
+category: coursework
 ---
  
 **Mun et al. (2025)** proposed a minimax optimal two-sample (A/B) testing algorithm under local differential privacy (LDP). However, a key challenge arises when dealing with high-dimensional datasets, such as images or text, where the domain size $k$ is massive or unknown.
