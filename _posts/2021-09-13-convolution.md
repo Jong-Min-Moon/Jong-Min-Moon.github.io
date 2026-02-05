@@ -1,12 +1,11 @@
 ---
 layout: post
 title: "Fundamentals of Convolution"
-date: 2025-02-01
+date: 2021-09-13
 description: "Inner product and convolution in signal processing and statistics"
 project: neural-probe-integration
 categories: research
 ---
-
 
 ### I. Signal Processing Perspective
 **Core Concept:** Convolution is an extension of the inner product, representing the time-varying similarity between a signal and a kernel (filter).
@@ -20,7 +19,7 @@ categories: research
 #### 2. The Convolution Operation
 * **Definition:** A repeated computation of the inner product over time.
 * **Procedure:**
-    1.  **Flip:** The kernel (the "mover" or filter) is reversed in time.
+    1.  **Flip:** The kernel (the mover or filter) is reversed in time.
     2.  **Shift:** The flipped kernel slides along the time axis of the signal.
     3.  **Multiply & Sum:** At each time step, the inner product is computed between the signal and the overlapping kernel section.
 * **Result:** A time series representing the similarity between the signal and the flipped kernel at every time point.
@@ -47,10 +46,16 @@ Cohen (2014) offers standard interpretations:
 * Given two independent random variables $X$ and $Y$ with probability density functions (PDFs) $f_X$ and $f_Y$.
 * Let $Z = X + Y$.
 * The PDF of $Z$ is the convolution of the PDFs of $X$ and $Y$:
-  $$f_Z(z) = (f_X * f_Y)(z)$$
+
+$$
+f_Z(z) = (f_X \ast f_Y)(z)
+$$
 
 #### 2. The Integral Formulation
-$$f_Z(z) = \int_{-\infty}^{\infty} f_X(x) \cdot f_Y(z-x) \, dx$$
+
+$$
+f_Z(z) = \int_{-\infty}^{\infty} f_X(x) \cdot f_Y(z-x) \, dx
+$$
 
 * **Connection to Signal Processing:**
     * The term $f_Y(z-x)$ contains the same "Flip and Shift" mechanics found in signal theory.
@@ -59,7 +64,7 @@ $$f_Z(z) = \int_{-\infty}^{\infty} f_X(x) \cdot f_Y(z-x) \, dx$$
 
 ---
 
-### III. Common Properties: The "Blurring" Effect
+### III. Common Properties: Smoothing
 In both domains, convolution acts as a smoothing operator.
 * **In Signals:** Convolving a sharp signal with a broad kernel smoothes out high-frequency noise (Low-pass filtering).
 * **In Statistics:** Adding random variables increases uncertainty (variance). The resulting distribution ($Z$) is wider and flatter than the constituent distributions ($X$ or $Y$).
