@@ -1,0 +1,91 @@
+---
+layout: post
+title: "Wavelet Basis & Function Spaces: Besov vs. Hölder"
+date: 2026-02-05
+description: "Understanding Nonparametric Regression, Haar Wavelets, and Smoothness Norms"
+project: ldp-testing
+categories: statistics 
+math: true
+---
+
+### I. Context: Signal Processing vs. Statistical Estimation
+Before diving into Besov spaces, it is crucial to understand the fundamental shift from **Convolution** (used in neuroscience/signal processing) to **Basis Expansion** (used in statistics).
+
+| Feature | **Wavelet Convolution (CWT)** | **Wavelet Basis (DWT)** |
+| :--- | :--- | :--- |
+| **Goal** | Feature Extraction & Visualization | Estimation, Compression, Denoising |
+| **Method** | Sliding window (Redundant) | Tiling / Grid (Orthogonal) |
+| **Structure** | Smooth, overlapping coefficients | Sparse, independent coefficients |
+| **Wavelet** | Complex Morlet (Smooth) | Haar, Daubechies (Compact/Step) |
+
+In the statistical context (e.g., nonparametric regression), we prioritize **efficiency** and **sparsity**. We want to reconstruct a function $f(t)$ using the fewest number of coefficients possible.
+
+---
+
+### II. The Haar Wavelet Basis
+The text provided focuses on the **Haar Multivariate Wavelet Basis**. This system creates a hierarchical representation of a function using step-like "building blocks."
+
+
+
+#### 1. The Structure (Setting $J=0$)
+The analysis starts at the coarsest level ($J=0$), dividing the function into two categories:
+
+* **Scaling Coefficients ($\theta_\phi$):**
+    * **Symbol:** $\Phi_0$
+    * **Role:** Represents the **Global Trend** or average of the function over the domain $[0,1]^d$.
+    * **Analogy:** The "Foundation" of the house.
+
+* **Wavelet Coefficients ($\theta_\psi$):**
+    * **Symbol:** $\Psi_j$ (for levels $j \ge 0$)
+    * **Role:** Captures **Abrupt Oscillations** and details that deviate from the global trend.
+    * **Resolution:** As level $j$ increases, the wavelets become narrower and taller, capturing higher-frequency details.
+
+#### 2. Why Haar?
+The Haar basis is chosen because projecting a density onto this basis is mathematically equivalent to **Equal-Sized Binning** (histograms). This allows researchers to link abstract function space theory directly to the discretization error inherent in statistical testing.
+
+---
+
+### III. The Besov Ball: A "Budgeting Game"
+How do we define if a function is "smooth"? The **Besov Norm** ($|||f|||_{s,2,q}$) measures smoothness by calculating the "cost" of building the function using these wavelet blocks.
+
+$$|||f|||_{s,2,q} := \left[ \sum_{j=0}^{\infty} \underbrace{2^{jsq}}_{\text{Price Tag}} \underbrace{\left( \sum_{\psi \in \Psi_j} |\theta_{\psi}(f)|^2 \right)^{q/2}}_{\text{Energy at Level } j} \right]^{1/q}$$
+
+#### 1. The "Price Tag" ($2^{js}$)
+This term acts as a weighted penalty.
+* **Low $j$ (Coarse levels):** Cheap. You can use these blocks freely.
+* **High $j$ (Fine details):** Expensive. The cost grows exponentially ($2^{js}$).
+
+#### 2. The Rule of the Besov Ball
+To stay inside the Besov Ball (i.e., to have a finite norm), you must be "thrifty." You are allowed to use high-frequency wavelets (high $j$), but you must use them **sparingly** (Sparsity).
+
+This definition allows the Besov space to accommodate **Spatially Inhomogeneous** functions—functions that are smooth in most places but have occasional sharp spikes or jumps.
+
+---
+
+### IV. Comparison: Besov ($B^s_{p,q}$) vs. Hölder ($C^s$)
+This is the critical distinction for statistical modeling.
+
+
+
+#### 1. The Hölder Class ($C^s$)
+* **Philosophy:** **Uniform Regularity** (Worst-Case).
+* **The Rule:** The function must be smooth **everywhere**.
+* **Sensitivity:** If the function has a single "bad" point (a sharp corner, a jump, a spike) *anywhere*, the entire function is rejected.
+* **Norm:** Based on $L^\infty$ (Maximum error).
+
+#### 2. The Besov Space ($B^s_{p,q}$)
+* **Philosophy:** **Average Regularity**.
+* **The Rule:** The function must be smooth **on average**.
+* **Flexibility:** It tolerates local irregularities (like jumps or spikes) as long as they are spatially sparse. The "cost" of one bad point is averaged out over the smooth regions.
+* **Norm:** Based on $L^p$ (Integrated error).
+
+#### 3. Specific "Different Functions"
+Because of this flexibility, Besov spaces contain functions that are banned from Hölder classes:
+
+| Function Type | Description | Hölder Class ($C^s$) | Besov Space ($B^s_{p,q}$) |
+| :--- | :--- | :--- | :--- |
+| **Step Function** | Flat $\rightarrow$ Jump $\rightarrow$ Flat | **REJECTED** (Infinite derivative at jump) | **ACCEPTED** (Jump requires only sparse coefficients) |
+| **Local Spike** | Smooth line with one sharp burst | **REJECTED** (Fails at the burst location) | **ACCEPTED** (Averaged out by smooth regions) |
+
+### V. Summary
+By selecting the **Haar Basis** and **Besov Spaces**, one explicitly chooses a framework that can model **discontinuities** and **abrupt changes**. Unlike Fourier/Hölder methods, which assume data is uniformly smooth (like a sine wave), Besov/Haar methods assume data may have sharp edges (like a histogram or a neural spike) and handle them robustly without "blowing up" the error metric.
