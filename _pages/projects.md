@@ -6,7 +6,7 @@ description: Working papers that have not yet been published in journals, confer
 nav: true
 nav_order: 2
 display_categories: [work, fun, coursework]
-horizontal: false
+horizontal: true
 ---
 
 <!-- pages/projects.md -->
@@ -20,7 +20,7 @@ horizontal: false
   <!-- Generate cards for each project -->
   {% if page.horizontal -%}
   <div class="container">
-    <div class="row row-cols-2">
+    <div class="row row-cols-1">
     {%- for project in sorted_projects -%}
       {% include projects_horizontal.html %}
     {%- endfor %}
@@ -41,7 +41,7 @@ horizontal: false
   <!-- Generate cards for each project -->
   {% if page.horizontal -%}
   <div class="container">
-    <div class="row row-cols-2">
+    <div class="row row-cols-1">
     {%- for project in sorted_projects -%}
       {% include projects_horizontal.html %}
     {%- endfor %}

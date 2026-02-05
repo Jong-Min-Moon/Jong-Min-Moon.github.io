@@ -1,0 +1,53 @@
+---
+layout: post
+title: "The Filter-Hilbert Method"
+date: 2021-10-25
+description: "Decoupling filtering from the analytic signal for better frequency control"
+project: neural-probe-integration
+categories: research
+math: true
+---
+
+### I. The Core Distinction: Decoupling
+The fundamental difference between Wavelet Convolution and the Filter-Hilbert method lies in how they handle the two primary tasks of time-frequency analysis: **Filtering** (isolating frequencies) and **Analytic Representation** (extracting power/phase).
+
+* **Wavelet Convolution:** Performs both tasks simultaneously. A complex Morlet wavelet is, by definition, a bandpass filter *and* an analytic signal combined.
+* **Filter-Hilbert Method:** Decouples these steps.
+    1.  **Step 1 (Filtering):** Apply a bandpass filter to isolate the frequency of interest.
+    2.  **Step 2 (Hilbert):** Apply the Hilbert transform to extract the analytic signal (complex power/phase information).
+
+**The Main Advantage:** By decoupling these steps, you gain significantly more control over the **frequency characteristics** of the filter.
+
+### II. The Hilbert Transform
+The Hilbert transform is a mathematical operation used to extract complex information from a real-valued signal.
+
+#### 1. Purpose
+It converts a real-valued signal (which only has cosine components, $M\cos(2\pi ft)$) into an analytic (complex) signal by generating and adding the **imaginary part**.
+* **Real Part:** Original signal ($M\cos(2\pi ft)$).
+* **Imaginary Part:** Phase quadrature component ($iM\sin(2\pi ft)$).
+
+
+
+#### 2. Implementation (The Frequency Domain Trick)
+In practice (like in MATLAB's `hilbert` function), we do not compute this by integrating in the time domain. Instead, we manipulate the Fourier spectrum:
+1.  **FFT:** Convert signal to the frequency domain.
+2.  **Rotate:** Double the **positive-frequency** coefficients and set the **negative-frequency** coefficients to **zero**.
+3.  **IFFT:** Convert back to the time domain.
+
+### III. The Advantage: Filter Control (Gaussian vs. Plateau)
+The primary limitation of Morlet wavelets is that their frequency shape is **always Gaussian**. You cannot change this shape; you can only change its width (via the number of cycles).
+
+
+
+The Filter-Hilbert method allows you to design filters with custom shapes:
+* **Plateau Shapes:** Unlike the Gaussian peak of a wavelet, a bandpass filter can have a flat top ("plateau").
+* **Benefit:** This offers better **frequency specificity**. You can define a hard boundary for the frequencies you want to keep versus those you want to remove, resulting in time-frequency plots that are smoother along the frequency axis.
+
+### IV. Filter Types
+Using the Filter-Hilbert method, you can apply four standard types of frequency filters before extracting the analytic signal:
+* **Bandpass:** Keep activity *between* two frequencies (most useful for time-frequency decomposition).
+* **Band-stop:** Remove activity *between* two frequencies (notch filter).
+* **High-pass:** Retain frequencies *above* a cutoff.
+* **Low-pass:** Retain frequencies *below* a cutoff.
+
+**Summary:** While wavelet convolution is mathematically elegant (one step), the Filter-Hilbert method is practically powerful because it allows you to shape your frequency isolation (e.g., using a plateau filter) before extracting the power and phase.
