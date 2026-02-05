@@ -3,7 +3,7 @@ layout: project
 title: Federated Analytics under Server-level Privacy Protection
 description: Published in Journal of Machine Learning Research (JMLR), entitled "Minimax Optimal Two-Sample Testing under Local Differential Privacy".
 img: 
-importance: 2
+importance: 1
 category: work
 project_handle: ldp-testing
 ---

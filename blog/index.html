@@ -25,6 +25,26 @@ pagination:
   </div>
   {% endif %}
 
+  <!-- Search Input -->
+  <div class="search-container" style="margin-bottom: 20px;">
+    <input type="text" id="search-input" class="form-control" placeholder="Search posts..." aria-label="Search posts">
+    <ul id="results-container" class="list-group mt-2"></ul>
+  </div>
+
+  <!-- Script -->
+  <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+  <script>
+    window.simpleJekyllSearch = new SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('results-container'),
+      json: '{{ "/assets/json/search.json" | relative_url }}',
+      searchResultTemplate: '<li class="list-group-item"><a href="{url}">{title}</a> <span class="text-muted small">({date})</span><br><small>{description}</small></li>',
+      noResultsText: '<li class="list-group-item">No posts found</li>',
+      limit: 10,
+      fuzzy: false
+    })
+  </script>
+
   {% if site.display_tags or site.display_categories %}
   <div class="tag-category-list">
     <ul class="p-0 m-0">
