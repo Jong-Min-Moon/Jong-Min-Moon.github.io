@@ -2,7 +2,7 @@
 layout: project
 title: In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium
 description: Developing a novel method for integrating soft neural probes using high-resolution printing of liquid electronics directly on the cranium for improved biocompatibility and signal stability.
-img: assets/img/neural_probe.png
+img: assets/img/publication_preview/natcomm.png
 importance: 1
 category: work
 project_handle: neural-probe-integration
