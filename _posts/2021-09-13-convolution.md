@@ -1,10 +1,11 @@
 ---
 layout: post
 title: "Fundamentals of Convolution"
-date: 2021-09-13
+date: 2025-02-01
 description: "Inner product and convolution in signal processing and statistics"
 project: neural-probe-integration
 categories: research
+math: true
 ---
 
 ### I. Signal Processing Perspective
@@ -43,9 +44,9 @@ Cohen (2014) offers standard interpretations:
 **Core Concept:** Convolution defines the probability distribution of the **sum** of independent random variables.
 
 #### 1. Sum of Random Variables
-* Given two independent random variables $X$ and $Y$ with probability density functions (PDFs) $f_X$ and $f_Y$.
-* Let $Z = X + Y$.
-* The PDF of $Z$ is the convolution of the PDFs of $X$ and $Y$:
+* Given two independent random variables \\( X \\) and \\( Y \\) with probability density functions (PDFs) \\( f_X \\) and \\( f_Y \\).
+* Let \\( Z = X + Y \\).
+* The PDF of \\( Z \\) is the convolution of the PDFs of \\( X \\) and \\( Y \\):
 
 $$
 f_Z(z) = (f_X \ast f_Y)(z)
@@ -58,15 +59,15 @@ f_Z(z) = \int_{-\infty}^{\infty} f_X(x) \cdot f_Y(z-x) \, dx
 $$
 
 * **Connection to Signal Processing:**
-    * The term $f_Y(z-x)$ contains the same "Flip and Shift" mechanics found in signal theory.
-    * **Flip:** $-x$ (the variable is negated/reversed).
-    * **Shift:** $z$ (the variable is shifted by the total sum).
+    * The term \\( f_Y(z-x) \\) contains the same "Flip and Shift" mechanics found in signal theory.
+    * **Flip:** \\( -x \\) (the variable is negated/reversed).
+    * **Shift:** \\( z \\) (the variable is shifted by the total sum).
 
 ---
 
 ### III. Common Properties: Smoothing
 In both domains, convolution acts as a smoothing operator.
 * **In Signals:** Convolving a sharp signal with a broad kernel smoothes out high-frequency noise (Low-pass filtering).
-* **In Statistics:** Adding random variables increases uncertainty (variance). The resulting distribution ($Z$) is wider and flatter than the constituent distributions ($X$ or $Y$).
+* **In Statistics:** Adding random variables increases uncertainty (variance). The resulting distribution \\( Z \\) is wider and flatter than the constituent distributions \\( X \\) or \\( Y \\).
 
 **Source:** Cohen, M. X. *Analyzing Neural Time Series Data: Theory and Practice*. The MIT Press, Cambridge, Massachusetts, 2014. (Chapter 10).
