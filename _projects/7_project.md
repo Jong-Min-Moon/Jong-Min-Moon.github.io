@@ -8,11 +8,9 @@ category: work
 project_handle: neural-probe-integration
 ---
 
-This project aims to address the challenges of integrating soft neural probes with biological tissues. By utilizing high-resolution printing of liquid electronics, we can create interconnects directly on the cranium, minimizing mechanical mismatch and improving long-term stability.
+This project, published in Nature Communications, aims to address the challenges of integrating soft neural probes with biological tissues. By utilizing high-resolution printing of liquid electronics, we can create interconnects directly on the cranium, minimizing mechanical mismatch and improving long-term stability.
 
-## Key Objectives
-1.  Develop a high-resolution printing process for liquid metal alloys.
-2.  Demonstrate stable electrical connections on curved biological surfaces.
-3.  Validate in-vivo performance and biocompatibility.
+As the sole statistician on the team, I applied signal processing and statistical testing to detect correlations between individual- and population-level neural responses to visual stimuli, thereby validating the signal fidelity of the novel neural probe. Additionally, I built an object-oriented MATLAB data pipeline ([github.com/Jong-Min-Moon/neurosignal-matlab](https://github.com/Jong-Min-Moon/neurosignal-matlab)) for signal processing, feature extraction, and analysis of neural time-series data.
 
-Check out the updates below for our progress!
+This page explains core concepts used in this project, including convolution, Fourier transform, Hilbert transform, and wavelet transform, and how they are used to analyze neural data in this paper.
+
