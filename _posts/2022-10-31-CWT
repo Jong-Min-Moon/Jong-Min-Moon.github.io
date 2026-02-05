@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Wavelet Basis & Function Spaces: Besov vs. Hölder"
-date: 2026-02-05
+date: 2022-10-31
 description: "Understanding Nonparametric Regression, Haar Wavelets, and Smoothness Norms"
 project: ldp-testing
 categories: statistics 
@@ -13,7 +13,7 @@ Before diving into Besov spaces, it is crucial to understand the fundamental shi
 
 | Feature | **Wavelet Convolution (CWT)** | **Wavelet Basis (DWT)** |
 | :--- | :--- | :--- |
-| **Goal** | Feature Extraction & Visualization | Estimation, Compression, Denoising |
+| **Goal** | Phase, Power Extraction & Visualization | Estimation, Compression, Denoising |
 | **Method** | Sliding window (Redundant) | Tiling / Grid (Orthogonal) |
 | **Structure** | Smooth, overlapping coefficients | Sparse, independent coefficients |
 | **Wavelet** | Complex Morlet (Smooth) | Haar, Daubechies (Compact/Step) |
@@ -32,8 +32,7 @@ The analysis starts at the coarsest level ($J=0$), dividing the function into tw
 
 * **Scaling Coefficients ($\theta_\phi$):**
     * **Symbol:** $\Phi_0$
-    * **Role:** Represents the **Global Trend** or average of the function over the domain $[0,1]^d$.
-    * **Analogy:** The "Foundation" of the house.
+    * **Role:** Represents the **Global Trend** or average of the function over the domain $[0,1]^d$. The coefficient is simply just the mean of the function.
 
 * **Wavelet Coefficients ($\theta_\psi$):**
     * **Symbol:** $\Psi_j$ (for levels $j \ge 0$)
@@ -41,7 +40,7 @@ The analysis starts at the coarsest level ($J=0$), dividing the function into tw
     * **Resolution:** As level $j$ increases, the wavelets become narrower and taller, capturing higher-frequency details.
 
 #### 2. Why Haar?
-The Haar basis is chosen because projecting a density onto this basis is mathematically equivalent to **Equal-Sized Binning** (histograms). This allows researchers to link abstract function space theory directly to the discretization error inherent in statistical testing.
+The Haar basis is chosen because projecting a density onto this basis is mathematically equivalent to **Equal-Sized Binning** or histogramization. The resolution level decides the bin width and the coefficients are the bin heights. This allows researchers to link abstract function space theory directly to the discretization error inherent in statistical testing.
 
 ---
 
@@ -71,13 +70,13 @@ This is the critical distinction for statistical modeling.
 * **Philosophy:** **Uniform Regularity** (Worst-Case).
 * **The Rule:** The function must be smooth **everywhere**.
 * **Sensitivity:** If the function has a single "bad" point (a sharp corner, a jump, a spike) *anywhere*, the entire function is rejected.
-* **Norm:** Based on $L^\infty$ (Maximum error).
+* **Norm Analogy:** Based on $L^\infty$ (Maximum error).
 
 #### 2. The Besov Space ($B^s_{p,q}$)
 * **Philosophy:** **Average Regularity**.
 * **The Rule:** The function must be smooth **on average**.
 * **Flexibility:** It tolerates local irregularities (like jumps or spikes) as long as they are spatially sparse. The "cost" of one bad point is averaged out over the smooth regions.
-* **Norm:** Based on $L^p$ (Integrated error).
+* **Norm Analogy:** Based on $L^p$ (Integrated error).
 
 #### 3. Specific "Different Functions"
 Because of this flexibility, Besov spaces contain functions that are banned from Hölder classes:
@@ -87,5 +86,7 @@ Because of this flexibility, Besov spaces contain functions that are banned from
 | **Step Function** | Flat $\rightarrow$ Jump $\rightarrow$ Flat | **REJECTED** (Infinite derivative at jump) | **ACCEPTED** (Jump requires only sparse coefficients) |
 | **Local Spike** | Smooth line with one sharp burst | **REJECTED** (Fails at the burst location) | **ACCEPTED** (Averaged out by smooth regions) |
 
+![Besov Space](assets/img/publication_preview/besov.png)
+    
 ### V. Summary
-By selecting the **Haar Basis** and **Besov Spaces**, one explicitly chooses a framework that can model **discontinuities** and **abrupt changes**. Unlike Fourier/Hölder methods, which assume data is uniformly smooth (like a sine wave), Besov/Haar methods assume data may have sharp edges (like a histogram or a neural spike) and handle them robustly without "blowing up" the error metric.
+By selecting the **Haar Basis** and **Besov Spaces**, one explicitly chooses a framework that can model **discontinuities** and **abrupt changes**. Unlike Fourier/Hölder methods, which assume data is uniformly smooth (like a sine wave), Besov/Haar methods assume data may have sharp edges   and handle them robustly without "blowing up" the error metric.
