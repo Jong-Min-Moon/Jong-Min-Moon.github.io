@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Fundamentals of Convolution"
-date: 2025-02-01
+date: 2022-09-13
 description: "Inner product and convolution in signal processing and statistics"
 project: neural-probe-integration
 categories: research
@@ -14,8 +14,8 @@ math: true
 #### 1. Mathematical Foundation: The Inner Product
 * **Definition:** The scalar result obtained by summing the products of corresponding elements in two vectors.
 * **Interpretation:** The inner product represents the **similarity** between two vectors.
-    * High inner product $\rightarrow$ High similarity.
-    * Zero inner product $\rightarrow$ Orthogonality (no similarity).
+    * High inner product: High similarity.
+    * Zero inner product: Orthogonality (no similarity).
 
 #### 2. The Convolution Operation
 * **Definition:** A repeated computation of the inner product over time.
