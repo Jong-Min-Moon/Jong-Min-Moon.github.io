@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Fundamentals of Convolution"
-date: 2022-09-13
+date: 2021-09-13
 description: "Inner product and convolution in signal processing and statistics"
 project: neural-probe-integration
 categories: research
