@@ -1,11 +1,10 @@
 ---
 layout: post
-title: "Fundamentals of Functional Connectivity"
+title: "Fundamentals of Functional Connectivity and Gradients"
 date: 2023-02-09
-description: "Why female representation matters in autism research and how to fix it."
+description: "Principle and practice of mapping the brain's functional architecture into a low-dimensional space."
 project: autism-sex-differences
 categories: research
-mermaid: true
 ---
 
 ## I. Core Concept: Functional Connectivity (FC)
