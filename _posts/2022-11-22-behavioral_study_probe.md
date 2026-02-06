@@ -15,7 +15,7 @@ math: true
 ---
 
 ### III. Task 1: Active Locomotion Analysis
-Mice were monitored as they traversed a track, specifically focusing on the transition between running along a long arm and stopping at an intersection. One probe recorded from CA1 and another from L6 simultaneously.
+
 
 #### 1. Single-Unit Activity & Behavioral Correlation
 The firing rates of individual neurons in both regions showed distinct modulation depending on the specific motor behavior of the mouse.
