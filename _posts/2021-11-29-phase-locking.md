@@ -18,6 +18,10 @@ However, the term is used in two very different experimental contexts depending 
 ---
 
 ### II. Type 1: Spike-Field Phase Locking (Internal Sync)
+> "Phase locking refers to the tendency of a neuron to fire action potentials at particular phases of an ongoing periodic sound waveform, such as the sinusoidal waveforms that are typically used in physiological studies of the auditory system"
+>
+> — *Encyclopedia of Neuroscience, 2009*
+
 - **Context:** The Probe Validation experiment (Park et al.).
 - **Synonyms:** Spike-Field Coherence (SFC), Spike-Phase Coupling.
 
@@ -36,6 +40,10 @@ The LFP oscillation acts as a "conductor." When the voltage is at a specific pha
 ---
 
 ### III. Type 2: Inter-Trial Phase Locking (External Sync)
+> "Activity is phase-locked when its phase is the same or very similar on each trial"
+>
+> — *Cohen, M. X. *Analyzing Neural Time Series Data: Theory and Practice, Chapter 3*
+
 **Context:** EEG/ERP Analysis (Cohen, Chapter 2).
 **Synonyms:** Inter-Trial Phase Clustering (ITPC), Phase-Locking Value (PLV).
 
