@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Behavioral Study and Statistical Analysis"
-date: 2021-11-22
-description: "Behavioral Study and Statistical Analysis"
+title: "Data Analysis Detail: Mouse Behavioral Study"
+date: 2021-11-29
+description: "Details for the data analysis section of the Nature Communications paper 'In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium'"
 project: neural-probe-integration
 categories: research computational-neuroscience paper-details real-data-analysis
 math: true
