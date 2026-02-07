@@ -3,7 +3,7 @@ layout: page
 title: project 6
 description: Predicting forest fire from artillery training data and weather data
 img:
-importance: 4
+importance: 10
 category: published
 ---
 ### 1. Data Collection and Preprocessing

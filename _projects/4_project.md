@@ -3,7 +3,7 @@ layout: page
 title: Hybrid Partial Least Squars Regression with Multiple Functional and Scalar Predictors
 description: We propose a computationally efficient NIPALS-type hybrid partial least squares regression algorithm that unifies functional and scalar predictors in a Hilbert space.
 img:
-importance: 3
+importance: 4
 category: fun
 ---
 

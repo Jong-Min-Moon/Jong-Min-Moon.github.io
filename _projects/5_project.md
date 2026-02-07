@@ -3,7 +3,7 @@ layout: page
 title:  Bayesian Spatial Modeling of Cancer Incidence (BYM2 Model)
 description: Based on ch 15, 16 of BDA3, we run Bayesian GLM with spatial random effect on Manhattan breast cancer incidence.
 img: assets/img/spatial.png
-importance: 3
+importance: 10
 category: coursework
 ---
 
