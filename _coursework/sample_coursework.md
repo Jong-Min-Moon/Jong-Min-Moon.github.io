@@ -6,6 +6,9 @@ img: assets/img/pomdp.png
 importance: 1
 category: core
 project_handle: sample-coursework
+course_number: BUAD 311
+institution: USC Marshall
+course_level: Undergraduate
 ---
 
 This is a sample coursework project description.
