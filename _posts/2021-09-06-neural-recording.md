@@ -25,7 +25,7 @@ math: true
 Invasive recordings are further categorized by where the electrode is placed relative to the cell membrane.
 When an action potential occurs and propagates along the axon, the sudden influx of sodium ions creates a positive charge inside the cell, leaving the external environment relatively negative. Consequently, the action potential appears as a positive deflection when measured intracellularly, but as a negative deflection when recorded extracellularly.
 
-![Intracellular vs Extracellular](/assets/img/intra_extra.png)
+<img src="/assets/img/intra_extra.png" alt="Intracellular vs Extracellular" style="width: 100%; height: auto;">
 
 | Feature | Intracellular Recording | **Extracellular Recording** |
 | :--- | :--- | :--- |
@@ -42,16 +42,8 @@ When an action potential occurs and propagates along the axon, the sudden influx
 
 ---
 
-## 3. Signal Characteristics & Processing
-
-The raw signal obtained from extracellular recording contains different frequency bands:
-
-* **LFP (Local Field Potential):** 0.1 ~ 300 Hz (Low frequency, synaptic potentials).
-* **Spiking Activity (MUA/SUA):** 300 ~ 3,000 Hz (High frequency, action potentials).
-
-### Characteristics of Extracellular Single Unit (SU) Signals
+## 3. Preprocessing for Extracellular Recording
 Because the signal is measured from outside the cell, it has four distinct characteristics: **"Flipped, Noisy, Weak, Aggregated."**
-
 1.  **Flipped:** Since the electrode is outside, the action potential appears as a **negative deflection** (convex down). You must look for "dips" rather than peaks.
 2.  **Noisy:** Contains significant background electrical noise.
 3.  **Weak:** The signal amplitude is very low.
@@ -59,7 +51,17 @@ Because the signal is measured from outside the cell, it has four distinct chara
 4.  **Aggregated:** A single electrode picks up spikes from multiple neighboring neurons.
     * $\rightarrow$ Requires **Spike Sorting**.
 
----
+A common preprocessing pipeline for extracellular recording includes these three key steps:
+
+1.  **Filtering:** Separates the raw signal into meaningful frequency bands:
+    *   **LFP (Local Field Potential):** < 300 Hz (captures slower synaptic potentials).
+    *   **Spiking Activity (MUA/SUA):** 300 – 3,000 Hz (isolates fast action potentials).
+2.  **Spike Detection:** Identifies potential waveforms by setting a threshold (typically 3–4x the standard deviation of the noise) to find signals that stand out from the background noise.
+3.  **Spike Sorting:** Clusters the detected waveforms based on their shape and features (like PCA components) to assign each spike to a specific, unique neuron.
+
+
+ 
+ 
 
 ## 4. Spike Sorting
 
