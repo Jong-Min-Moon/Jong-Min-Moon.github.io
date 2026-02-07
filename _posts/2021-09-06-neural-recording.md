@@ -25,16 +25,19 @@ math: true
 Invasive recordings are further categorized by where the electrode is placed relative to the cell membrane.
 When an action potential occurs and propagates along the axon, the sudden influx of sodium ions creates a positive charge inside the cell, leaving the external environment relatively negative. Consequently, the action potential appears as a positive deflection when measured intracellularly, but as a negative deflection when recorded extracellularly.
 
-![Intracellular vs Extracellular](assets/img/intra_extra.png)
+![Intracellular vs Extracellular](/assets/img/intra_extra.png)
 
-| Feature | Intracellular | **Extracellular** |
+| Feature | Intracellular Recording | **Extracellular Recording** |
 | :--- | :--- | :--- |
-| **Placement** | Electrode inserted **inside** the cell | Electrode placed **outside/near** the cell |
-| **Signal** | Very clear, high fidelity | Detects signals from **multiple (a few)** nearby cells |
-| **Disadvantages** | High risk of cell damage<br>Signal varies by technique/location<br>Difficult in moving animals | Signal requires processing (**spike sorting**) due to aggregation |
-| **Advantages** | Precise potential measurement | **Robust** to movement/technique<br>Applicable to **awake behaving animals** |
-| **Example** | patch clamp, current clamp, voltage clamp, sharp electrode | Single-unit, multi-unit, local field potential |
-| **Characteristic** | Strong upward spike | Weak, downward spike, noisy
+| **Electrode Placement** | **Inside** the cell membrane | **Outside** (adjacent to) the cell membrane |
+| **Signal Source** | **Single Neuron** (Membrane Potential) | **Aggregate** of nearby neurons + LFP |
+| **Waveform Polarity** | **Positive** (Upward deflection) | **Negative** (Downward/Flipped deflection) |
+| **Signal Strength** | **Strong** (mV range), High Fidelity | **Weak** (\(\mu\)V range), Noisy |
+| **Key Challenge** | **Stability:** Difficult to maintain in moving animals (fragile) | **Separation:** Requires **Spike Sorting** to distinguish individual neurons |
+| **Key Advantage** | Measures exact membrane potential (sub-threshold) | **Robust:** Suitable for long-term recording in **awake, behaving animals** |
+| **Common Techniques** | Patch Clamp, Sharp Microelectrode | Tetrodes, Silicon Probes, Microwire Arrays |
+| **Data Types** | \(V_m\) (Membrane Voltage) | LFP, MUA (Multi-Unit), SUA (Single-Unit) |
+
 > **Note:** When we say "single unit recording," we generally refer to **invasive, extracellular** recording. It does not mean that we record from a single neuron. Rather, it means we record multiple neurons but we can isolate each neuron's activity from the aggregated signal.
 
 ---
