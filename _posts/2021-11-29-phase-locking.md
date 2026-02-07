@@ -8,8 +8,9 @@ categories: research, statistics
 math: true
 ---
 
-### I. The Core Concept: "Consistency of Angles"
-In neuroscience, "Phase Locking" always means the same thing mathematically: **consistency of angles**. You collect a sequence of phase angles (0° to 360°) and ask: *"Are these angles random (uniform), or do they cluster around a specific direction?"*
+### I. The Core Concept: Consistency of Angles
+In neuroscience, *phase locking* mathematically means **consistency of angles**. You collect a sequence of phase angles (0° to 360°) and ask: 
+>Are these angles random (uniform), or do they cluster around a specific direction?
 
 However, the term is used in two very different experimental contexts depending on **what** is locking to **what**.
 
@@ -22,13 +23,11 @@ However, the term is used in two very different experimental contexts depending 
 >
 > — *Encyclopedia of Neuroscience, 2009*
 
-- **Context:** The Probe Validation experiment (Park et al.).
-- **Synonyms:** Spike-Field Coherence (SFC), Spike-Phase Coupling.
-
-* **What is locking?** A single neuron's firing (**Spike**).
-* **What is it locking to?** An **Internal Brain Rhythm** (The LFP/Theta Wave).
-* **The Reference Frame:** The Brain's Clock (The cycle of the wave itself).
-* **The Question:** *"Does this neuron fire in sync with the background beat of the hippocampus?"*
+- **Synonyms:** Spike-field coherence , spike-phase coupling.
+- **What is locking?** A single neuron's firing (spike train).
+- **What is it locking to?** An internal brain rhythm (LFP/Theta Wave).
+- **The Reference Frame:** The brain's clock (the cycle of the wave itself).
+- **The Question:** *"Does this neuron fire in sync with the background beat of the hippocampus?"*
 
 **Mechanism:**
 The LFP oscillation acts as a "conductor." When the voltage is at a specific phase (e.g., the trough), the membrane potential of the neuron is pushed closer to threshold, making it more likely to fire.
@@ -42,7 +41,7 @@ The LFP oscillation acts as a "conductor." When the voltage is at a specific pha
 ### III. Type 2: Inter-Trial Phase Locking (External Sync)
 > "Activity is phase-locked when its phase is the same or very similar on each trial"
 >
-> — *Cohen, M. X. *Analyzing Neural Time Series Data: Theory and Practice, Chapter 3*
+> — *Cohen, M. X. Analyzing Neural Time Series Data: Theory and Practice, Chapter 3*
 
 **Context:** EEG/ERP Analysis (Cohen, Chapter 2).
 **Synonyms:** Inter-Trial Phase Clustering (ITPC), Phase-Locking Value (PLV).
