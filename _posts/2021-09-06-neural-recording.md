@@ -23,15 +23,19 @@ math: true
 ## 2. Types of Invasive Recording: Intracellular vs. Extracellular
 
 Invasive recordings are further categorized by where the electrode is placed relative to the cell membrane.
+When an action potential occurs and propagates along the axon, the sudden influx of sodium ions creates a positive charge inside the cell, leaving the external environment relatively negative. Consequently, the action potential appears as a positive deflection when measured intracellularly, but as a negative deflection when recorded extracellularly.
+
+![Intracellular vs Extracellular](assets/img/intra_extra.png)
 
 | Feature | Intracellular | **Extracellular** |
 | :--- | :--- | :--- |
 | **Placement** | Electrode inserted **inside** the cell | Electrode placed **outside/near** the cell |
 | **Signal** | Very clear, high fidelity | Detects signals from **multiple (a few)** nearby cells |
-| **Disadvantages** | High risk of cell damage<br>Signal varies by technique/location<br>Difficult in moving animals | Signal requires processing (**Spike Sorting**) due to aggregation |
+| **Disadvantages** | High risk of cell damage<br>Signal varies by technique/location<br>Difficult in moving animals | Signal requires processing (**spike sorting**) due to aggregation |
 | **Advantages** | Precise potential measurement | **Robust** to movement/technique<br>Applicable to **awake behaving animals** |
-
-> **Note:** When we say "Single Unit Recording," we generally refer to **Invasive, Extracellular** recording.
+| **Example** | patch clamp, current clamp, voltage clamp, sharp electrode | Single-unit, multi-unit, local field potential |
+| **Characteristic** | Strong upward spike | Weak, downward spike, noisy
+> **Note:** When we say "single unit recording," we generally refer to **invasive, extracellular** recording. It does not mean that we record from a single neuron. Rather, it means we record multiple neurons but we can isolate each neuron's activity from the aggregated signal.
 
 ---
 
@@ -85,4 +89,4 @@ The standard method for visualizing spike timing data.
 ---
 
 ### Reference
-* **LFP and Recording Video:** [YouTube Link](https://www.youtube.com/watch?v=LyBPd53cSPI)
+- "Single-Unit Recording Explained! | Neuroscience Methods 101." *YouTube*, uploaded by Psyched!, 24 July 2022, www.youtube.com/watch?v=LyBPd53cSPI.
