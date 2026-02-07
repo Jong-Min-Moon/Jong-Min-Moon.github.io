@@ -178,6 +178,9 @@ collections:
   projects:
     output: true
     permalink: /projects/:path/
+  coursework:
+    output: true
+    permalink: /coursework/:path/
 
 announcements:
   enabled: true
