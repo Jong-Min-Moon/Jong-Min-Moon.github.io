@@ -2,7 +2,7 @@
 layout: project
 title: Validating the signal fidelity of novel soft neural probes
 description: Published in Nature Communications, entitled "In-vivo integration of soft neural probes through high-resolution printing of liquid electronics on the cranium".
-img: assets/img/publication_preview/natcomm.png
+img: assets/img/publication_preview/natcomm_wide.png
 importance: 1
 category: work
 project_handle: neural-probe-integration
