@@ -1,6 +1,6 @@
 <!-- _includes/projects.html -->
 <div class="grid-sizer"></div>
-<div class="grid-item">
+<div class="grid-item" data-category="{{ project.category | jsonify | escape }}">
   {% if project.redirect -%}
   <a href="{{ project.redirect }}">
     {%- else -%}
@@ -16,7 +16,36 @@
           <h2 class="card-title text-lowercase">{{ project.title }}</h2>
           <div class="project-venue mb-2">
             {% if project.venue %}
+            {% assign venues = project.venue | split: "impossible_delimiter" %}
+            {% if project.venue.first %}
+            {% assign venues = project.venue %}
+            {% else %}
+            {% assign venues = project.venue | split: "impossible_delimiter" %}
+            {% assign venues = project.venue | split: "" | first | push: project.venue %}
+            {% endif %}
+
+            {% comment %}
+            Liquid is tricky with types.
+            If it's an array, project.venue.first will be truthy (if not empty).
+            If it's a string, it might not have .first or it might be the first char.
+            A safer way is to inspect the object or just try to iterate?
+            Actually, Jekyll/Liquid is notably bad at `typeof`.
+
+            Standard hack: Capture it and check? Or just use site.projects metadata?
+
+            Let's try a simpler approach if possible.
+            If we use `jsonify`, an array becomes `["a","b"]` and string becomes `"a"`.
+
+            {% endcomment %}
+
+            {% assign is_array = project.venue | first %}
+            {% if is_array %}
+            {% for venue in project.venue %}
+            <span class="badge badge-secondary">{{ venue }}</span>
+            {% endfor %}
+            {% else %}
             <span class="badge badge-secondary">{{ project.venue }}</span>
+            {% endif %}
             {% endif %}
           </div>
           <p class="card-text">{{ project.description }}</p>

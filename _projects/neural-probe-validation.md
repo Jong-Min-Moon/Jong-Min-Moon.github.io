@@ -5,8 +5,9 @@ description: Filtering, feature extraction, clustering, regression and statistic
 img: assets/img/publication_preview/natcomm_mini.png
 venue: Nature Communications
 importance: 1
-category: work
+category: computational neuroscience
 project_handle: neural-probe-integration
+related_publications: park_-vivo_2024
 ---
 
 This project, published in Nature Communications, aims to address the challenges of integrating soft neural probes with biological tissues. By utilizing high-resolution printing of liquid electronics, we can create interconnects directly on the cranium, minimizing mechanical mismatch and improving long-term stability.

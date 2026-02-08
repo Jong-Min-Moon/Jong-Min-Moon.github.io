@@ -13,35 +13,37 @@ layout: default
     {{ content }}
   </article>
 
+  {%- if page.related_publications != null and page.related_publications.size > 0 -%}
+  <h2>References</h2>
+  <div class="publications">
+    {% assign publications = page.related_publications | replace: ", ", "," | split: "," %}
+    {% for pub in publications %}
+    {% bibliography -f {{ site.scholar.bibliography }} -q @*[key={{ pub }}]* %}
+    {% endfor %}
+  </div>
+  {%- endif %}
+
   <!-- Related Posts Section -->
   {% assign project_handle = page.project_handle | default: page.title %}
   {% assign related_posts = site.posts | where: "project", project_handle %}
-  
-  {% if related_posts.size > 0 %}
-    <h2 class="mt-4">Project Updates</h2>
-    <ul class="post-list">
-      {% for post in related_posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
-          </a>
-        </h3>
-        {% if post.description %}
-          <p>{{ post.description }}</p>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
 
-  {%- if page.related_publications != null and page.related_publications.size > 0 -%}
-    {% assign publications = page.related_publications | replace: ", ", "," | split: "," | join: "|" %}
-    <h2>References</h2>
-    <div class="publications">
-      {% bibliography -f {{ site.scholar.bibliography }} -q @*[key^={{ publications }}]* %}
-    </div>
-  {%- endif %}
+  {% if related_posts.size > 0 %}
+  <h2 class="mt-4">Project Updates</h2>
+  <ul class="post-list">
+    {% for post in related_posts %}
+    <li>
+      <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+      <h3>
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}
+        </a>
+      </h3>
+      {% if post.description %}
+      <p>{{ post.description }}</p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
 </div>

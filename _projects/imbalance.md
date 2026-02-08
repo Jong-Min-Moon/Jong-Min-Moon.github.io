@@ -1,10 +1,12 @@
 ---
 layout: page
-title: project 6
+title: Wildfire Prediction from Imbalanced Data
 description: Predicting forest fire from artillery training data and weather data
-img:
-importance: 10
-category: published
+img: assets/img/publication_preview/wildfire_wide.png
+importance: 7
+category: [class imbalance]
+venue: [Computational Statistics & Data Analysis, Journal of Classification]
+related_publications: nam_prediction_2024, mun_weighted_2025
 ---
 ### 1. Data Collection and Preprocessing
 The study combines two distinct datasets to create a predictive model:

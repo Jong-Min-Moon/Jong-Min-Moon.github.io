@@ -5,8 +5,9 @@ description: Stabilizing heterogeneous treatment effect estimation for high-dime
 img: assets/img/publication_preview/neuroimage_wide.png
 venue: NeuroImage
 importance: 2
-category: work
+category: [computational neuroscience, causal inference, class imbalance]
 project_handle: autism-sex-differences
+related_publications: namgung_sex_2024
 ---
 
 This project addresses the statistical challenge of estimating heterogeneous treatment effects (HTEs) in Autism Spectrum Disorder (ASD), where female participants are significantly underrepresented using class imbalance adjusted functional connectivity. By employing a cluster-aware generative model for oversampling, we improve the stability of estimates for the female subgroup.

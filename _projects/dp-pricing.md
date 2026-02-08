@@ -5,7 +5,8 @@ description: We propose a DM (direct method)-type transfer learning algorithm fo
 img: assets/img/pricing.png
 venue: NeurIPS 2025 MLxOR Workshop
 importance: 3
-category: work
+category: [differential privacy, nonparametric statistics, causal inference, reinforcement learning/bandits]
+related_publications: munOfflineDynamicPricing2025
 ---
 
 We study pricing policy learning from batched contextual bandit data under market

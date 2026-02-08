@@ -1,0 +1,29 @@
+.project-filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+
+  .filter-btn {
+    background: none;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    color: var(--global-text-color);
+
+    &:hover {
+      border-color: var(--global-theme-color);
+      color: var(--global-theme-color);
+    }
+
+    &.active {
+      background-color: var(--global-theme-color);
+      color: var(--global-bg-color);
+      border-color: var(--global-theme-color);
+    }
+  }
+}

@@ -4,8 +4,8 @@ title: Off-Policy Learning in Partially Observed Markov Decision Processes under
 description: We stabilize off-policy learning from partially observed health data using a geometry-aware gradient method, improving convergence and policy performance in simulations.
 img: assets/img/pomdp.png
 venue: Working Paper
-importance: 10
-category: coursework
+importance: 6
+category: [causal inference, reinforcement learning/bandits]
 project_handle: pomdp-learning
 related_publications: einstein1956investigations, einstein1950meaning
 ---

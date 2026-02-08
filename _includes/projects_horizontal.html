@@ -1,4 +1,4 @@
-<div class="card-item col">
+<div class="card-item col" data-category="{{ project.category | jsonify | escape }}">
   {%- if project.redirect -%}
   <a href="{{ project.redirect }}">
     {%- else -%}
@@ -18,7 +18,14 @@
                 <h3 class="card-title text-lowercase">{{ project.title }}</h3>
                 <div class="project-venue mb-2">
                   {% if project.venue %}
+                  {% assign is_array = project.venue | first %}
+                  {% if is_array %}
+                  {% for venue in project.venue %}
+                  <span class="badge badge-secondary">{{ venue }}</span>
+                  {% endfor %}
+                  {% else %}
                   <span class="badge badge-secondary">{{ project.venue }}</span>
+                  {% endif %}
                   {% endif %}
                 </div>
                 <p class="card-text">{{ project.description }}</p>
