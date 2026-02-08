@@ -5,6 +5,7 @@ date: 2023-02-09
 description: "Principle and practice of mapping the brain's functional architecture into a low-dimensional space."
 project: autism-sex-differences
 categories: research
+related_publications: namgung_sex_2024
 ---
 
 ## I. Functional Connectivity
