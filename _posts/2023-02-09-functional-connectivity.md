@@ -7,27 +7,23 @@ project: autism-sex-differences
 categories: research
 ---
 
-## I. Core Concept: Functional Connectivity (FC)
+## I. Functional Connectivity
+In neuroscience, it is well established that brain regions cooperate within large-scale functional networks to support specific cognitive processes. Consequently, connectivity data has emerged as a fundamental modality for studying brain function.
 
-### 1. Definition
-Functional Connectivity (FC) refers to the **statistical dependence** between the time-series activity of spatially distinct brain regions, distinct from their physical connections. While structural connectivity describes the physical "wiring" (axons/white matter), functional connectivity captures the temporal correlation of neural signals.
+There are three main types of brain connectivity:
 
-### 2. Key Characteristics
-*   **Measurement Modalities:**
-    *   **fMRI (Functional MRI):** Measures **hemodynamic activity** (blood flow/oxygenation) as an indirect proxy for neural activity. Good spatial resolution, low temporal resolution.
-    *   **EEG / MEG:** Measures **electrical/magnetic activity** directly. Excellent temporal resolution, lower spatial resolution.
-*   **Mechanism:** Connections are inferred when signals from two separate regions fluctuate in synchrony. Basically, computing correlation.
-*   **Structural vs. Functional:** A functional connection does not imply a direct anatomical link; two regions may show high correlation because they are both driven by a shared third source (indirect connection).
+| Connectivity Type | Description |
+| :--- | :--- |
+| **Functional Connectivity** | Investigates the **undirected** statistical dependence between separate brain regions characterized by similar temporal dynamics. It does not imply direct structural connection. |
+| **Effective Connectivity** | Refers to the **directed, or causal** influence of one region over another. |
+| **Structural Connectivity** | Investigates the **physical connections** (e.g., axons, white matter) between brain regions. |
 
-### 3. Importance: Network Integration
-The brain is not distinguishable solely by isolated regions but by large-scale networks. FC reveals how the brain integrates information across distributed systems to support cognition.
+Functional connectivities are inferred when signals from two separate regions fluctuate in synchrony. Basically, computing correlation. Signals can be from any modalities. For example:
+*   **fMRI:** Functional magnetic resonance imaging (fMRI) provides an indirect measure of neuronal activity by evaluating changes in blood oxygenation over different areas of the brain. Good spatial resolution, low temporal resolution.
+*   **EEG / MEG:** Measures **electrical/magnetic activity** directly. Excellent temporal resolution, lower spatial resolution.
 
-**Resting State Networks (RSNs):**
-Even when a subject is doing nothing ("resting state"), the brain maintains intrinsic synchronized activity organized into networks, such as:
-*   **Default Mode Network (DMN):** Active during internal thought, memory, and self-reference.
-*   **Visual Network:** Active during visual processing.
-
-
+ 
+ 
 
 ## II. Functional Gradients: Low-Dimensional Representation
 
