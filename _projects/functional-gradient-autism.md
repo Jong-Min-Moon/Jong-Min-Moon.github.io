@@ -3,6 +3,7 @@ layout: project
 title: Causal inference of sex differences in autism spectrum disorder
 description: Stabilizing heterogeneous treatment effect estimation for high-dimensional outcomes in high-imbalance regimes
 img: assets/img/publication_preview/neuroimage_wide.png
+venue: NeuroImage
 importance: 2
 category: work
 project_handle: autism-sex-differences

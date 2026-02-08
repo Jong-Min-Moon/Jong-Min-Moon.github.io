@@ -3,6 +3,7 @@ layout: page
 title: Offline Dynamic Pricing under Covariate Shift and Local Differential Privacy via Twofold Pessimism
 description: We propose a DM (direct method)-type transfer learning algorithm for learning continuous treatment assignment policy from offline data under local differential privacy.
 img: assets/img/pricing.png
+venue: NeurIPS 2025 MLxOR Workshop
 importance: 3
 category: work
 ---
