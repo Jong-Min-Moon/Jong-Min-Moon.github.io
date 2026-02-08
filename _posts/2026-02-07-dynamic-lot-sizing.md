@@ -20,5 +20,20 @@ A manager decides how much inventory to order in each period $t$ to satisfy dema
 2.  **Finite Planning Horizon**: The decision-making process spans a discrete, finite timeline $t = 1, 2, \dots, T$.
 3.  **Known Dynamic Demand**: The demand $d_t$ for each period varies over time (hence "dynamic") but is known in advance for the entire sequence $d_1, \dots, d_T$ (deterministic).
 4.  **Periodic Review**: Inventory levels are reviewed, and ordering decisions are made at the beginning of each period.
-5.  **Unconstrained Capacity**: There are no limits on the order quantity or inventory storage (often referred to as the "infinite warehouse" assumption).
+5.  **Unconstrained Capacity**: There are no limits on the order quantity or inventory storage (infinite warehouse assumption).
 6.  **No Backorders**: Demand must be fully met in the period it occurs; shortages are not permitted.
+
+Input variables:
+* $d_t$: demand in period $t$
+* $c_o$: ordering cost
+* $c_h$: holding cost
+
+
+
+## Calcium Imaging
+given y_1, ..., y_T, want to decide s_1, ..., s_T
+and c_1,.. c_T 
+c_t: current inventory level.
+s_t: order quantity in period t. 
+perishable good: c_t = s_t + \gamma c_(t-1)
+the holding cost is 1/2(y_t-c_t)^2.
