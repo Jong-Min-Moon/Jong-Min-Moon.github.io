@@ -2,7 +2,7 @@
 layout: project
 title: fMRI Site Harmonization Using Causal Inference
 description: Site Harmonization Using Average Treatment Effect for the Overlap Population
-img: assets/img/publication_preview/natcomm_mini.png
+img: assets/img/publication_preview/site-harmonization.png
 venue: working paper
 importance: 3
 category: [computational neuroscience, causal inference]
