@@ -48,7 +48,9 @@ Park, Bo-yong
   author = {Mun, Jongmin and Xu, Xiaocong and Fan, Yingying},
   year = 2025,
   month = nov,
-  category = {Privacy}
+  category = {Privacy},
+  abstract = {We study offline policy learning under market shift and privacy protection. Motivated by high-stakes pricing for new products, where price experimentation is infeasible, we leverage historical transaction data from heterogeneous, privacy-protected sources. We model heterogeneity via a covariate shift assumption, where the relationship between price, features, and revenue remains invariant, and privacy through local differential privacy (LDP), where each data point is perturbed before use. Viewing both as distributional shifts, we design a policy learning algorithm grounded in the pessimism principle of offline reinforcement learning. Without privacy, our predict-then-optimize approach constructs a pessimistic revenue predictor and optimizes it to set prices, achieving minimax-optimal decision error. Under LDP, we apply the Laplace mechanism and adapt the pessimistic revenue predictor to account for additional uncertainty introduced by privacy noise. The resulting doubly pessimistic objective is then optimized to determine the final pricing policy.},
+  html = {https://openreview.net/pdf?id=ZL748l6oQG}
 }
 
 
@@ -125,6 +127,7 @@ pythonpackage = {https://pypi.org/project/privateAB/},
 	urldate = {2026-01-25},
 	publisher = {arXiv},
 	author = {Mun, Jongmin and Jang, Jeong Hoon},
+	rpackage = {https://github.com/Jong-Min-Moon/FShybridPLS},
 	month = jan,
 	year = {2026},
 	journal = {arxiv preprint},
