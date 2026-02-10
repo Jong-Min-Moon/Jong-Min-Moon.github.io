@@ -4,7 +4,7 @@ title: Federated A/B Testing under User-level Privacy Protection
 description: "Nonparametric two-sample testing under local differential privacy."
 img: assets/img/publication_preview/ldp_minimax_wide.png
 venue: Journal of Machine Learning Research
-importance: 3
+importance: 4
 category: [differential privacy, nonparametric statistics]
 project_handle: ldp-testing
 related_publications: mun_minimax_2024
