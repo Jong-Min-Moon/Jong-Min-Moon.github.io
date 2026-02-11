@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 itemCategoryList = itemCategoryList.map(c => String(c).trim());
 
                 if (category === "all" || itemCategoryList.includes(category)) {
-                    item.style.display = "block";
+                    item.style.display = null;
                 } else {
                     item.style.display = "none";
                 }

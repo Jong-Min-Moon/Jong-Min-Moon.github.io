@@ -1,7 +1,7 @@
 ---
 ---
 <!-- _layouts/bib.html -->
-<div class="row">
+<div class="row grid-item" data-category="{{ entry.category | jsonify | escape }}">
   <div class="col-sm-2 {% if entry.preview %}preview{% else %}abbr{% endif %}">
     {%- if entry.preview -%}
     {% if entry.preview contains '://' -%}

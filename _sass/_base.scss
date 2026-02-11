@@ -24,6 +24,7 @@ hr {
 }
 
 table {
+
   td,
   th {
     font-size: 1rem;
@@ -576,10 +577,16 @@ footer.sticky-bottom {
     text-align: right;
   }
 
+  .grid-sizer,
+  .grid-item {
+    width: 100%;
+  }
+
   ol.bibliography {
     list-style: none;
     padding: 0;
     margin-top: 0;
+
 
     li {
       margin-bottom: 1rem;
@@ -589,137 +596,140 @@ footer.sticky-bottom {
         min-width: 80px;
         max-width: 200px;
       }
+    }
 
-      .abbr {
-        height: 2rem;
-        margin-bottom: 0.5rem;
 
-        abbr {
-          display: inline-block;
-          background-color: var(--global-theme-color);
-          padding-left: 1rem;
-          padding-right: 1rem;
+    .abbr {
+      height: 2rem;
+      margin-bottom: 0.5rem;
 
-          a {
-            color: white;
+      abbr {
+        display: inline-block;
+        background-color: var(--global-theme-color);
+        padding-left: 1rem;
+        padding-right: 1rem;
 
-            &:hover {
-              text-decoration: none;
-            }
-          }
-        }
-
-        .award {
-          color: var(--global-theme-color) !important;
-          border: 1px solid var(--global-theme-color);
-        }
-      }
-
-      .title {
-        font-weight: bolder;
-      }
-
-      .author {
         a {
-          border-bottom: 1px dashed var(--global-theme-color);
+          color: white;
 
           &:hover {
-            border-bottom-style: solid;
             text-decoration: none;
           }
         }
+      }
 
-        >em {
-          border-bottom: 1px solid;
-          font-style: normal;
-        }
+      .award {
+        color: var(--global-theme-color) !important;
+        border: 1px solid var(--global-theme-color);
+      }
+    }
 
-        >span.more-authors {
-          color: var(--global-text-color-light);
-          border-bottom: 1px dashed var(--global-text-color-light);
-          cursor: pointer;
+    .title {
+      font-weight: bolder;
+    }
 
-          &:hover {
-            color: var(--global-text-color);
-            border-bottom: 1px dashed var(--global-text-color);
-          }
+    .author {
+      a {
+        border-bottom: 1px dashed var(--global-theme-color);
+
+        &:hover {
+          border-bottom-style: solid;
+          text-decoration: none;
         }
       }
 
-      .links {
-        a.btn {
+      >em {
+        border-bottom: 1px solid;
+        font-style: normal;
+      }
+
+      >span.more-authors {
+        color: var(--global-text-color-light);
+        border-bottom: 1px dashed var(--global-text-color-light);
+        cursor: pointer;
+
+        &:hover {
           color: var(--global-text-color);
-          border: 1px solid var(--global-text-color);
-          padding-left: 1rem;
-          padding-right: 1rem;
-          padding-top: 0.25rem;
-          padding-bottom: 0.25rem;
-          margin-left: 0;
-
-          &:hover {
-            color: var(--global-theme-color);
-            border-color: var(--global-theme-color);
-          }
+          border-bottom: 1px dashed var(--global-text-color);
         }
       }
+    }
 
-      .badges {
-        padding-bottom: 0.5rem;
-        span {
-          display: inline-block;
-          color: $black-color;
-          height: 100%;
-          padding-right: 0.5rem;
-          vertical-align: middle;
+    .links {
+      a.btn {
+        color: var(--global-text-color);
+        border: 1px solid var(--global-text-color);
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        margin-left: 0;
 
-          &:hover {
-            text-decoration: underline;
-          }
+        &:hover {
+          color: var(--global-theme-color);
+          border-color: var(--global-theme-color);
         }
       }
+    }
 
-      .hidden {
-        font-size: 0.875rem;
-        max-height: 0px;
-        overflow: hidden;
-        text-align: justify;
-        transition-property: 0.15s ease;
-        -moz-transition: 0.15s ease;
-        -ms-transition: 0.15s ease;
-        -o-transition: 0.15s ease;
-        transition: all 0.15s ease;
+    .badges {
+      padding-bottom: 0.5rem;
 
-        p {
-          line-height: 1.4em;
-          margin: 10px;
-        }
+      span {
+        display: inline-block;
+        color: $black-color;
+        height: 100%;
+        padding-right: 0.5rem;
+        vertical-align: middle;
 
-        pre {
-          font-size: 1em;
-          line-height: 1.4em;
-          padding: 10px;
+        &:hover {
+          text-decoration: underline;
         }
       }
+    }
 
-      .hidden.open {
-        max-height: 100em;
-        transition-property: 0.15s ease;
-        -moz-transition: 0.15s ease;
-        -ms-transition: 0.15s ease;
-        -o-transition: 0.15s ease;
-        transition: all 0.15s ease;
+    .hidden {
+      font-size: 0.875rem;
+      max-height: 0px;
+      overflow: hidden;
+      text-align: justify;
+      transition-property: 0.15s ease;
+      -moz-transition: 0.15s ease;
+      -ms-transition: 0.15s ease;
+      -o-transition: 0.15s ease;
+      transition: all 0.15s ease;
+
+      p {
+        line-height: 1.4em;
+        margin: 10px;
       }
 
-      div.abstract.hidden {
-        border: dashed 1px var(--global-bg-color);
+      pre {
+        font-size: 1em;
+        line-height: 1.4em;
+        padding: 10px;
       }
+    }
 
-      div.abstract.hidden.open {
-        border-color: var(--global-text-color);
-      }
+    .hidden.open {
+      max-height: 100em;
+      transition-property: 0.15s ease;
+      -moz-transition: 0.15s ease;
+      -ms-transition: 0.15s ease;
+      -o-transition: 0.15s ease;
+      transition: all 0.15s ease;
+    }
+
+    div.abstract.hidden {
+      border: dashed 1px var(--global-bg-color);
+    }
+
+    div.abstract.hidden.open {
+      border-color: var(--global-text-color);
     }
   }
 }
+
 
 // Rouge Color Customization
 figure.highlight {
@@ -911,7 +921,8 @@ progress::-moz-progress-bar {
     }
   }
 
-  .dropdown-item.active, .dropdown-item:active {
+  .dropdown-item.active,
+  .dropdown-item:active {
     background-color: var(--global-hover-color);
     color: var(--global-hover-text-color) !important;
 
@@ -953,6 +964,7 @@ nav[data-toggle="toc"] {
 
 /* small screens */
 @media (max-width: 576px) {
+
   /* override stickyness so that the navigation does not follow scrolling */
   nav[data-toggle="toc"] {
     visibility: hidden;
@@ -971,7 +983,12 @@ nav[data-toggle="toc"] {
       color: var(--global-tip-block-text);
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: var(--global-tip-block-title);
     }
   }
@@ -984,7 +1001,12 @@ nav[data-toggle="toc"] {
       color: var(--global-warning-block-text);
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: var(--global-warning-block-title);
     }
   }
@@ -997,7 +1019,12 @@ nav[data-toggle="toc"] {
       color: var(--global-danger-block-text);
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: var(--global-danger-block-title);
     }
   }
