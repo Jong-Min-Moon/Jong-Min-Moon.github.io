@@ -16,7 +16,7 @@ Park, Bo-yong
 	year = {2024},
 	keywords = {Autism spectrum disorder, Class imbalance, Functional gradient, Gaussian mixture model, Oversampling, Sex difference},
 	pages = {120956},
-	category = {Imbalance},
+	category = "class imbalance, computational neuroscience",
 		preview={neuroimage.png},
 		note="Preliminary version  presented at the
 		2024 International Conference of the IEEE Engineering in Medicine and Biology Society"
@@ -39,7 +39,7 @@ Park, Bo-yong
 	month = mar,
 	year = {2024},
 	pages = {170--189},
-	category = {Imbalance},
+	category = {class imbalance},
 	preview={forest_fire.png}
 }
 @article{munOfflineDynamicPricing2025,
@@ -48,7 +48,7 @@ Park, Bo-yong
   author = {Mun, Jongmin and Xu, Xiaocong and Fan, Yingying},
   year = 2025,
   month = nov,
-  category = {Privacy},
+  category = "differential privacy, nonparametric statistics, reinforcement learning/bandits",
   abstract = {We study offline policy learning under market shift and privacy protection. Motivated by high-stakes pricing for new products, where price experimentation is infeasible, we leverage historical transaction data from heterogeneous, privacy-protected sources. We model heterogeneity via a covariate shift assumption, where the relationship between price, features, and revenue remains invariant, and privacy through local differential privacy (LDP), where each data point is perturbed before use. Viewing both as distributional shifts, we design a policy learning algorithm grounded in the pessimism principle of offline reinforcement learning. Without privacy, our predict-then-optimize approach constructs a pessimistic revenue predictor and optimizes it to set prices, achieving minimax-optimal decision error. Under LDP, we apply the Laplace mechanism and adapt the pessimistic revenue predictor to account for additional uncertainty introduced by privacy noise. The resulting doubly pessimistic objective is then optimized to determine the final pricing policy.},
   html = {https://openreview.net/pdf?id=ZL748l6oQG}
 }
@@ -75,7 +75,7 @@ html = {https://doi.org/10.1016/j.csda.2024.108078},
 	year = {2025},
 	pages = {108078},
     paper = {https://doi.org/10.1016/j.csda.2024.108078},
-	category = {Imbalance},
+	category = {Class Imbalance},
 	preview={wsvm.png}
 }
 
@@ -94,7 +94,7 @@ To enable high-quality neural recordings in freely moving animals, our materials
 	month = feb,
 	year = {2024},
 	pages = {1772},
-    category = {Brain},
+    category = {computational neuroscience},
 	  selected = {true},
 	preview={natcomm.png}
 }
@@ -116,7 +116,7 @@ slides = {slide_ldp.pdf},
 pythonpackage = {https://pypi.org/project/privateAB/},
 	journal = {Journal of Machine Learning Research},
 	  selected = {true},
-	  category = {Privacy},
+	  category = "differential privacy, nonparametric statistics",
 	  preview={ldp_minimax.png}
 }
 
@@ -132,14 +132,15 @@ pythonpackage = {https://pypi.org/project/privateAB/},
 	year = {2026},
 	journal = {arxiv preprint},
 	  selected = {true},
-	  category = {Hi-dim}
+	  category = {high-dimensional statistics}
 
 }
 
 @article{mun_clustering_2024,
-	title = {High-Dimensional Sparse Clustering via Iterative Semidefinite Programming Relaxed K-Means},
-	preprint = {https://doi.org/10.48550/arXiv.2505.20478},
-	abstract=  {We propose an iterative algorithm for clustering high-dimensional data, where the true signal lies in a much lower-dimensional space. Our method alternates between feature selection and clustering, without requiring precise estimation of sparse model parameters. Feature selection is performed by thresholding a rough estimate of the discriminative direction, while clustering is carried out via a semidefinite programming (SDP) relaxation of K-means. In the isotropic case, the algorithm is motivated by the minimax separation bound for exact recovery of cluster labels using varying sparse subsets of features. This bound highlights the critical role of variable selection in achieving exact recovery. We further extend the algorithm to settings with unknown sparse precision matrices, avoiding full model parameter estimation by computing only the minimally required quantities. Across a range of simulation settings, we find that the proposed iterative approach outperforms several state-of-the-art methods, especially in higher dimensions.},
+	title = {Iterative Exploration-Driven Sparse SDP Clustering via Thompson Sampling},
+	preprint = {https://jong-min.org/assets/pdf/sdp_clustering_preprint.pdf},
+	abstract=  {This paper studies high-dimensional sparse clustering, a combinatorial NP-hard problem arising from the bilinear coupling between cluster assignment and feature selection. We analyze semidefinite programming (SDP) relaxations of 
+$K$-means and establish minimax separation bounds, demonstrating that these relaxations are theoretically robust to feature over-selection: exact recovery is preserved even in the presence of non-informative features. Leveraging this robustness, we propose a block-coordinate ascent framework that alternates between SDP-based clustering and non-conservative feature selection. To address the tendency of deterministic greedy methods to become trapped in local optima, we formulate the feature selection step as a Thompson sampling bandit problem. This approach introduces adaptive memory by aggregating historical variable-selection outcomes into posterior distributions, and selects features via posterior sampling, enabling stochastic exploration that promotes the inclusion of underexplored features and facilitates escape from local maxima. We establish conditions for consistent variable selection and exact clustering recovery, and extend the method to settings with unknown covariance through a scalable, inverse-free estimation procedure. Numerical experiments demonstrate that the proposed memory-driven approach consistently outperforms state-of-the-art sparse clustering methods.},
 	urldate = {2025-05-26},
 	publisher = {arXiv},
 	author = {Mun, Jongmin and Dubey, Paromita   and Fan, Yingying},
@@ -148,5 +149,5 @@ slides = {slide_sdp.pdf},
 	year = {2025},
 	journal = {arxiv preprint},
 	  selected = {true},
-	  category = {Hi-dim}
+	  category = "high-dimensional statistics, reinforcement learning/bandits"
 }

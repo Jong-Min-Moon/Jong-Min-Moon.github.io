@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const filterBtns = document.querySelectorAll(".filter-btn");
     const projectItems = document.querySelectorAll(".grid-item, .card-item");
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (Array.isArray(parsed)) {
                         itemCategoryList = parsed;
                     } else {
-                        itemCategoryList = [parsed];
+                        itemCategoryList = String(parsed).split(',').map(c => c.trim());
                     }
                 } catch (e) {
                     console.log("JSON parse error for:", itemCategories, e);
@@ -35,12 +34,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             if (Array.isArray(parsedRepaired)) {
                                 itemCategoryList = parsedRepaired;
                             } else {
-                                itemCategoryList = [parsedRepaired];
+                                itemCategoryList = String(parsedRepaired).split(',').map(c => c.trim());
                             }
                         } catch (e2) {
                             let cleanCat = itemCategories.trim();
-                            if (cleanCat.startsWith('"') && cleanCat.endsWith('"')) cleanCat = cleanCat.slice(1, -1);
-                            itemCategoryList = [cleanCat];
+                            // Remove wrapping quotes if present
+                            if (cleanCat.startsWith('"') && cleanCat.endsWith('"')) {
+                                cleanCat = cleanCat.slice(1, -1);
+                            } else if (cleanCat.startsWith("'") && cleanCat.endsWith("'")) {
+                                cleanCat = cleanCat.slice(1, -1);
+                            }
+                            itemCategoryList = cleanCat.split(',').map(c => c.trim());
                         }
                     }
                 }
@@ -49,8 +53,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 itemCategoryList = itemCategoryList.map(c => String(c).trim());
 
                 if (category === "all" || itemCategoryList.includes(category)) {
+                    if (item.closest('li')) {
+                        item.closest('li').style.display = null;
+                    }
                     item.style.display = null;
                 } else {
+                    if (item.closest('li')) {
+                        item.closest('li').style.display = "none";
+                    }
                     item.style.display = "none";
                 }
             });
