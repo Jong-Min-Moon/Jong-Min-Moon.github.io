@@ -20,7 +20,7 @@ teaching: true
 ---
 
 I am a third-year PhD student in the [Data Sciences and Operations Department](https://www.marshall.usc.edu/departments/data-sciences-and-operations)
-at the University of Southern California. I am advised by [Prof. Yingying Fan](https://faculty.marshall.usc.edu/yingying-fan/) and [Prof. Paromita Dubey](https://www.paromitadubey.com/). My current research focuses on using reinforcement learning and causal inference to address problems in statistics and operations research, including high-dimensional clustering and dynamic pricing. 
+at the University of Southern California. I am advised by [Prof. Yingying Fan](https://faculty.marshall.usc.edu/yingying-fan/) and [Prof. Paromita Dubey](https://www.paromitadubey.com/). My current research focuses on using reinforcement learning and causal inference to address problems in statistics, operations research and computational neuroscience, including high-dimensional clustering, dynamic pricing and site harmonization. 
 
 Before starting my PhD, I studied:
 1.  High-dimensional neural signal analysis for the development of liquid-metal neural probe, with [Dr. Young-Geun Park](https://www.younggeunpark.com/) and [Prof. Jang-Ung Park](https://www.younggeunpark.com/),
