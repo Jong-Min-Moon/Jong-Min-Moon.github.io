@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: Publications
-description: Publications are listed by category in reverse chronological order. Click “Summary” for details, after the page is fully loaded (it may take a moment to load).
+description:  
 nav: true
 nav_order: 1
 display_categories: [causal inference, "reinforcement learning/bandits", computational neuroscience, differential privacy, nonparametric statistics, high-dimensional statistics, class imbalance]

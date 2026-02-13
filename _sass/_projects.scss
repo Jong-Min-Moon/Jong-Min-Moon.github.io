@@ -5,6 +5,86 @@
   margin-bottom: 2rem;
   flex-wrap: wrap;
 
+  @media (max-width: 768px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 5px;
+    -webkit-overflow-scrolling: touch;
+    /* smooth scrolling on iOS */
+
+    &::-webkit-scrollbar {
+      display: none;
+      /* hide scrollbar for cleaner look */
+    }
+
+    // Abbreviations for mobile
+    .filter-btn {
+      &[data-filter="causal inference"] {
+        font-size: 0;
+
+        &::after {
+          content: "causal";
+          font-size: 0.9rem;
+        }
+      }
+
+      &[data-filter="reinforcement learning/bandits"] {
+        font-size: 0;
+
+        &::after {
+          content: "RL";
+          font-size: 0.9rem;
+        }
+      }
+
+      &[data-filter="computational neuroscience"] {
+        font-size: 0;
+
+        &::after {
+          content: "comp neuro";
+          font-size: 0.9rem;
+        }
+      }
+
+      &[data-filter="differential privacy"] {
+        font-size: 0;
+
+        &::after {
+          content: "privacy";
+          font-size: 0.9rem;
+        }
+      }
+
+      &[data-filter="nonparametric statistics"] {
+        font-size: 0;
+
+        &::after {
+          content: "nonparametric";
+          font-size: 0.9rem;
+        }
+      }
+
+      &[data-filter="high-dimensional statistics"] {
+        font-size: 0;
+
+        &::after {
+          content: "high-dim";
+          font-size: 0.9rem;
+        }
+      }
+
+      &[data-filter="class imbalance"] {
+        font-size: 0;
+
+        &::after {
+          content: "imbalance";
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
   .filter-btn {
     background: none;
     border: 1px solid var(--global-divider-color);

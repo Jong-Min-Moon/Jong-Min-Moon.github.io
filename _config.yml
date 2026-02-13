@@ -304,8 +304,8 @@ scholar:
   group_by: category
   group_order: descending
   
-  sort_by: year
-  order: descending
+  sort_by: year, month
+  order: descending, descending
 
 badges: # Display different badges for your publications
   altmetric_badge: false # Altmetric badge (https://www.altmetric.com/products/altmetric-badges/)
