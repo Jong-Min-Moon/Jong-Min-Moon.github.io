@@ -1,0 +1,194 @@
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Vibe Coding Report: Group Anagrams | Jongmin Mun</title> <meta name="author" content="Jongmin Mun"> <meta name="description" content="A report on generating a Group Anagrams script using AI prompts and iterative refinement."> <meta name="keywords" content="Jongmin Mun, USC"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="/assets/css/main.css?v=1771344092"> <link rel="canonical" href="https://jong-min-moon.github.io/blog/2026/vibe-coding-report-3/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> <script src="/assets/js/distillpub/overrides.js"></script> <style type="text/css">{{page._styles}}</style> </head> <body> <d-front-matter> <script async type="text/json">{
+      "title": "Vibe Coding Report: Group Anagrams",
+      "description": "A report on generating a Group Anagrams script using AI prompts and iterative refinement.",
+      "published": "February 16, 2026",
+      "authors": [
+        {
+          "author": "Jongmin Mun",
+          "authorURL": "https://jong-min.org/",
+          "affiliations": [
+            {
+              "name": "",
+              "url": ""
+            }
+          ]
+        }
+        
+      ],
+      "katex": {
+        "delimiters": [
+          {
+            "left": "$",
+            "right": "$",
+            "display": false
+          },
+          {
+            "left": "$$",
+            "right": "$$",
+            "display": true
+          }
+        ]
+      }
+    }</script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Jongmin </span>Mun</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About</a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">Publications</a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects</a> </li> <li class="nav-item "> <a class="nav-link" href="/coursework/">Coursework</a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv</a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">Posts<span class="sr-only">(current)</span></a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill"> <d-title> <h1>Vibe Coding Report: Group Anagrams</h1> <p>A report on generating a Group Anagrams script using AI prompts and iterative refinement.</p> </d-title> <d-byline></d-byline> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div><a href="#a-prompts">A. Prompts</a></div> <div><a href="#b-final-generated-program">B. Final Generated Program</a></div> <div><a href="#c-inputs-and-outputs">C. Inputs and Outputs</a></div> <div><a href="#d-ai-generated-analysis">D. AI-Generated Analysis</a></div> </nav> </d-contents> <h2 id="a-prompts">A. Prompts</h2> <p>This time, I took one further step of prompting to improve the code.</p> <h3 id="prompt-1-gemini-3-pro">Prompt 1 (Gemini 3 Pro)</h3> <blockquote> <p>I am going to do vibe coding and I want you to help me write the first prompt. The problem is writing a python code that follows the following instruction:</p> <p>Given a list of words, group together all words that are anagrams of each other. Example: Input: [“listen”, “silent”, “enlist”, “rat”, “tar”] Output: [[“listen”,”silent”,”enlist”], [“rat”,”tar”]]</p> <p>The input format examples are:</p> <ul> <li> <strong>Input 1:</strong> listen silent enlist inlets google giggle rat tar art</li> <li> <strong>Input 2:</strong> dusty study night thing cat act tac tacit attic tactic</li> <li> <strong>Input 3:</strong> state taste tates seats asset teats teat set eats east</li> <li>(Each line can be interpreted as a space-separated list of words.)</li> </ul> <p>Test cases must be written with these examples and the test output should clearly format and print the input and output. Do not hardcode the test code. Rather, use a formal testing framework like pytest and allowing dynamic user inputs, but use the inputs I provided on that framework.</p> </blockquote> <h3 id="prompt-2-cursor">Prompt 2 (Cursor)</h3> <blockquote> <p>Act as an expert Python developer. I want you to write a clean, efficient Python script to solve the “Group Anagrams” problem, along with a robust test suite using pytest.</p> <p><strong>The Objective:</strong> Write a function that takes a space-separated string of words, parses it into a list, and groups all words that are anagrams of each other. Example: &gt; Input: “listen silent enlist rat tar” Output: [[“listen”, “silent”, “enlist”], [“rat”, “tar”]]</p> <p><strong>Testing Requirements:</strong></p> <ol> <li>Use the <code class="language-plaintext highlighter-rouge">pytest</code> framework.</li> <li>Do not just hardcode the tests sequentially. Use <code class="language-plaintext highlighter-rouge">@pytest.mark.parametrize</code> to allow for dynamic, scalable testing.</li> <li>The test cases must clearly print the input string and the resulting grouped output to the console so I can visually verify it (ensure the test uses print statements or logs that can be seen when running <code class="language-plaintext highlighter-rouge">pytest -s</code>).</li> <li>Include the ability for a user to input their own string via standard input if run as a standalone script (e.g., under <code class="language-plaintext highlighter-rouge">if __name__ == "__main__":</code>).</li> </ol> <p><strong>Use the following inputs for your parameterized tests:</strong></p> <ul> <li>Test Case 1 Input: listen silent enlist inlets google giggle rat tar art</li> <li>Test Case 2 Input: dusty study night thing cat act tac tacit attic tactic</li> <li>Test Case 3 Input: state taste tates seats asset teats teat set eats east</li> </ul> <p>Please provide the complete Python code, including the main logic and the pytest suite in a single file or clearly separated blocks, complete with type hinting and docstrings.</p> </blockquote> <h3 id="prompt-3-gemini-3-pro">Prompt 3 (Gemini 3 Pro)</h3> <blockquote> <p>Summarize the logic of the following program. Then, comment on how the program could be improved. give me a two-paragraph summary.</p> </blockquote> <h3 id="prompt-4-cursor">Prompt 4 (Cursor)</h3> <blockquote> <p>Refactor the <code class="language-plaintext highlighter-rouge">group_anagrams</code> Python script to implement the following improvements:</p> <ol> <li> <strong>Algorithmic Optimization:</strong> Update the <code class="language-plaintext highlighter-rouge">group_anagrams</code> function to use a 26-element character frequency tuple as the dictionary key instead of sorting the characters. This will optimize the time complexity per word from $O(K \log K)$ to $O(K)$. You can use <code class="language-plaintext highlighter-rouge">ord(char) - ord('a')</code> to map lowercase characters to their respective indices.</li> <li> <strong>Type Hinting Modernization:</strong> Completely remove the <code class="language-plaintext highlighter-rouge">from typing import List</code> import. Update all type hints across the entire file—including the function signature, variable annotations, and the pytest suite—to use modern Python built-in types (e.g., <code class="language-plaintext highlighter-rouge">list</code>, <code class="language-plaintext highlighter-rouge">dict</code>, <code class="language-plaintext highlighter-rouge">tuple</code> instead of <code class="language-plaintext highlighter-rouge">List</code>, <code class="language-plaintext highlighter-rouge">Dict</code>, <code class="language-plaintext highlighter-rouge">Tuple</code>).</li> </ol> <p>Please ensure all existing tests still pass, the interactive <code class="language-plaintext highlighter-rouge">__main__</code> block remains functional, and the docstrings are updated to reflect the new logic.</p> </blockquote> <hr> <h2 id="b-final-generated-program">B. Final Generated Program</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sh">"""</span><span class="s">
+Group Anagrams: Given a space-separated string of words, group all words that are anagrams.
+Includes pytest suite with parametrized tests and optional stdin input when run as script.
+</span><span class="sh">"""</span>
+
+<span class="kn">from</span> <span class="n">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+
+<span class="k">def</span> <span class="nf">_char_frequency_key</span><span class="p">(</span><span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="p">...]:</span>
+    <span class="sh">"""</span><span class="s">
+    Build a 26-element tuple of letter counts (a-z) for the lowercase word.
+
+    Uses ord(char) - ord(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="s">) to map each letter to an index. Non-letter
+    characters are ignored. O(K) per word where K = len(word).
+
+    Returns:
+        A tuple of 26 integers: count of </span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="s"> at index 0, </span><span class="sh">'</span><span class="s">b</span><span class="sh">'</span><span class="s"> at 1, ..., </span><span class="sh">'</span><span class="s">z</span><span class="sh">'</span><span class="s"> at 25.
+    </span><span class="sh">"""</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">26</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">word</span><span class="p">.</span><span class="nf">lower</span><span class="p">():</span>
+        <span class="k">if</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sh">"</span><span class="s">z</span><span class="sh">"</span><span class="p">:</span>
+            <span class="n">counts</span><span class="p">[</span><span class="nf">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="nf">ord</span><span class="p">(</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="nf">tuple</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">group_anagrams</span><span class="p">(</span><span class="n">words_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="sh">"""</span><span class="s">
+    Parse a space-separated string into words and group all anagrams together.
+
+    Two words are anagrams if they have the same character frequencies (same
+    count per letter a-z, ignoring case and non-letter characters). Keys are
+    computed as 26-element frequency tuples in O(K) per word. Groups are
+    returned in order of first occurrence; within each group, words keep
+    their input order.
+
+    Args:
+        words_str: A single string of space-separated words.
+
+    Returns:
+        A list of lists; each inner list contains words that are anagrams
+        of each other. Groups appear in order of first occurrence.
+
+    Example:
+</span><span class="gp">        &gt;&gt;&gt;</span> <span class="nf">group_anagrams</span><span class="p">(</span><span class="sh">"</span><span class="s">listen silent enlist rat tar</span><span class="sh">"</span><span class="p">)</span>
+        <span class="p">[[</span><span class="sh">'</span><span class="s">listen</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">silent</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">enlist</span><span class="sh">'</span><span class="p">],</span> <span class="p">[</span><span class="sh">'</span><span class="s">rat</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tar</span><span class="sh">'</span><span class="p">]]</span>
+    <span class="sh">"""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">words_str</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">words_str</span><span class="p">.</span><span class="nf">strip</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">words</span> <span class="o">=</span> <span class="n">words_str</span><span class="p">.</span><span class="nf">split</span><span class="p">()</span>
+    <span class="c1"># Key: 26-element frequency tuple (hashable); value: list of words with that signature
+</span>    <span class="n">groups</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="p">...],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nf">_char_frequency_key</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="n">groups</span><span class="p">[</span><span class="n">key</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="c1"># Return groups in order of first occurrence (iteration order of defaultdict)
+</span>    <span class="k">return</span> <span class="nf">list</span><span class="p">(</span><span class="n">groups</span><span class="p">.</span><span class="nf">values</span><span class="p">())</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------
+# Pytest suite (parametrized, with visible input/output via print)
+# Run with: pytest group_anagrams.py -v -s
+# ---------------------------------------------------------------------------
+</span>
+<span class="kn">import</span> <span class="n">pytest</span>
+
+
+<span class="nd">@pytest.mark.parametrize</span><span class="p">(</span>
+    <span class="sh">"</span><span class="s">words_str,expected</span><span class="sh">"</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="sh">"</span><span class="s">listen silent enlist inlets google giggle rat tar art</span><span class="sh">"</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">listen</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">silent</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">enlist</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">inlets</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">google</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">giggle</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">rat</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">tar</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">art</span><span class="sh">"</span><span class="p">],</span>
+            <span class="p">],</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="sh">"</span><span class="s">dusty study night thing cat act tac tacit attic tactic</span><span class="sh">"</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">dusty</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">study</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">night</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">thing</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">cat</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">act</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">tac</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">tacit</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">attic</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">tactic</span><span class="sh">"</span><span class="p">],</span>
+            <span class="p">],</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="sh">"</span><span class="s">state taste tates seats asset teats teat set eats east</span><span class="sh">"</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">state</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">taste</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">tates</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">teats</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">seats</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">asset</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">teat</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">set</span><span class="sh">"</span><span class="p">],</span>
+                <span class="p">[</span><span class="sh">"</span><span class="s">eats</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">east</span><span class="sh">"</span><span class="p">],</span>
+            <span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">case_1_anagrams</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">case_2_anagrams</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">case_3_anagrams</span><span class="sh">"</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_group_anagrams</span><span class="p">(</span><span class="n">words_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Parametrized test: checks result and prints input/output for visual verification.</span><span class="sh">"""</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nf">group_anagrams</span><span class="p">(</span><span class="n">words_str</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">  Input:  </span><span class="si">{</span><span class="n">words_str</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Output: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="n">expected</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Expected </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s">, got </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="sh">"</span>
+
+
+<span class="k">def</span> <span class="nf">test_group_anagrams_empty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Empty or whitespace-only input returns empty list.</span><span class="sh">"""</span>
+    <span class="k">assert</span> <span class="nf">group_anagrams</span><span class="p">(</span><span class="sh">""</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="nf">group_anagrams</span><span class="p">(</span><span class="sh">"</span><span class="s">   </span><span class="sh">"</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+
+
+<span class="k">def</span> <span class="nf">test_group_anagrams_single_word</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Single word returns one group.</span><span class="sh">"""</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nf">group_anagrams</span><span class="p">(</span><span class="sh">"</span><span class="s">hello</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">  Input:  hello</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Output: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="p">[[</span><span class="sh">"</span><span class="s">hello</span><span class="sh">"</span><span class="p">]]</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------
+# Standalone script: read from stdin and print grouped anagrams
+# ---------------------------------------------------------------------------
+</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Group Anagrams — Enter a space-separated list of words (or leave blank to exit):</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="nf">input</span><span class="p">().</span><span class="nf">strip</span><span class="p">()</span>
+    <span class="k">except</span> <span class="nb">EOFError</span><span class="p">:</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="sh">""</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_input</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">No input provided. Exiting.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nf">group_anagrams</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Input:  </span><span class="si">{</span><span class="n">user_input</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Output: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <hr> <h2 id="c-inputs-and-outputs">C. Inputs and Outputs</h2> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>group_anagrams.py::test_group_anagrams[case_1_anagrams] 
+  Input:  listen silent enlist inlets google giggle rat tar art
+  Output: [['listen', 'silent', 'enlist', 'inlets'], ['google'], ['giggle'], ['rat', 'tar', 'art']]
+PASSED
+group_anagrams.py::test_group_anagrams[case_2_anagrams] 
+  Input:  dusty study night thing cat act tac tacit attic tactic
+  Output: [['dusty', 'study'], ['night', 'thing'], ['cat', 'act', 'tac'], ['tacit', 'attic'], ['tactic']]
+PASSED
+group_anagrams.py::test_group_anagrams[case_3_anagrams] 
+  Input:  state taste tates seats asset teats teat set eats east
+  Output: [['state', 'taste', 'tates', 'teats'], ['seats', 'asset'], ['teat'], ['set'], ['eats', 'east']]
+PASSED
+group_anagrams.py::test_group_anagrams_empty PASSED
+group_anagrams.py::test_group_anagrams_single_word 
+  Input:  hello
+  Output: [['hello']]
+PASSED
+</code></pre></div></div> <hr> <h2 id="d-ai-generated-analysis">D. AI-Generated Analysis</h2> <p>The updated Python script efficiently groups anagrams by replacing the previous sorting mechanism with a linear-time character-frequency counting approach. For each parsed word, it calls a helper function that tallies the occurrences of letters from ‘a’ to ‘z’ into a 26-element tuple, operating in strictly $O(K)$ time where $K$ is the word length. Because this fixed-length tuple is immutable, it serves as a perfect, hashable dictionary key in a defaultdict. As the script iterates through the input string, words sharing the same frequency signature are appended to the same list, and the grouped anagrams are ultimately returned in their original insertion order alongside a modern, fully typed test suite.</p> <p>While the script is highly optimized for standard English text, its strict filtering of characters outside the lowercase ‘a’ to ‘z’ range leaves room for improvement regarding edge cases and internationalization. Because it silently ignores numbers, punctuation, and Unicode characters (like accented letters), strings with entirely different non-alphabetical characters could be incorrectly grouped together as anagrams if their base English letter counts match. To make the program universally robust, you could replace the fixed 26-element array with a <code class="language-plaintext highlighter-rouge">frozenset</code> derived from <code class="language-plaintext highlighter-rouge">collections.Counter(word.lower())</code>, which would safely and accurately hash any character from any language while maintaining excellent performance and actually shrinking the codebase.</p> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2026 Jongmin Mun. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>

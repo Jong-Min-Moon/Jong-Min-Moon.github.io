@@ -1,0 +1,179 @@
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Vibe Coding Report 1: Word Frequency Analyzer | Jongmin Mun</title> <meta name="author" content="Jongmin Mun"> <meta name="description" content="A report on generating a Word Frequency Analyzer using AI prompts and iterative refinement."> <meta name="keywords" content="Jongmin Mun, USC"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="/assets/css/main.css?v=1771344092"> <link rel="canonical" href="https://jong-min-moon.github.io/blog/2026/vibe-coding-report-1/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> <script src="/assets/js/distillpub/overrides.js"></script> <style type="text/css">{{page._styles}}</style> </head> <body> <d-front-matter> <script async type="text/json">{
+      "title": "Vibe Coding Report 1: Word Frequency Analyzer",
+      "description": "A report on generating a Word Frequency Analyzer using AI prompts and iterative refinement.",
+      "published": "February 16, 2026",
+      "authors": [
+        {
+          "author": "Jongmin Mun",
+          "authorURL": "https://jong-min.org/",
+          "affiliations": [
+            {
+              "name": "",
+              "url": ""
+            }
+          ]
+        }
+        
+      ],
+      "katex": {
+        "delimiters": [
+          {
+            "left": "$",
+            "right": "$",
+            "display": false
+          },
+          {
+            "left": "$$",
+            "right": "$$",
+            "display": true
+          }
+        ]
+      }
+    }</script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Jongmin </span>Mun</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About</a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">Publications</a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects</a> </li> <li class="nav-item "> <a class="nav-link" href="/coursework/">Coursework</a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv</a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">Posts<span class="sr-only">(current)</span></a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill"> <d-title> <h1>Vibe Coding Report 1: Word Frequency Analyzer</h1> <p>A report on generating a Word Frequency Analyzer using AI prompts and iterative refinement.</p> </d-title> <d-byline></d-byline> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div><a href="#a-prompts">A. Prompts</a></div> <div><a href="#b-final-generated-program">B. Final Generated Program</a></div> <div><a href="#c-inputs-and-outputs">C. Inputs and Outputs</a></div> <div><a href="#d-ai-generated-analysis">D. AI-Generated Analysis</a></div> </nav> </d-contents> <h2 id="a-prompts">A. Prompts</h2> <h3 id="prompt-1-gemini-3-pro">Prompt 1 (Gemini 3 Pro)</h3> <blockquote> <p>I am going to do vibe coding and I want you to help me write the first prompt. The problem is writing a python code that does:</p> <p><strong>Problem 1: Word Frequency Analyzer</strong> Write a program that takes in a block of text and outputs the 10 most frequent words, along with their counts. Ignore capitalization and punctuation. If two words have the same count, break ties by alphabetical order of the word. Return exactly k items if there are at least k unique words</p> <p>The input format examples are:</p> <ul> <li> <strong>Input 1:</strong> “The quick brown fox jumps over the lazy dog. The dog wasn’t amused; the fox was.”</li> <li> <strong>Input 2:</strong> “Data, data, data! I can’t make bricks without clay, said Sherlock. DATA drives decisions.”</li> <li> <strong>Input 3:</strong> “To be, or not to be—that is the question: Whether ‘tis nobler in the mind to suffer…”</li> </ul> </blockquote> <h3 id="prompt-2-cursor">Prompt 2 (Cursor)</h3> <blockquote> <p><strong>Role &amp; Objective:</strong> Act as an expert Python developer. Write a highly optimized, clean, and well-documented Python function that acts as a Word Frequency Analyzer.</p> <p><strong>Function Signature:</strong> <code class="language-plaintext highlighter-rouge">def analyze_word_frequency(text: str, k: int = 10) -&gt; list[tuple[str, int]]:</code></p> <p><strong>Core Requirements:</strong></p> <ul> <li> <strong>Parse the Text:</strong> Process the input block of text and count the frequency of each word.</li> <li> <strong>Normalization:</strong> Ignore capitalization (treat “The” and “the” as identical).</li> <li> <strong>Punctuation:</strong> Remove all punctuation. (Note: Please handle contractions like “wasn’t” or “can’t” by keeping them as a single word without the apostrophe, e.g., “wasnt”, OR specify if you prefer splitting them).</li> <li> <strong>Sorting &amp; Tie-Breaking:</strong> Sort the output descending by frequency. If two or more words have the exact same count, break the tie by sorting those words in ascending alphabetical order.</li> <li> <strong>Output Limit:</strong> Return exactly k items as a list of tuples (word, count). If the text contains fewer than k unique words, return all available unique words sorted by the same rules.</li> </ul> <p><strong>Test Cases to validate against:</strong></p> <ul> <li>Input 1: “The quick brown fox jumps over the lazy dog. The dog wasn’t amused; the fox was.”</li> <li>Input 2: “Data, data, data! I can’t make bricks without clay, said Sherlock. DATA drives decisions.”</li> <li>Input 3: “To be, or not to be—that is the question: Whether ‘tis nobler in the mind to suffer…”</li> </ul> <p>Please provide the complete Python code, including the collections or re modules if you use them, and write a quick test block at the bottom to run the three inputs.</p> </blockquote> <h3 id="prompt-3-gemini-3-pro">Prompt 3 (Gemini 3 Pro)</h3> <blockquote> <p>The cursor has generated a python code. Now write a prompt that orders it to write a test code: For each test case provided , it should clearly list the input you used and the exact output the program produced.</p> <p>the inputs are:</p> <ul> <li>Input 1: “The quick brown fox jumps over the lazy dog. The dog wasn’t amused; the fox was.”</li> <li>Input 2: “Data, data, data! I can’t make bricks without clay, said Sherlock. DATA drives decisions.”</li> <li>Input 3: “To be, or not to be—that is the question: Whether ‘tis nobler in the mind to suffer…”</li> </ul> </blockquote> <h3 id="prompt-4-cursor">Prompt 4 (Cursor)</h3> <blockquote> <p><strong>Objective:</strong> Write a test script to validate the word frequency function we just created. Do not use a silent testing framework like unittest; instead, write a script that runs the function against specific inputs and prints the results clearly to the console.</p> <p><strong>Formatting Requirements:</strong> For each test case, execute the function with k=10. The terminal output for each test case must be heavily formatted and clearly list both the raw input and the exact output. Use print statements to format it exactly like this example:</p> <div class="language-text highlighter-rouge"> <div class="highlight"><pre class="highlight"><code>========================================
+TEST CASE 1
+========================================
+INPUT:
+"The quick brown fox jumps over the lazy dog. The dog wasn’t amused; the fox was."
+
+OUTPUT:
+[('the', 4), ('dog', 2), ('fox', 2), ('amused', 1), ('brown', 1), ...]
+</code></pre></div> </div> <p><strong>The Test Inputs:</strong> Please implement this for the following three inputs:</p> <ul> <li>Input 1: “The quick brown fox jumps over the lazy dog. The dog wasn’t amused; the fox was.”</li> <li>Input 2: “Data, data, data! I can’t make bricks without clay, said Sherlock. DATA drives decisions.”</li> <li>Input 3: “To be, or not to be—that is the question: Whether ‘tis nobler in the mind to suffer…”</li> </ul> </blockquote> <h3 id="prompt-5-gemini-3-pro">Prompt 5 (Gemini 3 Pro)</h3> <blockquote> <p>Summarize the logic of the following program. Then, comment on how the program could be improved. give me a two-paragraph summary.</p> </blockquote> <hr> <h2 id="b-final-generated-program">B. Final Generated Program</h2> <h3 id="word_frequency_analyzerpy-main-python-code"> <code class="language-plaintext highlighter-rouge">word_frequency_analyzer.py</code> (Main Python Code)</h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sh">"""</span><span class="s">
+Word Frequency Analyzer
+
+Parses text, normalizes words (lowercase, no punctuation), counts frequencies,
+and returns the top-k (word, count) pairs sorted by count descending with
+alphabetical tie-breaking.
+</span><span class="sh">"""</span>
+
+<span class="kn">import</span> <span class="n">re</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">analyze_word_frequency</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+    <span class="sh">"""</span><span class="s">
+    Analyze word frequency in the given text and return the top-k words.
+
+    Words are normalized: lowercased and stripped of punctuation. Contractions
+    (e.g., </span><span class="sh">"</span><span class="s">wasn</span><span class="sh">'</span><span class="s">t</span><span class="sh">"</span><span class="s">, </span><span class="sh">"</span><span class="s">can</span><span class="sh">'</span><span class="s">t</span><span class="sh">"</span><span class="s">) are kept as single tokens with the apostrophe
+    removed (</span><span class="sh">"</span><span class="s">wasnt</span><span class="sh">"</span><span class="s">, </span><span class="sh">"</span><span class="s">cant</span><span class="sh">"</span><span class="s">).
+
+    Args:
+        text: Input string to analyze.
+        k: Maximum number of (word, count) pairs to return (default 10).
+
+    Returns:
+        List of up to k tuples (word, count), sorted by count descending.
+        Ties in count are broken by word ascending alphabetically.
+        Fewer than k items if the text has fewer unique words.
+    </span><span class="sh">"""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">text</span><span class="p">.</span><span class="nf">strip</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="c1"># Normalize: lowercase for case-insensitive counting
+</span>    <span class="n">normalized</span> <span class="o">=</span> <span class="n">text</span><span class="p">.</span><span class="nf">lower</span><span class="p">()</span>
+
+    <span class="c1"># Handle contractions: remove apostrophes so "wasn't" -&gt; "wasnt", "'tis" -&gt; "tis"
+</span>    <span class="n">normalized</span> <span class="o">=</span> <span class="n">normalized</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"'"</span><span class="p">,</span> <span class="sh">""</span><span class="p">)</span>
+
+    <span class="c1"># Remove all remaining punctuation (keep only letters, digits, spaces)
+</span>    <span class="n">normalized</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="sa">r</span><span class="sh">"</span><span class="s">[^a-z0-9\s]</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">,</span> <span class="n">normalized</span><span class="p">)</span>
+
+    <span class="c1"># Split on whitespace and drop empty tokens
+</span>    <span class="n">words</span> <span class="o">=</span> <span class="n">normalized</span><span class="p">.</span><span class="nf">split</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">words</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="c1"># Count occurrences
+</span>    <span class="n">counts</span> <span class="o">=</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+    <span class="c1"># Sort: primary key = count descending, secondary key = word ascending
+</span>    <span class="n">sorted_items</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">counts</span><span class="p">.</span><span class="nf">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">sorted_items</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+<span class="c1"># ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="sh">"</span><span class="s">The quick brown fox jumps over the lazy dog. The dog wasn</span><span class="sh">'</span><span class="s">t amused; the fox was.</span><span class="sh">"</span><span class="p">,</span>
+            <span class="mi">10</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="sh">"</span><span class="s">Data, data, data! I can</span><span class="sh">'</span><span class="s">t make bricks without clay, said Sherlock. DATA drives decisions.</span><span class="sh">"</span><span class="p">,</span>
+            <span class="mi">10</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="sh">"</span><span class="s">To be, or not to be—that is the question: Whether </span><span class="sh">'</span><span class="s">tis nobler in the mind to suffer...</span><span class="sh">"</span><span class="p">,</span>
+            <span class="mi">10</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">test_cases</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">--- Input </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> (k=</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s">) ---</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nf">analyze_word_frequency</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  </span><span class="si">{</span><span class="n">word</span><span class="si">!r}</span><span class="s">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">()</span>
+</code></pre></div></div> <h3 id="test_word_frequencypy"><code class="language-plaintext highlighter-rouge">test_word_frequency.py</code></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sh">"""</span><span class="s">
+Test script for analyze_word_frequency.
+Runs the function against three fixed inputs with k=10 and prints
+formatted results to the console (no unittest).
+</span><span class="sh">"""</span>
+
+<span class="kn">from</span> <span class="n">word_frequency_analyzer</span> <span class="kn">import</span> <span class="n">analyze_word_frequency</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">INPUT_1</span> <span class="o">=</span> <span class="sh">"</span><span class="s">The quick brown fox jumps over the lazy dog. The dog wasn</span><span class="sh">'</span><span class="s">t amused; the fox was.</span><span class="sh">"</span>
+<span class="n">INPUT_2</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Data, data, data! I can</span><span class="sh">'</span><span class="s">t make bricks without clay, said Sherlock. DATA drives decisions.</span><span class="sh">"</span>
+<span class="n">INPUT_3</span> <span class="o">=</span> <span class="sh">"</span><span class="s">To be, or not to be—that is the question: Whether </span><span class="sh">'</span><span class="s">tis nobler in the mind to suffer...</span><span class="sh">"</span>
+
+
+<span class="k">def</span> <span class="nf">run_test</span><span class="p">(</span><span class="n">case_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">========================================</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">TEST CASE </span><span class="si">{</span><span class="n">case_num</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">========================================</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">INPUT:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">repr</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nf">analyze_word_frequency</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">OUTPUT:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">run_test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">INPUT_1</span><span class="p">)</span>
+    <span class="nf">run_test</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">INPUT_2</span><span class="p">)</span>
+    <span class="nf">run_test</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">INPUT_3</span><span class="p">)</span>
+
+</code></pre></div></div> <hr> <h2 id="c-inputs-and-outputs">C. Inputs and Outputs</h2> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>========================================
+TEST CASE 1
+========================================
+INPUT:
+"The quick brown fox jumps over the lazy dog. The dog wasn't amused; the fox was."
+
+OUTPUT:
+[('the', 4), ('dog', 2), ('fox', 2), ('amused', 1), ('brown', 1), ('jumps', 1), ('lazy', 1), ('over', 1), ('quick', 1), ('was', 1)]
+
+========================================
+TEST CASE 2
+========================================
+INPUT:
+"Data, data, data! I can't make bricks without clay, said Sherlock. DATA drives decisions."
+
+OUTPUT:
+[('data', 4), ('bricks', 1), ('cant', 1), ('clay', 1), ('decisions', 1), ('drives', 1), ('i', 1), ('make', 1), ('said', 1), ('sherlock', 1)]
+
+========================================
+TEST CASE 3
+========================================
+INPUT:
+"To be, or not to be—that is the question: Whether 'tis nobler in the mind to suffer..."
+
+OUTPUT:
+[('to', 3), ('be', 2), ('the', 2), ('in', 1), ('is', 1), ('mind', 1), ('nobler', 1), ('not', 1), ('or', 1), ('question', 1)]
+</code></pre></div></div> <hr> <h2 id="d-ai-generated-analysis">D. AI-Generated Analysis</h2> <p>The program calculates the top k most frequent words in a string by systematically cleaning, counting, and sorting the text. It begins by converting the entire input to lowercase and manually stripping out apostrophes so that contractions are merged into single alphanumeric tokens (e.g., “wasn’t” becomes “wasnt”). Next, it uses a regular expression to replace all remaining non-alphanumeric characters with spaces, which safely removes punctuation and treats characters like em-dashes as word separators. After splitting this sanitized string into a list of words, it tallies their frequencies using <code class="language-plaintext highlighter-rouge">collections.Counter</code>. Finally, the script sorts the dictionary items using a custom lambda function—prioritizing highest counts first (<code class="language-plaintext highlighter-rouge">-x[1]</code>), while resolving ties alphabetically (<code class="language-plaintext highlighter-rouge">x[0]</code>)—and returns the top k slice.</p> <p>While the script is highly effective for basic English text, it could be improved for better scalability and internationalization. The current regular expression <code class="language-plaintext highlighter-rouge">[^a-z0-9\s]</code> strips out all non-ASCII characters, meaning accented words (like “café” or “naïve”) will be improperly fractured; swapping this for a Unicode-aware regex would make the parser much more robust. Additionally, the current sorting method evaluates the entire vocabulary of the text at once (<code class="language-plaintext highlighter-rouge">sorted(counts.items(), ...)</code>), which is inefficient for massive datasets. While <code class="language-plaintext highlighter-rouge">Counter(words).most_common()</code> doesn’t natively support alphabetical tie-breaking, implementing a custom priority queue (using the <code class="language-plaintext highlighter-rouge">heapq</code> module) to maintain only the top k elements in memory would significantly improve the algorithm’s performance on book-length inputs.</p> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2026 Jongmin Mun. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
