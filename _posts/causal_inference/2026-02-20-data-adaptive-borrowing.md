@@ -52,3 +52,21 @@ $$
 *   $\lambda_{N}$ and $\nu$ are two tuning parameters that dictate the strength of the penalty; they are selected by minimizing the mean square error using cross-validation.
 
 Because the initial estimate $\hat{b}_{i}$ acts as the denominator in the penalty term $p(|b_{i}|)$, subjects who are truly comparable (and thus have an initial bias estimate close to zero) will receive an exceedingly large penalty. This dynamic successfully shrinks their final refined bias estimate ($\tilde{b}_{i}$) to exactly zero, allowing the framework to pinpoint and select them for the trial.
+
+cenrla limit diffusion
+
+
+fluid market sie lambda t
+
+precious setting: lambda and n together goes to infinty
+static price approach (dynamic pricing is not need in seminal dynamic rpciing paper) uses CLT
+iterative reoptimization heuristic
+the core logic is even though we use CLT, we dont need large number actually
+
+this talk focuses on large market regime
+core: same CLT small number argument
+
+the core message: what matter is the ratio. not which one is fixed
+
+
+plot: the optial policy in large market regime is not the static policy (high price w
