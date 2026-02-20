@@ -8,8 +8,8 @@
       <div class="card hoverable">
         {%- if project.img %}
         {%- include figure.html
-          path=project.img
-          alt="project thumbnail" -%}
+        path=project.img
+        alt="project thumbnail" -%}
         {%- endif %}
         <div class="card-body">
           <h2 class="card-title text-lowercase">{{ project.title }}</h2>
@@ -22,6 +22,12 @@
             {% endif %}
             {% if project.course_level %}
             <span class="badge badge-info">{{ project.course_level }}</span>
+            {% endif %}
+            {% if project.semester %}
+            <span class="badge badge-secondary">{{ project.semester }}</span>
+            {% endif %}
+            {% if project.lecturer %}
+            <span class="badge badge-info">{{ project.lecturer }}</span>
             {% endif %}
           </div>
           <p class="card-text">{{ project.description }}</p>

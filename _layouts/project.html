@@ -7,6 +7,14 @@ layout: default
   <header class="post-header">
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-description">{{ page.description }}</p>
+    <div class="post-meta">
+      {% if page.semester %}
+      <span class="badge badge-secondary">{{ page.semester }}</span>
+      {% endif %}
+      {% if page.lecturer %}
+      <span class="badge badge-info">{{ page.lecturer }}</span>
+      {% endif %}
+    </div>
   </header>
 
   <article>

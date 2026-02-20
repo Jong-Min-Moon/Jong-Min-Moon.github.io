@@ -26,6 +26,12 @@
                                     {% if project.course_level %}
                                     <span class="badge badge-info">{{ project.course_level }}</span>
                                     {% endif %}
+                                    {% if project.semester %}
+                                    <span class="badge badge-secondary">{{ project.semester }}</span>
+                                    {% endif %}
+                                    {% if project.lecturer %}
+                                    <span class="badge badge-info">{{ project.lecturer }}</span>
+                                    {% endif %}
                                 </div>
                                 <p class="card-text">{{ project.description }}</p>
                                 <div class="row ml-1 mr-1 p-0">
