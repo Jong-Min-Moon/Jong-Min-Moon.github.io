@@ -5,7 +5,7 @@ description: "A deep dive into how machine learning and adaptive lasso can enhan
 date: 2026-02-20
 categories: causal_inference statistics
 tags: causal-inference medical-statistics adaptive-lasso machine-learning
-project_handle: causal_inference
+project: causal_inference
 authors:
   - name: Jong Min Moon
     url: "https://github.com/Jong-Min-Moon"

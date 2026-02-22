@@ -32,7 +32,7 @@ Let's define our variables:
 
 Our basic dataset consists of these repeated measurements: $(y_{ij}, t_{ij})$.
 
-## Nonlinear Population PK Modeling
+## Population PK Modeling b
 
 The primary goals of population PK modeling are twofold:
 1.  **Describe the Trajectory**: Determine how the drug concentration $y_{ij}$ changes as a function of time $t_{ij}$. This requires the main modeling.

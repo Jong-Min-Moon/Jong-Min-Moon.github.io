@@ -129,6 +129,10 @@ blog_name: blog # blog_name will be displayed in your blog page
 blog_nav_title: "Posts" # your blog must have a title for it to be displayed in the nav bar
 blog_description: a simple whitespace theme for academics
 permalink: /blog/:year/:title/
+published: true
+
+future: true
+
 
 # Pagination
 pagination:
