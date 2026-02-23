@@ -7,7 +7,7 @@ categories: ml_mio optimization statistics
 tags: causal-inference mixed-integer-programming matching-methods benchmarking
 project: ml_mio
 authors:
-  - name: Jong Min Moon
+  - name: Jongmin Mun
     url: "https://github.com/Jong-Min-Moon"
     affiliations:
       name: USC Marshall
@@ -16,9 +16,11 @@ toc:
   - name: Optimization Framework
   - name: Key Innovations
   - name: Computational Efficiency
+paper_key: bennett2020building
+mermaid: true
 ---
 
-## Problem Setting
+## MIP of quadratic order of dataset size
 
 Without loss of generality, we focus on a single treatment level, as the matching procedure remains identical across all levels.
 
@@ -39,7 +41,7 @@ For each covariate $p \in \{1, \dots, P\}$ and category $k \in \{1, \dots, K\}$,
 ### Decision Variables
 The optimization model uses two types of variables:
 *   **$m_{t,\ell} \in \{0, 1\}$:** A binary indicator that is $1$ if template unit $t \in \mathcal{T}$ is matched to treated unit $\ell \in \mathcal{L}$, and $0$ otherwise.
-*   **$v_{p,k} \geq 0$:** A continuous variable representing the "cell count margin"—the absolute difference between the number of matched treated units and the target count $N_{p,k}$. Our goal is to minimize the sum of these margins.
+*   **$v_{p,k} \geq 0$:** A continuous variable representing the "cell count margin"—the absolute difference between the number of matched treated units and the target count $N_{p,k}$. Because this margin is not restricted to integer values, the model is formulated as a mixed-integer linear programming (MILP) problem.
 
 ### Constraints
 The core logic of the model is captured in the following constraints:
@@ -52,10 +54,25 @@ The core logic of the model is captured in the following constraints:
     *   Each treated unit is matched at most once: $\sum_{t \in \mathcal{T}} m_{t,\ell} \leq 1, \quad \forall \ell \in \mathcal{L}$
     *   Each template unit is matched exactly once: $\sum_{\ell \in \mathcal{L}} m_{t,\ell} = 1, \quad \forall t \in \mathcal{T}$
 
+Collecting everything together, the optimization problem is:
+
+$$
+\begin{aligned}
+\min_{\mathbf{v}, \mathbf{m}} \quad & \sum_{p=1}^{P} \sum_{k=1}^{K} v_{p,k} \\
+\text{s.t.} \quad & \left| \sum_{\ell \in \mathcal{L}_{p,k}} \left( \sum_{t \in \mathcal{T}} m_{t,\ell} \right) - N_{p,k} \right| \leq v_{p,k}, \quad & \forall p \in \{1, \dots, P\}, \forall k \in \{1, \dots, K\} \\
+& \sum_{t \in \mathcal{T}} m_{t,\ell} \leq 1, \quad & \forall \ell \in \mathcal{L} \\
+& \sum_{\ell \in \mathcal{L}} m_{t,\ell} = 1, \quad & \forall t \in \mathcal{T} \\
+& m_{t,\ell} \in \{0, 1\}, \quad & \forall t \in \mathcal{T}, \forall \ell \in \mathcal{L}
+\end{aligned}
+$$
+
+### Scalability: Variable and Constraint Complexity
+While the MILP formulation is mathematically rigorous, it faces significant scalability hurdles. Specifically, the problem requires $T \times L + P \times K$ decision variables and a corresponding number of constraints. Since the matching variables grow quadratically with the number of units ($T \times L$), memory consumption in solvers like Gurobi can become a critical bottleneck for large-scale observational studies.
+
 ### Analogy: Filling the Grid
 Imagine a grid of size $P \times K$ where each cell represents a specific covariate category. The template units are already distributed across these cells. The matching process is like "filling" these cells with treated units to mirror the template's distribution as closely as possible.
 
-```mermaid
+<div class="mermaid">
 graph TD
     subgraph Grid ["Grid: P Covariates x K Categories"]
         Cell1 ["Cell (1,1): Target N_1,1"]
@@ -68,6 +85,23 @@ graph TD
     
     style Grid fill:#f9f9f9,stroke:#333,stroke-width:2px
     style TreatedPool fill:#e1f5fe,stroke:#01579b
-```
+</div>
 
 By minimizing $\sum v_{pk}$, we ensure that the final "population" of matched treated units is a representative reflection of the template.
+
+
+## MIP of Linear Order Relative to Dataset Size
+To improve scalability, the paper proposes a reformulation that reduces the number of decision variables.  We define a new binary indicator $z_\ell = \sum_{t \in \mathcal{T}} m_{t,\ell}$ for each treated unit $\ell \in \mathcal{L}$.
+
+The paper demonstrates that the constraint $m_{t,\ell} \in \{0, 1\}$ for all $t, \ell$ can be effectively replaced by a single binary constraint $z_\ell \in \{0, 1\}$ and a total count constraint $\sum_{\ell \in \mathcal{L}} z_\ell = T$. This argument leverages the fact that the matching requirements are equality constraints, allowing the problem to be solved without lose of generality in terms of matching. The resulting optimization problem is significantly more efficient:
+
+$$
+\begin{aligned}
+\min_{\mathbf{v}, \mathbf{z}} \quad & \sum_{p=1}^{P} \sum_{k=1}^{K} v_{p,k} \\
+\text{s.t.} \quad & \left| \sum_{\ell \in \mathcal{L}_{p,k}} z_\ell - N_{p,k} \right| \leq v_{p,k}, \quad & \forall p, k \\
+& \sum_{\ell \in \mathcal{L}} z_\ell = T \\
+& z_\ell \in \{0, 1\}, \quad & \forall \ell \in \mathcal{L}
+\end{aligned}
+$$
+
+Here, $z_\ell$ is a binary decision variable that takes the value 1 if treated unit $\ell$ matched by a template unit, and 0 otherwise.
