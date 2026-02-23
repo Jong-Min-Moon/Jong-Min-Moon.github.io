@@ -3,8 +3,8 @@ layout: page
 title: Coursework
 permalink: /coursework/
 description: Summary of coursework and related projects.
-nav: true
-nav_order: 3
+nav: false
+
 display_categories: [core, elective]
 horizontal: true
 ---
