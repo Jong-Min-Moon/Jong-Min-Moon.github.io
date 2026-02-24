@@ -12,6 +12,7 @@ authors:
     affiliations:
       name: USC Marshall
 bibliography: 2026-02-04-best-subset-selection.bib
+paper_key: bertsimasBestSubsetSelection2016
 toc:
   - name: Overview
   - name: Best Subset Selection (BSS) Problem
@@ -52,11 +53,25 @@ $$\|\nabla g(\beta) - \nabla g(\beta_0)\| \leq \ell \cdot \|\beta - \beta_0\|$$
 By combining these discrete methods with modern computational techniques from MIP, the framework can handle significantly larger feature spaces than previous exact $\ell_0$ approaches while maintaining global optimality guarantees.
 
 ## Mixed Integer Optimization (MIO)
-
 **Mixed Integer Optimization (MIO)** is a mature subfield of mathematical optimization that provides a robust framework for modeling and solving structured non-convex problems. Because the field is so well-established, we have a deep understanding of the "under-the-hood" mechanics within modern solvers.
 
+### Diverse Problem Classes
+The framework is highly versatile, supporting various problem types including:
+* **Mixed Integer Linear Optimization (MILO)**
+* **Mixed Integer Second-Order Cone Programming (MISOCP)**
+
+### A Comprehensive Solver Ecosystem
+Users can choose from a wide range of powerful solvers depending on their specific needs:
+* **Commercial Solvers**: Industry leaders include **Gurobi**, **CPLEX**, and **Xpress**.
+* **Non-commercial/Open-Source Solvers**: Reliable options include **SCIP**, **CBC**, **GLPK**, and **lpsolve**.
+
+### Seamless Integration
+MIO tools are easily accessible through modern programming interfaces, allowing for flexible implementation across different environments:
+* **Languages**: Full support for **Python**, **R**, **Matlab**, and **Julia** (specifically through **JuMP**).
 ### Complexity vs. Practicality
 While MIO is **worst-case NP-hard**, this theoretical classification does not mean these problems are unsolvable. The prevailing attitude in modern operations research is that NP-hardness is a "challenge accepted". The goal is to find efficient ways to solve these problems in practice. 
+
+
 
 ### The MIO Renaissance
 We have seen a significant rise in the utility of **Mixed Integer Optimization (MIO)** due to dramatic improvements in both software and algorithms over the last decade. Leading solvers like **Gurobi** and **CPLEX** have demonstrated nearly a **2x speedup every year**, independent of hardware advancements.
@@ -66,3 +81,70 @@ This exponential growth in computational efficiency has led major tech companies
 > **"Why not statistics?"**
 
 If MIO can solve massive industrial logistics and scheduling problems, it should be leveraged to provide certifiable, global solutions to the structured non-convex problems inherent in statistical learning, such as best-subset selection.
+
+# Best-Subset Selection via  MIO 
+To implement the best-subset selection problem within an MIO framework, the standard least squares objective is coupled with "Big-M" constraints to bridge the continuous coefficients $\beta$ and the binary indicators $z$.
+
+ 
+The problem is formally expressed as:
+
+$$\min_{\beta, z} \frac{1}{2} \|\mathbf{y} - \mathbf{X}\beta\|_2^2$$
+
+**Subject to:**
+* **Big-M Constraints:** $-M z_i \le \beta_i \le M z_i, \quad i = 1, \dots, p$
+* **Binary Indicators:** $z_i \in \{0, 1\}, \quad i = 1, \dots, p$
+* **Sparsity Constraint:** $\sum_{i=1}^{p} z_i \le k$
+
+### Logical Coupling via Big-M
+The parameter $M$ is a sufficiently large constant (e.g., $M = 1000$) that enforces the relationship between variable selection and estimation:
+* **If $z_i = 0$:** The constraint forces the coefficient $\beta_i$ to be exactly zero.
+* **If $z_i = 1$:** The coefficient $\beta_i$ is free to take any value within the practical range $[-M, M]$.
+
+### Certifiable Optimality
+A primary advantage of this approach is the **Certificate of Optimality** provided by MIP technology. Unlike heuristic methods, MIO solvers systematically tighten the gap between the **upper bound** (the best feasible solution found) and the **lower bound** (the theoretical best possible value).
+
+
+
+This allows for controlled convergence; the solver can be stopped once a pre-defined **optimality gap** (e.g., 1% or 5%) is achieved, providing a rigorous guarantee on the solution's proximity to the global optimum.
+
+![MIP trajectory](assets/img/MIP_trajectory_typical.png)
+
+The paper claims that for $n \leq 1000, p \leq 1000$, the MIO approach can solve the best-subset selection problem to good quality within a few minutes, but certificates of optimality can take longer.
+
+## Basic Techniques for Scaling Computational Performance
+
+To bridge the gap between theoretical $\ell_0$ formulations and practical high-dimensional applications, several optimization techniques are employed to accelerate solver convergence.
+
+### 1. Implied Inequalities and Strengthening Cuts
+A standard strategy in integer programming is to introduce **implied inequalities** that, while mathematically redundant, significantly tighten the feasible region for the solver's relaxation. This leads to much tighter lower bounds and faster pruning of the branch-and-bound tree. The original $\ell_0$ problem is strengthened by incorporating these additional norm constraints:
+
+$$\min_{\beta} \|\mathbf{y} - \mathbf{X}\beta\|_2^2$$
+
+$$\text{s.t.} \quad \|\beta\|_0 \leq k$$
+$$\|\beta\|_{\infty} \leq \delta_{11}, \quad \|\beta\|_1 \leq \delta_{21}$$
+$$\|\mathbf{X}\beta\|_{\infty} \leq \delta_{12}, \quad \|\mathbf{X}\beta\|_1 \leq \delta_{22}$$
+
+By bounding the coefficients and their projections ($\mathbf{X}\beta$) in both $L_1$ and $L_\infty$ spaces, the solver can discard suboptimal regions of the search space much more aggressively.
+
+---
+
+### 2. Polyhedral Outer Approximation: Simplifying Curves into Straight Lines
+
+Nonlinear optimization is difficult and slow to solve directly. To overcome this, we approximate the "curvy" problem using a sequence of **Mixed-Integer Linear Programs (MILP)**, which modern solvers can handle with extreme efficiency.
+Think of it like approximating a circle by drawing a many-sided polygon around it; as you add more sides (straight lines), your approximation gets closer and closer to the actual curve.
+
+#### The Mathematical Framework
+Modern solvers perform best when working with linear or piecewise-linear structures. To handle a quadratic (squared) objective like least-squares within this linear framework, we use a **polyhedral outer approximation** $\mathcal{P}$:
+
+$$\mathcal{P} \subset \left\{ \beta : \frac{1}{2} \|\mathbf{y} - \mathbf{X}\beta\|_2^2 \leq t \right\}$$
+
+This approach breaks down the global "curvy" loss into individual, manageable pieces using auxiliary variables $t_i$ and residuals $r_i$:
+
+* **Aggregate Loss**: We ensure the sum of individual errors stays below a total threshold $t$: $\sum_{i \in [n]} t_i \leq t$.
+* **Individual Residual Bounds**: Each specific error point $r_i^2$ is bounded by its own $t_i$: $r_i^2 \leq t_i, \quad i \in [n]$.
+* **Residual Definition**: The residual is the difference between our prediction and the actual data: $\mathbf{r} = \mathbf{y} - \mathbf{X}\beta$.
+
+
+
+#### Why This Works
+Instead of trying to solve the complex squared term all at once, the algorithm surrounds the quadratic curve with a series of **linear tangential cuts**—flat planes that touch the curve. This allows the solver to leverage high-speed linear programming engines to iteratively refine the solution. Each time the solver finds a point outside the true curve, it adds a new "flat" constraint to slice away that suboptimal region, eventually "wrapping" the solution tightly around the global optimum.
