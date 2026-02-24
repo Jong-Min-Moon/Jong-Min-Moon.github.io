@@ -7,4 +7,6 @@ dropdown: true
 children: 
     - title: Coursework
       permalink: /coursework/
+    - title: Papers
+      permalink: /study/papers/
 ---
