@@ -73,24 +73,25 @@ $$
 </p>
 
 ## Weak double robustness: convergence in probability to ATE
-This means that AIPW is consistent if either the $\hat{\mu}_{(w)}(x)$ are consistent or $\hat{e}(x)$ is consistent. To see this, first consider the case where $\hat{\mu}_{(w)}(x)$ is consistent, the regression term goes to $\tau$ and the propensity term also goes to zero because of the residualization:
+This implies that AIPW is consistent if either the outcome models $$\hat{\mu}_{(w)}(x)$$ are consistently estimated or the propensity score model $$\hat{e}(x)$$ is consistent.
+To see this, first consider the case where $$\hat{\mu}_{(w)}(x)$$ is consistent. Then the regression component converges to $$\tau$$, while the propensity-weighted correction term converges to zero due to residualization.
 
 <p>
 $$
 \begin{align*}
-\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n (\hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i)) \quad &\text{ (a consistent treatment effect estimator)} \\
-&+ \frac{1}{n} \sum_{i=1}^n \left( \frac{W_i}{\hat{e}(X_i)}(Y_i - \hat{\mu}_{(1)}(X_i)) - \frac{1 - W_i}{1 - \hat{e}(X_i)}(Y_i - \hat{\mu}_{(0)}(X_i)) \right) \quad &\text{ ($\approx$ mean-zero noise)},
+\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n (\hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i)) \overset{\to}{p} \tau \\
+&+ \frac{1}{n} \sum_{i=1}^n \left( \frac{W_i}{\hat{e}(X_i)}(Y_i - \hat{\mu}_{(1)}(X_i)) - \frac{1 - W_i}{1 - \hat{e}(X_i)}(Y_i - \hat{\mu}_{(0)}(X_i)) \right) \quad &\overset{\to}{p} 0.
 \end{align*}
 $$
 </p>
 
-Second, suppose that $\hat{e}(x)$ is consistent, i.e., $\hat{e}(x) \approx e(x)$. We can express the AIPW estiamtor alternatively as IPW estiamtor plus  regression estimators weighted by propensity residuals. Then, the IPW term goes to $\tau$ and the regression term also goes to zero because of the residualization:
+Second, suppose that the propensity score model is consistent, so that $$\hat{e}(x) \approx e(x)$$. The AIPW estimator can then be rewritten as the IPW estimator plus regression adjustments weighted by the propensity score residuals. In this representation, the IPW component converges to $$\tau$$, while the regression adjustment term converges to zero due to residualization.
 
 <p>
 $$
 \begin{align*}
-\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n \left( \frac{W_iY_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)} \right) \quad &\text{ (the IPW estimator)} \\
-&+ \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(1)}(X_i) \left( 1 - \frac{W_i}{\hat{e}(X_i)} \right) - \hat{\mu}_{(0)}(X_i) \left( 1 - \frac{1 - W_i}{1 - \hat{e}(X_i)} \right)\right) \quad &\text{ ($\approx$ mean-zero noise)},
+\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n \left( \frac{W_iY_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)} \right) \quad \overset{\to}{p} \tau \\
+&+ \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(1)}(X_i) \left( 1 - \frac{W_i}{\hat{e}(X_i)} \right) - \hat{\mu}_{(0)}(X_i) \left( 1 - \frac{1 - W_i}{1 - \hat{e}(X_i)} \right)\right) \quad \overset{\to}{p} 0.
 \end{align*}
 $$  
 </p>
@@ -98,7 +99,7 @@ $$
  
 
 ## Strong double robustness: convergence speed (CLT)
- Consider the following “oracle” AIPW estimator that depends on the true $\mu_{(w)}(x)$ and $e(x)$ rather than on estimates thereof:
+ Consider the following “oracle” AIPW estimator that depends on the true $\mu_{(w)}(x), e(x)$ rather than on estimates thereof:
 
 <p>
 $$
