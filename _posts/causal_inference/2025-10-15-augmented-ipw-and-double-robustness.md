@@ -11,6 +11,7 @@ authors:
     url: "https://github.com/Jong-Min-Moon"
     affiliations:
       name: USC Marshall
+bibliography: 2025-10-15-augmented-ipw-and-double-robustness.bib
 toc:
   - name: Introduction
   - name: Statistical setting
@@ -54,51 +55,61 @@ $$
 $$
 
 ## Augmented IPW
-Given that the average treatment effect can be estimated in two different ways, i.e., by first non-parametrically estimating $e(x)$ or by first estimating $\mu_{(0)}(x)$ and $\mu_{(1)}(x)$, it is natural to ask whether it is possible to combine both strategies. This turns out to be a very good idea, and yields the augmented IPW (AIPW) estimator of Robins, Rotnitzky, and Zhao [1994]:
+AIPW mixes the two characterization of ATE by first  making a best effort attempt at $$\tau$$ by estimating $$\mu_{(0)}(x)$$ and $$\mu_{(1)}(x)$$; then, it deals with any biases of the $$\hat{\mu}_{(w)}(x)$$ by applying IPW to the regression residuals<d-cite key="robinsEstimationRegressionCoefficients1994"></d-cite>:
 
+<p>
 $$
-\hat{\tau}_{AIPW} = \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i) + \frac{W_i (Y_i - \hat{\mu}_{(1)}(X_i))}{\hat{e}(X_i)} - \frac{(1 - W_i)(Y_i - \hat{\mu}_{(0)}(X_i))}{1 - \hat{e}(X_i)} \right).
+\begin{align*}
+\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i) + \frac{W_i (Y_i - \hat{\mu}_{(1)}(X_i))}{\hat{e}(X_i)} - \frac{(1 - W_i)(Y_i - \hat{\mu}_{(0)}(X_i))}{1 - \hat{e}(X_i)} \right).
+\end{align*}
 $$
+</p>
 
-Qualitatively, AIPW can be seen as first making a best effort attempt at $\tau$ by estimating $\mu_{(0)}(x)$ and $\mu_{(1)}(x)$; then, it deals with any biases of the $\hat{\mu}_{(w)}(x)$ by applying IPW to the regression residuals.
+## Weak double robustness: convergence in probability to ATE
+This means that AIPW is consistent if either the $\hat{\mu}_{(w)}(x)$ are consistent or $\hat{e}(x)$ is consistent. To see this, first consider the case where $\hat{\mu}_{(w)}(x)$ is consistent, the regression term goes to $\tau$ and the propensity term also goes to zero because of the residualization:
 
-## Weak double robustness
-AIPW has many good statistical properties. One of its properties that is easiest to explain is “double robustness”: AIPW is consistent if either the $\hat{\mu}_{(w)}(x)$ are consistent or $\hat{e}(x)$ is consistent. To see this, first consider the case where $\hat{\mu}_{(w)}(x)$ is consistent, i.e., $\hat{\mu}_{(w)}(x) \approx \mu_{(w)}(x)$. Then,
-
+<p>
 $$
 \begin{align*}
 \hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n (\hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i)) \quad &\text{ (a consistent treatment effect estimator)} \\
 &+ \frac{1}{n} \sum_{i=1}^n \left( \frac{W_i}{\hat{e}(X_i)}(Y_i - \hat{\mu}_{(1)}(X_i)) - \frac{1 - W_i}{1 - \hat{e}(X_i)}(Y_i - \hat{\mu}_{(0)}(X_i)) \right) \quad &\text{ ($\approx$ mean-zero noise)},
 \end{align*}
 $$
+</p>
 
-because $\mathbb{E} [Y_i - \hat{\mu}_{(W_i)}(X_i) \mid X_i, W_i] \approx 0$, and so the “garbage” propensity score weight $1/\hat{e}(X_i)$, resp. $1/(1-\hat{e}(X_i))$ is multiplied by mean-zero noise that makes it go away. Thus $\hat{\tau}_{AIPW}$ is consistent.
+Second, suppose that $\hat{e}(x)$ is consistent, i.e., $\hat{e}(x) \approx e(x)$. We can express the AIPW estiamtor alternatively as IPW estiamtor plus  regression estimators weighted by propensity residuals. Then, the IPW term goes to $\tau$ and the regression term also goes to zero because of the residualization:
 
-Second, suppose that $\hat{e}(x)$ is consistent, i.e., $\hat{e}(x) \approx e(x)$. Then,
-
+<p>
 $$
 \begin{align*}
 \hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n \left( \frac{W_iY_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)} \right) \quad &\text{ (the IPW estimator)} \\
 &+ \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(1)}(X_i) \left( 1 - \frac{W_i}{\hat{e}(X_i)} \right) - \hat{\mu}_{(0)}(X_i) \left( 1 - \frac{1 - W_i}{1 - \hat{e}(X_i)} \right)\right) \quad &\text{ ($\approx$ mean-zero noise)},
 \end{align*}
+$$  
+</p>
+
+ 
+
+## Strong double robustness: convergence speed (CLT)
+ Consider the following “oracle” AIPW estimator that depends on the true $\mu_{(w)}(x)$ and $e(x)$ rather than on estimates thereof:
+
+<p>
 $$
-
-because $\mathbb{E} [1 - W_i/\hat{e}(X_i) \mid X_i] \approx 0$, and so the “garbage” regression adjustments $\hat{\mu}_{(w)}(X_i)$ is multiplied by mean-zero noise that makes it go away. Thus $\hat{\tau}_{AIPW}$ is consistent. 
-
-The above double robustness of AIPW is well known. However, while it is a nice property to have, its importance should not be overstated: It only guarantees consistency of $\hat{\tau}_{AIPW}$, whereas in most treatment effect estimation applications we also care about rates of convergence and confidence intervals. Furthermore, one might also argue that, in a modern statistical setting, one should expect practitioners to appropriate non-parametric estimators for both $\mu_{(w)}(x)$ and $e(x)$ such that both are consistent; in which case both $\hat{\tau}_{REG}$ and $\hat{\tau}_{IPW}$ would already be consistent on their own, and so the above double robustness statement (namely consistency of $\hat{\tau}_{AIPW}$) doesn’t buy us much.
-
-## Strong double robustness
-A much more interesting and useful property is the following “strong” double robustness result that quantifies the weaker consistency statement given above. Consider the following “oracle” AIPW estimator that depends on the true $\mu_{(w)}(x)$ and $e(x)$ rather than on estimates thereof:
-
-$$
+\begin{equation*}
 \hat{\tau}^*_{AIPW} = \frac{1}{n} \sum_{i=1}^n \left( \mu_{(1)}(X_i) - \mu_{(0)}(X_i) + \frac{W_i(Y_i - \mu_{(1)}(X_i))}{e(X_i)} - \frac{(1 - W_i) (Y_i - \mu_{(0)}(X_i))}{1 - e(X_i)} \right).
+\end{equation*}
 $$
+</p>
 
 Then, under flexible conditions described below, we can verify that
 
+<p>
 $$
+\begin{equation*}
 |\hat{\tau}_{AIPW} - \hat{\tau}^*_{AIPW}| = O_P \left( \max_w \mathbb{E} [(\hat{\mu}_{(w)}(X_i) - \mu_{(w)}(X_i))^2]^{\frac{1}{2}} \mathbb{E} [(\hat{e}(X_i) - e(X_i))^2]^{\frac{1}{2}} \right).
 $$
+\end{equation*}
+</p>
 
 In other words, $\hat{\tau}_{AIPW}$ is a good approximation for the oracle $\hat{\tau}^*_{AIPW}$ as long as both the outcome regressions $\hat{\mu}_{(w)}(\cdot)$ and the propensity regression $\hat{e}(\cdot)$ are reasonably accurate; and if one of them is very accurate it can tolerate the other being less so. The upshot is that, if
 
@@ -117,13 +128,10 @@ Now, $\hat{\tau}^*_{AIPW}$ is just an IID average, so we immediately see that
 $$
 \sqrt{n} (\hat{\tau}^*_{AIPW} - \tau) \Rightarrow \mathcal{N} \left(0, V^* \right),
 $$
-$$
-V^* = \text{Var} [\tau(X_i)] + \mathbb{E} \left[ \frac{\sigma^2_0(X_i)}{1 - e(X_i)} \right] + \mathbb{E} \left[ \frac{\sigma^2_1(X_i)}{e(X_i)} \right],
-$$
 
 and so whenever $\sqrt{n} (\hat{\tau}_{AIPW} - \hat{\tau}^*_{AIPW}) \xrightarrow{p} 0$ holds $\hat{\tau}_{AIPW}$ also satisfies a CLT as above. In interpreting the constraint, note that if $\hat{\mu}_{(w)}$ and $\hat{e}$ both attained the parametric “$\sqrt{n}$-consistent” rate, then the error product would be bounded as $O(1/n)$. A simple way to satisfy it is to have all regression adjustments be $o(n^{-1/4})$ consistent in root-mean squared error (RMSE), which is an order of magnitude slower than the parametric rate. Moreover, this condition doesn’t depend on the internal structure of the machine learning method used; rather, it only depends on the mean-squared error of the risk adjustments, and so justifies tuning the $\hat{\mu}_{(w)}(\cdot)$ and $\hat{e}(\cdot)$ estimates via cross-validation.
 
-To see why $\hat{\tau}^*$ has variance $V^*/n$, note that we can decompose its summands into 3 uncorrelated parts: $\mu_{(1)}(X_i) - \mu_{(0)}(X_i)$, $W_i(Y_i - \mu_{(1)}(X_i)) / e(X_i)$, and $(1 - W_i) (Y_i - \mu_{(0)}(X_i)) / (1 - e(X_i))$.
+
 
 ## Cross-fitting
 When choosing which treatment effect estimator to use in practice, we want to attain performance as in the CLT equation and so need to make sure that first-order equivalence holds. In order to formally establish this result, it is helpful to consider the following minor modification of AIPW using cross-fitting. At a high level, cross-fitting uses cross-fold estimation to avoid bias due to overfitting; the reason why this works is exactly the same as why we want to use cross-validation when estimating the predictive accuracy of an estimator.
@@ -206,11 +214,4 @@ by risk decay (3). (To establish this fact, also note that by consistency (2), t
 
 The upshot is that by using cross-fitting, we can transform any $o_P(n^{-1/4})$-consistent machine learning method into an efficient ATE estimator. Also, the proof was remarkably short (at least compared to a typical proof in the semiparametric efficiency literature).
 
-## Condensed notation
-We will be encountering cross-fit estimators frequently. From now on, we’ll use the following notation: We define the data into $K$ folds (above, $K = 2$), and compute estimators $\hat{\mu}_{(-k)}^{(w)}(x)$, etc., excluding the $k$-th fold. Then, writing $k(i)$ as the mapping that takes an observation and puts it into one of the $K$ folds, we can write
-
-$$
-\hat{\tau}_{AIPW} = \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(-k(i))}^{(1)}(X_i) - \hat{\mu}_{(-k(i))}^{(0)}(X_i) + \frac{W_i(Y_i - \hat{\mu}_{(-k(i))}^{(1)}(X_i))}{\hat{e}_{(-k(i))}(X_i)} - \frac{(1 - W_i)(Y_i - \hat{\mu}_{(-k(i))}^{(0)}(X_i))}{1 - \hat{e}_{(-k(i))}(X_i)} \right),
-$$
-
-which (almost) fits on one line.
+ 
