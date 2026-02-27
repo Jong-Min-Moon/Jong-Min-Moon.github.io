@@ -29,14 +29,17 @@ We saw that IPW is a simple ATE stimator under unconfoundedness, which is insens
 ## Two characterizations of the ATE
 The ATE can be characterized in terms of the propensity score $$e(x) = \mathbb{P} [W_i = 1 \mid X_i = x]$$, as the expectation of oracle IPW estimator:
 
+<p>
 $$
 \begin{equation*}
 \tau = \mathbb{E} [\hat{\tau}^*_{IPW}] , \quad \hat{\tau}^*_{IPW} = \frac{1}{n} \sum_{i=1}^n \left( \frac{W_i Y_i}{e(X_i)} - \frac{(1 - W_i) Y_i}{1 - e(X_i)} \right).
 \end{equation*}
 $$
+</p>
 
 However, $\tau$ can also be characterized in terms of the conditional response surfaces $\mu_{(w)}(x) = \mathbb{E} [Y_i(w) \mid X_i = x]$. Under unconfoundedness,
 
+<p>
 $$
 \begin{align*}
 \tau(x) &:= \mathbb{E} [Y_i(1) - Y_i(0) \mid X_i = x] \\
@@ -46,13 +49,17 @@ $$
 &= \mu_{(1)}(x) - \mu_{(0)}(x),
 \end{align*}
 $$
+</p>
 
 and so $\tau = \mathbb{E} [\mu_{(1)}(x) - \mu_{(0)}(x)]$. Thus we could also derive a consistent (but not necessarily optimal) estimator for $\tau$ by first estimating $\mu_{(0)}(x)$ and $\mu_{(1)}(x)$ non-parametrically, and then using 
+
+<p>
 $$
 \begin{equation*}
 \hat{\tau}_{REG} = \frac{1}{n} \sum_{i=1}^n(\hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i)).
 \end{equation*}
 $$
+</p>    
 
 ## Augmented IPW
 AIPW mixes the two characterization of ATE by first  making a best effort attempt at $$\tau$$ by estimating $$\mu_{(0)}(x)$$ and $$\mu_{(1)}(x)$$; then, it deals with any biases of the $$\hat{\mu}_{(w)}(x)$$ by applying IPW to the regression residuals<d-cite key="robinsEstimationRegressionCoefficients1994"></d-cite>:
