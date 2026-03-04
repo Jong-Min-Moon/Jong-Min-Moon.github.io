@@ -73,15 +73,15 @@ By minimizing this aggregate imbalance, the resulting matched sample of treated 
 
 Without loss of generality, we focus on a single treatment level, as the matching procedure remains identical across all levels.
 
-### Datasets
+### Notations
 The study involves units (e.g., students) defined by an outcome, a treatment status, and a set of covariates. We consider $P$ **categorical** covariates, $\mathcal{P} = \{p_1, \ldots, p_P\}$. Note that continuous variables, such as household income, are discretized into categories in this paper.
 
 In the paper's running example, the covariates include categorical variables such as gender, ethnicity, parental education levels, and household income. While each covariate in practice has a distinct number of levels, for ease of exposition we assume that each has exactly $K$ categories. Accordingly, each unit $i$ is represented by a covariate vector, for example, $\mathbf{x}_i \in [K]^P$.
 
 
 The data is organized into two distinct sets:
-1.  **Treatment Dataset ($\mathcal{L}$):** Units that received the specific treatment level under study. We denote this set as $\mathcal{L} = \{\ell_1, \ldots, \ell_L\}$. For example, a unit $\ell_1$ consists of an outcome $y_{ell_1}$, treatment $A_{ell_1}$ and a covariate vector $\mathbf{x}_{\ell_1}$. For matching stage, we only care about the covariate vector $\mathbf{x}_{\ell_1}$.
-2.  **Template Dataset ($\mathcal{T}$):** A sample drawn from the population that represents the target covariate distribution. We denote this set as $\mathcal{T} = \{t_1, \ldots, t_T\}$. Since this dataset is genereated for the matching purpose,  we only care about the covariate vector $\mathbf{x}_{t_1}$.
+1.  **Treatment Dataset ($\mathcal{L}$):** Units that received the specific treatment level under study. We denote this set as $\mathcal{L} = \{\ell_1, \ldots, \ell_L\}$. For example, a unit $\ell \in \mathcal{L}$ consists of an outcome $y_{\ell}$, a treatment $A_{\ell}$, and a covariate vector $\mathbf{x}_{\ell}$. 
+2.  **Template Dataset ($\mathcal{T}$):** A sample drawn from the population that represents the target covariate distribution. We denote this set as $\mathcal{T} = \{t_1, \ldots, t_T\}$. Since this dataset is generated for matching purposes, we only care about the covariate vector $\mathbf{x}_{t}$ for a given unit $t \in \mathcal{T}$.
 
 ### Problem Coefficients
 For each covariate $p \in \{1, \dots, P\}$ and category $k \in \{1, \dots, K\}$, we define:
