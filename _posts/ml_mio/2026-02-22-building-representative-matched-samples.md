@@ -29,6 +29,7 @@ The 2010 Chile earthquake had a magnitude of 8.8 and caused more than 500 fatali
   </div>
 </div>
 
+# Introduction
 Geographically, Chile lies along the Pacific Ring of Fire and experiences a major earthquake, on average, more than once every two years. Socially, Chile has the highest level of income inequality (as measured by the Gini index) among the 35 OECD countries, ranking above both Mexico and the United States.
 
 In this context marked by extreme income inequality and recurring natural disasters, it is crucial to understand how such shocks affect college entrance examinations—the primary pathway for social mobility. Against this backdrop, the author—then a PhD student in education at Columbia University—sought to estimate the impact of this devastating earthquake on Chilean college entrance exam scores.
@@ -38,8 +39,10 @@ The causal effect cannot be identified simply by comparing the average test scor
 
 The core principle of causal inference is that, to make a credible causal claim, the groups being compared must be equivalent in all relevant respects. Ideally, we would compare the same individual in two parallel worlds—one in which they experienced the earthquake and one in which they did not. Since such a comparison is impossible, we instead adjust for observable characteristics related to test performance and compare students who are as similar as possible along those dimensions.
 
+## Matching method
 Matching provides one way to achieve this. It pairs units in the treatment group with comparable units in the control (or other treatment) group based on shared characteristics. In practice, units that cannot be adequately matched are often discarded, which reduces the sample size but improves comparability. After matching, we obtain pairs (or matched sets) of students who are similar in observed characteristics, making the comparison between them more credible. 
 
+# Methodology
 ## Data and method
 The authors use census data from Chile. The dataset includes roughly 100,000 students. Treatment is defined as the level of earthquake exposure, measured in 10 levels.
 Each student is characterized by 14 categorical variables, including gender, ethnicity, parental education, and household income.
@@ -150,9 +153,9 @@ By shifting from a quadratic-size to a linear-size formulation, we do not sacrif
 
 **Proposition 4.2 (Integrality Guarantee for Two Covariates)** In scenarios where there are at most two covariates, the linear-size MIP is strictly integral.
 
-## Results  
+# Results  
 
-### Tables 1 and 2: Computational Speed  
+## Tables 1 and 2: Computational Speed  
 
 Tables 1 and 2 compare computational performance across different data sizes and levels of treatment granularity.
 
@@ -166,13 +169,13 @@ Table 2 fixes the template size at 1,000 and varies the total sample size from a
 
 Together, these results demonstrate the substantial efficiency gains achieved by the linear-sized formulation.
 
-### Table 3: Imbalance Measure  
+## Table 3: Imbalance Measure  
 
 Table 3 reports covariate imbalance under different numbers of treatment levels (3, 5, and 10).  
 
 In all settings, the procedure achieved **exact matching**, meaning the objective value was zero in every case. This indicates that the matched samples perfectly replicated the template distribution across all covariate categories.
 
-### Figure 2: Visualization of Causal Effects  
+## Figure 2: Visualization of Causal Effects  
 
 Figure 2 presents the estimated causal effects. The target matched sample size was approximately 1,000 students, and the procedure was repeated using different random seeds to assess stability.  
 
