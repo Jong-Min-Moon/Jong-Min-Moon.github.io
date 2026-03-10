@@ -63,4 +63,69 @@ If a langauge model is a good model, than it would assign higher probability to 
 # But How do we get these probabilites?
 The answer is: there's more than one way! But let's start with one simple, intuitive way that works resonably well in simple cases: **counting** AKA maximum likelihood estimation (MLE).
 
+"bigram model"
 Let's start by assuming that the next token is only dependent on the previous token, i.e., $P(w_t|w_1^{t-1}) = P(w_t|w_{t-1})$. This is a valid language model. It's just that not that good. In fact in real language model like GPT we also cannot use all previous tokenes. It's capped,    for example million.
+
+then the language model becomes:
+$$
+    \hat{P}(w_1^T) = \prod_{t=1}^{T} \hat{P}(w_t|w_{t-1})
+$$
+
+
+### How to count
+I want to compute $P(Cat|The)$ by counting. 
+
+the key point is we only care about the conditionals, not marginals. 
+
+Do not count the marginals.
+count "the _" not "the". count "the" followed b y something, not count "the" only. In these examples it's easy because all the are followed by other word. but if there's a setnence "I went to the" then we don't count "the" in this sentence. if we have trigram model, than we should count "the _ _".
+
+18 "the_"
+
+THen count "the cat"
+C(the _) = 18
+C(the cat) = 3
+
+then $P(Cat|The) = \frac{C(the cat)}{C(the_)} = \frac{3}{18} = \frac{1}{6}$
+
+some probabilities can be 0.
+
+2. introduce dummy \<S\> token at the start of the sentence. the reason is only to estiamte conditional probabilities. n-gram model requires n-1 start tokens
+
+# What if we have web-scale data?
+what would happen to our bigram and trigarm model> does the amount of data mattrer? to what extent?
+
+how might you try to improve your probability estimates?
+
+More importantly, how do you know your probability estiamtes are good> what's the true metric of sucess?
+
+
+
+Another example.
+..
+...
+...
+
+1. using a biagram model, what is the probability of 'walked' after 'when it got ark the cat'?
+   because of the bigram mdoel. actually we only need to estimate P(walked|cat).
+2. what if we don;t make that assumption? we go back to the defintion of language model:
+P(walked|when it got dark the cat)=P(when|<S>) * p(it|<S> when) P (got|<S> when it)...
+= 0 because one of the probabilty is 0.
+So as the model gets complicated, there;s more cahnge that setnences have zero probabilities, if not enough data. bigger model requires more data
+
+
+
+trigram model
+p(the cat jumped over)
+=
+p(the|s s) * p(cat|s the) * p(jumped|the cat) * p(over| cat jumped)
+
+p(jumped | the cat) = C(the cat jumped) / C(the cat _). always the last is blank
+
+
+
+
+when computing perplexity, assume the start token exists at the beginning
+
+
+what the formula tells us: perpexity is bouned by 1. small is better
