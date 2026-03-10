@@ -17,7 +17,7 @@ toc:
   - name: Discussion Questions
 ---
 
-## Problem Description
+# Problem Description
 
 Suppose that we have $n$ data points $\{\mathbf{a}_i\}_{i=1}^n \subseteq \mathbb{R}^d$ representing their locations. We aim to select at most $k$ of these locations to serve as cluster centers. Each data point is then either assigned to exactly one center or classified as an outlier. This is modeled using a variant of the Facility Location Problem. Unlike the standard formulation, this version incorporates two specific features:
 
@@ -38,7 +38,7 @@ Suppose that we have $n$ data points $\{\mathbf{a}_i\}_{i=1}^n \subseteq \mathbb
 *   $C > 0$: The capacity limit, representing the maximum number of points any single cluster can accommodate.
 *   $k$: maximum number of clusters.
 
-## Solving the problem using integer programming
+# Formulating as an optimizaiton problem
 
 ### Objective
 - Intra-cluster distance: For cluster $j$, $\sum_{i=1}^n  d_{ij}x_{ij}$ is the total distance between points assigned to cluster $j$ and the cluster center $j$. We want to minimize sum of these intra-cluster distances over all clusters.
@@ -47,9 +47,23 @@ Suppose that we have $n$ data points $\{\mathbf{a}_i\}_{i=1}^n \subseteq \mathbb
 The problem can be formulated as the following Mixed-Integer Optimization (MIO) problem:
 
 ### Constraints
-- i-perspective: ith location is only assigned to exactly one cluster center: $\sum_{j=1}^n x_{ij} = 1$. WE make a twist of being classified as outlier and being un-assigned: $\sum_{j=1}^n x_{ij} + z_i= 1$. So either assigned to a cluster, or labeled as an outlier.
-- j-perspecice: when y_j =1, we have for cluster id j, it can handle up to C locations. when y_j = 0, no location can be assigned to cluster id j. Thus $\sum_{i=1}^n x_{ij} \le C y_j$.
-- We set the maximum number of clusers . $\sum_{j=1}^n y_j \le k $
+
+- **i-perspective:** Each point must either be assigned to exactly one cluster or be classified as an outlier. This is expressed as  
+  $$
+  \sum_{j=1}^{n} x_{ij} + z_i = 1 \quad \forall i,
+  $$  
+  where $x_{ij} = 1$ if point $i$ is assigned to cluster $j$, and $z_i = 1$ if point $i$ is an outlier.
+
+- **j-perspective:** Each cluster can only accommodate points if it is open, and cannot exceed its capacity $C$. Formally,  
+  $$
+  \sum_{i=1}^{n} x_{ij} \le C \, y_j \quad \forall j,
+  $$  
+  where $y_j = 1$ if cluster $j$ is opened.
+
+- **Cluster limit:** The total number of clusters cannot exceed $k$, i.e.,  
+  $$
+  \sum_{j=1}^{n} y_j \le k.
+  $$
 
 ### Optimization problem
 Combining these together, we have linear objective and linear constraint, so an binary integer program:
