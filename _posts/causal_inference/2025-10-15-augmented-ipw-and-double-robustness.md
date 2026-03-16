@@ -79,8 +79,8 @@ To see this, first consider the case where $$\hat{\mu}_{(w)}(x)$$ is consistent.
 <p>
 $$
 \begin{align*}
-\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n (\hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i)) \overset{\to}{p} \tau \\
-&+ \frac{1}{n} \sum_{i=1}^n \left( \frac{W_i}{\hat{e}(X_i)}(Y_i - \hat{\mu}_{(1)}(X_i)) - \frac{1 - W_i}{1 - \hat{e}(X_i)}(Y_i - \hat{\mu}_{(0)}(X_i)) \right) \quad &\overset{\to}{p} 0.
+\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n (\hat{\mu}_{(1)}(X_i) - \hat{\mu}_{(0)}(X_i)) \overset{p}{\to} \tau \\
+&+ \frac{1}{n} \sum_{i=1}^n \left( \frac{W_i}{\hat{e}(X_i)}(Y_i - \hat{\mu}_{(1)}(X_i)) - \frac{1 - W_i}{1 - \hat{e}(X_i)}(Y_i - \hat{\mu}_{(0)}(X_i)) \right) \quad &\overset{p}{\to} 0.
 \end{align*}
 $$
 </p>
@@ -90,8 +90,8 @@ Second, suppose that the propensity score model is consistent, so that $$\hat{e}
 <p>
 $$
 \begin{align*}
-\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n \left( \frac{W_iY_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)} \right) \quad \overset{\to}{p} \tau \\
-&+ \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(1)}(X_i) \left( 1 - \frac{W_i}{\hat{e}(X_i)} \right) - \hat{\mu}_{(0)}(X_i) \left( 1 - \frac{1 - W_i}{1 - \hat{e}(X_i)} \right)\right) \quad \overset{\to}{p} 0.
+\hat{\tau}_{AIPW} &= \frac{1}{n} \sum_{i=1}^n \left( \frac{W_iY_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)} \right) \quad \overset{p}{\to} \tau \\
+&+ \frac{1}{n} \sum_{i=1}^n \left( \hat{\mu}_{(1)}(X_i) \left( 1 - \frac{W_i}{\hat{e}(X_i)} \right) - \hat{\mu}_{(0)}(X_i) \left( 1 - \frac{1 - W_i}{1 - \hat{e}(X_i)} \right)\right) \quad \overset{p}{\to} 0.
 \end{align*}
 $$  
 </p>
@@ -262,5 +262,5 @@ $$
 by risk decay (3). (To establish this fact, also note that by consistency (2), the estimated propensities will all eventually also be uniformly bounded away from 0, $\eta/2 \leq \hat{e}_{\mathcal{I}_2}(X_i) \leq 1 - \eta/2$, and so the MSE for the inverse weights decays at the same rate as the MSE for the propensities themselves.)
 
 The upshot is that by using cross-fitting, we can transform any $o_P(n^{-1/4})$-consistent machine learning method into an efficient ATE estimator. Also, the proof was remarkably short (at least compared to a typical proof in the semiparametric efficiency literature).
-Stefan Wager recommends:
+Stefan Wager recommends <d-cite key="wager2024stats361"></d-cite>:
 > When I talk about AIPW, I’ll implicitly assume we’re using cross-fitting unless specified otherwise. I also recommend using cross-fitting when implementing AIPW in practice.

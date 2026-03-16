@@ -178,5 +178,37 @@ We aim to minimize the cross-entropy loss between the predicted probability dist
 
 ![Trained Probabilities](/assets/img/transformer/output_trained_model_probability_distributions.png)
 
-## Go Forth And Transform
-I hope you’ve found this a useful place to start to break the ice with the major concepts of the Transformer.
+
+
+## Problem Setup
+
+In self-attention, \(Q\), \(K\), and \(V\) all derive from the same input sequence of length \(n\). Given the following matrices with sequence length \(n = 2\) and dimension \(d_k = 2\):
+
+### Query
+
+$$
+Q = \begin{bmatrix}
+1 & 2 \\
+0 & 1
+\end{bmatrix}
+$$
+
+### Key
+
+$$
+K = \begin{bmatrix}
+1 & 1 \\
+0 & 1
+\end{bmatrix}
+$$
+
+### Value
+
+$$
+V = \begin{bmatrix}
+5 & 0 \\
+0 & 5
+\end{bmatrix}
+$$
+
+Each row represents a token in the sequence. \(Q[i]\) is the query for token \(i\), \(K[j]\) is the key for token \(j\), and \(V[j]\) is the value for token \(j\).
