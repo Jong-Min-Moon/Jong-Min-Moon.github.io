@@ -2,7 +2,7 @@
 layout: distill
 title: "Leetcode 283: Move Zeroes"
 description: "A two-pointer approach to move all non-zero elements to the front of an array"
-tags: algorithms two-pointers arrays
+tags: algorithms two-pointers arrays same-direction-traversal
 categories: eee-2020
 date: 2018-09-20
 featured: false
@@ -17,6 +17,7 @@ authors:
 - We need one pointer (`read`) to read the new number and decide whether it is 0 or not.
 - If it is nonzero, we need to move it to the front. However we need to keep the order of the non-zero elements and we don't want to overwrite.
 - Thus we need a second pointer (`record`) to keep track of the position where the next non-zero element should be placed.
+- This is the basic idea of same-direction-traversal two-pointer approach.
 
 ## Initialization
 - `read` obviously starts from 0.
