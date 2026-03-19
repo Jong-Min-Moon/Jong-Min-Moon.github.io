@@ -19,7 +19,7 @@ toc:
 
 # Problem Description
 
-Suppose that we have $n$ data points $\{\mathbf{a}_i\}_{i=1}^n \subseteq \mathbb{R}^d$ representing their locations. We aim to select at most $k$ of these locations to serve as cluster centers. Each data point is then either assigned to exactly one center or classified as an outlier. This is modeled using a variant of the Facility Location Problem. Unlike the standard formulation, this version incorporates two specific features:
+Suppose that we have $n$ data points $\mathbf{a}_1, \ldots, \mathbf{a}_m \in \mathbb{R}^d$ representing their locations. We aim to select at most $k$ of these locations to serve as cluster centers. Each data point is then either assigned to exactly one center or classified as an outlier. This is modeled using a variant of the Facility Location Problem. Unlike the standard formulation, this version incorporates two specific features:
 
 *   **Outlier Rejection**: Points that are too costly to assign to any center may be excluded from the clusters.
 *   **Capacity Constraints**: An upper bound is imposed on the number of points that can be assigned to any single cluster.
@@ -49,21 +49,33 @@ The problem can be formulated as the following Mixed-Integer Optimization (MIO) 
 ### Constraints
 
 - **i-perspective:** Each point must either be assigned to exactly one cluster or be classified as an outlier. This is expressed as  
+
+<p>
   $$
+  \begin{equation*}
   \sum_{j=1}^{n} x_{ij} + z_i = 1 \quad \forall i,
-  $$  
+  \end{equation*}
+  $$
+</p>
+
   where $x_{ij} = 1$ if point $i$ is assigned to cluster $j$, and $z_i = 1$ if point $i$ is an outlier.
 
-- **j-perspective:** Each cluster can only accommodate points if it is open, and cannot exceed its capacity $C$. Formally,  
+- **j-perspective:** Each cluster can only accommodate points if it is open, and cannot exceed its capacity $C$. Formally,
+  
+<p>  
   $$
   \sum_{i=1}^{n} x_{ij} \le C \, y_j \quad \forall j,
   $$  
+</p>
+
   where $y_j = 1$ if cluster $j$ is opened.
 
 - **Cluster limit:** The total number of clusters cannot exceed $k$, i.e.,  
+<p>
   $$
   \sum_{j=1}^{n} y_j \le k.
   $$
+</p>
 
 ### Optimization problem
 Combining these together, we have linear objective and linear constraint, so an binary integer program:

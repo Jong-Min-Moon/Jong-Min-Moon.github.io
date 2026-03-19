@@ -138,17 +138,18 @@ After 5 minutes, the solver's gap remained large:
 
 This indicates that the MIQCP is **still hard to solve exactly**, and we may need to **tighten the formulation** for better convergence.
 
----
-
-## Centroids Found
 
 The solver returned the following centroids:
 
 ```python
 array([[ 66.32243059, 129.07219318],
        [ 41.92044401,  48.09716577]])
+```
 
-       to visualize:
-/assets/img/kmeans_out.png
+to visualize:
+```liquid
+{% include figure.html path="assets/img/kmeans_out.png" class="img-fluid rounded z-depth-1" %}
+```
 
-actuakly visually it olooks good. maybe setting cluster number as 2 was mistkae.
+Visually, the clusters look reasonable, suggesting that the problem may not be infeasible. It is possible that choosing 
+$k=2$ clusters is limiting the solver from finding a lower objective.
