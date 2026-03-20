@@ -2,7 +2,7 @@
 layout: distill
 title: "Leetcode 283: Move Zeroes"
 description: "A two-pointer approach to move all non-zero elements to the front of an array"
-tags: algorithms two-pointers arrays same-direction-traversal
+tags: algorithms two-pointers arrays same-direction-traversal taxi
 categories: eee-2020
 date: 2018-09-20
 featured: false
