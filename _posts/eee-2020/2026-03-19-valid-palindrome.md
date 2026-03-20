@@ -11,6 +11,7 @@ authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"
 ---
+Original problem is [here](https://leetcode.com/problems/valid-palindrome/description/).
 
 # Inward Traversal Two-Pointer Approach
 
@@ -73,10 +74,3 @@ class Solution:
 
 - **Space Complexity**: $O(n)$. We create a new cleaned string which takes space proportional to the original string length. An optimized in-place solution would achieve $O(1)$ space.
 - **Time Complexity**: $O(n)$. We traverse the list to clean it, and then traverse it again with two pointers. Both take linear time.
-
-# Optimized solution
-
-```python
-class Solution:
-    
-```
