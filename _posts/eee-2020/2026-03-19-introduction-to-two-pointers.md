@@ -36,11 +36,7 @@ These pointers generally serve two different but supplementary purposes. A commo
 
 ## Inward traversal
 
-This approach has pointers starting at opposite ends of the data structure and moving inward toward each other:
-
-> *Image represents a visual depiction of a two-pointer approach in a coding pattern, likely for array traversal or similar operations. The diagram shows a sequence of eight black dots enclosed within square brackets, representing elements in a data structure. Above the dots, two rectangular boxes are labeled 'left' (in orange) and 'right' (in light blue). Dashed orange lines connect the 'left' box to the first four dots, indicating a pointer traversing from left to right across this section. Similarly, dashed light blue lines connect the 'right' box to the last four dots, showing a pointer moving from right to left. Both pointers converge on the central dot, suggesting a meeting point in the algorithm. The arrows from the 'left' and 'right' boxes point downwards, indicating the direction of pointer movement towards the center. The overall structure illustrates a common algorithm strategy where two pointers start from opposite ends of a data structure and move towards each other until they meet or a specific condition is met.*
-
-The pointers move toward the center, adjusting their positions based on comparisons, until a certain condition is met, or they meet/cross each other. This is ideal for problems where we need to compare elements from different ends of a data structure.
+This approach has pointers starting at opposite ends of the data structure and moving inward toward each other. The pointers move toward the center, adjusting their positions based on comparisons, until a certain condition is met, or they meet/cross each other. This is ideal for problems where we need to compare elements from different ends of a data structure. Palindrome is a good example of this approach.
 
  
 
