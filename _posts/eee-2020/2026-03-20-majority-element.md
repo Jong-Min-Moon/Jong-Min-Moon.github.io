@@ -36,25 +36,20 @@ The original problem is [here](https://leetcode.com/problems/majority-element/).
 
 *(Note: There is also an $O(1)$ space solution to this problem known as the Boyer-Moore Voting Algorithm, but using a Hash Map frequency table is a very robust general string/array counting pattern!)*
 
-## My solution
+# My solution
 
 ```python
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        count = {}
-        res = 0
+        max_num = 0
         max_count = 0
-        
-        for n in nums:
-            # Update the hashmap frequency table
-            count[n] = count.get(n, 0) + 1
-            
-            # Compare with the best pair
-            if count[n] > max_count:
-                res = n
-                max_count = count[n]
-                
-        return res
+        count = {}
+        for num in nums:
+            count[num] = count.get(num, 0) + 1
+            if count[num] > max_count:
+                max_num = num
+                max_count = count[num]
+        return max_num
 ```
 
 ## Complexity Analysis
