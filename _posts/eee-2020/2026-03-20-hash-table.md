@@ -15,7 +15,7 @@ authors:
 # Basic Idea
 - Hash table is a key-value lookup.
 - This means that it saves the data as key-value pairs very quickly, and fetch the data for given key very quickly.
-- Importantly, keys are not necessarily integers. They can be strings, objects, etc (for integer keys, arrays are already good enough)
+- Importantly, keys are not necessarily integers or contiguous. They can be strings, objects, etc (for integer keys, arrays are already good enough)
 - good for saving dynamic set of data
 - For coding test, just remember that it does insert, delete, search in O(1) on average. Especially good for search!
 - It uses a hash function to convert a key into an integer index (or hash code) and link it to the value.
