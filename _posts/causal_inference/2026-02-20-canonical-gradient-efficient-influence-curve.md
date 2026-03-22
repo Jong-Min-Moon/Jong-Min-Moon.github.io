@@ -3,7 +3,7 @@ layout: distill
 title: "Lecture 16: Canonical Gradient and Efficient Influence Curve"
 description: "Notes by Rachael Phillips for PB HLTH 290, Spring 2019"
 date: 2026-02-20
-categories: causal_inference statistics
+categories: dso-603 statistics
 tags: causal-inference asymptotic-efficiency efficiency-theory
 project: causal_inference
 authors:

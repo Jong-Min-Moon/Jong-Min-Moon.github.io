@@ -3,7 +3,7 @@ layout: distill
 title: "Potential Outcome Framework and Matching Estimators"
 description: "An introduction to the Neyman-Rubin causal model and matching methods"
 date: 2026-03-03
-categories: causal_inference statistics
+categories: dso-603 statistics
 tags: causal-inference matching potential-outcomes
 project: causal_inference
 authors:

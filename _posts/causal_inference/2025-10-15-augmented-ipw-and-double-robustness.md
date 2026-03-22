@@ -3,7 +3,7 @@ layout: distill
 title: "Augmented IPW and Double Robustness"
 description: "AIPW estimator, double robustness, and cross-fitting"
 date: 2025-10-15
-categories: causal_inference statistics
+categories: dso-603 statistics
 tags: causal-inference aipw double-robustness
 project: causal_inference
 authors:

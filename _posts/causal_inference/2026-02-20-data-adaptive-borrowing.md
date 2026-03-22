@@ -3,7 +3,7 @@ layout: distill
 title: "Paper review: Improving randomized controlled trial analysis via data-adaptive borrowing"
 description: "A deep dive into how machine learning and adaptive lasso can enhance RCTs by selectively borrowing information from external controls."
 date: 2026-02-20
-categories: causal_inference statistics
+categories: dso-603 statistics
 tags: causal-inference medical-statistics adaptive-lasso machine-learning
 project: causal_inference
 authors:

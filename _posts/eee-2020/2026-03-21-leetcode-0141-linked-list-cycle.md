@@ -100,3 +100,6 @@ class Solution:
 
 - **Space Complexity**: $O(1)$. We strictly utilize two lightweight tracker nodes (`slow` and `fast`), slashing the heavy mapping footprint of the $O(N)$ Hash Set approach.
 - **Time Complexity**: $O(N)$. If there is no cycle, the fast pointer reaches the list boundaries naturally in precisely $N/2$ steps. If there actually is a cycle, the cyclic distance between the two pointers never exceeds $N$, and since the fast pointer functionally closes that gap by exactly $1$ node per structural loop step, it terminates safely in $\le N$ time.
+
+# References
+- https://www.youtube.com/watch?v=gBTe7lFR3vc

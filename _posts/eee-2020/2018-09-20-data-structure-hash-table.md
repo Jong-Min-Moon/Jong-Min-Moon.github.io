@@ -18,6 +18,7 @@ authors:
 - Importantly, keys are not necessarily integers or contiguous. They can be strings, objects, etc (for integer keys, arrays are already good enough)
 - good for saving dynamic set of data
 - For coding test, just remember that it does insert, delete, search in O(1) on average. Especially good for search!
+  - For example, it turns $O(n^2)$ algorithm, which does $O(n)$ searches at each iterations out of total $n$ elements, to $O(n)$ algorithm since the search now costs $O(1)$ per iteration.
 - It uses a hash function to convert a key into an integer index (or hash code) and link it to the value.
 
 # Hash Function and Collisions

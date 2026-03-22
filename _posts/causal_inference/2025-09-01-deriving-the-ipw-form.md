@@ -3,7 +3,7 @@ layout: distill
 title: "Deriving the IPW Estimator: From One RCT to Infinite RCTs under Unconfoundedness"
 description: "An intuitive derivation of the Inverse Probability Weighting (IPW) estimator from a single RCT to multiple RCTs and observational data."
 date: 2025-09-01
-categories: causal_inference statistics
+categories: dso-603 statistics
 tags: causal-inference ipw
 project: causal_inference
 authors:

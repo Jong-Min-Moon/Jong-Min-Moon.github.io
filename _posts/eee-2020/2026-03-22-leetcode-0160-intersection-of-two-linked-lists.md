@@ -100,3 +100,7 @@ class Solution:
 
 - **Space Complexity**: $O(1)$. We only use two pointers (`pA` and `pB`), which requires constant extra space regardless of the size of the linked lists.
 - **Time Complexity**: $O(N + M)$, where $N$ and $M$ are the lengths of the two linked lists. In the worst-case scenario, each pointer traverses both lists exactly once before meeting at the intersection node or `None`.
+
+# References
+- https://www.youtube.com/@CodingNinjaExAmazon?sub_confirmation=1
+

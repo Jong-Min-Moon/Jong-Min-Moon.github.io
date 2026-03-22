@@ -3,7 +3,7 @@ layout: distill
 title: "FWL Theorem"
 description: "Frisch-Waugh-Lovell theorem"
 date: 2025-09-25
-categories: causal_inference
+categories: dso-603
 tags: fwl-theorem
 project: causal_inference
 authors:

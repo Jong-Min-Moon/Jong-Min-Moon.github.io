@@ -3,7 +3,7 @@ layout: distill
 title: "When Does Linear Regression Yield Causal Inference?"
 description: "Intuition on ATE estimation under unconfoundedness and overlap"
 date: 2025-08-25
-categories: causal_inference statistics
+categories: dso-603 statistics
 tags: causal-inference linear-regression
 project: causal_inference
 authors:
