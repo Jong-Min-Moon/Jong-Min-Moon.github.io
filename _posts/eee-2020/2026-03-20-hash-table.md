@@ -39,11 +39,20 @@ my_hash_map = {}
 # Insert - O(1) average time
 my_hash_map["apple"] = 5
 my_hash_map["banana"] = 10
+```
 
-# Lookup - O(1) average time
+## Lookup
+- use `.get()` instead of `[]` to avoid `KeyError`.
+- use `in` to check if the key exists.
+
+```python
+# Lookup - O(1) average time. .get and in
+my_hash_map.get("apple", 0)
 if "apple" in my_hash_map:
     print(my_hash_map["apple"]) # Output: 5
+```
 
+```python
 # Delete - O(1) average time
 del my_hash_map["banana"]
 ```
