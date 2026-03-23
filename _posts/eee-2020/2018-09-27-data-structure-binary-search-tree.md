@@ -59,14 +59,18 @@ authors:
 
 # Traversal
 
-## Post-order Traversal
-
-Many problems in BST is solved by traversal. The general idea is as follows:
+## Depth-First Search (DFS)
+- This method is classified with respect to order between subtrees and the root. 
+- Subtrees call recursions so they are expensive. Node is usually cheap.
+- Also, root note is always physically visited first. But in traversals visit means some operation, such as printing or computing.
+### Post-order Traversal
+Many problems in BST is solved by this traversal. The general idea is as follows:
 1. Finding one or more base cases
 2. Calling the same function on the left subtree
 3. Calling the same function on the right subtree
 4. Combining the results
-this is called **Post-order Traversal:** visiting the left subtree, the right subtree, and then the root. Useful for safely deleting the entire tree from the bottom up.
+
+The root is visited after visiting the left and right subtrees, because the results should be combined. So we do the expensive operations first.
 
 ### treeSum
 A very easy example of traversal is to find the sum of all nodes in a tree.
@@ -121,9 +125,14 @@ def reverseTree(root):
     return root
 ```
 
-## Other traversals
-- **In-order Traversal:** Visiting the left subtree, the root, and then the right subtree. Because of the BST property, an in-order traversal of a BST visits the nodes in **ascending sorted order**.
-- **Pre-order Traversal:** Visiting the root, the left subtree, and then the right subtree. Often used for copying a tree.
+## In-order Traversal
+- `left -> root -> right`. 
+- Because of the BST property, an in-order traversal of a BST visits the nodes in **ascending sorted order**.
+- This allows us to think of a BST as a sorted array.
+- Complexity: $O(n)$.
+
+## Pre-order Traversal
+- `root -> left -> right`. Often used for copying a tree.
 
 
 # Implementation in Python
@@ -177,3 +186,5 @@ class BST:
 - Data Structures: Binary Search Tree (https://youtu.be/i_Q0v_Ct5lY?si=1LRwlMGZX_fTdIOo)
 - How to solve (almost) any binary tree coding problem
  (https://youtu.be/s2Yyk3qdy3o?si=79XX6gvPli3loC_P)
+- Post-order tree traversal in 2 minutes
+ (https://youtu.be/4zVdfkpcT6U?si=E4uA3Mv6oAnRLMxV)
