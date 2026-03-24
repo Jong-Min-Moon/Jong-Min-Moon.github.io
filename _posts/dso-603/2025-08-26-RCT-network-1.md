@@ -101,11 +101,12 @@ The naive A/B test estimates a 200% increase in rides, overestimating the true g
 
 ## Statistical Interference
 
-Why did this breakdown occur? It is due to a statistical phenomenon known as **interference**, which is a violation of the Stable Unit Treatment Value Assumption (SUTVA). 
+- This bias is due to **interference**, which is a violation of the Stable Unit Treatment Value Assumption (SUTVA). 
 
-A key assumption of causal inference is that a unit's potential outcomes are unaffected by the group assignments of *other* units. **Interference occurs when assigning User B to treatment negatively impacts the potential outcome of User A.** 
+- A key assumption of causal inference is that a unit's potential outcomes are unaffected by the group assignments of *other* units. 
+- **Interference occurs when assigning User B to treatment affects the potential outcome of User A.** 
 
-When User B's Prime Time was subsidized, User B "stole" the single driver with much higher probability, tanking User A's expected rides to 0.25. This drove the Control group down and the Treatment group up, exaggerating the true effect of the subsidy.
+- When User B's Prime Time was subsidized, User B "stole" the single driver with much higher probability, tanking User A's expected rides down.
 
 ## Alternative Experiment Designs
 
