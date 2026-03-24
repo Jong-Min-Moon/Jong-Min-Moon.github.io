@@ -33,7 +33,7 @@ layout: default
 
   <!-- Related Posts Section -->
   {% assign project_handle = page.project_handle | default: page.title %}
-  {% assign related_posts = site.posts | where: "project", project_handle %}
+  {% assign related_posts = site.posts | where: "project", project_handle | reverse %}
 
   {% if related_posts.size > 0 %}
   <h2 class="mt-4">Project Updates</h2>

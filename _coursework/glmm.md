@@ -43,3 +43,59 @@ Enrollment is restricted to students who have completed the following prerequisi
 - Linear mixed models
 - Generalized linear mixed models
 - Models for longitudinal data
+
+---
+
+# Related Posts
+
+<div class="projects">
+{% assign category_posts = site.categories['glmm'] | reverse %}
+
+{% if category_posts.size > 0 %}
+  <!-- Collect all unique tags -->
+  {% assign all_tags = "" | split: "" %}
+  {% for post in category_posts %}
+    {% for tag in post.tags %}
+      {% assign all_tags = all_tags | push: tag %}
+    {% endfor %}
+  {% endfor %}
+  {% assign unique_tags = all_tags | uniq | sort %}
+
+  <div class="project-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      {% for tag in unique_tags %}
+      <button class="filter-btn" data-filter="{{ tag }}">{{ tag }}</button>
+      {% endfor %}
+  </div>
+
+  <div class="grid">
+    <div class="grid-sizer"></div>
+    {% for post in category_posts %}
+      <div class="grid-item" data-category="{{ post.tags | jsonify | escape }}">
+        {% if post.redirect -%}
+        <a href="{{ post.redirect }}">
+        {%- else -%}
+        <a href="{{ post.url | relative_url }}">
+        {%- endif %}
+          <div class="card hoverable">
+            <div class="card-body">
+              <h2 class="card-title text-lowercase">{{ post.title }}</h2>
+              <p class="card-text">{{ post.description }}</p>
+              <div class="row ml-1 mr-1 p-0">
+                {% for tag in post.tags %}
+                  <span class="badge badge-secondary mr-1 mb-1">{{ tag }}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Filter Script -->
+  <script src="{{ '/assets/js/projects.js' | relative_url }}"></script>
+{% else %}
+  <p>No posts found for this course yet.</p>
+{% endif %}
+</div>
