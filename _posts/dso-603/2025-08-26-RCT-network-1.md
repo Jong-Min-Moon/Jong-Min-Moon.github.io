@@ -11,41 +11,91 @@ authors:
     url: "https://jongminmoon.github.io"
 ---
 
+# Network interference in A/B testing
 
+- A/B testing is not a fully solved problem. Lots of fruits left for reseaerchers.
+- In ridesharing marketplace systems where supply and demand are affected by evolving network dynamics, user level RCT violates SUTVA and bias treatment effect.
 
-A/B testing is not a solved problem. In ridesharing marketplace systems where supply and demand are affected by network effects, naively randomizing users into control and treatment groups can violently bias the effect estimates.
-
-This post summarizes Part 1 of the Lyft Engineering series by Nicholas Chamandy, ["Experimentation in a Ridesharing Marketplace: Interference Across a Network"](https://eng.lyft.com/experimentation-in-a-ridesharing-marketplace-b39db027a66e), written in 2016. 
+- This post summarizes Part 1 of the Lyft Engineering series by Nicholas Chamandy, ["Experimentation in a Ridesharing Marketplace: Interference Across a Network"](https://eng.lyft.com/experimentation-in-a-ridesharing-marketplace-b39db027a66e), written in 2016. 
 
 ## The Problem: Network Dynamics and Pricing
 
-Consider a simple, microscopic example of **undersupply**: Two prospective passengers (User A and User B) open the app simultaneously, but there is only **one available driver**. To maintain driver availability, Lyft may trigger "Prime Time" (surge pricing).
+- Consider a simple **undersupply** scenario: User A, User B, and **one available driver**.
+- This triggers **"Prime Time" (surge pricing)**, which displays **prime time** badge in the Lyft app and the price is 1.5x higher than normal.
+- We want to estimate the causal effect of subsidy for surge pricing (W=0: surge pricing, W=1: subsidy for surge pricing).
+- Simplifying assumption: driver do not react to surge pricing. Only passengers react to surge pricing.
 
-Suppose Lyft wants to test the effect of **subsidizing Prime Time** (paying the surge cost on the passenger's behalf). The metric of interest is the **total number of rides completed on average**.
-- If a user sees Prime Time, they have a 50% chance of requesting a ride.
-- If a user receives the subsidy (does not see Prime Time), they have a 100% chance of requesting a ride.
+### Network effect
+- Since there is only one driver, if user A requests a ride, user B cannot request a ride. 
+- Therefore, user A's request affects user B's outcome. This is a violation of SUTVA.
 
-### Comparing the Parallel Universes
-To find the **Global Average Treatment Effect (ATE)**, we examine two counterfactuals:
-1. **Global Control (No Subsidy):** Both users see Prime Time. 
-   - A requests 50% of the time, B requests 50% of the time. 
-   - If both request, only one can get a ride.
-   - Using basic probability, the expected number of completed rides is **0.75**.
+### Causal estimand
+- Let $Y_A$ and $Y_B$ be the number of rides completed by user A and user B, respectively. 
+- Let $W_A$ and $W_B$ be the treatment assignments for user A and user B, respectively. 
+- We are interested in the causal effect of the subsidy on the total number of rides completed, which is given by 
+<p align="center">
+\begin{equation*}
+    \tau := E[Y_A + Y_B | W_A=1, W_B=1] - E[Y_A + Y_B | W_A=0, W_B=0]
+\end{equation*}
+</p>
+- This definition is diffferent from ATE where unit indicators are collapsed. Since SUTVA is violated, we cannot use the standard ATE definition.
+
+### Rider behavior model
+- Whether user A opens the app first or user B opens the app first is uniformly random. 
+- If no prime time, the user requests a ride with probability 1.
+- If surge pricing is on, the user requests a ride with probability 0.5. 
+
+### If there are parallel universes
+1. **Global Control (No Subsidy for both):** Both users see Prime Time. 
+   - By 0.5 + (1-0.5)*0.5 = 0.75 and symmetry, we have 
+   <p align="center">
+   \begin{equation*}
+       E[Y_A + Y_B | W_A=0, W_B=0] = 0.5*0.75 + 0.5*0.75 = 0.75
+   \end{equation*}
+   </p>
 2. **Global Treatment (Subsidy for All):** Neither sees Prime Time. Wait times aside, the first one to request gets the single driver.
-   - The expected number of completed rides is exactly **1.0**.
+   - The expected number of completed rides is exactly 
+   <p align="center">
+   \begin{equation*}
+       E[Y_A + Y_B | W_A=1, W_B=1] = 0.5 + 0.5 = 1
+   \end{equation*}
+   </p>
 
 The true causal treatment effect of the subsidy is an increase in completed rides from 0.75 to 1.0, a **33% increase**.
 
 ## Naive A/B Testing: Randomizing Users
+- In reality, there is no parallel universe. We randomly pick a user and give subsidy. Another user do not receive subsidy. 
+- without loss of generality assume user A is in control group (surge pricing) and user B is in treatment group (subsidy). 
 
-If we test this subsidy by randomly assigning passengers to groups, we create a third, mutually exclusive universe. Suppose User A is assigned to the **Control Group** (sees Prime Time) and User B is assigned to the **Treatment Group** (gets the subsidy). 
+### User A (Control; no subsidy; surge priced)
+- Has a 50% chance to request. However, User A can only get a ride if they open the app first (50% chance). Otherwise, User B (subsidized) will request immediately and take the driver. 
+- User A's expected rides is 
 
-Let's calculate the expected rides for each user under this naive randomization:
-- **Treatment User B:** Has a 100% chance to request. User B will *always* get the driver, unless User A happened to open the app slightly earlier (50% chance) *and* decided to accept Prime Time (50% chance of that half). User B's expected rides is **0.75**.
-- **Control User A:** Has a 50% chance to request. However, User A can only get a ride if they open the app first (50% chance). Otherwise, User B will request immediately and take the driver. User A's expected rides is **0.25**.
+<p align="center">
+\begin{equation*}
+    E[Y_A + Y_B | W_A=0, W_B=1] = 0.25
+\end{equation*}
+</p>
 
-Calculating the **Estimated Treatment Effect**:
-- (Treatment - Control) / Control = (0.75 - 0.25) / 0.25 = **+200%**.
+- User A represents all users in parlalel universe 1. So $E[Y_A + Y_B | W_A=0, W_B=0]$ is estimated as $E[Y_A + Y_B | W_A=0, W_B=1] = 0.25$ 
+- This is smaller than the true value 0.75
+
+### User B (Treatment; subsidy; not surge priced)
+- Opens app first (0.5) and gets a ride (*1) + opens the app late (0.5) but user A did not request a ride (*0.5) then user B gets a ride (*1) 
+
+<p align="center">
+\begin{equation*}
+    E[Y_A + Y_B | W_A=1, W_B=0] = 0.5*1 + 0.5*0.5*1 = 0.75
+\end{equation*}
+</p>
+
+### Estimated Treatment Effect
+
+<p align="center">
+\begin{equation*}
+    \hat{\tau} = \frac{0.75 - 0.25}{0.25} = 2
+\end{equation*}
+</p>
 
 The naive A/B test estimates a 200% increase in rides, overestimating the true global effect (33%) by a factor of six! 
 
