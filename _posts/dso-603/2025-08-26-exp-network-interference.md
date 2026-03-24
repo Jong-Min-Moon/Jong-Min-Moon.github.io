@@ -4,7 +4,7 @@ title: "Violation of SUTVA in A/B Testing: network interference"
 description: "A summary of the Lyft Engineering blog post 'Interference Across a Network' detailing how naive A/B testing can bias effect estimates in ridesharing."
 date: 2025-08-26
 categories: dso-603 statistics
-tags: causal-inference ab-testing experimentation network-effects
+tags: experiment
 project: dso-603
 authors:
   - name: Jongmin Mun
@@ -135,11 +135,11 @@ The naive A/B test estimates a 200% increase in rides, overestimating the true g
 
 - In practice, data scientists think:
 
-| Randomization Unit | Bias | Variance |
-| :--- | :--- | :--- |
-| **Space (geohash)** | High | Low |
-| **Time interval (hour)** | Mid | Mid |
-| **Coarse spatial units (city)** | Low | High |
+| Randomization Unit              | Bias | Variance |
+| :------------------------------ | :--- | :------- |
+| **Space (geohash)**             | High | Low      |
+| **Time interval (hour)**        | Mid  | Mid      |
+| **Coarse spatial units (city)** | Low  | High     |
  
 
 
