@@ -101,10 +101,10 @@ The naive A/B test estimates a 200% increase in rides, overestimating the true g
 
 ## Statistical Interference
 
-- This bias is due to **interference**, which is a violation of the Stable Unit Treatment Value Assumption (SUTVA). 
+- This bias is due to **interference**, which is a violation of the Stable Unit Treatment Value Assumption ([SUTVA](https://jong-min.org/blog/2025/causal-assumption-sutva/)). 
 
 - A key assumption of causal inference is that a unit's potential outcomes are unaffected by the group assignments of *other* units. 
-- **Interference occurs when assigning User B to treatment affects the potential outcome of User A.** 
+- In our scenario, interference occured, since assigning User B to treatment increased the ride probability of B, and this in turn decresases the ride probability of A, because there is only one driver. 
 
 - When User B's Prime Time was subsidized, User B "stole" the single driver with much higher probability, tanking User A's expected rides down.
 

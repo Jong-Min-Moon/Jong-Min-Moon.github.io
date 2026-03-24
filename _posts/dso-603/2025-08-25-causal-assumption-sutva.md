@@ -11,8 +11,14 @@ authors:
     url: "https://jongminmoon.github.io"
 ---
 
-Causal inference under Rubin potential outcomes framework, whether from a randomized A/B test or an observational study, relies heavily on the **Stable Unit Treatment Value Assumption (SUTVA)**.
-SUTVA consists of two distinct components:
+# Rubin Potential Outcomes Framework
+- Every experimental  unit (e.g. user) walks around with two pieces of paper, one in each back pocket.
+- On one of these papers is written that subject’s inevitable outcome should she happen to be assigned to the control group.
+On the other piece of paper is written her outcome given assignment to the treatment. Together, the two pieces of paper are a unit’s potential outcomes.
+- In ideal universe, we will take one unit and observe both potential outcomes. The causal inference is done.
+- But in reality, we can only observe one of the potential outcomes for each unit. Therefore we need at least to units: one for treatment and one for control.
+- When there are many units, whether in a randomized A/B test or an observational study, we rely heavily on the **Stable Unit Treatment Value Assumption (SUTVA)**. Another important assumption is ignorability (or unconfoundedness).
+- SUTVA consists of two distinct components:
   1.  **Consistency**: No hidden variations of treatment.
   2.  **No Interference** 
    
@@ -78,3 +84,4 @@ In modern tech, interference is the most common and difficult SUTVA violation. T
 - Keele, Luke. 2015b. “The Statistics of Causal Inference: A View from Political Methodology.” Polit. Anal. 23 (3): 313–35.
 - Applied Causal Inference (with R) Paul C. Bauer, Version: 29 May, 2020. [link](https://bookdown.org/paul/applied-causal-analysis/sutva1.html)
 - SUTVA (Stable Unit Treatment Value Assumption) - Causal Inference, Data Talks, Youtube Video. [link](https://youtu.be/wFpUKGNgb0Y?si=kf7eE0bYyNOMXaYi)
+- Nicholas Chamandy, Experimentation in a Ridesharing Marketplace. Lyft Engineering blog post. [link](https://medium.com/@nicholas.chamandy/experimentation-in-a-ridesharing-marketplace-5b8701973677)

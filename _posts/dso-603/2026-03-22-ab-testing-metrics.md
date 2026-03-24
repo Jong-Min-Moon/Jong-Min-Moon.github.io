@@ -35,18 +35,25 @@ When designing an experiment, metrics generally fall into different roles:
     - **Email Marketing:** 2%–5% (varies by industry and list quality)
 
 ## 2. Secondary / Diagnostic Metrics
+- aka driver, surrogate, indirect, predictive metrics
 - These help explain the *why* behind the primary metric's movement.
 - If the primary metric goes up, secondary metrics reveal the mechanism (e.g., users are finding the button faster).
+- align with the primary metric and more sensitive to the product change
 - **Example:** Time to first click, scroll depth, or number of searches per session.
 
 ## 3. Guardrail / Safety Metrics
 - Metrics that act as a safety net. You do not necessarily want to improve them, but you want to ensure they do not degrade.
 - **Example:** Page load time, crash rate, unsubscribe rate, or customer support ticket volume.
 
+### trustworthy-related metrics
+-  monitors trustworthiness of the experiemnt
+- checks violation of assumptions
+- example: randomization units assinged to variant: if the numbers are significanlty different accross treatments (sample ratio mismatch) measured by t-test or chi-square test
 # Characteristics of a Good Metric
 
 A metric in an A/B test is only useful if it reliably distinguishes robust changes from noise. It should be:
-
+ 1. simple and claer. shoud be explained in one sentence.
+ 2. actionable: must lead to a decision. for example, if the metric is short-term revenue, it is easy to make it significant (increase the price). but in long term lose custemer and lost long term goal. so it is not actionable.
 1. **Sensitive (Statistical Power):** The metric must be sensitive enough to detect meaningful changes caused by the treatment. If the metric is too noisy (high variance), it will be difficult to achieve statistical significance.
 2. **Robust:** The metric should not be overly sensitive to outliers or unrelated systemic variations.
 3. **Actionable & Understandable:** Stakeholders must easily understand what the metric measures so they can make informed decisions when the experiment concludes.
