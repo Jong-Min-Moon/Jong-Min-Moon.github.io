@@ -163,12 +163,14 @@ To get the ground truth values, we run simulation over the entire period twice:
 - One under global control (everyone gets surge pricing)
 - One under global treatment (everyone gets subsidy for surge pricing)
 
-As a result, we observe the groun truths:
+As a result, we observe the following ground truths about the treatment:
 - A decrease in availability
 - An increase in ETAs
 - An increase in total rides
 
+## Results
 
+<img src="lyft_granularity.png" alt="alt text" style="width: 100%; height: auto;">
 
 # References 
 - Chamandy, N. (2016). *Experimentation in a Ridesharing Marketplace: Interference Across a Network Part 1 : interferences across a network*. Lyft Engineering. Retrieved from https://eng.lyft.com/experimentation-in-a-ridesharing-marketplace-b39db027a66e
