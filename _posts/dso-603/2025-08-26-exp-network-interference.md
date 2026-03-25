@@ -4,16 +4,16 @@ title: "Violation of SUTVA in A/B Testing: network interference"
 description: "A summary of the Lyft Engineering blog post 'Interference Across a Network' detailing how naive A/B testing can bias effect estimates in ridesharing."
 date: 2025-08-26
 categories: dso-603 statistics
-tags: experimentation network-effects
+tags: experiment
 project: dso-603
 authors:
   - name: Jongmin Mun
-    url: "https://jongminmoon.github.io"
+    url: "https://jong-min.org"
 ---
 
 # Network interference in A/B testing
 
-- A/B testing is not a fully solved problem. Lots of fruits left for reseaerchers.
+- A/B testing is not a fully solved problem.
 - In ridesharing marketplace systems where supply and demand are affected by evolving network dynamics, user level RCT violates SUTVA and bias treatment effect.
 
 - This post summarizes Part 1 and 3 of the Lyft Engineering series by Nicholas Chamandy, ["Experimentation in a Ridesharing Marketplace: Interference Across a Network"](https://eng.lyft.com/experimentation-in-a-ridesharing-marketplace-b39db027a66e), written in 2016. 
@@ -135,11 +135,11 @@ The naive A/B test estimates a 200% increase in rides, overestimating the true g
 
 - In practice, data scientists think:
 
-| Randomization Unit | Bias | Variance |
-| :--- | :--- | :--- |
-| **Space (geohash)** | High | Low |
-| **Time interval (hour)** | Mid | Mid |
-| **Coarse spatial units (city)** | Low | High |
+| Randomization Unit              | Bias | Variance |
+| :------------------------------ | :--- | :------- |
+| **Space (geohash)**             | High | Low      |
+| **Time interval (hour)**        | Mid  | Mid      |
+| **Coarse spatial units (city)** | Low  | High     |
  
 
 
