@@ -4,7 +4,7 @@ title: "Violation of SUTVA in A/B Testing: network interference"
 description: "A summary of the Lyft Engineering blog post 'Interference Across a Network' detailing how naive A/B testing can bias effect estimates in ridesharing."
 date: 2025-08-26
 categories: dso-603 statistics
-tags: causal-inference ab-testing experimentation network-effects
+tags: experimentation network-effects
 project: dso-603
 authors:
   - name: Jongmin Mun
