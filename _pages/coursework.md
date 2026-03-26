@@ -5,7 +5,7 @@ permalink: /coursework/
 description: Summary of coursework and related projects.
 nav: false
 
-display_categories: [core, elective]
+display_categories: [stat, opt, cs, math]
 horizontal: true
 ---
 

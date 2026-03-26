@@ -4,7 +4,7 @@ title: "Generalized Linear Mixed Models"
 description: "Theory and data analysis methods for Generalized Linear Mixed Models (GLMM), extending regression to exponential families and random effects."
 img: assets/img/publication_preview/glmm.png
 importance: 2
-category: core
+category: stat
 project_handle: glmm
 course_number: STA6640
 institution: Yonsei University

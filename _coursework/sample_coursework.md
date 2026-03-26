@@ -4,7 +4,7 @@ title: Sample Coursework Project
 description: This is a sample coursework project to demonstrate the new Coursework tab.
 img: assets/img/pomdp.png
 importance: 1
-category: core
+category: cs
 project_handle: sample-coursework
 course_number: BUAD 311
 institution: USC Marshall

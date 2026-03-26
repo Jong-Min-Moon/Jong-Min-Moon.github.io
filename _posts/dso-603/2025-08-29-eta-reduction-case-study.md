@@ -19,7 +19,7 @@ Consider ETA in the ride-hailing industry, defined as the estimated time for a d
 - Ride-hailing is largely commoditized.  
 - This is because trips are short and similar-getting from A to B-so differentiation between Uber and Lyft is minimal.  
 - Riders are most sensitive to **price** and **wait time**.  
-- A consistently lower ETA wins marginal users who multi-home (check multiple apps).  
+- Lower ETA wins marginal users who multi-home (check multiple apps).  
 - For example, as a student in LA, I compare both apps: price first (often different), then ETA if prices are similar—especially during undersupply (e.g., after games or concerts).  
 
 ### Long-term competitive advantage  
