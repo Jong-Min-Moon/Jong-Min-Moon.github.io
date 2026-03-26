@@ -4,7 +4,7 @@ title: "A/B Testing Metrics"
 description: "A comprehensive guide to selecting and evaluating metrics in A/B testing and online experimentation."
 date: 2026-03-22
 categories: dso-603 statistics
-tags: causal-inference ab-testing experimentation metrics
+tags: experimentation
 project: dso-603
 authors:
   - name: Jongmin Mun
@@ -34,14 +34,14 @@ When designing an experiment, metrics generally fall into different roles:
     - **Search Ads:** 2%–5% (often higher for branded terms)
     - **Email Marketing:** 2%–5% (varies by industry and list quality)
 
-## 2. Secondary / Diagnostic Metrics
-- aka driver, surrogate, indirect, predictive metrics
-- These help explain the *why* behind the primary metric's movement.
-- If the primary metric goes up, secondary metrics reveal the mechanism (e.g., users are finding the button faster).
+## 2. Secondary  Metrics
+- aka Diagnostic, driver, surrogate, indirect, predictive metrics
+- These help explain the *why* behind the primary metric's movement: **If the primary metric goes up, secondary metrics reveal the mechanism** (e.g., users are finding the button faster).
 - align with the primary metric and more sensitive to the product change
 - **Example:** Time to first click, scroll depth, or number of searches per session.
 
-## 3. Guardrail / Safety Metrics
+## 3. Guardrail  Metrics
+- aka safety metric
 - Metrics that act as a safety net. You do not necessarily want to improve them, but you want to ensure they do not degrade.
 - **Example:** Page load time, crash rate, unsubscribe rate, or customer support ticket volume.
 
