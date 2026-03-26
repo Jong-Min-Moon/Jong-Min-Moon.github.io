@@ -1,5 +1,5 @@
 <div class="grid-sizer"></div>
-<div class="grid-item">
+<div class="grid-item" data-category="{{ project.category | jsonify | escape }}">
   {% if project.redirect -%}
   <a href="{{ project.redirect }}">
     {%- else -%}

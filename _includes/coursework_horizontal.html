@@ -1,4 +1,4 @@
-<div class="card-item col">
+<div class="card-item col" data-category="{{ project.category | jsonify | escape }}">
     {%- if project.redirect -%}
     <a href="{{ project.redirect }}">
         {%- else -%}
