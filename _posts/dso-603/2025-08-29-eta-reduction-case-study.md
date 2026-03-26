@@ -9,6 +9,7 @@ project: dso-603
 authors:
   - name: Jongmin Mun
     url: "https://jong-min.org"
+bibliography: 2025-08-29-eta-reduction-case-study.bib
 ---
 
 # Speculation before experiment  
@@ -28,78 +29,94 @@ Consider ETA in the ride-hailing industry, defined as the estimated time for a d
 
 
 
-# The Business Question
+# Experiment for short-term competitive advantage
+Let us design an experiment to measure the short-term causal effect of ETA reduction
 
-In any on-demand marketplace (ridesharing, food delivery, logistics), a critical user-facing metric is the **Estimated Time of Arrival (ETA)**. A fundamental business question invariably arises: 
+## Treatment
+- Introduce a new matching algorithm to reduce average ETAs by x minutes (or y%), or simply inflate the control group's displayed ETA by the equivalent amount.
 
-> *"What is the exact causal effect of reducing ETA by 1 minute on a user's probability of requesting a ride (conversion)?"*
+- The engineering team will define x and y. These values must remain uniform to uphold the SUTVA assumption of a single treatment version
 
-Understanding the true price elasticity and time elasticity of demand is crucial. If the platform mathematically knows how much 1 minute of ETA is worth in revenue, it can perfectly optimize its dispatch distances, dynamic pricing, and driver incentives to maximize efficiency.
+## Metric
+We need to define metrics to quantitatively evaluate the impact of reducing ETA. One metric isn't enoguh. we need at least 3 metrics to ensure we aren't optimizing one area at the expense of another.
 
----
+### Primary Metric: Session Conversion Rate
 
-# Why is this so hard to measure?
+We use the conversion rate as the primary metric. Conversion rate can be defined in many ways <d-cite key="amazon-conversion"></d-cite>
 
-## 1. The Trap of Observational Data (Endogeneity)
+Session Conversion Rate: The percentage of app opens that result in a completed booking.
+<p>
+\begin{equation*}
+\text{Session Conversion Rate} = \frac{\text{Number of completed trips}}{\text{Number of app opens}}
+\end{equation*}
+<\p>
 
-The most naive approach is to query historical data: plot a scatterplot of ETA on the x-axis and Conversion Rate on the y-axis, and draw a regression line. 
+### Secondary  Metric: Rider Cancellation Rate
+Seconday metrics help explain the *why* behind the primary metric's movement: **If the primary metric goes up, secondary metrics reveal the mechanism** (e.g., users are finding the button faster). We consider the Rider Cancellation Rate as secondary metric:
 
-If you attempt this in a real ridesharing network, you will often find a surprisingly flat line, or sometimes even a **positive** correlation (higher ETA = higher conversion). Does this mean customers actually *prefer* waiting longer for their driver? 
+<p>
+\begin{equation*}
+\text{Rider Cancellation Rate} = \frac{\text{Number of canceled trips}}{\text{Number of requested trips}}
+\end{equation*}
+</p>
 
-Of course not. This is a classic violation of the unconfoundedness assumption, specifically **Omitted Variable Bias (Endogeneity)**. 
-- During a rainstorm, a blizzard, or rush hour, demand naturally surges. 
-- Because demand surges, available vehicle supply drops, causing average ETAs to spike across the city.
-- However, because it's raining or cold, riders' outside options (like walking, biking, or taking the bus) vanish. Their *intent to book* is drastically higher.
-- Therefore, they book the ride *despite* the high ETA. 
 
-The external environmental context (weather, rush hour, events) acts as a massive confounder that entirely masks the true negative elasticity of ETA.
 
-## 2. The Trap of Standard A/B Testing (Interference)
+### Guardrail Metrics:
+We do not necessarily want to improve this, but we want to ensure it does not degrade. 
 
-Since historical observational data is hopelessly confounded, the natural next step for a data scientist is a randomized A/B test. We could artificially inflate the ETA display by 2 minutes for the Control group, or physically improve the ETA for the Treatment group by allowing their requests to search a much wider radius for drivers.
+- ETA reduction is meaningless if the ETA is not accurate. We consider the ETA Mean Absolute Error (MAE) as a guardrail metric:
 
-As discussed in our previous posts on the SUTVA assumption, this fails catastrophically due to **Network Interference**. 
+<p>
+\begin{equation*}
+\text{ETA MAE} = \frac{1}{N} \sum_{i=1}^{N} \big| \text{Predicted ETA}_i - \text{Actual Arrival Time}_i \big|
+\end{equation*}
+</p>
+
+- Match Rate / Unfulfilled Requests: Ensuring the system isn't breaking to achieve artificially low ETAs.
+## Experiment Design
+
+### Network interference
+Here the unit is app user. App users in ridesharing marketplace are notoriously **networked** since they share the same pool of drivers. This violates the SUTVA assumption of no interference. Consider the following scenario where ETA reduction has positive effect on conversion rate.
 - If Treatment users receive a lower ETA, they will book more rides.
 - By booking more rides, they consume the limited, shared supply of vehicles in the neighborhood.
 - The Control users, sharing the exact same physical neighborhood, are now starved of cars. This forces their *actual* ETAs to rise and their conversion to drop artificially.
-- Your estimated treatment effect will be wildly exaggerated, making the ETA reduction look far more powerful than it actually is globally.
+- The estimated treatment effect will be wildly exaggerated, making the ETA reduction look far more powerful than it actually is globally.
 
----
 
-# How do we actually measure the causal effect?
 
-Data scientists employ several advanced causal inference techniques to cut through the noise of endogeneity and the bias of network interference.
+###  Switchback Experiments
 
-## Approach 1: Instrumental Variables (IV)
+Instead of randomizing individual users, we randomize the entire state of the marketplace over time intervals or small regions. 
+We can then compare the aggregated conversion rate during the Treatment windows versus the Control windows.
 
-An **Instrumental Variable (IV)** is something that is highly correlated with the ETA (the treatment) but has absolutely no direct relationship with the user's inherent intent to book (the outcome) or the confounding variables (like weather).
+## Confounding Scenarios
+When the experimental results contradict our underlying intuition (e.g., shorter ETAs failing to improve or even hurting conversion), it is usually driven by unobserved confounding or our insight is wrong. Below is a key scenario where this occurs.
 
-**The Instrument:** *Random Supply Shocks.*
-Imagine User A opens the app. By pure luck, a driver just dropped off another passenger on the exact same block 5 seconds ago. User A gets a 1-minute ETA. 
-User B opens the app a block away, but no driver randomly dropped off nearby, so they get a 5-minute ETA. 
+### Geographic Selection Bias
+Running a switchback experiment in a geographic zone that is too small or entirely homogeneous can yield results that do not generalize to the broader network.
 
-This localized, micro-level variation in supply is functionally random. It is deeply correlated with the ETA but completely uncorrelated with whether it's raining or rush hour. By using this random supply shock as an instrument, we can isolate the unconfounded causal effect of ETA on conversion.
+- Suppose we run a switchback experiment exclusively in the University Park area in Los Angeles. The ride-hailing demand here is heavily dominated by a single demographic: USC students. The trip composition is highly skewed toward short-distance rides between campus, nearby apartments, and local retail (e.g., Ralphs, Target, local restaurants).
+This creates two distinct behavioral distortions:
+  - Diminishing Returns on Speed: Because the geographic footprint is so small, baseline ETAs are likely already very short. Shaving 1 minute off a 3-minute ETA provides negligible marginal utility to a student taking a 5-minute ride.
+  - Denominator inflation: College students frequently use the app as a planning tool while getting ready in their dorms or apartments. If the quoted ETA is too short (e.g., 1 minute), they will not request the ride because they aren't physically ready to walk out the door. They will close the app, finish getting ready, and request later. This artificially inflates the denominator (sessions) without increasing the numerator (orders), tanking the session conversion rate for the treatment group.
 
-## Approach 2: Switchback Experiments
+- The Root Cause: Setting the geographic zone too small restricts our sample to a highly homogenous population. We are no longer measuring the Global Average Treatment Effect (ATE) for the platform; we are measuring a very specific Conditional Average Treatment Effect (CATE) for college students taking short trips.
 
-Instead of randomizing individual users, we randomize the entire state of the marketplace over time.
+- The Remedies:
+  - Expand and Diversify the Experimental Units: Instead of running the switchback in a single hyper-local neighborhood, define the experimental units at the city or macro-regional level (e.g., all of Los Angeles County). If you must use smaller zones, ensure the experiment runs across a representative sample of zone types (e.g., mixing University Park with Downtown LA business districts, and suburban areas like Pasadena) so the aggregate result reflects the true market variance.
+  - Redefine the Conversion Metric: Augment the primary "Session Conversion Rate" with a "User-Level Time-Bounded Conversion Rate" (e.g., Did the user book a ride within 15 minutes of their first app open?). This captures the student who closed the app because the ETA was too fast, but successfully booked 10 minutes later when they were actually ready.
 
-We can run a **Switchback Experiment** where we alternate the system's dispatch parameters (which dictate aggregate average ETAs) every 30 minutes in a single city. 
-- **12:00 PM - 12:30 PM (Treatment):** highly aggressive dispatch $\rightarrow$ Faster ETAs overall.
-- **12:30 PM - 1:00 PM (Control):** Standard dispatch $\rightarrow$ Standard ETAs.
+### Matching algorithm backfired
+- Greedy algorithms (matching the absolute closest car instantly) keep ETAs incredibly low but can create network imbalances, leading to "No Cars Available" screens for other users in the same neighborhood.
+- On the other hand, consider the scenario where the control group algorithm uses a batching window.
+  - For example, waiting 10–15 seconds to collect all neighborhood requests before dispatching to find the global optimum. In this case, the quoted ETA will naturally be slightly higher.
+  - However, this global optimization dramatically reduces the number of failed matches. -- Because almost everyone who opens the app is guaranteed a ride (no error screens), the overall session conversion can go up.
 
-By keeping the entire city in the same uniform state, we neutralize user-level competitive interference. We can then compare the aggregate conversion rate during the Treatment windows versus the Control windows.
+###  Cannibalization Effect
 
-## Approach 3: Geospatial Discontinuity
-
-Sometimes, platform algorithms or driver incentive zones create hard geographic boundaries on the map. 
-- **Zone A:** Drivers receive a massive $10 bonus per ride, so supply is abundant and ETAs are 2 minutes.
-- **Zone B:** Drivers receive no bonus, so supply is sparse and ETAs are 7 minutes.
-
-If we look at users standing perfectly on the border between Zone A and Zone B (perhaps one side of the street vs. the other), they are essentially identical in demographics, intent, and macro weather patterns. The only difference is an arbitrary boundary line slicing down the middle of the street altering their supply. Applying a **Regression Discontinuity Design (RDD)** spatially across this boundary allows us to cleanly estimate the impact of the ETA difference.
-
----
-
-# Conclusion
-
-Measuring the causal impact of ETA lies at the absolute heart of marketplace operations. Because simple queries are plagued by endogeneity and standard A/B tests are biased by network interference, estimating this single parameter requires the full toolkit of advanced experimental design and causal inference.
+- Imagine a user opens the app and sees UberX has an unusually high ETA of 12 minutes, but Uber Comfort or UberPool is only 5 minutes away.
+Instead of closing the app (which would hurt conversion), the user upgrades to Comfort or shifts to Pool. The overall session conversion for the app goes up, even though the primary product's ETA degraded.
+ 
+ 
+ 
