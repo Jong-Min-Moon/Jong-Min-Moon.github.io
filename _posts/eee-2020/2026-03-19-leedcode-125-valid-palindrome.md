@@ -2,7 +2,7 @@
 layout: distill
 title: "Leetcode 125: Valid Palindrome"
 description: "A two-pointer approach to check if a string is a valid palindrome"
-tags: algorithms two-pointers strings inward-traversal
+tags: algorithms two-pointers(inward) strings
 categories: eee-2020
 date: 2018-09-20
 featured: false

@@ -4,7 +4,7 @@ title: "Introduction to Two Pointers"
 description: "A comprehensive guide to the two-pointer algorithmic pattern"
 tags: algorithms two-pointers
 categories: eee-2020
-date: 2026-03-19
+date: 2018-10-01
 featured: false
 project: eee-2020
 authors:
