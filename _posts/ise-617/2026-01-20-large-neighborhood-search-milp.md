@@ -7,6 +7,27 @@ categories: ise-617
 tags: optimization milp heuristics large-neighborhood-search
 project: ise-617
 ---
+Large Neighborhood search is a heuristic algorithm for solving large-scale optimization problems.  It is a combination of local search and CP/MIP (constraint programming / mixed-integer programming).
+
+
+# Intuition from Combination of CP and Local Search
+Find a feasible solution using constraint programming
+
+Then Repeat:
+1. Select a large neighborhood of the current solution
+2. Find an optimal solution in the neighborhood using constraint programming
+ 
+ This works because:
+ 1. CP is good for finding feasible solutions.
+ 2. CP is good at optimizing small combinatorial spaces.
+
+The algorithm is almost technology independent: MIP can replace CP here.
+### How to define a neighborhood?
+The neiborhood can be defined as follows: (there are many options)
+- given a feasible point, fix a subset of variables. 
+- Let the other variable free.
+- In other words, neighborhood is the set of all feasible solutions that agree with the fixed variables.
+- Which variable to choose is problem-specific. We have to exploit the problem structure such as spatial or temporal structure. But sometimes just random neighborhood is good enough.
 
 ## Introduction to MILP and Computational Challenges
 
