@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Dynamic Lot Sizing Problem"
+title: "Multi-period MILP and Dynamic Lot Sizing Problem"
 date: 2026-02-07
 description: "An introduction to the Dynamic Lot Sizing Problem and its key assumptions."
-project: operations-management
-categories: operations-research optimization
+project: ise-617
+categories: ise-617
 math: true
 ---
 
