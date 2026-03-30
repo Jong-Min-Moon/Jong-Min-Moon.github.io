@@ -3,9 +3,9 @@ layout: distill
 title: "Facility Location Problem with Outliers and Capacity Constraints"
 description: "Exploring a variant of the Facility Location Problem incorporating outlier rejection and capacity constraints."
 date: 2026-03-06
-categories: ml_mio optimization
+categories: ise-617 optimization
 tags: optimization facility-location mixed-integer-programming
-project: ml_mio
+project: ise-617
 authors:
   - name: Jongmin Mun
     url: "https://github.com/Jong-Min-Moon"

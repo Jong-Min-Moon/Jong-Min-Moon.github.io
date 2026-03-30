@@ -2,10 +2,10 @@
 layout: distill
 title: "Large Neighborhood Search (LNS) for Mixed-Integer Linear Programming (MILP)"
 description: "An overview of Large Neighborhood Search (LNS) heuristics for solving complex Mixed-Integer Linear Programs (MILP), exploring core concepts, 'destroy and repair' methods, and popular frameworks like RINS and Local Branching."
-date: 2026-03-29
-categories: ml_mio
+date: 2026-01-20
+categories: ise-617
 tags: optimization milp heuristics large-neighborhood-search
-project: ml_mio
+project: ise-617
 ---
 
 ## Introduction to MILP and Computational Challenges
@@ -82,3 +82,6 @@ Modern LNS implementations often utilize adaptive machine learning techniques:
 ## Summary
 
 Large Neighborhood Search offers an elegant compromise between heuristic speed and exact algorithmic rigor. By systematically destroying and repairing portions of a solution through sub-MIP formulations, LNS algorithms like RINS and Local Branching have fundamentally elevated the primal performance of commercial MILP optimization software today. 
+
+# References
+- Discrete Optimization || 01 Large Neighborhood Search asymmetric TSP with time windows 8 42 [link](https://youtu.be/FpwKZhX5X8M?si=QibyaGdaiLX2rsvU)

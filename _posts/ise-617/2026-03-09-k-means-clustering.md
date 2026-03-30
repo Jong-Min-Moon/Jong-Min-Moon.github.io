@@ -3,10 +3,10 @@ layout: distill
 title: "k-means Clustering"
 description: "Formulating and implementing k-means clustering as a mixed-integer optimization problem."
 tags: distill machine-learning optimization clustering
-categories: ml_mio
+categories: ise-617
 date: 2026-03-09
 featured: false
-project: ml_mio
+project: ise-617
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

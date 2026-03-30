@@ -2,10 +2,10 @@
 layout: distill
 title: "An Overview of Constraint Programming (CP)"
 description: "Exploring the fundamentals of Constraint Programming (CP), how it differs from MILP, and its powerful constraint propagation mechanisms for solving complex combinatorial problems."
-date: 2026-03-29
-categories: ml_mio
+date: 2026-01-19
+categories: ise-617
 tags: optimization constraint-programming algorithms combinatorial-search
-project: ml_mio
+project: ise-617
 ---
 
 ## Introduction to Constraint Programming (CP)
@@ -76,3 +76,6 @@ These hybrid frameworks leverage **Benders Decomposition** or **Logic-Based Bend
 
 ## Summary
 Constraint Programming is a robust, dynamic method for finding feasible solutions (and proving optimality) in heavily constrained environments. Whenever your problem is dominated by strict logical bounds rather than cost-minimization gradients, CP is likely the superior approach.
+
+# References
+- Discrete Optimization || 01 CP 1 intuition computational paradigm map coloring n queens 27 16 [link](https://youtu.be/V7c1YWl02fg?si=28C10GaJn0IdtjB1)

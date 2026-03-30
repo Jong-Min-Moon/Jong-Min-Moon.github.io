@@ -3,9 +3,9 @@ layout: distill
 title: "Best Subset Selection via a Modern Optimization Lens"
 description: "Lecture summary for 02-04-2026 on Best Subset Selection"
 date: 2026-02-04
-categories: ml_mio optimization statistics
+categories: ise-617 optimization statistics
 tags: machine-learning mixed-integer-programming best-subset-selection
-project: ml_mio
+project: ise-617
 authors:
   - name: Jongmin Mun
     url: "https://github.com/Jong-Min-Moon"

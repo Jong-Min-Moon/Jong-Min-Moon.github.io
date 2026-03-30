@@ -3,9 +3,9 @@ layout: distill
 title: "Paper review: Building Representative Matched Samples With Multi-Valued Treatments in Large Observational Studies"
 description: "A review of Magdelena Bennett et al. (2020) on using mixed-integer optimization to create representative matched samples for multi-valued treatments."
 date: 2026-02-22
-categories: ml_mio optimization statistics
+categories: ise-617 optimization statistics
 tags: causal-inference mixed-integer-programming matching-methods benchmarking
-project: ml_mio
+project: ise-617
 authors:
   - name: Jongmin Mun
     url: "https://github.com/Jong-Min-Moon"

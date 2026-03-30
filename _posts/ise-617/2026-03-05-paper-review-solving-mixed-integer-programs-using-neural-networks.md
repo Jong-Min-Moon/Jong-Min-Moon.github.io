@@ -3,9 +3,9 @@ layout: distill
 title: "paper review: Solving Mixed Integer Programs Using Neural Networks"
 description: ""
 date: 2026-03-05
-categories: ml_mio optimization
+categories: ise-617 optimization
 tags: machine-learning mixed-integer-programming
-project: ml_mio
+project: ise-617
 authors:
   - name: Jongmin Mun
     url: "https://github.com/Jong-Min-Moon"

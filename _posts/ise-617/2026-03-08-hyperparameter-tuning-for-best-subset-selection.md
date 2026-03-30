@@ -3,9 +3,9 @@ layout: distill
 title: "Hyperparameter Tuning for Best Subset Selection"
 description: "Exploring methods for determining the optimal subset size k in best subset selection problems."
 date: 2026-03-08
-categories: ml_mio optimization
+categories: ise-617 optimization
 tags: machine-learning optimization best-subset-selection hyperparameter-tuning
-project: ml_mio
+project: ise-617
 authors:
   - name: Jongmin Mun
     url: "https://github.com/Jong-Min-Moon"
