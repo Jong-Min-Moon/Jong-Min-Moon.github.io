@@ -1,6 +1,6 @@
 ---
 layout: project
-title: "Math 541: Graduate Mathematical Statistics I & II"
+title: "Graduate Mathematical Statistics"
 description: "Foundational sequences in graduate mathematical statistics covering probability, estimation, hypothesis testing, and asymptotics."
 importance: 1
 category: stat
