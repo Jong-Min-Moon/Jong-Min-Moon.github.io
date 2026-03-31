@@ -47,6 +47,18 @@ You’re minimizing a linear function over an interval. The minimum is always at
 Linear functions have no curvature, and the feasible region (a polytope) is built from flat faces, so the optimum can’t hide in the middle. It gets pushed all the way out to the boundary, and specifically to a corner where constraints intersect.
 
 
+## Problem Formulation
+For $\mathbf{Q} \in \mathbb{R}^{n \times n}$, $\mathbf{a} \in \mathbb{R}^n$, $c \in \mathbb{R}^n$, and $\tilde{C} \subseteq \mathbb{R}^{n} \times \mathbb{R}^n$ is a projection of $C$ where $\mathbf{s}$ is marginalized out, we consider the following problem:
+<p>
+\begin{aligned}
+\min_{x, z} \quad & x^\top \mathbf{Q} x + \mathbf{a}^\top x + c^\top z \\
+\text{s.t.} \quad & x_i (1 - z_i) = 0, \quad z_i \in \{0,1\}, \quad i \in [n], 
+\text{(switch constraints)}
+\\
+& (x, z) \in \tilde{C} \subseteq \mathbb{R}^{n} \times \mathbb{R}^n \text{(side constraints)}.
+\end{aligned}
+</p>
+
 ## Definition 1: Factorizable matrix
 - Definition 1 introduces block-factorizable matrix. This is for multi-dimensional state variables. For scalar state variables, we don't need this complication.
 - Let us focus on scalar state variables. A symmetric cost matrix $Q$ is factorizable if
@@ -57,6 +69,8 @@ Q_{ij} = u_i v_j.
 </p> 
 
 - This means that Q is expresed by $2n$ parameters.
+
+## Proposition 1 & 2
 
 ## Proposition 3: 2 by 2 rank-1 decomposition of the cost matrix inverse
 
