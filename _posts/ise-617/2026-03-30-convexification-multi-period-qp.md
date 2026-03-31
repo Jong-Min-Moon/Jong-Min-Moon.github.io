@@ -47,7 +47,9 @@ You’re minimizing a linear function over an interval. The minimum is always at
 Linear functions have no curvature, and the feasible region (a polytope) is built from flat faces, so the optimum can’t hide in the middle. It gets pushed all the way out to the boundary, and specifically to a corner where constraints intersect.
 
 
-## 
+## Proposition 1
+- Definition 1 introduces block-factorizable matrix. This is for multi-dimensional state variables. For scalar state variables, we don't need this complication.
+- 
 
 ## Proposition 3: 2 by 2 rank-1 decomposition of the cost matrix inverse
 
