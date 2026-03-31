@@ -28,15 +28,36 @@ toc:
 
 
 ## The fundamental law of linear programming
-- When you optimize a linear objective over a region defined by linear constraints, the best solution always occurs at a corner (an *extreme point*) of that region. 
+- Linear programming (LP) is the problem of optimizing a linear objective function $c^\top x$ subject to linear inequality constraints $Ax \le b$ and $x \ge 0$. 
+- The best LP solution always occurs at a corner (an *extreme point*) of that region. 
 
 ### Intuition from one dimension
 You’re minimizing a linear function over an interval. The minimum is always at one of the endpoints. 
 
 ### Intuition from two dimensions
 - Let's go bird's eye view. 
-- The feasible set is a polygon, and the objective is a line you slide across it. Like a ruler moving in a fixed direction.
-- As you move the line inward to minimize the value, it will keep touching the polygon along edges, but the last place it can touch before leaving the region is almost always a vertex—because a flat line can’t “settle” in the interior without being able to move further unless it’s pinned at a corner. The deeper intuition is that linear functions have no curvature, and the feasible region (a polytope) is built from flat faces, so the optimum can’t hide in the middle—it gets pushed all the way out to the boundary, and specifically to a corner where constraints intersect.
+- The feasible set is a polygon.
+- Contour set is a set of decision variables with the same objective value.
+- Since the objective is linear, the contour set is a flat line with direction $c$. The objective value increases in the direciton orthogonal to the contour line.
+- Minimization is equivalent to chekcing every contour line and finding the minimum value. 
+- This is equivalent to moving the line $y=c^\top x$ in the direction orthogonal to $c$. 
+- Since the polygon has sharp vertices, the minimum value occurs at the first (or last) vertex.
+
+### Two sentences Intuition
+Linear functions have no curvature, and the feasible region (a polytope) is built from flat faces, so the optimum can’t hide in the middle. It gets pushed all the way out to the boundary, and specifically to a corner where constraints intersect.
+
+
+## 
+
+## Proposition 3: 2 by 2 rank-1 decomposition of the cost matrix inverse
+
+### High Level Summary
+- The cost matrix $Q$ is massive and complicated.
+- However, its inverse $Q^{-1}$ has a very nice structue: it can be decomposed into a sum of $n$ independent, simple rank-one matrices.
+- Moreover, each rank-one matrix has a very simple structure: almost everything is zero, except for a 2x2 block.
+- Why do we care? Because this breakdown allows us to isolate the exact costs associated with taking specific actions between specific time periods.
+- Corollary: principal submatrix of $Q$ can also be similarly decomposed.
+
 
 ## Overview
 
