@@ -69,16 +69,16 @@ Linear functions have no curvature, and the feasible region (a polytope) is buil
 - Therefore, minimizing a linear objective over \(S\) or over \(\operatorname{conv}(S)\) yields the same optimal value. This is a standard result in convex optimization texts.
 
 # Section 1: Problem Formulation
-Given a number of periods $n \in \mathbb{Z}_+$, a vector $c \in \mathbb{R}^n$, and sequences of scalars $\{r_i\}_{i=1}^{n+1}$, $\{f_i\}_{i=1}^n$, $\{b_i\}_{i=0}^n$, $\{P_i\}_{i=1}^{n+1}$, and $\{A_i\}_{i=1}^n$ with $r_i, f_i, b_i \in \mathbb{R}$, $A_i \neq 0$, and $P_i > 0$, we consider a mixed-integer quadratic optimization problem (MIQP) of the form:
+Given a number of periods $$n \in \mathbb{Z}_+$$, a vector $$c \in \mathbb{R}^n$$, and sequences of scalars $$\{r_i\}_{i=1}^{n+1}$$, $$\{f_i\}_{i=1}^n$$, $$\{b_i\}_{i=0}^n$$, $$\{P_i\}_{i=1}^{n+1}$$, and $$\{A_i\}_{i=1}^n$$ with $$r_i, f_i, b_i \in \mathbb{R}$$, $$A_i \neq 0$$, and $$P_i > 0$$, we consider a mixed-integer quadratic optimization problem (MIQP) of the form:
 
 <p>
-$$\begin{aligned}
+\begin{aligned}
 \min_{s,x,z} \quad & \sum_{i=1}^{n+1} P_i(s_i - r_i)^2 + \sum_{i=1}^{n} f_i x_i + \sum_{i=1}^{n} c_i z_i \\
 \text{s.t.} \quad & s_1 = b_0 \\
 & s_{i+1} = A_i s_i + x_i + b_i, \quad i \in [n] \\
 & x_i(1 - z_i) = 0, \quad z_i \in \{0, 1\}, \quad i \in [n] \\
 & (s, x, z) \in C \subseteq \mathbb{R}^{n+1} \times \mathbb{R}^n \times \mathbb{R}^n
-\end{aligned}$$
+\end{aligned}
 </p>
 
 where $x \in \mathbb{R}^n$ is a vector whose $i$-th element corresponds to $x_i$ in period $i$.
