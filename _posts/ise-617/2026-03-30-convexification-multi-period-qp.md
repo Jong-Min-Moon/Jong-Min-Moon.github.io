@@ -14,7 +14,6 @@ authors:
     affiliations:
       name: USC Marshall
 toc:
-  - name: Preliminaries
   - name: Overview
   - name: The Mathematical Setting
   - name: Core Methodology and Convexification
@@ -24,49 +23,6 @@ toc:
 ---
 
 
-# Preliminaries
-
-
-## The Fundamental Law of Linear Programming
-
-1. **Linear programming (LP)** involves optimizing a linear objective function $c^\top x$ subject to linear inequality constraints $Ax \le b$ and $x \ge 0$. The optimal solution of an LP is always attained at a **corner point** (or *extreme point*) of the feasible region.
-
-2. Minimizing a linear objective over a non-convex set of points yields the **same result** as minimizing it over the **convex hull** of those points, since the optimum always occurs at one of the extreme points.
-### Intuition of 1 from one dimension
-You’re minimizing a linear function over an interval. The minimum is always at one of the endpoints. 
-
-### Intuition of 1 from two dimensions
-- Let's go bird's eye view. 
-- The feasible set is a polygon.
-- Contour set is a set of decision variables with the same objective value.
-- Since the objective is linear, the contour set is a flat line with direction $c$. The objective value increases in the direciton orthogonal to the contour line.
-- Minimization is equivalent to chekcing every contour line and finding the minimum value. 
-- This is equivalent to moving the line $y=c^\top x$ in the direction orthogonal to $c$. 
-- Since the polygon has sharp vertices, the minimum value occurs at the first (or last) vertex.
-
-### Two sentences Intuition of 1
-Linear functions have no curvature, and the feasible region (a polytope) is built from flat faces, so the optimum can’t hide in the middle. It gets pushed all the way out to the boundary, and specifically to a corner where constraints intersect.
-
-### Justification of 2
-
-1. **Fundamental Theorem of Linear Programming**  
-   The minimum (and maximum) of a linear function over a convex polytope occurs at a **vertex** (extreme point).  
-   This implies that optimizing over a non-convex set of points gives the same result as optimizing over its convex hull, since the extreme points of the convex hull are points from the original set.  
-   [Wikipedia: Fundamental theorem of linear programming](https://en.wikipedia.org/wiki/Fundamental_theorem_of_linear_programming?utm_source=chatgpt.com)
-
-2. **Bauer’s Maximum Principle**  
-   A linear function, being both convex and concave, attains its minimum and maximum over a compact convex set at some **extreme point**.  
-   This supports that the optimum over the convex hull occurs at one of the original points.  
-   [Wikipedia: Bauer maximum principle](https://en.wikipedia.org/wiki/Bauer_maximum_principle?utm_source=chatgpt.com)
-
-3. **Convex Optimization Textbook Reference**  
-   - Boyd, S., & Vandenberghe, L. (2004). *Convex Optimization*. Cambridge University Press.  
-   - See Chapter 2 (Convex Sets) and Chapter 4 (Convex Optimization Problems) for formal statements that linear objectives attain optima at extreme points of convex sets.
-
-- The convex hull \(\operatorname{conv}(S)\) of a set \(S\) is a convex set containing all convex combinations of points from \(S\).  
-- Any optimum of a linear objective over \(\operatorname{conv}(S)\) must occur at an extreme point of \(\operatorname{conv}(S)\) (by Bauer’s principle or the fundamental LP theorem).  
-- By definition of the convex hull, the extreme points of \(\operatorname{conv}(S)\) are drawn from the original set \(S\).  
-- Therefore, minimizing a linear objective over \(S\) or over \(\operatorname{conv}(S)\) yields the same optimal value. This is a standard result in convex optimization texts.
 
 # Section 1: Problem Formulation
 Given a number of periods $$n \in \mathbb{Z}_+$$, a vector $$c \in \mathbb{R}^n$$, and sequences of scalars $$\{r_i\}_{i=1}^{n+1}$$, $$\{f_i\}_{i=1}^n$$, $$\{b_i\}_{i=0}^n$$, $$\{P_i\}_{i=1}^{n+1}$$, and $$\{A_i\}_{i=1}^n$$ with $$r_i, f_i, b_i \in \mathbb{R}$$, $$A_i \neq 0$$, and $$P_i > 0$$, we consider a mixed-integer quadratic optimization problem (MIQP) of the form:
