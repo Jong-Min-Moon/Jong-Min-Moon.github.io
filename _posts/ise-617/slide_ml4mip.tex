@@ -2,6 +2,9 @@
 \usetheme{Madrid}
 \usecolortheme{default}
 \usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
 \usetikzlibrary{calc, positioning, arrows.meta}
 \title[LLM-LNS for MILP]{Large Language Model-driven Large Neighborhood Search for Large-Scale MILP Problems}
 \author[Ye et al.]{Huigen Ye, Hua Xu, An Yan, Yaoyang Cheng}
@@ -60,12 +63,12 @@
 		\end{itemize}
 	\end{frame}
 	
-	% Slide 6: Dual-Layer Agent - Outer Layer
+ 
 
 		\begin{frame}{Inner Exploitation Loop:  Evolution of Heuristics}
-			\vskip -7mm
+			\vskip -2mm
 		 Exploitation: find the best possible heuristics with  evolution prompt fixed
-		 \vskip 5mm
+		 \vskip 3mm
 			\centering
 			% Resize the diagram to exactly the width of the slide text area
 			% The '!' tells LaTeX to keep the aspect ratio the same
@@ -95,7 +98,7 @@
 					
 					% Left/Right boxes 
 					\node (solver) [sidebox] at (-4.8, 0) {\textbf{LNS Solver} scores heuristics using \textbf{small MILPs}};
-					\node (llm) [sidebox] at (4.8, 0) {\textbf{LLM} develops new heuristics, according to a \textbf{fixed prompt set} $\mathcal{P} = P_1, \ldots, $};
+					\node (llm) [sidebox] at (5.8, 0) {\textbf{LLM} develops new heuristics, according to a \textbf{fixed prompt set} $\mathcal{P} = \{P_1, \ldots, P_N\}$};
 					
 					% Arrows 
 					\draw [-{Stealth}, line width=1.2pt, color=blue!50!black] 
@@ -105,22 +108,91 @@
 					
 				\end{tikzpicture}%
 			} 
-	Repeat   for a fixed number of time; the whole procedure can be written as $\mathcal{H}= \texttt{inner}(\texttt{prompt})$		
+	Repeat   for a fixed number of time; the whole procedure can be written as 
+\begin{equation*}
+	\mathcal{H}= \texttt{inner}(\texttt{prompt})
+\end{equation*}		
 			% End of resizebox
 		\end{frame}
 		
 
-	
-	% Slide 7: Differential Memory
-	\begin{frame}{Differential Memory for Directional Evolution}
-		Unlike traditional random mutations, LLM-LNS uses a directed approach to learn from past generations[cite: 2246].
+\begin{frame}
+	\begin{itemize}
+		\item Generation 0: capacity ratio with penalties
+		\begin{equation*}
+			\text{scores}[\text{bins} > \text{item}] = \frac{\text{bins} - \text{item}}{\text{bins}} \times \frac{1}{\text{index of bin} + 0.5} 
+		\end{equation*}
 		
+		\item Generation 5:  Random exploration factor added
+		\begin{align*}
+			\text{scores}[\text{bins} > \text{item}] &= \frac{\text{bins} - \text{item}}{\text{bins} + 10^{-5}} - \frac{
+				\frac{\text{bins}^2}{10^2}
+			}{
+				\max\left(\frac{\text{bins}^2}{10^2}\right)
+			} \left( 1 - \frac{\text{bins} - \text{item}}{\max(\text{bins})} \right) 
+			\\& \quad + \text{randomness} \times 0.1 
+		\end{align*}
+		
+		\item Generation 8: Advanced hybrid optimization methods, such as genetic algorithms combined with tabu search, are introduced
+		\begin{align*}
+			\text{scores}[\text{bins} > \text{item}] &= \frac{\text{bins} - \text{item}}{\text{bins} + 10^{-5}} - \text{history penalty} - \frac{
+				\frac{\text{bins}^2}{15^2}
+			}{\max\left(\frac{\text{bins}^2}{15^2}\right)} 
+			\\& \quad + \text{mutation variance} - \left( 1 - \frac{\text{bins} - \text{item}}{\max(\text{bins}) + 10^{-5}} \right) 
+		\end{align*}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Outer Exploration Loop: Evolution of Prompts}
+	\vskip -2mm
+	Exploration: when inner loop stagnates, change the prompt
+	\vskip 3mm
+	\centering
+	
+	% Added [H] here to prevent Beamer floating errors
+	\begin{algorithm}[H]
+		\caption{Outer loop for exploration}
+		\begin{algorithmic}[1] % [1] enables line numbering
+			\Require Initial heuristic $H_0$, Initial prompt $P$, Total iterations $T$
+			\For{$t = 1$ \textbf{to} $T$}
+			\State $\mathcal{H}_{t} \gets \text{inner}(P)$
+			\If{no improvement of $\mathcal{H}_{t}$ for a certain number of steps}
+			\State $P \gets \texttt{LLMevolve}(P)$
+			\EndIf
+			\EndFor
+		\end{algorithmic}
+	\end{algorithm}
+	
+Final step: use the best strategy out of $\mathcal{H}_T$ and run LNS on massive MILP.	
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item \textbf{Generation 1: Initialization by handcrafted prompts}   ``Create a completely new algorithm'', ``Modify the given algorithm'' 
+		
+		\item \textbf{Generation 6: Addressing Stagnation.} ``Reconfigure heuristic principles to \textbf{reduce computational complexity} while maintaining effectiveness.'' 
+
+		
+		\item \textbf{Generation 10: Stochastic Adjustment.}  ``Enhance diversity by \textbf{introducing stochastic elements} to refine exploration strategies.'' 
+
+ 
+	\end{itemize}
+\end{frame}
+	% Slide 7: Differential Memory
+\begin{frame}{Inside the LLM: Differential Memory for Directional Evolution}
+	\begin{itemize}
+		\item \textbf{Historical Context:} Inside the inner loop, LLM reads a set of $m$ strategy-thought-fitness tuples, capturing both successful and unsuccessful heuristics:
+		$$S^{(t)} = \left\{ \langle H_i^{(t)}, \text{thought}_i, f(H_i^{(t)}) \rangle \right\}_{i=1}^m$$
+		
+		\item \textbf{Directional Evolution:} The model $M$ generates the next iteration by conditioning on this historical memory:
+		$$H_i^{(t+1)} = \texttt{LLM}(p_{\text{meta}} \parallel S^{(t)})$$
+		
+		\item \textbf{The Meta-Prompt ($p_{\text{meta}}$):} Combines two key components:
 		\begin{itemize}
-			\item The LLM is provided with strategy-thought-fitness tuples from parent generations[cite: 2249, 2252].
-			\item A meta-prompt instructs the LLM to learn the differences between higher- and lower-performing strategies[cite: 2257].
-			\item This allows the LLM to act as an optimizer, identifying the most promising directions for code modification and avoiding past mistakes[cite: 2057, 2248].
+			\item[--] The strategic prompt provided by the Outer Loop.
+			\item[--] A differential memory instruction: \textit{``Learn from history, both good and bad. Think of what makes the difference.''}
 		\end{itemize}
-	\end{frame}
+	\end{itemize}
+\end{frame}
 	
 	% Slide 8: Integration with ALNS
 	\begin{frame}{Integration: Adaptive Large Neighborhood Search}

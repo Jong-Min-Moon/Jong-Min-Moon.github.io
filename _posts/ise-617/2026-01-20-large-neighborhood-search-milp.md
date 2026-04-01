@@ -106,3 +106,4 @@ Large Neighborhood Search offers an elegant compromise between heuristic speed a
 
 # References
 - Discrete Optimization || 01 Large Neighborhood Search asymmetric TSP with time windows 8 42 [link](https://youtu.be/FpwKZhX5X8M?si=QibyaGdaiLX2rsvU)
+- https://acrogenesis.com/or-tools/documentation/user_manual/manual/metaheuristics/jobshop_lns.html
