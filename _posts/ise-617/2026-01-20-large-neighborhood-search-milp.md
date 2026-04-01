@@ -22,12 +22,26 @@ Then Repeat:
  2. CP is good at optimizing small combinatorial spaces.
 
 The algorithm is almost technology independent: MIP can replace CP here.
+
+
+
+- The goal of the destroy phase is to partially dismantle the current best-known feasible solution.
+- In MILP, "destroying" a solution means unfixing a subset of the variables, freeing them up to be optimized again.
+
 ### How to define a neighborhood?
 The neiborhood can be defined as follows: (there are many options)
 - given a feasible point, fix a subset of variables. 
 - Let the other variable free.
 - In other words, neighborhood is the set of all feasible solutions that agree with the fixed variables.
 - Which variable to choose is problem-specific. We have to exploit the problem structure such as spatial or temporal structure. But sometimes just random neighborhood is good enough.
+
+### Destroy and Repair
+If we use the strategy mentioned above, the LNS algorithm can be reprased as 
+0. Feasible solution
+
+repeat:
+1. The Destroy Phase
+2. The Repair Phase
 
 ## Introduction to MILP and Computational Challenges
 
