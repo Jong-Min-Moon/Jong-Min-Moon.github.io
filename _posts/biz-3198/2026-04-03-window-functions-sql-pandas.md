@@ -8,12 +8,56 @@ tags: sql pandas python data-handling
 project: biz-3198
 ---
 
+# Window function = data analysis step
 
 After the database server has completed all of the steps necessary to evaluate a query, including joining, filtering, grouping, and sorting, the result set is complete and ready to be returned to the caller. Imagine if you could pause the query execution at this point and take a walk through the result set while it is still held in memory; what types of analysis might you want to do? If your result set contains sales data, perhaps you might want to generate rankings for salespeople or regions, or calculate percentage differences between one time period and another. If you are generating results for a financial report, perhaps you would like to calculate subtotals for each report section, and a grand total for the final section. Using analytic functions, you can do all of these things and more.
 
 Window functions let you compute aggregations, rankings, or offsets **across a set of rows that are related to the current row**—without collapsing the result into a single row the way `GROUP BY` does. They are one of the most powerful tools for data analysis in both SQL and pandas.
 
----
+
+# df.rank()
+
+`
+DataFrame.rank(axis=0, method='average', numeric_only=False, na_option='keep', ascending=True, pct=False)
+`
+## Key options
+
+### method
+- average: average rank of the group. can be float. e.g. rank 2.5 (think of 1.5tier journals)
+- min: lowest rank in the group (think of equal contribution co autuors)
+- max: highest rank in the group 
+- first: ranks assigned in order they appear in the array
+- dense: like ‘min’, but rank always increases by 1 between groups.
+
+### ascending
+- True: smallest values is rank 1 (think of running)
+- False: largest values is rank 1. Think of test score or salary. This is more common.
+
+
+## Leetcode 178: Rank Scores
+This is a almost a tutorial for rank function.
+
+```python
+def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
+    scores['rank'] = scores['score'].rank(method = 'dense', ascending = False)
+    return scores.sort_values(by = 'score', ascending = False)[['score', 'rank']]
+```
+
+## Leetcode 184: Department Highest salary
+
+```python
+def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) -> pd.DataFrame:
+    df = employee.merge(department, left_on='departmentId', right_on='id', how='left', suffixes=('_emp', '_dept'))
+    df['rank'] = df.groupby('departmentId')['salary'].rank(method = 'min', ascending = False)
+    return df[df['rank']==1][['name_dept', 'name_emp', 'salary']].rename(
+        columns = {
+            'name_dept' : 'Department',
+            'name_emp' : 'Employee',
+            'salary' : 'Salary'
+        }
+    )
+```
+
 
 ## 1. What Is a Window Function?
 
