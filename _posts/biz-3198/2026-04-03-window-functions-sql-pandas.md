@@ -8,6 +8,9 @@ tags: sql pandas python data-handling
 project: biz-3198
 ---
 
+
+After the database server has completed all of the steps necessary to evaluate a query, including joining, filtering, grouping, and sorting, the result set is complete and ready to be returned to the caller. Imagine if you could pause the query execution at this point and take a walk through the result set while it is still held in memory; what types of analysis might you want to do? If your result set contains sales data, perhaps you might want to generate rankings for salespeople or regions, or calculate percentage differences between one time period and another. If you are generating results for a financial report, perhaps you would like to calculate subtotals for each report section, and a grand total for the final section. Using analytic functions, you can do all of these things and more.
+
 Window functions let you compute aggregations, rankings, or offsets **across a set of rows that are related to the current row**—without collapsing the result into a single row the way `GROUP BY` does. They are one of the most powerful tools for data analysis in both SQL and pandas.
 
 ---
@@ -41,7 +44,7 @@ The function is evaluated for every row over its window, and the original row is
 We will use a simple sales table throughout:
 
 | order_id | salesperson | region | sale_date  | amount |
-|----------|-------------|--------|------------|--------|
+| -------- | ----------- | ------ | ---------- | ------ |
 | 1        | Alice       | East   | 2024-01-05 | 500    |
 | 2        | Bob         | West   | 2024-01-07 | 300    |
 | 3        | Alice       | East   | 2024-01-12 | 700    |
@@ -93,10 +96,10 @@ df = pd.DataFrame(data)
 
 Ranking functions assign an ordinal position to each row within its partition.
 
-| Function | Behavior |
-|---|---|
-| `ROW_NUMBER()` | Unique sequential integer, no ties |
-| `RANK()` | Tied rows get the same rank; next rank skips |
+| Function       | Behavior                                               |
+| -------------- | ------------------------------------------------------ |
+| `ROW_NUMBER()` | Unique sequential integer, no ties                     |
+| `RANK()`       | Tied rows get the same rank; next rank skips           |
 | `DENSE_RANK()` | Tied rows get the same rank; next rank does *not* skip |
 
 ### 3.1 SQL
@@ -207,12 +210,12 @@ df_sorted["moving_avg_3"] = (
 
 Offset functions let you look at the value of another row **relative** to the current row—no self-join required.
 
-| Function | Description |
-|---|---|
-| `LAG(col, n)` | Value of `col` from `n` rows *before* the current row |
-| `LEAD(col, n)` | Value of `col` from `n` rows *after* the current row |
+| Function           | Description                                                |
+| ------------------ | ---------------------------------------------------------- |
+| `LAG(col, n)`      | Value of `col` from `n` rows *before* the current row      |
+| `LEAD(col, n)`     | Value of `col` from `n` rows *after* the current row       |
 | `FIRST_VALUE(col)` | Value of `col` from the *first* row in the partition/frame |
-| `LAST_VALUE(col)` | Value of `col` from the *last* row in the partition/frame |
+| `LAST_VALUE(col)`  | Value of `col` from the *last* row in the partition/frame  |
 
 ### 5.1 LAG and LEAD (SQL)
 
@@ -300,10 +303,10 @@ df["bucket"] = pd.qcut(df["amount"], q=3, labels=[3, 2, 1]).astype(int)
 
 ## 7. PERCENT_RANK and CUME_DIST
 
-| Function | Formula |
-|---|---|
-| `PERCENT_RANK()` | $(rank - 1) / (N - 1)$ |
-| `CUME_DIST()` | (number of rows ≤ current) / N |
+| Function         | Formula                        |
+| ---------------- | ------------------------------ |
+| `PERCENT_RANK()` | $(rank - 1) / (N - 1)$         |
+| `CUME_DIST()`    | (number of rows ≤ current) / N |
 
 ### 7.1 SQL
 
@@ -329,21 +332,21 @@ df["cume_dist"] = df["amount"].rank(pct=True, method="max")
 
 ## 8. Summary Cheat Sheet
 
-| Operation | SQL | pandas |
-|---|---|---|
-| Row number | `ROW_NUMBER() OVER (...)` | `rank(method="first")` |
-| Rank | `RANK() OVER (...)` | `rank(method="min")` |
-| Dense rank | `DENSE_RANK() OVER (...)` | `rank(method="dense")` |
-| Group total | `SUM() OVER (PARTITION BY ...)` | `groupby().transform("sum")` |
-| Running total | `SUM() OVER (ORDER BY ... ROWS ...)` | `groupby().cumsum()` |
-| Moving avg | `AVG() OVER (ROWS BETWEEN n PRECEDING ...)` | `rolling(window=n).mean()` |
-| Previous row | `LAG(col, 1) OVER (...)` | `groupby().shift(1)` |
-| Next row | `LEAD(col, 1) OVER (...)` | `groupby().shift(-1)` |
-| First in group | `FIRST_VALUE(col) OVER (...)` | `groupby().transform("first")` |
-| Last in group | `LAST_VALUE(col) OVER (...)` | `groupby().transform("last")` |
-| Buckets | `NTILE(n) OVER (...)` | `pd.qcut(..., q=n)` |
-| Percentile rank | `PERCENT_RANK() OVER (...)` | manual formula with `rank()` |
-| Cumulative dist | `CUME_DIST() OVER (...)` | `rank(pct=True, method="max")` |
+| Operation       | SQL                                         | pandas                         |
+| --------------- | ------------------------------------------- | ------------------------------ |
+| Row number      | `ROW_NUMBER() OVER (...)`                   | `rank(method="first")`         |
+| Rank            | `RANK() OVER (...)`                         | `rank(method="min")`           |
+| Dense rank      | `DENSE_RANK() OVER (...)`                   | `rank(method="dense")`         |
+| Group total     | `SUM() OVER (PARTITION BY ...)`             | `groupby().transform("sum")`   |
+| Running total   | `SUM() OVER (ORDER BY ... ROWS ...)`        | `groupby().cumsum()`           |
+| Moving avg      | `AVG() OVER (ROWS BETWEEN n PRECEDING ...)` | `rolling(window=n).mean()`     |
+| Previous row    | `LAG(col, 1) OVER (...)`                    | `groupby().shift(1)`           |
+| Next row        | `LEAD(col, 1) OVER (...)`                   | `groupby().shift(-1)`          |
+| First in group  | `FIRST_VALUE(col) OVER (...)`               | `groupby().transform("first")` |
+| Last in group   | `LAST_VALUE(col) OVER (...)`                | `groupby().transform("last")`  |
+| Buckets         | `NTILE(n) OVER (...)`                       | `pd.qcut(..., q=n)`            |
+| Percentile rank | `PERCENT_RANK() OVER (...)`                 | manual formula with `rank()`   |
+| Cumulative dist | `CUME_DIST() OVER (...)`                    | `rank(pct=True, method="max")` |
 
 ---
 
