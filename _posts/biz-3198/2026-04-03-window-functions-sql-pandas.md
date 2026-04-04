@@ -20,6 +20,11 @@ Window functions let you compute aggregations, rankings, or offsets **across a s
 `
 DataFrame.rank(axis=0, method='average', numeric_only=False, na_option='keep', ascending=True, pct=False)
 `
+
+- rank is a window function: it does not collapse rows. 
+- If just used, it ranks among all rows
+- If used with groupby, it ranks among groups
+
 ## Key options
 
 ### method
@@ -58,6 +63,33 @@ def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) 
     )
 ```
 
+## Leetcode 185: Department Top Three Salaries
+
+```python
+def top_three_salaries(employee: pd.DataFrame, department: pd.DataFrame) -> pd.DataFrame:
+    df = employee.merge(department, how = 'left', left_on = 'departmentId', right_on = 'id', suffixes = ('_emp', '_dept'))
+    df['salrank'] = df.groupby('departmentId')['salary'].rank(method = 'dense', ascending = False)
+    return df[df['salrank']<=3][['name_dept', 'name_emp', 'salary']].rename(
+        columns = {
+            'name_dept' : 'Department',
+            'name_emp' : 'Employee',
+            'salary' : 'Salary'
+        }
+    )
+```
+
+## Leetcode 1875: Group Employees of the Same Salary
+- groupby + transform is the window function in pandas
+- copy is needed when we assign new columns after filtering
+- sort_values with two columns!
+```python
+    employees['salary_count'] = employees.groupby('salary')['salary'].transform('size')
+    filtered_employees = employees[employees['salary_count'] > 1].copy() #since we are assigning new columns after filtering...
+
+
+    filtered_employees['team_id'] = filtered_employees['salary'].rank(method = 'dense').astype(int)
+    return filtered_employees[['employee_id', 'name', 'salary', 'team_id']].sort_values(['team_id', 'employee_id'])
+```
 
 ## 1. What Is a Window Function?
 
@@ -395,6 +427,7 @@ df["cume_dist"] = df["amount"].rank(pct=True, method="max")
 ---
 
 ## References
+- farlowdw, [Database SQL Primer - Part 2: Window Functions](https://leetcode.com/discuss/post/1600719/database-sql-primer-part-2-window-functi-sm8m/)
 - Colt Steele, [SQL Window Functions in 10 Minutes](https://youtu.be/y1KCM8vbYe4?si=TOH9VCXTSoxq8xNo
 - [PostgreSQL Window Function Documentation](https://www.postgresql.org/docs/current/tutorial-window.html)
 - [pandas `DataFrame.groupby` User Guide](https://pandas.pydata.org/docs/user_guide/groupby.html)
