@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 1134: Armstrong Number"
 description: "Determining if a number is an Armstrong number by extracting its digits."
 tags: algorithms math
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-20
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

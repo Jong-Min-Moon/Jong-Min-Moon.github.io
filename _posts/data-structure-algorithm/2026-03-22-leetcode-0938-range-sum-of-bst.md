@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 938: Range Sum of BST"
 description: "Calculating the sum of all nodes in a given range by traversing a Binary Search Tree."
 tags: algorithms tree binary-search-tree depth-first-search
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2026-03-22
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 242: Valid Anagram"
 description: "Checking if two strings are anagrams of each other using a Hash Map."
 tags: algorithms hash-table strings taxi
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-20
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

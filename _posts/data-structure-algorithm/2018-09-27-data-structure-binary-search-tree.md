@@ -3,10 +3,10 @@ layout: distill
 title: "Data Structures: Binary Search Tree"
 description: "A node-based binary tree data structure with properties that make it highly efficient for searching, inserting, and deleting elements."
 tags: data-structures binary-search-tree tree algorithms
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-27
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

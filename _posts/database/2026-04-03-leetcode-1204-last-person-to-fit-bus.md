@@ -3,9 +3,9 @@ layout: distill
 title: "LeetCode 1204: Last Person to Fit in the Bus"
 description: "Solving the 'Last Person to Fit in the Bus' problem using window functions in both SQL and pandas. A perfect application of running totals to real-world scenarios."
 date: 2026-04-03
-categories: biz-3198
+categories: database
 tags: leetcode sql pandas window-functions
-project: biz-3198
+project: database
 ---
 
 In this post, we solve [LeetCode 1204: Last Person to Fit in the Bus](https://leetcode.com/problems/last-person-to-fit-in-the-bus/).

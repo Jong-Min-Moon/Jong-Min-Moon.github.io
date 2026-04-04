@@ -3,10 +3,10 @@ layout: distill
 title: "Data Structures: Hash Table"
 description: "A foundational dictionary data structure allowing for $O(1)$ average associative lookups."
 tags: data-structures hash-table dictionary arrays
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-20
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

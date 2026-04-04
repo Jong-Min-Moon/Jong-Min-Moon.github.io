@@ -1,10 +1,10 @@
 ---
 layout: project
-title: "Data Structures"
+title: "Data Structure / Algorithm"
 description: "Understand abstract data types, object-oriented programming, and analysis of algorithms."
 importance: 1
 category: cs
-project_handle: eee-2020
+project_handle: data-structure-algorithm
 course_number: EEE2020
 institution: Yonsei University
 course_level: Undergraduate
@@ -39,7 +39,7 @@ After successfully taking the class you will acquire:
 # Related Posts
 
 <div class="projects">
-{% assign category_posts = site.categories['eee-2020'] | reverse %}
+{% assign category_posts = site.categories['data-structure-algorithm'] | reverse %}
 
 {% if category_posts.size > 0 %}
   <!-- Collect all unique tags -->

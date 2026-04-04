@@ -185,6 +185,9 @@ collections:
   coursework:
     output: true
     permalink: /coursework/:path/
+  coding_test:
+    output: true
+    permalink: /coding-test/:path/
 
 announcements:
   enabled: true

@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 914: X of a Kind in a Deck of Cards"
 description: "Grouping elements by checking the Greatest Common Divisor (GCD) of their frequencies."
 tags: algorithms hash-table math arrays
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-20
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

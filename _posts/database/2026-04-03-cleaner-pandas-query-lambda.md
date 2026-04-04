@@ -3,9 +3,9 @@ layout: distill
 title: "Cleaner pandas: Beyond Redundant Boolean Indexing"
 description: "Stop repeating your DataFrame name! A guide to using .query() and lambda functions for more readable, efficient, and 'fluent' pandas code."
 date: 2026-04-03
-categories: biz-3198
+categories: database
 tags: pandas python data-handling method-chaining
-project: biz-3198
+project: database
 ---
 
 If you've spent any time with pandas, you've likely written code that looks like this:

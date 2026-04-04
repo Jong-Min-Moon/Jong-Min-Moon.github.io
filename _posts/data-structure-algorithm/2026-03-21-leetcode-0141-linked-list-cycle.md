@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 141: Linked List Cycle"
 description: "Detecting a cycle in a linked list using Floyd's Tortoise and Hare algorithm."
 tags: algorithms linked-list two-pointers hash-table
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-20
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

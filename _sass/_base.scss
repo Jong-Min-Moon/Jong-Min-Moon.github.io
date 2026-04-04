@@ -1065,3 +1065,21 @@ nav[data-toggle="toc"] {
     padding-top: 0.5rem;
   }
 }
+
+// Nested Dropdown Submenu
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+.dropdown-submenu > a:after {
+  content: " \25B8"; /* right arrow */
+  float: right;
+  margin-left: 0.5rem;
+}

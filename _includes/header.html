@@ -68,6 +68,19 @@
               {%- for child in p.children -%}
               {%- if child.title == 'divider' %}
               <div class="dropdown-divider"></div>
+              {%- elsif child.children %}
+              <div class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">{{ child.title }}</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                  {%- for subchild in child.children -%}
+                  {%- if subchild.title == 'divider' %}
+                  <div class="dropdown-divider"></div>
+                  {%- else %}
+                  <a class="dropdown-item" href="{{ subchild.permalink | relative_url }}">{{ subchild.title }}</a>
+                  {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
               {%- else %}
               <a class="dropdown-item" href="{{ child.permalink | relative_url }}">{{ child.title }}</a>
               {%- endif -%}

@@ -3,9 +3,9 @@ layout: distill
 title: "Leetcode 977. Squares of a Sorted Array"
 description: "Solving the Squares of a Sorted Array problem using a Two Pointers approach."
 date: 2026-03-29
-categories: eee-2020
+categories: data-structure-algorithm
 tags: leetcode two-pointers(inward) array algorithm
-project: eee-2020
+project: data-structure-algorithm
 ---
 
 The original problem is [here](https://leetcode.com/problems/squares-of-a-sorted-array/description/).

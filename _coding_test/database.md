@@ -1,10 +1,10 @@
 ---
 layout: project
-title: "Business Programming"
+title: "Database"
 description: "Undergraduate course introducing Python programming for business analytics, covering data collection, processing, statistical analyses, and machine learning fundamentals."
 importance: 1
 category: cs
-project_handle: biz-3198
+project_handle: database
 course_number: BIZ 3198
 institution: Yonsei University (Sinchon)
 course_level: Undergraduate
@@ -38,7 +38,7 @@ Upon completing this course, students will be able to:
 # Related Posts
 
 <div class="projects">
-{% assign category_posts = site.categories['biz-3198'] | reverse %}
+{% assign category_posts = site.categories['database'] | reverse %}
 
 {% if category_posts.size > 0 %}
   <!-- Collect all unique tags -->

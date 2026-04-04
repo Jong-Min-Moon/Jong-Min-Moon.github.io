@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 392: Is Subsequence"
 description: "A two-pointer approach to check if one string is a subsequence of another"
 tags: algorithms two-pointers strings same-direction-traversal
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-20
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

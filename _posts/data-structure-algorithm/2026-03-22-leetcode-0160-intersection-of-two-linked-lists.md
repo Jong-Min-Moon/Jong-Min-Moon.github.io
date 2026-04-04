@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 160: Intersection of Two Linked Lists"
 description: "Finding the node at which the intersection of two singly linked lists begins using the Two Pointers technique."
 tags: algorithms linked-list two-pointers
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2026-03-22
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

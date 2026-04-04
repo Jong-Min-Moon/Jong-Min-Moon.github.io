@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 27: Remove Element"
 description: "A two-pointer approach to remove a specific element in-place from an array"
 tags: algorithms two-pointers arrays same-direction-traversal
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2026-03-19
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

@@ -3,9 +3,9 @@ layout: distill
 title: "Window Functions in SQL and Pandas"
 description: "A practical guide to window functions—ranking, aggregation, and offset operations computed over a sliding frame—demonstrated side-by-side in SQL and Python's pandas library."
 date: 2026-04-03
-categories: biz-3198
+categories: database
 tags: sql pandas python data-handling
-project: biz-3198
+project: database
 ---
 
 # Window function = data analysis step

@@ -9,4 +9,10 @@ children:
       permalink: /coursework/
     - title: Papers
       permalink: /study/papers/
+    - title: Coding Test
+      children: 
+        - title: Data Structure / Algorithm
+          permalink: /coding-test/data-structure-algorithm/
+        - title: Database
+          permalink: /coding-test/database/
 ---

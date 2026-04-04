@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 26: Remove Duplicates from Sorted Array"
 description: "A two-pointer approach to remove duplicates in-place from a sorted array"
 tags: algorithms two-pointers arrays
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2026-03-19
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 121: Best Time to Buy and Sell Stock"
 description: "Iteratively updating minimums and maximum profits in a single pass"
 tags: algorithms arrays optimal-substructure
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-09-20
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

@@ -3,10 +3,10 @@ layout: distill
 title: "Leetcode 202: Happy Number"
 description: "Determining if a number is a happy number using Hash Set and Two Pointers techniques."
 tags: algorithms math two-pointers hash-table
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2026-03-22
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"

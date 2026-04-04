@@ -3,10 +3,10 @@ layout: distill
 title: "Introduction to Two Pointers"
 description: "A comprehensive guide to the two-pointer algorithmic pattern"
 tags: algorithms two-pointers
-categories: eee-2020
+categories: data-structure-algorithm
 date: 2018-10-01
 featured: false
-project: eee-2020
+project: data-structure-algorithm
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"
