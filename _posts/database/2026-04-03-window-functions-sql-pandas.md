@@ -14,6 +14,25 @@ After the database server has completed all of the steps necessary to evaluate a
 
 Window functions let you compute aggregations, rankings, or offsets **across a set of rows that are related to the current row**—without collapsing the result into a single row the way `GROUP BY` does. They are one of the most powerful tools for data analysis in both SQL and pandas.
 
+# Summary Cheat Sheet
+
+| Operation       | SQL                                         | pandas                         |
+| --------------- | ------------------------------------------- | ------------------------------ |
+| Dense rank      | `DENSE_RANK() OVER (...)`                   | `rank(method="dense")`         |
+| Rank            | `RANK() OVER (...)`                         | `rank(method="min")`           |
+| Group total     | `SUM() OVER (PARTITION BY ...)`             | `groupby().transform("sum")`   |
+| Row number      | `ROW_NUMBER() OVER (...)`                   | `rank(method="first")`         |
+| Running total   | `SUM() OVER (ORDER BY ... ROWS ...)`        | `groupby().cumsum()`           |
+| Moving avg      | `AVG() OVER (ROWS BETWEEN n PRECEDING ...)` | `rolling(window=n).mean()`     |
+| Previous row    | `LAG(col, 1) OVER (...)`                    | `groupby().shift(1)`           |
+| Next row        | `LEAD(col, 1) OVER (...)`                   | `groupby().shift(-1)`          |
+| First in group  | `FIRST_VALUE(col) OVER (...)`               | `groupby().transform("first")` |
+| Last in group   | `LAST_VALUE(col) OVER (...)`                | `groupby().transform("last")`  |
+| Buckets         | `NTILE(n) OVER (...)`                       | `pd.qcut(..., q=n)`            |
+| Percentile rank | `PERCENT_RANK() OVER (...)`                 | manual formula with `rank()`   |
+| Cumulative dist | `CUME_DIST() OVER (...)`                    | `rank(pct=True, method="max")` |
+
+---
 
 # df.rank()
 
@@ -49,7 +68,7 @@ def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
 ```
 
 ## Leetcode 184: Department Highest salary
-
+Dense rank is used here.
 ```python
 def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) -> pd.DataFrame:
     df = employee.merge(department, left_on='departmentId', right_on='id', how='left', suffixes=('_emp', '_dept'))
@@ -64,6 +83,7 @@ def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) 
 ```
 
 ## Leetcode 185: Department Top Three Salaries
+Dense rank is used here.
 
 ```python
 def top_three_salaries(employee: pd.DataFrame, department: pd.DataFrame) -> pd.DataFrame:
@@ -79,6 +99,7 @@ def top_three_salaries(employee: pd.DataFrame, department: pd.DataFrame) -> pd.D
 ```
 
 ## Leetcode 1875: Group Employees of the Same Salary
+- Dense rank is used here.
 - groupby + transform is the window function in pandas
 - copy is needed when we assign new columns after filtering
 - sort_values with two columns!
@@ -90,6 +111,371 @@ def top_three_salaries(employee: pd.DataFrame, department: pd.DataFrame) -> pd.D
     filtered_employees['team_id'] = filtered_employees['salary'].rank(method = 'dense').astype(int)
     return filtered_employees[['employee_id', 'name', 'salary', 'team_id']].sort_values(['team_id', 'employee_id'])
 ```
+
+# rank(method = 'min'): first rank with ties
+
+## Leetcode 512: Game Play Analysis II
+
+```python
+def game_analysis(activity: pd.DataFrame) -> pd.DataFrame:
+activity['event_date_rank'] = activity.groupby('player_id')['event_date'].rank(method = 'min')
+return activity[activity['event_date_rank']==1][['player_id', 'device_id']]
+```
+
+## Leetcode 586: Customer Placing the Largest Number of Orders
+- Follow up: What if more than one customer has the largest number of orders, can you find all the customer_number in this case?
+
+- first rank with ties
+- When you do orders.groupby('customer_number').size(), Pandas makes customer_number the index of the new DataFrame, not a column.
+- in pandas, no .count(). it's .size()
+- aggregation removes anything other than group variable and aggregated variable. group variable is turned into index. use reset_index() to make it a column.
+
+```python
+def largest_orders(orders: pd.DataFrame) -> pd.DataFrame:
+order_count = orders.groupby('customer_number').size().reset_index(name='order_count') #result is two columns
+order_count['count_rank'] = order_count['order_count'].rank(method = 'min', ascending = False)
+return order_count[order_count['count_rank'] == 1][['customer_number']]
+```
+
+## Leetcode 1070: Product Sales Analysis III
+```python
+def sales_analysis(sales: pd.DataFrame) -> pd.DataFrame:
+sales['year_rank'] = sales.groupby('product_id')['year'].rank(method = 'min')
+return sales[sales['year_rank']==1][['product_id', 'year', 'quantity', 'price']].rename(
+columns = {'year': 'first_year'}
+)
+```
+
+## Leetcode 1082: Sales Analysis I
+
+<!--
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| product_id   | int     |
+| product_name | varchar |
+| unit_price   | int     |
++--------------+---------+
+product_id is the primary key (column with unique values) of this table.
+Each row of this table indicates the name and the price of each product.
+Table: Sales
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| seller_id   | int     |
+| product_id  | int     |
+| buyer_id    | int     |
+| sale_date   | date    |
+| quantity    | int     |
+| price       | int     |
++-------------+---------+
+This table can have repeated rows.
+product_id is a foreign key (reference column) to the Product table.
+Each row of this table contains some information about one sale.
+ 
+
+Write a solution that reports the best seller by total sales price, If there is a tie, report them all.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Product table:
++------------+--------------+------------+
+| product_id | product_name | unit_price |
++------------+--------------+------------+
+| 1          | S8           | 1000       |
+| 2          | G4           | 800        |
+| 3          | iPhone       | 1400       |
++------------+--------------+------------+
+Sales table:
++-----------+------------+----------+------------+----------+-------+
+| seller_id | product_id | buyer_id | sale_date  | quantity | price |
++-----------+------------+----------+------------+----------+-------+
+| 1         | 1          | 1        | 2019-01-21 | 2        | 2000  |
+| 1         | 2          | 2        | 2019-02-17 | 1        | 800   |
+| 2         | 2          | 3        | 2019-06-02 | 1        | 800   |
+| 3         | 3          | 4        | 2019-05-13 | 2        | 2800  |
++-----------+------------+----------+------------+----------+-------+
+Output: 
++-------------+
+| seller_id   |
++-------------+
+| 1           |
+| 3           |
++-------------+
+Explanation: Both sellers with id 1 and 3 sold products with the most total price of 2800.
+-->
+
+- first rank with ties
+
+```python
+def sales_analysis(sales: pd.DataFrame, product: pd.DataFrame) -> pd.DataFrame:
+    sales_record = sales.merge(product, on = 'product_id', how = 'left')
+    revenue = sales_record.groupby('seller_id')['price'].sum().reset_index(name = 'revenue') 
+    revenue['revenue_rank'] = revenue['revenue'].rank(method = 'min', ascending = False)
+    return revenue[revenue['revenue_rank'] == 1][['seller_id']]
+```
+
+## Leetcode 1112: Highest Grade For Each Student
+
+<!--
+Table: Enrollments
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| student_id    | int     |
+| course_id     | int     |
+| grade         | int     |
++---------------+---------+
+(student_id, course_id) is the primary key (combination of columns with unique values) of this table.
+grade is never NULL.
+ 
+
+Write a solution to find the highest grade with its corresponding course for each student. In case of a tie, you should find the course with the smallest course_id.
+
+Return the result table ordered by student_id in ascending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Enrollments table:
++------------+-------------------+
+| student_id | course_id | grade |
++------------+-----------+-------+
+| 2          | 2         | 95    |
+| 2          | 3         | 95    |
+| 1          | 1         | 90    |
+| 1          | 2         | 99    |
+| 3          | 1         | 80    |
+| 3          | 2         | 75    |
+| 3          | 3         | 82    |
++------------+-----------+-------+
+Output: 
++------------+-------------------+
+| student_id | course_id | grade |
++------------+-----------+-------+
+| 1          | 2         | 99    |
+| 2          | 2         | 95    |
+| 3          | 3         | 82    |
++------------+-----------+-------+
+-->
+
+- .rank cannot handle multiple columns.
+- Insteand, use sort_values() and then .drop_duplicates()
+
+```python
+def highest_grade(enrollments: pd.DataFrame) -> pd.DataFrame:
+    sorted_df = enrollments.sort_values(
+        by = ['student_id', 'grade', 'course_id'],
+        ascending = [True, False, True]
+    )
+    
+    top_grades = sorted_df.drop_duplicates(subset = ['student_id'], keep ='first')
+    return top_grades[['student_id', 'course_id', 'grade']]
+```
+# ROW_NUMBER()
+
+
+
+## Leetcode 180. Consecutive Numbers
+- https://leetcode.com/problems/consecutive-numbers/
+## Leetcode 601. Human Traffic of Stadium
+- https://leetcode.com/problems/human-traffic-of-stadium/description/
+- hard. skip for now
+## Leetcode 618. Students Report By Geography
+- https://leetcode.com/problems/students-report-by-geography/description/
+
+AVG()
+
+615. Average Salary: Departments VS Company
+ 
+ 
+LAG()
+
+1709. Biggest Window Between Visits
+LEAD()
+
+1811. Find Interview Candidates
+MAX()
+
+1084. Sales Analysis III
+1867. Orders With Maximum Quantity Above Average
+MIN()
+
+1084. Sales Analysis III
+ 
+
+
+
+# Group cumulative sum: groupby + cumsum
+- this corresponds to SUM() OVER (PARTITION BY ...) in SQL.
+
+## Leetcode 534. Game Play Analysis III
+- original problem: https://leetcode.com/problems/game-play-analysis-iii/description/
+<!--
+Table: Activity
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| player_id    | int     |
+| device_id    | int     |
+| event_date   | date    |
+| games_played | int     |
++--------------+---------+
+(player_id, event_date) is the primary key (combination of columns with unique values) of this table.
+This table shows the activity of players of some games.
+Each row is a record of a player who logged in and played a number of games (possibly 0) before logging out on someday using some device.
+ 
+
+Write a solution to report the device that is first logged in for each player.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Activity table:
++-----------+-----------+------------+--------------+
+| player_id | device_id | event_date | games_played |
++-----------+-----------+------------+--------------+
+| 1         | 2         | 2016-03-01 | 5            |
+| 1         | 2         | 2016-05-02 | 6            |
+| 2         | 3         | 2017-06-25 | 1            |
+| 3         | 1         | 2016-03-02 | 0            |
+| 3         | 4         | 2018-07-03 | 5            |
++-----------+-----------+------------+--------------+
+Output: 
++-----------+-----------+
+| player_id | device_id |
++-----------+-----------+
+| 1         | 2         |
+| 2         | 3         |
+| 3         | 1         |
++-----------+-----------+
+-->
+
+- pandas seems to be not good at window functions with multiple conditions.
+- so first sort and then use cumsum. always sort before using cumsum.
+
+```python
+def game_play_analysis(activity: pd.DataFrame) -> pd.DataFrame:
+    activity = activity.sort_values(by = ['player_id', 'event_date'])
+    activity['games_played_so_far'] = activity.groupby('player_id')['games_played'].cumsum()
+    return activity[['player_id', 'event_date', 'games_played_so_far']]
+```
+
+## Leetcode 579. Find Cumulative Salary of an Employee
+- hard. skip for now.
+
+## Leetcode 1308. Running Total for Different Genders
+- original problem is [here](https://leetcode.com/problems/running-total-for-different-genders/
+description/)
+- always sort_values before using cumsum
+- always lose one granularity when using cumsum
+<!--
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| player_name   | varchar |
+| gender        | varchar |
+| day           | date    |
+| score_points  | int     |
++---------------+---------+
+(gender, day) is the primary key (combination of columns with unique values) for this table.
+A competition is held between the female team and the male team.
+Each row of this table indicates that a player_name and with gender has scored score_point in someday.
+Gender is 'F' if the player is in the female team and 'M' if the player is in the male team.
+ 
+
+Write a solution to find the total score for each gender on each day.
+
+Return the result table ordered by gender and day in ascending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Scores table:
++-------------+--------+------------+--------------+
+| player_name | gender | day        | score_points |
++-------------+--------+------------+--------------+
+| Aron        | F      | 2020-01-01 | 17           |
+| Alice       | F      | 2020-01-07 | 23           |
+| Bajrang     | M      | 2020-01-07 | 7            |
+| Khali       | M      | 2019-12-25 | 11           |
+| Slaman      | M      | 2019-12-30 | 13           |
+| Joe         | M      | 2019-12-31 | 3            |
+| Jose        | M      | 2019-12-18 | 2            |
+| Priya       | F      | 2019-12-31 | 23           |
+| Priyanka    | F      | 2019-12-30 | 17           |
++-------------+--------+------------+--------------+
+Output: 
++--------+------------+-------+
+| gender | day        | total |
++--------+------------+-------+
+| F      | 2019-12-30 | 17    |
+| F      | 2019-12-31 | 40    |
+| F      | 2020-01-01 | 57    |
+| F      | 2020-01-07 | 80    |
+| M      | 2019-12-18 | 2     |
+| M      | 2019-12-25 | 13    |
+| M      | 2019-12-30 | 26    |
+| M      | 2019-12-31 | 29    |
+| M      | 2020-01-07 | 36    |
++--------+------------+-------+
+Explanation: 
+For the female team:
+The first day is 2019-12-30, Priyanka scored 17 points and the total score for the team is 17.
+The second day is 2019-12-31, Priya scored 23 points and the total score for the team is 40.
+The third day is 2020-01-01, Aron scored 17 points and the total score for the team is 57.
+The fourth day is 2020-01-07, Alice scored 23 points and the total score for the team is 80.
+
+For the male team:
+The first day is 2019-12-18, Jose scored 2 points and the total score for the team is 2.
+The second day is 2019-12-25, Khali scored 11 points and the total score for the team is 13.
+The third day is 2019-12-30, Slaman scored 13 points and the total score for the team is 26.
+The fourth day is 2019-12-31, Joe scored 3 points and the total score for the team is 29.
+The fifth day is 2020-01-07, Bajrang scored 7 points and the total score for the team is 36.
+-->
+
+```python
+def running_total_for_different_genders(scores: pd.DataFrame) -> pd.DataFrame:
+    scores = scores.sort_values(by = ['gender', 'day'])
+    scores['total'] = scores.groupby('gender')['score_points'].cumsum()
+    return scores[['gender', 'day', 'total']]
+```
+
+# COUNT = .groupby.transform('size')
+
+## Leetcode 1303: Find the Team Size
+
+```python
+def team_size(employee: pd.DataFrame) -> pd.DataFrame:
+employee['team_size'] = employee.groupby('team_id')['team_id'].transform('size')
+return employee[['employee_id', 'team_size']]
+```
+
+# AVG() = 
 
 ## 1. What Is a Window Function?
 
@@ -406,25 +792,7 @@ df["cume_dist"] = df["amount"].rank(pct=True, method="max")
 
 ---
 
-## 8. Summary Cheat Sheet
 
-| Operation       | SQL                                         | pandas                         |
-| --------------- | ------------------------------------------- | ------------------------------ |
-| Row number      | `ROW_NUMBER() OVER (...)`                   | `rank(method="first")`         |
-| Rank            | `RANK() OVER (...)`                         | `rank(method="min")`           |
-| Dense rank      | `DENSE_RANK() OVER (...)`                   | `rank(method="dense")`         |
-| Group total     | `SUM() OVER (PARTITION BY ...)`             | `groupby().transform("sum")`   |
-| Running total   | `SUM() OVER (ORDER BY ... ROWS ...)`        | `groupby().cumsum()`           |
-| Moving avg      | `AVG() OVER (ROWS BETWEEN n PRECEDING ...)` | `rolling(window=n).mean()`     |
-| Previous row    | `LAG(col, 1) OVER (...)`                    | `groupby().shift(1)`           |
-| Next row        | `LEAD(col, 1) OVER (...)`                   | `groupby().shift(-1)`          |
-| First in group  | `FIRST_VALUE(col) OVER (...)`               | `groupby().transform("first")` |
-| Last in group   | `LAST_VALUE(col) OVER (...)`                | `groupby().transform("last")`  |
-| Buckets         | `NTILE(n) OVER (...)`                       | `pd.qcut(..., q=n)`            |
-| Percentile rank | `PERCENT_RANK() OVER (...)`                 | manual formula with `rank()`   |
-| Cumulative dist | `CUME_DIST() OVER (...)`                    | `rank(pct=True, method="max")` |
-
----
 
 ## References
 - farlowdw, [Database SQL Primer - Part 2: Window Functions](https://leetcode.com/discuss/post/1600719/database-sql-primer-part-2-window-functi-sm8m/)

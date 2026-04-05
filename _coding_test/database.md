@@ -5,32 +5,8 @@ description: "Undergraduate course introducing Python programming for business a
 importance: 1
 category: cs
 project_handle: database
-course_number: BIZ 3198
-institution: Yonsei University (Sinchon)
-course_level: Undergraduate
-semester: Spring 2018
 ---
  
-## Learning Objectives
-Upon completing this course, students will be able to:
-1. Python Control Flow (e.g., For, While, If…)
-2. Function
-3. Input and Print
-4. Class, Instance, Init Method, Inheritance
-5. Module, Exception
-6. Reading and Writing CSV Files
-7. Dates and Times, NumPy
-8. Data Handling I
-9. Hypothesis Testing I
-10. Hypothesis Testing II
-11. Regression I
-12. Logistic Regression
-13. Web Crawling
-14. Introduction to R
-15. Data Analyses with R (In-class exercise)
-16. Data Analyses with R
-17. Machine Learning with R I
-18. Machine Learning with R II
 
 
  
