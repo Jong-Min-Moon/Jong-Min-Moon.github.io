@@ -34,8 +34,17 @@ Window functions let you compute aggregations, rankings, or offsets **across a s
 
 ---
 
-# df.rank()
+# Ranking
 
+Ranking functions assign an ordinal position to each row within its partition.
+
+| Function       | Behavior                                               |
+| -------------- | ------------------------------------------------------ |
+| `DENSE_RANK()` | Tied rows get the same rank; next rank does *not* skip |
+| `ROW_NUMBER()` | Unique sequential integer, no ties                     |
+| `RANK()`       | Tied rows get the same rank; next rank skips           |
+
+## .rank() function
 `
 DataFrame.rank(axis=0, method='average', numeric_only=False, na_option='keep', ascending=True, pct=False)
 `
@@ -44,21 +53,24 @@ DataFrame.rank(axis=0, method='average', numeric_only=False, na_option='keep', a
 - If just used, it ranks among all rows
 - If used with groupby, it ranks among groups
 
-## Key options
+### Key options
 
-### method
-- average: average rank of the group. can be float. e.g. rank 2.5 (think of 1.5tier journals)
-- min: lowest rank in the group (think of equal contribution co autuors)
-- max: highest rank in the group 
-- first: ranks assigned in order they appear in the array
-- dense: like ‘min’, but rank always increases by 1 between groups.
+- method
+  - average: average rank of the group. can be float. e.g. rank 2.5 (think of 1.5tier journals)
+  - min: lowest rank in the group (think of equal contribution co autuors)
+  - max: highest rank in the group 
+  - first: ranks assigned in order they appear in the array
+  - dense: like ‘min’, but rank always increases by 1 between groups.
 
-### ascending
-- True: smallest values is rank 1 (think of running)
-- False: largest values is rank 1. Think of test score or salary. This is more common.
+- ascending
+  - True: smallest values is rank 1 (think of running)
+  - False: largest values is rank 1. Think of test score or salary. This is more common.
 
 
-## Leetcode 178: Rank Scores
+## Dense ranking
+
+
+### Leetcode 178: Rank Scores
 This is a almost a tutorial for rank function.
 
 ```python
@@ -67,7 +79,7 @@ def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
     return scores.sort_values(by = 'score', ascending = False)[['score', 'rank']]
 ```
 
-## Leetcode 184: Department Highest salary
+### Leetcode 184: Department Highest salary
 Dense rank is used here.
 ```python
 def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) -> pd.DataFrame:
@@ -82,7 +94,7 @@ def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) 
     )
 ```
 
-## Leetcode 185: Department Top Three Salaries
+### Leetcode 185: Department Top Three Salaries
 Dense rank is used here.
 
 ```python
@@ -98,7 +110,7 @@ def top_three_salaries(employee: pd.DataFrame, department: pd.DataFrame) -> pd.D
     )
 ```
 
-## Leetcode 1875: Group Employees of the Same Salary
+### Leetcode 1875: Group Employees of the Same Salary
 - Dense rank is used here.
 - groupby + transform is the window function in pandas
 - copy is needed when we assign new columns after filtering
@@ -112,9 +124,10 @@ def top_three_salaries(employee: pd.DataFrame, department: pd.DataFrame) -> pd.D
     return filtered_employees[['employee_id', 'name', 'salary', 'team_id']].sort_values(['team_id', 'employee_id'])
 ```
 
-# rank(method = 'min'): first rank with ties
+## Ranking with ties
+- rank(method = 'min'): first rank with ties
 
-## Leetcode 512: Game Play Analysis II
+### Leetcode 512: Game Play Analysis II
 
 ```python
 def game_analysis(activity: pd.DataFrame) -> pd.DataFrame:
@@ -122,7 +135,7 @@ activity['event_date_rank'] = activity.groupby('player_id')['event_date'].rank(m
 return activity[activity['event_date_rank']==1][['player_id', 'device_id']]
 ```
 
-## Leetcode 586: Customer Placing the Largest Number of Orders
+### Leetcode 586: Customer Placing the Largest Number of Orders
 - Follow up: What if more than one customer has the largest number of orders, can you find all the customer_number in this case?
 
 - first rank with ties
@@ -137,7 +150,7 @@ order_count['count_rank'] = order_count['order_count'].rank(method = 'min', asce
 return order_count[order_count['count_rank'] == 1][['customer_number']]
 ```
 
-## Leetcode 1070: Product Sales Analysis III
+### Leetcode 1070: Product Sales Analysis III
 ```python
 def sales_analysis(sales: pd.DataFrame) -> pd.DataFrame:
 sales['year_rank'] = sales.groupby('product_id')['year'].rank(method = 'min')
@@ -146,7 +159,7 @@ columns = {'year': 'first_year'}
 )
 ```
 
-## Leetcode 1082: Sales Analysis I
+### Leetcode 1082: Sales Analysis I
 
 <!--
 +--------------+---------+
@@ -223,7 +236,7 @@ def sales_analysis(sales: pd.DataFrame, product: pd.DataFrame) -> pd.DataFrame:
     return revenue[revenue['revenue_rank'] == 1][['seller_id']]
 ```
 
-## Leetcode 1112: Highest Grade For Each Student
+### Leetcode 1112: Highest Grade For Each Student
 
 <!--
 Table: Enrollments
@@ -285,21 +298,22 @@ def highest_grade(enrollments: pd.DataFrame) -> pd.DataFrame:
     top_grades = sorted_df.drop_duplicates(subset = ['student_id'], keep ='first')
     return top_grades[['student_id', 'course_id', 'grade']]
 ```
-# ROW_NUMBER()
+## Row number: unique integers
 
 
-
-## Leetcode 180. Consecutive Numbers
-- https://leetcode.com/problems/consecutive-numbers/
-## Leetcode 601. Human Traffic of Stadium
+### Leetcode 601. Human Traffic of Stadium
 - https://leetcode.com/problems/human-traffic-of-stadium/description/
 - hard. skip for now
-## Leetcode 618. Students Report By Geography
+### Leetcode 618. Students Report By Geography
 - https://leetcode.com/problems/students-report-by-geography/description/
+- hard. skip for now
 
-AVG()
 
-615. Average Salary: Departments VS Company
+# AVG, MAX, MIN
+
+## AVG
+
+### Leetcode 615. Average Salary: Departments VS Company
  
  
 LAG()
@@ -389,6 +403,7 @@ def game_play_analysis(activity: pd.DataFrame) -> pd.DataFrame:
 description/)
 - always sort_values before using cumsum
 - always lose one granularity when using cumsum
+
 <!--
 +---------------+---------+
 | Column Name   | Type    |
@@ -465,6 +480,74 @@ def running_total_for_different_genders(scores: pd.DataFrame) -> pd.DataFrame:
     return scores[['gender', 'day', 'total']]
 ```
 
+## Leetcode 180. Consecutive Numbers
+- https://leetcode.com/problems/consecutive-numbers/
+- An SQl guru categorized this as a row number problem, but this is also a cumsum problem
+- use shift and cumsum to detect changepoint
+
+
+
+
+## Leetcode 180. Consecutive Numbers
+
+<!--
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| num         | varchar |
++-------------+---------+
+In SQL, id is the primary key for this table.
+id is an autoincrement column starting from 1.
+ 
+
+Find all numbers that appear at least three times consecutively.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Logs table:
++----+-----+
+| id | num |
++----+-----+
+| 1  | 1   |
+| 2  | 1   |
+| 3  | 1   |
+| 4  | 2   |
+| 5  | 1   |
+| 6  | 2   |
+| 7  | 2   |
++----+-----+
+Output: 
++-----------------+
+| ConsecutiveNums |
++-----------------+
+| 1               |
++-----------------+
+Explanation: 1 is the only number that appears consecutively for at least three times.
+-->
+- very sophisticated way of detecting changepoint. 
+- Don't think this is a generaliable skill...
+
+```python
+def consecutive_numbers(logs: pd.DataFrame) -> pd.DataFrame:
+# 1. Sort by Id to ensure we are looking at the rows in sequential order
+    logs['block_indicator'] = (logs['num'] != logs['num'].shift()).fillna(True).cumsum()
+    logs['consec_counts'] = logs.groupby('block_indicator').transform('size')
+    # groupby includes num because the output contains num; num is not used for grouping
+    return logs[logs['consec_counts'] >=3].drop_duplicates(
+        subset = ['num'], keep = 'first'
+    )[['num']].rename(
+        columns = {'num': 'ConsecutiveNums'}
+    )
+ ```
+ 
 # COUNT = .groupby.transform('size')
 
 ## Leetcode 1303: Find the Team Size
@@ -554,15 +637,7 @@ df = pd.DataFrame(data)
 
 ---
 
-## 3. Ranking Functions
 
-Ranking functions assign an ordinal position to each row within its partition.
-
-| Function       | Behavior                                               |
-| -------------- | ------------------------------------------------------ |
-| `ROW_NUMBER()` | Unique sequential integer, no ties                     |
-| `RANK()`       | Tied rows get the same rank; next rank skips           |
-| `DENSE_RANK()` | Tied rows get the same rank; next rank does *not* skip |
 
 ### 3.1 SQL
 
