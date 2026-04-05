@@ -309,26 +309,223 @@ def highest_grade(enrollments: pd.DataFrame) -> pd.DataFrame:
 - hard. skip for now
 
 
-# AVG, MAX, MIN
+# AVG, MAX, MIN groupby + transform('mean', 'max', 'min')
 
-## AVG
+ 
+### [Leetcode 615](https://leetcode.com/problems/average-salary-departments-vs-company/). Average Salary: Departments VS Company
 
-### Leetcode 615. Average Salary: Departments VS Company
+<!--
+Table: Salary
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| employee_id | int  |
+| amount      | int  |
+| pay_date    | date |
++-------------+------+
+In SQL, id is the primary key column for this table.
+Each row of this table indicates the salary of an employee in one month.
+employee_id is a foreign key (reference column) from the Employee table.
  
+
+Table: Employee
+
++---------------+------+
+| Column Name   | Type |
++---------------+------+
+| employee_id   | int  |
+| department_id | int  |
++---------------+------+
+In SQL, employee_id is the primary key column for this table.
+Each row of this table indicates the department of an employee.
  
+
+Find the comparison result (higher/lower/same) of the average salary of employees in a department to the company's average salary.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Salary table:
++----+-------------+--------+------------+
+| id | employee_id | amount | pay_date   |
++----+-------------+--------+------------+
+| 1  | 1           | 9000   | 2017/03/31 |
+| 2  | 2           | 6000   | 2017/03/31 |
+| 3  | 3           | 10000  | 2017/03/31 |
+| 4  | 1           | 7000   | 2017/02/28 |
+| 5  | 2           | 6000   | 2017/02/28 |
+| 6  | 3           | 8000   | 2017/02/28 |
++----+-------------+--------+------------+
+Employee table:
++-------------+---------------+
+| employee_id | department_id |
++-------------+---------------+
+| 1           | 1             |
+| 2           | 2             |
+| 3           | 2             |
++-------------+---------------+
+Output: 
++-----------+---------------+------------+
+| pay_month | department_id | comparison |
++-----------+---------------+------------+
+| 2017-02   | 1             | same       |
+| 2017-03   | 1             | higher     |
+| 2017-02   | 2             | same       |
+| 2017-03   | 2             | lower      |
++-----------+---------------+------------+
+Explanation: 
+In March, the company's average salary is (9000+6000+10000)/3 = 8333.33...
+The average salary for department '1' is 9000, which is the salary of employee_id '1' since there is only one employee in this department. So the comparison result is 'higher' since 9000 > 8333.33 obviously.
+The average salary of department '2' is (6000 + 10000)/2 = 8000, which is the average of employee_id '2' and '3'. So the comparison result is 'lower' since 8000 < 8333.33.
+
+With he same formula for the average salary comparison in February, the result is 'same' since both the department '1' and '2' have the same average salary with the company, which is 7000. 
+-->
+
+- transform + mean to get dept average and total average
+- drop duplicate to get department version dataframe. This is simpler than groupby.
+- use np.select() to create the comparison column: requires list of two boolean arrays and list of two values and a default value.
+
+```python
+import pandas as pd
+import numpy as np
+def average_salary(salary: pd.DataFrame, employee: pd.DataFrame) -> pd.DataFrame:
+# 1. Merge tables
+    df = salary.merge(employee, on='employee_id')
+    
+    # 2. Format the date as a string 'YYYY-MM' (safer than to_period)
+    df['pay_month'] = df['pay_date'].dt.strftime('%Y-%m')
+
+    
+    # 3. Calculate the averages using your transform logic
+    df['salary_avg'] = df.groupby('pay_month')['amount'].transform('mean')
+    df['salary_avg_dept'] = df.groupby(['pay_month', 'department_id'])['amount'].transform('mean')
+    
+
+    # 4. Drop duplicates to get unique month-department combinations
+    df = df.drop_duplicates(
+        subset=['pay_month', 'department_id'], keep='first'
+    ).sort_values(['pay_month', 'department_id']).copy()
+    
+    # 5. Create the exact 'higher', 'lower', 'same' comparison
+    conditions = [
+        df['salary_avg_dept'] > df['salary_avg'],
+        df['salary_avg_dept'] < df['salary_avg']
+    ]
+    choices = ['higher', 'lower']
+    df['comparison'] = np.select(conditions, choices, default='same')
+    
+    # 6. Return only the requested columns
+    return df[['pay_month', 'department_id', 'comparison']]
+```
+### [Leetcode 1084](https://leetcode.com/problems/sales-analysis-iii/description/). Sales Analysis III
+
+<!--
+Table: Product
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| product_id   | int     |
+| product_name | varchar |
+| unit_price   | int     |
++--------------+---------+
+product_id is the primary key (column with unique values) of this table.
+Each row of this table indicates the name and the price of each product.
+Table: Sales
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| seller_id   | int     |
+| product_id  | int     |
+| buyer_id    | int     |
+| sale_date   | date    |
+| quantity    | int     |
+| price       | int     |
++-------------+---------+
+This table can have duplicate rows.
+product_id is a foreign key (reference column) to the Product table.
+Each row of this table contains some information about one sale.
+ 
+
+Write a solution to report the products that were only sold in the first quarter of 2019. That is, between 2019-01-01 and 2019-03-31 inclusive.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Product table:
++------------+--------------+------------+
+| product_id | product_name | unit_price |
++------------+--------------+------------+
+| 1          | S8           | 1000       |
+| 2          | G4           | 800        |
+| 3          | iPhone       | 1400       |
++------------+--------------+------------+
+Sales table:
++-----------+------------+----------+------------+----------+-------+
+| seller_id | product_id | buyer_id | sale_date  | quantity | price |
++-----------+------------+----------+------------+----------+-------+
+| 1         | 1          | 1        | 2019-01-21 | 2        | 2000  |
+| 1         | 2          | 2        | 2019-02-17 | 1        | 800   |
+| 2         | 2          | 3        | 2019-06-02 | 1        | 800   |
+| 3         | 3          | 4        | 2019-05-13 | 2        | 2800  |
++-----------+------------+----------+------------+----------+-------+
+Output: 
++-------------+--------------+
+| product_id  | product_name |
++-------------+--------------+
+| 1           | S8           |
++-------------+--------------+
+Explanation: 
+The product with id 1 was only sold in the spring of 2019.
+The product with id 2 was sold in the spring of 2019 but was also sold after the spring of 2019.
+The product with id 3 was sold after spring 2019.
+We return only product 1 as it is the product that was only sold in the spring of 2019.
+-->
+
+- can use window function or groupby aggregation, both win `min`
+- I tested both: since the result requires returning the product name, groupby aggregation is very slow because it requires groupby with respect to string. 
+- numbers: window funciton beats 50%, aggregation beats 25%
+
+```python
+import pandas as pd
+
+def sales_analysis(product: pd.DataFrame, sales: pd.DataFrame) -> pd.DataFrame:
+    df = sales.merge(product, on= 'product_id')
+    df['is_first_quarter'] = df['sale_date'].between('2019-01-01', '2019-03-31')
+    df['is_only_first_quarter'] = df.groupby('product_id')['is_first_quarter'].transform('min')
+    return df[df['is_only_first_quarter'] == True].drop_duplicates(subset = ['product_id'])[['product_id', 'product_name']]
+```
+
+### [Leetcode 1867. Orders With Maximum Quantity Above Average](https://leetcode.com/problems/orders-with-maximum-quantity-above-average/description/)
+MAX()
+
+
+
+
+
 LAG()
 
 1709. Biggest Window Between Visits
 LEAD()
 
 1811. Find Interview Candidates
-MAX()
 
-1084. Sales Analysis III
-1867. Orders With Maximum Quantity Above Average
-MIN()
-
-1084. Sales Analysis III
+ 
  
 
 
