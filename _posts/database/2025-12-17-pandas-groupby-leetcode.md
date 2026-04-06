@@ -16,15 +16,114 @@ Merge is so basic that it rarely shows up as a standalone problem. It is usually
 - merge on different columns: `pd.merge(A, B, left_on = 'aaa', right_on = 'bbb')`
 - left join is the one used most at work. 60% of the times. we keep all rows from the left df. we keep only the matching row from the right df. the info that is not in the right df will be filled with NaN. `pd.merge(A, B, left_on = 'aaa', right_on = 'bbb', how = 'left')` Forget right join. Industry standard is left join.
 - inner join used 30% of the times. it keeps the intersection so there will be no NA. `pd.merge(A, B, left_on = 'aaa', right_on = 'bbb', how = 'inner')`
-- full outer join keeps all rows in both tables. there will be many NA.
+- full outer join keeps all rows in both tables. there will be many NA. Good for finding missing values. [Leetcode 1965: Employees With Missing Information](https://leetcode.com/problems/employees-with-missing-information/description/) is a good example.
 
-# Groupby Summary
-- **[2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/)**: `.groupby()`, `.nunique()`, `.reset_index()`, `rename(columns={})`
-- **[1693. Daily Leads and Partners](https://leetcode.com/problems/daily-leads-and-partners/)**: `groupby` with two indices, dictionary aggregator (named aggregation)
-- **[1741. Find Total Time Spent by Each Employee](https://leetcode.com/problems/find-total-time-spent-by-each-employee/)**: Mutate (add column) and then `agg`
-- **[1484. Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/)**: `agg` by tuple with `lambda x` for complex string joining
+ 
 
----
+# Groupby
+
+
+## Summary Cheat Sheet
+
+| SQL                   | pandas                                     | 설명                           |
+| --------------------- | ------------------------------------------ | ------------------------------ |
+| `GROUP BY col`        | `.groupby('col')`                          | starts with groupby()          |
+| | `.reset_index(name = 'new_col')` |  usually the submission ends with this
+| `COUNT(*)`            | `.size()`                                  | counts all rows in each group  |
+| `COUNT(DISTINCT col)` | `.nunique()`                               | counts unique values in each group |
+| `SUM(col)`            | `.sum()`                                   | 합계                           |
+| `AVG(col)`            | `.mean()`                                  | 평균                           |
+| `AS new_col`          | `.reset_index(name='new_col')` or `.agg()` | 결과 컬럼명 지정               |
+| `GROUP_CONCAT`        | `.agg(lambda x: ','.join(...))`            | 여러 행의 문자열을 하나로 통합 |
+
+### [2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/description/)
+
+ `.groupby()`, `.nunique()`, `.reset_index()`, `rename(columns={})`
+
+```python
+import pandas as pd
+
+def count_unique_subjects(teacher: pd.DataFrame) -> pd.DataFrame:
+    return teacher.groupby('teacher_id')['subject_id'].nunique().reset_index(name = 'cnt')
+```
+
+### [1693. Daily Leads and Partners](https://leetcode.com/problems/daily-leads-and-partners/description/)
+
+`groupby` with two indices, dictionary aggregator (named aggregation)
+
+```python
+import pandas as pd
+
+def daily_leads_and_partners(daily_sales: pd.DataFrame) -> pd.DataFrame:
+    return daily_sales.groupby(['date_id', 'make_name']).agg(
+        unique_leads=('lead_id', 'nunique'),
+        unique_partners=('partner_id', 'nunique')
+    ).reset_index()
+```
+
+### [1741. Find Total Time Spent by Each Employee](https://leetcode.com/problems/find-total-time-spent-by-each-employee/description/)
+
+Mutate (add column) and then `agg`
+
+```python
+import pandas as pd
+
+def total_time(employees: pd.DataFrame) -> pd.DataFrame:
+    employees['time_spent'] = employees['out_time'] - employees['in_time']
+    return employees.groupby(['event_day', 'emp_id'])['time_spent'].sum().reset_index(name = 'total_time')[['event_day', 'emp_id', 'total_time']].rename(
+        columns = {
+            'event_day' : 'day'
+        }
+    ) 
+```
+
+### [1484. Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/description/)
+
+`agg` by tuple with `lambda x` for complex string joining
+- one column, two aggregation: use list of tuples
+- use lambda for complicated aggregation
+- Series.unique() outputs a python list
+- sorted(list)
+
+```python
+import pandas as pd
+
+def categorize_products(activities: pd.DataFrame) -> pd.DataFrame:
+    return activities.groupby('sell_date')['product'].agg(
+        [
+            ('num_sold', 'nunique'),
+            ('products', lambda x: ','.join(sorted(x.unique())))
+            # to Series.unique() outputs a python list
+            # sorted(list)
+        ]
+    ).reset_index()
+```
+
+# Merge + Groupby
+TBD.
+
+always think of null when merging
+
+
+- 1587. groupby + merge + query
+
+- 610: triangle judgement.
+  - mutation is vector arithmetic. max(axis=1)
+  - .map can change datatype
+.replace cannot change datatype.
+  - .map({True: 'Yes', False: 'No'})  
+- 181. Employees Earning More Than Their Managers
+  - self merge. left on, right on
+- 1661. Average Time of Process per Machine
+  - agg paired quantities in one column
+  - pivot
+- 1280. Students and Examinations
+  - merge(..., how = 'cross') to make cross product
+- 3570. Find Books with No Available Copies
+  - merge (right=groupby), agg two, filter with two aggregated function
+- 1084 groupby.filter.  lambda x date.min drop.duplicates
+- 3642 multiple aggregation for same column.
+
 
 # Pandas `groupby()` 완벽 이해하기
 
@@ -246,16 +345,7 @@ def categorize_products(activities: pd.DataFrame) -> pd.DataFrame:
     ]).reset_index().sort_values('sell_date')
 ```
 
-## Summary Cheat Sheet
 
-| SQL                   | pandas                                     | 설명                           |
-| --------------------- | ------------------------------------------ | ------------------------------ |
-| `GROUP BY col`        | `.groupby('col')`                          | 기준 컬럼으로 그룹화           |
-| `COUNT(DISTINCT col)` | `.nunique()`                               | 고유값 개수 (중복 제외)        |
-| `SUM(col)`            | `.sum()`                                   | 합계                           |
-| `AVG(col)`            | `.mean()`                                  | 평균                           |
-| `AS new_col`          | `.reset_index(name='new_col')` or `.agg()` | 결과 컬럼명 지정               |
-| `GROUP_CONCAT`        | `.agg(lambda x: ','.join(...))`            | 여러 행의 문자열을 하나로 통합 |
 
 Pandas의 `groupby()`를 마스터하면 SQL에서 가능했던 모든 데이터 요약 작업을 파이썬에서도 효율적으로 처리할 수 있습니다!
 

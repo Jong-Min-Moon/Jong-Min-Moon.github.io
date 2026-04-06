@@ -23,7 +23,7 @@ I am a third-year PhD student in the [Data Sciences and Operations Department](h
 at the University of Southern California. I am advised by [Prof. Yingying Fan](https://faculty.marshall.usc.edu/yingying-fan/) and [Prof. Paromita Dubey](https://www.paromitadubey.com/). My current research focuses on using reinforcement learning and causal inference to address problems in statistics, operations research and computational neuroscience, including high-dimensional clustering, dynamic pricing and site harmonization. 
 
 Before starting my PhD, I studied:
-1.  High-dimensional neural signal analysis for the development of liquid-metal neural probe, with [Dr. Young-Geun Park](https://www.younggeunpark.com/) and [Prof. Jang-Ung Park](https://www.younggeunpark.com/),
-2. Regression for mixed functional-Euclidean data for medical image analysis, with [Prof. Jeong Hoon Jang](https://sites.google.com/view/jejang),
-3. The use of generative models to address class imbalance in machine learning, with [Prof. Jaeoh Kim](https://sites.google.com/inha.ac.kr/pcrl/members/professor?authuser=0), at the [Center for Army Analysis and Simulations (CAAS)](https://www.army.mil.kr/english/357/subview.do), a research department of the Republic of Korea Army.
-4.  Privacy–utility trade-off in private federated anayltics (A/B testing) using minimax statistical theory with [Prof. Ilmun Kim](https://ilmunk.github.io/),
+1.  High-dimensional neural signal analysis for the development of liquid-metal neural probe, with [Dr. Young-Geun Park](https://www.younggeunpark.com/) and [Dr. Jang-Ung Park](https://www.younggeunpark.com/),
+2. Regression for mixed functional-Euclidean data for medical image analysis, with [Dr. Jeong Hoon Jang](https://sites.google.com/view/jejang),
+3. The use of generative models to address class imbalance in machine learning, with [Dr. Jaeoh Kim](https://sites.google.com/inha.ac.kr/pcrl/members/professor?authuser=0), at the [Center for Army Analysis and Simulations (CAAS)](https://www.army.mil.kr/english/357/subview.do), a research department of the Republic of Korea Army,
+4.  Privacy–utility trade-off in private federated anayltics (A/B testing) using minimax statistical theory with [Dr. Ilmun Kim](https://ilmunk.github.io/).
