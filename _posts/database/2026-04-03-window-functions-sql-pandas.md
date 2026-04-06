@@ -511,19 +511,12 @@ def sales_analysis(product: pd.DataFrame, sales: pd.DataFrame) -> pd.DataFrame:
     return df[df['is_only_first_quarter'] == True].drop_duplicates(subset = ['product_id'])[['product_id', 'product_name']]
 ```
 
-### [Leetcode 1867. Orders With Maximum Quantity Above Average](https://leetcode.com/problems/orders-with-maximum-quantity-above-average/description/)
-MAX()
 
 
 
 
 
-LAG()
 
-1709. Biggest Window Between Visits
-LEAD()
-
-1811. Find Interview Candidates
 
  
  
@@ -755,7 +748,78 @@ employee['team_size'] = employee.groupby('team_id')['team_id'].transform('size')
 return employee[['employee_id', 'team_size']]
 ```
 
-# AVG() = 
+
+
+# Offset Functions
+
+Offset functions let you look at the value of another row **relative** to the current row—no self-join required.
+
+| Function           | Description                                                |
+| ------------------ | ---------------------------------------------------------- |
+| `LAG(col, n)`      | Value of `col` from `n` rows *before* the current row      |
+| `LEAD(col, n)`     | Value of `col` from `n` rows *after* the current row       |
+| `FIRST_VALUE(col)` | Value of `col` from the *first* row in the partition/frame |
+| `LAST_VALUE(col)`  | Value of `col` from the *last* row in the partition/frame  |
+
+### 5.1 LAG and LEAD (SQL)
+
+```sql
+SELECT
+    salesperson,
+    sale_date,
+    amount,
+    LAG(amount,  1, 0) OVER (PARTITION BY salesperson ORDER BY sale_date) AS prev_amount,
+    LEAD(amount, 1, 0) OVER (PARTITION BY salesperson ORDER BY sale_date) AS next_amount,
+    amount - LAG(amount, 1, 0)
+             OVER (PARTITION BY salesperson ORDER BY sale_date)           AS change
+FROM sales;
+```
+
+### 5.2 LAG and LEAD (pandas)
+
+```python
+df_sorted = df.sort_values(["salesperson", "sale_date"])
+
+df_sorted["prev_amount"] = (
+    df_sorted.groupby("salesperson")["amount"].shift(1).fillna(0)
+)
+df_sorted["next_amount"] = (
+    df_sorted.groupby("salesperson")["amount"].shift(-1).fillna(0)
+)
+df_sorted["change"] = df_sorted["amount"] - df_sorted["prev_amount"]
+```
+
+> `shift(1)` is `LAG(1)`, `shift(-1)` is `LEAD(1)`.
+
+### 5.3 FIRST_VALUE and LAST_VALUE (SQL)
+
+```sql
+SELECT
+    region,
+    salesperson,
+    sale_date,
+    amount,
+    FIRST_VALUE(amount) OVER (
+        PARTITION BY region ORDER BY sale_date
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS first_sale,
+    LAST_VALUE(amount) OVER (
+        PARTITION BY region ORDER BY sale_date
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS last_sale
+FROM sales;
+```
+
+### 5.4 FIRST_VALUE and LAST_VALUE (pandas)
+
+```python
+df_sorted = df.sort_values(["region", "sale_date"])
+
+df_sorted["first_sale"] = df_sorted.groupby("region")["amount"].transform("first")
+df_sorted["last_sale"]  = df_sorted.groupby("region")["amount"].transform("last")
+```
+
+
 
 ## 1. What Is a Window Function?
 
@@ -940,74 +1004,7 @@ df_sorted["moving_avg_3"] = (
 
 ---
 
-## 5. Offset Functions
 
-Offset functions let you look at the value of another row **relative** to the current row—no self-join required.
-
-| Function           | Description                                                |
-| ------------------ | ---------------------------------------------------------- |
-| `LAG(col, n)`      | Value of `col` from `n` rows *before* the current row      |
-| `LEAD(col, n)`     | Value of `col` from `n` rows *after* the current row       |
-| `FIRST_VALUE(col)` | Value of `col` from the *first* row in the partition/frame |
-| `LAST_VALUE(col)`  | Value of `col` from the *last* row in the partition/frame  |
-
-### 5.1 LAG and LEAD (SQL)
-
-```sql
-SELECT
-    salesperson,
-    sale_date,
-    amount,
-    LAG(amount,  1, 0) OVER (PARTITION BY salesperson ORDER BY sale_date) AS prev_amount,
-    LEAD(amount, 1, 0) OVER (PARTITION BY salesperson ORDER BY sale_date) AS next_amount,
-    amount - LAG(amount, 1, 0)
-             OVER (PARTITION BY salesperson ORDER BY sale_date)           AS change
-FROM sales;
-```
-
-### 5.2 LAG and LEAD (pandas)
-
-```python
-df_sorted = df.sort_values(["salesperson", "sale_date"])
-
-df_sorted["prev_amount"] = (
-    df_sorted.groupby("salesperson")["amount"].shift(1).fillna(0)
-)
-df_sorted["next_amount"] = (
-    df_sorted.groupby("salesperson")["amount"].shift(-1).fillna(0)
-)
-df_sorted["change"] = df_sorted["amount"] - df_sorted["prev_amount"]
-```
-
-> `shift(1)` is `LAG(1)`, `shift(-1)` is `LEAD(1)`.
-
-### 5.3 FIRST_VALUE and LAST_VALUE (SQL)
-
-```sql
-SELECT
-    region,
-    salesperson,
-    sale_date,
-    amount,
-    FIRST_VALUE(amount) OVER (
-        PARTITION BY region ORDER BY sale_date
-        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
-    ) AS first_sale,
-    LAST_VALUE(amount) OVER (
-        PARTITION BY region ORDER BY sale_date
-        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
-    ) AS last_sale
-FROM sales;
-```
-
-### 5.4 FIRST_VALUE and LAST_VALUE (pandas)
-
-```python
-df_sorted = df.sort_values(["region", "sale_date"])
-
-df_sorted["first_sale"] = df_sorted.groupby("region")["amount"].transform("first")
-df_sorted["last_sale"]  = df_sorted.groupby("region")["amount"].transform("last")
-```
 
 ---
 

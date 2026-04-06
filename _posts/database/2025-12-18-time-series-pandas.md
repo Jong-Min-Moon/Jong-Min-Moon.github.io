@@ -8,6 +8,24 @@ tags: pandas python time-series leetcode
 project: database
 ---
 
+# time series
+- 1890 .query('_.dt.year == 2020')
+- 1327 .dt.to_period('M') == '2020-02'
+- 1141 .between, to_timedelta, to_datetime,
+- 1251 Average Selling Price
+  - merge_asof: nearest match
+  - when dividing, various nulls appear. thus avoid dividing by 0.
+- 197. Rising Temperature
+  - pd.to_timedelta(1, unit = 'D')
+  - pd.merge( suffixes = ('_today', '_yesterday') )
+  - to_datetime
+- 1084. Sales Analysis III
+  - start_time = pd.to_datetime('2019-01-01')
+  - .filter(
+        lambda x: min(x['sale_date']) >= start_time and max(x['sale_date']) <= end_time
+    )
+
+
 # Time Series Operations in Pandas
 
 Handling time-series data efficiently is a core skill for data analysis. Whether you are filtering by year, converting to specific periods, or performing asynchronous joins, `pandas` provides a robust set of tools. Below are some common patterns and techniques, often encountered in database-style coding challenges.
