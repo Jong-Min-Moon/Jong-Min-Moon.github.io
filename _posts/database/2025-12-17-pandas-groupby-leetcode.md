@@ -1,12 +1,22 @@
 ---
 layout: distill
-title: "pandas aggregation by groupby"
+title: "pandas merge and groupby"
 description: 
-date: 2026-04-05
+date: 2025-12-17
 categories: database
 tags: pandas python leetcode data-handling
 project: database
 ---
+
+
+# Merge
+Merge is so basic that it rarely shows up as a standalone problem. It is usually a part of a more complex problem. The most frequent pattern is merge + groupby.
+
+- basic syntax: `pd.merge(A, B, on= 'aaa')` where two tables have the same column name 'aaa'.
+- merge on different columns: `pd.merge(A, B, left_on = 'aaa', right_on = 'bbb')`
+- left join is the one used most at work. 60% of the times. we keep all rows from the left df. we keep only the matching row from the right df. the info that is not in the right df will be filled with NaN. `pd.merge(A, B, left_on = 'aaa', right_on = 'bbb', how = 'left')` Forget right join. Industry standard is left join.
+- inner join used 30% of the times. it keeps the intersection so there will be no NA. `pd.merge(A, B, left_on = 'aaa', right_on = 'bbb', how = 'inner')`
+- full outer join keeps all rows in both tables. there will be many NA.
 
 # Groupby Summary
 - **[2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/)**: `.groupby()`, `.nunique()`, `.reset_index()`, `rename(columns={})`
@@ -248,3 +258,9 @@ def categorize_products(activities: pd.DataFrame) -> pd.DataFrame:
 | `GROUP_CONCAT`        | `.agg(lambda x: ','.join(...))`            | 여러 행의 문자열을 하나로 통합 |
 
 Pandas의 `groupby()`를 마스터하면 SQL에서 가능했던 모든 데이터 요약 작업을 파이썬에서도 효율적으로 처리할 수 있습니다!
+
+
+
+# Reference
+- 
+[Master Python Pandas Merge: The Ultimate Guide to Combining DataFrames](https://youtu.be/Fl3VGL3BuAA?si=yK36yxdVzC53Xlj8)
