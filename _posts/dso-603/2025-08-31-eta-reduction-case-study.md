@@ -2,7 +2,7 @@
 layout: distill
 title: "Case Study: Causal Effect of ETA Reduction"
 description: "A practical case study on measuring the causal effect of reducing Estimated Time of Arrival (ETA) in a ridesharing marketplace."
-date: 2025-08-29
+date: 2025-08-31
 categories: dso-603 statistics
 tags: causal-inference case-study marketplace experimentation
 project: dso-603
