@@ -13,6 +13,27 @@ bibliography: 2025-08-29-eta-reduction-case-study.bib
 ---
 
 
+# Quick Summary
+
+1. Set the context for the experiment
+   1. Clarify the business goal. Clarify the purpose of the experiment. Is it even worth running an A/B test?
+   2. Specify treatment and hypothesis. Set success, guardrail, tracking metrics.
+   
+2. Design the experiment
+   1. Unit of randomization. you should consider
+    1. measure success your metrics
+    2. avoid interference and network effects
+    3. consider user experience
+   2. Statistical tests
+      1. usually t or z test
+      2. sometimes quasi-experimental techniques like difference in differences
+      3. Do you require heteroskedastic robust standard errors or clustered standard errors?
+   3. Power analysis and sample size calculation
+      1. Ask for MDE, power, type I error
+
+3. Analyze the experiment
+
+
 # A/B Test Design Framework
 
 The engineering team implemented a new feature. As a data scientist you are asked to design an experiment to measure the impact of the new feature. Before running the test, you shoul first report your manager about the implementation plan.
@@ -67,21 +88,16 @@ The next step is to conduct a power analysis to determine the number of observat
 **in any AB  test implementation plan, you will have to mention power**. For some companies, and in junior roles, just mentioning this will be good enough. Other companies, especially for more senior roles, might ask you more specifics about how to calculate power. 
 
 
+If your unit of randomization is larger than your analysis unit, you may need to adjust how you calculate your standard errors.
 
 #### How to compute sample size
-We need power, type I error, and MDE (minimum detectable effect). Usually power rueqirement is 0.8 and type I error is 0.05.
+We need power, type I error, and MDE (minimum detectable effect). Usually power rueqirement is 0.8 and type I error is 0.05. Take a look at [here]()
 
-- MDE: It’s usually predetermined by PMs or stakeholders as “the lift that would be worth the effort in continuing to implement”. Then you can use that to calculate the sample size with power.
+- MDE: It’s usually predetermined by PMs or stakeholders as “the lift that would be worth the effort in continuing to implement”. 
+  - For example,  "how much resources does it take to implement this feature? Oh it takes 2 engrs at 25% capacity, which is $2 million a year. So now the MDE is index to 2 million."  
 
-Agree. I would frame this as "how much resources does it take to implement this feature? Oh it takes 2 engrs at 25% capacity, which is $2 million a year. So now the MDE is index to 2 million." Add in fudge factors to account for population sizes and how long investments need to pay off. 
+  - A helpful default MDE is 5%. Smaller than that is definitely okay (large companies like Airbnb go smaller).
 
-Also consider what other initiatives are going on/how many resources you have. If other initiatives are delivering 5% lift and this initiative delivers 3% lift, you may not launch this and tie up resources.
-
-Yep exactly what the other two folks have said, I rely on previous experiments or business stakeholders. If neither of those methods can produce a reasonable MDE, I'll just calculate what is the MDE that we can detect, given what I think the sample size will be.
-
-I agree with others that it depends on additional context, but a helpful default MDE is 5%. Smaller than that is definitely okay (large companies like Airbnb go smaller), but if you go much higher, you're entering statistical theater territory.
-
-If your unit of randomization is larger than your analysis unit, you may need to adjust how you calculate your standard errors.
 
 ### Further considerations
 
@@ -122,6 +138,10 @@ Alternatively, see if there is a segment of the population where the guardrail m
 
 Your success metric ended up being stat sig negative. How would you diagnose this? 
 
+
+
+
+# replies
 - Very good post and I think this encapsulates a good Product Analyst or DS - Product analytics interview on AB testing. One possible addition to the gotchas would be "explain p-value or CI to a stakeholder" sort of question. Stakeholders generally interpret frequentist concepts with Bayesian definitions. I have found some candidates will point this out and I surely give them a bonus point, without any further questions into Bayesian Statistics (unless the position is a "real DS" role and not for analytics).
 
 #

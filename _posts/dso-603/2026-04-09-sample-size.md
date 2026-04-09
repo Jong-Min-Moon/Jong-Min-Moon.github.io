@@ -2,7 +2,7 @@
 layout: distill
 title: "Quick and Dirty Sample Size Calculation"
 description: ""
-date: 2025-08-25
+date: 2026-04-09
 categories: dso-603 statistics
 tags: experimentation ab-testing metrics
 project: dso-603
