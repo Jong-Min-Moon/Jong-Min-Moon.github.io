@@ -64,7 +64,22 @@ Sometimes you might need to use difference-in-difference in an AB test. This is 
 ### Power analysis and sample size calculation
 The next step is to conduct a power analysis to determine the number of observations required and how long to run the experiment. You can either state that you would conduct a power analysis using an alpha of 0.05 and power of 80%, or ask the manager if the company has standards you should use.
 
-I’m not going to go into how to calculate power here, but know that **in any AB  test implementation plan, you will have to mention power**. For some companies, and in junior roles, just mentioning this will be good enough. Other companies, especially for more senior roles, might ask you more specifics about how to calculate power. 
+**in any AB  test implementation plan, you will have to mention power**. For some companies, and in junior roles, just mentioning this will be good enough. Other companies, especially for more senior roles, might ask you more specifics about how to calculate power. 
+
+
+
+#### How to compute sample size
+We need power, type I error, and MDE (minimum detectable effect). Usually power rueqirement is 0.8 and type I error is 0.05.
+
+- MDE: It’s usually predetermined by PMs or stakeholders as “the lift that would be worth the effort in continuing to implement”. Then you can use that to calculate the sample size with power.
+
+Agree. I would frame this as "how much resources does it take to implement this feature? Oh it takes 2 engrs at 25% capacity, which is $2 million a year. So now the MDE is index to 2 million." Add in fudge factors to account for population sizes and how long investments need to pay off. 
+
+Also consider what other initiatives are going on/how many resources you have. If other initiatives are delivering 5% lift and this initiative delivers 3% lift, you may not launch this and tie up resources.
+
+Yep exactly what the other two folks have said, I rely on previous experiments or business stakeholders. If neither of those methods can produce a reasonable MDE, I'll just calculate what is the MDE that we can detect, given what I think the sample size will be.
+
+I agree with others that it depends on additional context, but a helpful default MDE is 5%. Smaller than that is definitely okay (large companies like Airbnb go smaller), but if you go much higher, you're entering statistical theater territory.
 
 If your unit of randomization is larger than your analysis unit, you may need to adjust how you calculate your standard errors.
 
@@ -129,16 +144,6 @@ Yes, I like your answer better. If we think 0.05 threshold is too small then it 
 Of course we can admit that we were wrong when setting up the experiment and do it again with the new data, but we should have a good rationale to lift the threshold not just "we want to try again and see what happens".
 
 
-# How do you estimate your effect size, or where do you typically get your effect size?
-It’s usually predetermined by PMs or stakeholders as “the lift that would be worth the effort in continuing to implement”. Then you can use that to calculate the sample size with power.
-
-Agree. I would frame this as "how much resources does it take to implement this feature? Oh it takes 2 engrs at 25% capacity, which is $2 million a year. So now the MDE is index to 2 million." Add in fudge factors to account for population sizes and how long investments need to pay off. 
-
-Also consider what other initiatives are going on/how many resources you have. If other initiatives are delivering 5% lift and this initiative delivers 3% lift, you may not launch this and tie up resources.
-
-Yep exactly what the other two folks have said, I rely on previous experiments or business stakeholders. If neither of those methods can produce a reasonable MDE, I'll just calculate what is the MDE that we can detect, given what I think the sample size will be.
-
-I agree with others that it depends on additional context, but a helpful default MDE is 5%. Smaller than that is definitely okay (large companies like Airbnb go smaller), but if you go much higher, you're entering statistical theater territory.
 
 
 #
