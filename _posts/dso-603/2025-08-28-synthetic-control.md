@@ -55,7 +55,7 @@ Cash trip is a user facing feature. Driver can be both in control and treatment 
   - Interference really network/city wide, so spatial randomization less effective 
   - Sensitive change, so can’t launch in many cities at once
   - It takes a long time for effect to occur
-- So, you launch a new feature in just *one* city (e.g., Miami) at time $T$. This is your treatment city. 
+- So, you launch a new feature in just *one* city (e.g., Miami) at time $T$. This is your treatment city. So the experiment is city level.
 - Let's assume no interfence between cities. 
 - We need a control to estimate the global  treatment effect  $Y_1 - Y_0$.
 - To measure this, we need to answer the counterfactual: *"What would have happened to Miami if we didn't launch the feature?"* We don't have this information, what we have is:
@@ -69,11 +69,13 @@ Cash trip is a user facing feature. Driver can be both in control and treatment 
   ### Seasonality adjustd Miami
   - problem: unforseen events like covid.
   - seasonality adjustment is based on past, so it cannot adjust for future events.
+
 - ### Another city 
   - e.g., Houston or Atlanta from Time $T$ to $2T$
   - seasonlaity and future event problem addressed? maybe, if the city is very similar to miami in relevent aspects
-  - Some city can be similar to Miami. But it is hard to find a perfect analogue for Miami.
-
+  - Some city can be similar to Miami. If we buy this *common trend assumption* that Miami and Atlanta share the same trend in the absence of treatment, we can use the celebrated diff-in-diff method.
+  - But it is hard to find a perfect analogue for Miami.
+<img src="diffdiff_uber_pydata_amsterdam_2019.png" alt="alt text" style="width: 100%; height: auto;">
 
 ## The Main Idea
 
