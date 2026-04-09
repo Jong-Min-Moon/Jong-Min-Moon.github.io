@@ -15,6 +15,7 @@ bibliography: 2025-08-28-synthetic-control.bib
 While randomized controlled experiments (A/B testing) remain the gold standard for drawing causal inferences, there are many scenarios where they are deeply flawed or impossible to implement. 
 
 Standard experimental techniques—ranging from individual-level A/B testing to spatial/cluster randomization or switchback experiments—become unworkable when:
+
 - The product is public-facing and a rollout is difficult to undo.
 - The change is highly sensitive, so you cannot safely launch it in many locations at once.
 - Interference is network- or city-wide, breaking the stable unit treatment value assumption (SUTVA).
@@ -22,7 +23,13 @@ Standard experimental techniques—ranging from individual-level A/B testing to 
 
 In these cases, we rely on causal inference techniques designed for observational data. Arguably the most important innovation in policy evaluation in recent decades is **Synthetic Control**.
 
----
+### Uber Cash Trips: The Spillover Effect
+
+Uber launched in the US as a card-only service but later expanded into cash-heavy markets like Latin America and India. While accepting cash unlocked new rider segments, it introduced operational friction—specifically, drivers having to carry change and Uber struggling to collect its commissions.
+
+To evaluate this, Uber ran an experiment: showing drivers the payment method upfront to measure the impact on trip acceptance rates and unpaid service fees.
+
+However, standard A/B testing fails here due to network interference (the spillover effect). If drivers in the treatment group prefer cash and systematically decline card trips, they will consume the supply of cash trips. Consequently, the control group is starved of cash trips, artificially skewing the experiment's results even though they cannot see the payment types.
 
 # Synthetic Control
 
@@ -51,8 +58,9 @@ In these cases, we rely on causal inference techniques designed for observationa
   ### Past Miami (Time $0$ to $T$)
   - The problem is *seasonality* and time-based confounding.
   - The future might naturally differ from the past.
-  - More generally, standard marketplace vairability or growth is usually way bigger than treatment effect.
+  - More generally, **standard marketplace vairability or growth is usually way bigger than treatment effect.**
   - read Airbnb blog post by Jan Overgoor.
+  
   ### Seasonality adjustd Miami
   - problem: unforseen events like covid.
   - seasonality adjustment is based on past, so it cannot adjust for future events.
