@@ -2,15 +2,17 @@
 layout: distill
 title: "Quick and Dirty Sample Size Calculation"
 description: ""
-date: 2026-04-09
+date: 2026-03-03
 categories: dso-603 statistics
 tags: experimentation ab-testing metrics
 project: dso-603
 authors:
   - name: Jongmin Mun
     url: "https://jong-min.org"
-bibliography: 2025-08-25-sample-size.bib
+bib_file: dso-603
+bibliography: dso-603.bib
 ---
+
 
 * In big tech A/B testing, sample sizes are typically large enough to confidently rely on the Central Limit Theorem, permitting the use of the standard normal distribution under the null hypothesis. 
 * This frees us from relying on complex statistical theory to determine cutoffs. 
@@ -46,7 +48,7 @@ bibliography: 2025-08-25-sample-size.bib
 
 
 # Examples
-These examples are from <d-cite key="larsenStatisticalChallengesOnline2024"></d-cite>
+These examples are from Larsen et al. (2024) <d-cite key="larsenStatisticalChallengesOnline2024"></d-cite>
 
 
 

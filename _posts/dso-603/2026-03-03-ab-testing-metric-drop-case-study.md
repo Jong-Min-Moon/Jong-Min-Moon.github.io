@@ -2,7 +2,7 @@
 layout: distill
 title: "Case Study: Diagnosing and Addressing a Metric Drop"
 description: "An end-to-end framework for investigating MAU drops, targeting at-risk users, and making data-driven 'ship' decisions."
-date: 2026-04-09
+date: 2026-03-03
 categories: dso-603 statistics
 tags: a-b-testing case-study product-analytics metrics
 project: dso-603

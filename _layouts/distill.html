@@ -76,7 +76,8 @@
     <d-article>
       {% if page.paper_key -%}
       <div class="publications" style="grid-column: text; margin-bottom: 2rem;">
-        {% bibliography -f {{ page.bib_file | default: 'reading_list' }} -q @*[key={{page.paper_key}}]* --group_by none %}
+        {% assign bib_file = page.bib_file | default: 'reading_list' %}
+        {% bibliography -f {{ bib_file }} -q @*[key={{page.paper_key}}]* --group_by none %}
       </div>
       {%- endif %}
 
