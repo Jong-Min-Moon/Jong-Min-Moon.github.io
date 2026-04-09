@@ -31,6 +31,11 @@ To evaluate this, Uber ran an experiment: showing drivers the payment method upf
 
 However, standard A/B testing fails here due to network interference (the spillover effect). If drivers in the treatment group prefer cash and systematically decline card trips, they will consume the supply of cash trips. Consequently, the control group is starved of cash trips, artificially skewing the experiment's results even though they cannot see the payment types.
 
+How about switchback experiment? We can fix city and switch back and forth between treatment and control, over different time intervals. See [here](https://jong-min.org/blog/2025/switchback-experiments/) for the example from Doordash's algorithm change experiment and Lyft's surge pricing subsidy experiment. Note that these features are not user-facing. They can be silently deployed.
+<img src="switchback_uber_pydata_amsterdam_2019.png" alt="alt text" style="width: 100%; height: auto;">
+
+Cash trip is a user facing feature. Driver can be both in control and treatment group across different time bucket.  Therefore we cannot use switchback experiment for this cash trip experiment.
+
 # Synthetic Control
 
 
