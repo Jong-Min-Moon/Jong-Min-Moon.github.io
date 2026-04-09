@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Homework 3: Synthetic Data Generation and Classical Machine Learning | Jongmin Mun</title> <meta name="author" content="Jongmin Mun"> <meta name="description" content="HW3 for USC ISE-547 2026 spring"> <meta name="keywords" content="Jongmin Mun, USC"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="/assets/css/main.css?v=1775516583"> <link rel="canonical" href="https://jong-min-moon.github.io/blog/2026/homework-3-synthetic-data-generation/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> <script src="/assets/js/distillpub/overrides.js"></script> </head> <body> <d-front-matter> <script async type="text/json">{
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Homework 3: Synthetic Data Generation and Classical Machine Learning | Jongmin Mun</title> <meta name="author" content="Jongmin Mun"> <meta name="description" content="HW3 for USC ISE-547 2026 spring"> <meta name="keywords" content="Jongmin Mun, USC"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="/assets/css/main.css?v=1775696854"> <link rel="canonical" href="https://jong-min-moon.github.io/blog/2026/homework-3-synthetic-data-generation/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> <script src="/assets/js/distillpub/overrides.js"></script> </head> <body> <d-front-matter> <script async type="text/json">{
       "title": "Homework 3: Synthetic Data Generation and Classical Machine Learning",
       "description": "HW3 for USC ISE-547 2026 spring",
       "published": "April 6, 2026",
@@ -188,4 +188,822 @@ Confirm improved balance between classes
 Additional Notes
 Write clean, modular Python code
 Use pandas for data manipulation
-</code></pre></div></div> <h2 id="machine-learning-task">Machine Learning Task</h2> <ol> <li>Train a Logistic Regression classifier on the original, unbalanced training dataset. Evaluate its performance on the test set using precision, recall, and F1-score for the minority class.</li> <li>Train a second Logistic Regression classifier on the new, augmented training dataset. Evaluate its performance on the same test set.</li> <li>Compare the performance metrics from both models. Did augmenting the training data with synthetic samples improve the model’s ability to identify the minority class on the unseen test data? Explain why or why not.</li> </ol> <hr> <h1 id="question-2-generating-and-validating-data-with-specific-correlations">Question 2: Generating and Validating Data with Specific Correlations</h1> <p>You hypothesize a negative relationship between a patient’s cholesterol level (<code class="language-plaintext highlighter-rouge">chol</code>) and their maximum heart rate achieved (<code class="language-plaintext highlighter-rouge">thalch</code>). You will use an LLM to create data that models this relationship and then validate it.</p> <p><strong>Part A (LLM Task):</strong></p> <ol> <li>Write a prompt for an LLM to generate a synthetic dataset of 40 new patients.</li> <li>In your prompt, instruct the LLM to create profiles where there is a clear negative correlation: as <code class="language-plaintext highlighter-rouge">chol</code> increases, <code class="language-plaintext highlighter-rouge">thalch</code> should generally decrease. The other features should be medically plausible.</li> </ol> <p><strong>Part B (Machine Learning Task):</strong></p> <ol> <li>Using only the 40-sample synthetic dataset you just generated, train a Simple Linear Regression model to predict <code class="language-plaintext highlighter-rouge">thalch</code> using <code class="language-plaintext highlighter-rouge">chol</code> as the only predictor.</li> <li>What is the coefficient for <code class="language-plaintext highlighter-rouge">chol</code>? Is it negative, as you requested? What is the R-squared value? Does this analysis confirm that the LLM successfully generated data with the specified relationship?</li> </ol> <hr> <h1 id="question-3-using-an-llm-for-intelligent-data-imputation">Question 3: Using an LLM for Intelligent Data Imputation</h1> <p>The <code class="language-plaintext highlighter-rouge">ca</code> column (number of major vessels) has over 60% missing values. Instead of simple imputation, you will use an LLM to predict these values based on other patient data.</p> <p><strong>Part A (LLM Task):</strong></p> <ol> <li>Identify 5 rows from the original data (before imputation) where the <code class="language-plaintext highlighter-rouge">ca</code> value was missing.</li> <li>For each of these 5 rows, write a prompt for an LLM. Provide the LLM with all the other available features for that patient (<code class="language-plaintext highlighter-rouge">age</code>, <code class="language-plaintext highlighter-rouge">sex</code>, <code class="language-plaintext highlighter-rouge">chol</code>, <code class="language-plaintext highlighter-rouge">target</code>, etc.) and ask it to predict the most likely value for <code class="language-plaintext highlighter-rouge">ca</code> (a number from 0-3).</li> </ol> <p><strong>Part B (Machine Learning Task):</strong></p> <ol> <li>Create two versions of your training and test sets: <ul> <li> <strong>Dataset A:</strong> The datasets you already created where all missing <code class="language-plaintext highlighter-rouge">ca</code> values were filled with the mode.</li> <li> <strong>Dataset B:</strong> Start with Dataset A, but replace the <code class="language-plaintext highlighter-rouge">ca</code> values for your 5 chosen rows with the predictions from the LLM.</li> </ul> </li> <li>Train a K-Nearest Neighbors (KNN) classifier on the training data from Dataset A and record its accuracy on the test set from Dataset A.</li> <li>Train another K-Nearest Neighbors (KNN) classifier on the training data from Dataset B and record its accuracy on the test set from Dataset B.</li> <li>Compare the accuracies. Did the “intelligent” LLM-based imputation for just a few samples make any difference in model performance? Explain your findings.</li> </ol> <hr> <h1 id="question-4-scenario-based-generation-for-model-stress-testing">Question 4: Scenario-Based Generation for Model Stress Testing</h1> <p>You want to test how a model trained on general data performs on a specific, high-risk sub-population. You will use an LLM to generate data for this scenario.</p> <p><strong>Part A (LLM Task):</strong></p> <ol> <li>Write a prompt for an LLM to generate 30 synthetic patient profiles that meet a high-risk profile: patients older than 60 who are smokers and have a <code class="language-plaintext highlighter-rouge">cp</code> (chest pain type) of “asymptomatic”.</li> <li>The LLM should generate all other features and, based on these high-risk inputs, also assign a <code class="language-plaintext highlighter-rouge">target</code> value of 1 (heart disease present) for each synthetic patient.</li> </ol> <p><strong>Part B (Machine Learning Task):</strong></p> <ol> <li>Train a Decision Tree Classifier on your original training dataset.</li> <li>Use this trained model to make predictions on the 30 synthetic high-risk patients you generated.</li> <li>How many of the high-risk patients did your model correctly classify as having heart disease (<code class="language-plaintext highlighter-rouge">target=1</code>)? Discuss why your model might have failed to identify certain high-risk individuals, even though they were generated to fit a dangerous profile.</li> </ol> <hr> <h1 id="question-5-analyzing-the-impact-of-synthetic-outliers">Question 5: Analyzing the Impact of Synthetic Outliers</h1> <p>Outliers can influence machine learning models. You will generate synthetic “outlier” data and measure its effect on a Support Vector Machine (SVM).</p> <p><strong>Part A (LLM Task):</strong></p> <ol> <li>Write a prompt for an LLM to generate 20 new, synthetic patient records representing individuals with extreme health metrics.</li> <li>Instruct the LLM that these patients should have cholesterol (<code class="language-plaintext highlighter-rouge">chol</code>) levels above 400 mg/dl and resting blood pressure (<code class="language-plaintext highlighter-rouge">trestbps</code>) above 180 mmHg. The LLM should generate the remaining features and a target label for each.</li> </ol> <p><strong>Part B (Machine Learning Task):</strong></p> <ol> <li>Train a Support Vector Machine (SVM) classifier with a linear kernel on the original training dataset. Evaluate its accuracy on the test set.</li> <li>Create a new “outlier-included training dataset” by adding your 20 synthetic records to the original training data.</li> <li>Train a new SVM classifier on this “outlier-included training dataset” and evaluate it on the same test set.</li> <li>Compare the performance. Did the inclusion of synthetic outliers in the training data improve or degrade the model’s performance on the test set? Explain how extreme data points can affect the decision boundary of an SVM.</li> </ol> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2026 Jongmin Mun. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
+</code></pre></div></div> <p>Python code generated by gemini 3 flash:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">### Step 1: Identify the Minority Class
+</span>
+<span class="n">class_distribution</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">.</span><span class="nf">value_counts</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Original y_train class distribution:</span><span class="se">\n</span><span class="sh">"</span><span class="p">,</span> <span class="n">class_distribution</span><span class="p">)</span>
+
+<span class="n">minority_class</span> <span class="o">=</span> <span class="n">class_distribution</span><span class="p">.</span><span class="nf">idxmin</span><span class="p">()</span>
+<span class="n">minority_count</span> <span class="o">=</span> <span class="n">class_distribution</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span>
+<span class="n">majority_class</span> <span class="o">=</span> <span class="n">class_distribution</span><span class="p">.</span><span class="nf">idxmax</span><span class="p">()</span>
+<span class="n">majority_count</span> <span class="o">=</span> <span class="n">class_distribution</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Minority class: </span><span class="si">{</span><span class="n">minority_class</span><span class="si">}</span><span class="s"> (count: </span><span class="si">{</span><span class="n">minority_count</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Majority class: </span><span class="si">{</span><span class="n">majority_class</span><span class="si">}</span><span class="s"> (count: </span><span class="si">{</span><span class="n">majority_count</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1">### Step 2: Generate Synthetic Samples for the Minority Class
+</span>
+<span class="c1">#I will generate 50 synthetic records for the minority class. To ensure plausibility, I will base the values on the characteristics of the existing minority class samples in `X_train`.
+</span>
+<span class="c1">#- For numerical features, I'll generate random values within the observed range (min to max) of that feature for the minority class.
+#- For categorical features, I'll randomly sample from the unique values present for that feature in the minority class.
+#- The `target` column will be set to the minority class label.
+</span>
+<span class="c1">#This approach helps create realistic synthetic data while avoiding exact duplicates and maintaining medical plausibility within the observed data's constraints.
+</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c1"># Filter X_train for the minority class to get statistical insights
+</span><span class="n">X_train_minority</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span> <span class="o">==</span> <span class="n">minority_class</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">generate_synthetic_record</span><span class="p">(</span><span class="n">X_train_minority</span><span class="p">,</span> <span class="n">minority_class</span><span class="p">):</span>
+    <span class="n">synthetic_data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Define column types and generation strategy
+</span>    <span class="n">numerical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">age</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">trestbps</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">oldpeak</span><span class="sh">'</span><span class="p">]</span>
+    <span class="n">categorical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numerical_cols</span><span class="p">:</span>
+        <span class="n">min_val</span> <span class="o">=</span> <span class="n">X_train_minority</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">min</span><span class="p">()</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="n">X_train_minority</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">max</span><span class="p">()</span>
+        <span class="c1"># Generate a random float within min/max, then convert to int for certain columns if appropriate
+</span>        <span class="c1"># age, trestbps, chol, thalch can be floats then rounded to int for realism
+</span>        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">'</span><span class="s">age</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">trestbps</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">]:</span>
+            <span class="n">synthetic_data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># oldpeak can be float
+</span>            <span class="n">synthetic_data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">categorical_cols</span><span class="p">:</span>
+        <span class="n">unique_vals</span> <span class="o">=</span> <span class="n">X_train_minority</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nf">unique</span><span class="p">()</span>
+        <span class="n">synthetic_data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">unique_vals</span><span class="p">)</span>
+    
+    <span class="n">synthetic_data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">minority_class</span>
+    <span class="k">return</span> <span class="n">synthetic_data</span>
+
+<span class="c1"># Generate 50 synthetic samples
+</span><span class="n">synthetic_records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="nf">generate_synthetic_record</span><span class="p">(</span><span class="n">X_train_minority</span><span class="p">,</span> <span class="n">minority_class</span><span class="p">)</span>
+    <span class="n">synthetic_records</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+<span class="c1"># Create a DataFrame from synthetic records
+# Ensure the exact column order as specified in the prompt
+</span><span class="n">ordered_cols</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">age</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">trestbps</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">oldpeak</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">synthetic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">(</span><span class="n">synthetic_records</span><span class="p">)[</span><span class="n">ordered_cols</span> <span class="o">+</span> <span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">synthetic_df</span><span class="p">)</span><span class="si">}</span><span class="s"> synthetic samples.</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">synthetic_df</span><span class="p">.</span><span class="nf">head</span><span class="p">())</span>
+
+<span class="c1"># Separate synthetic features and target
+</span><span class="n">X_synthetic</span> <span class="o">=</span> <span class="n">synthetic_df</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">])</span>
+<span class="n">y_synthetic</span> <span class="o">=</span> <span class="n">synthetic_df</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="c1">### Step 3: Create Augmented Training Dataset
+# Combine original and synthetic data
+</span><span class="n">X_train_augmented</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">concat</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_synthetic</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">y_train_augmented</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">concat</span><span class="p">([</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_synthetic</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">X_train_augmented shape: </span><span class="si">{</span><span class="n">X_train_augmented</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">y_train_augmented size: </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">y_train_augmented</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1">### Step 4: Validation
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Class distribution BEFORE augmentation:</span><span class="se">\n</span><span class="sh">"</span><span class="p">,</span> <span class="n">y_train</span><span class="p">.</span><span class="nf">value_counts</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Class distribution AFTER augmentation:</span><span class="se">\n</span><span class="sh">"</span><span class="p">,</span> <span class="n">y_train_augmented</span><span class="p">.</span><span class="nf">value_counts</span><span class="p">())</span>
+</code></pre></div></div> <h2 id="machine-learning-task">Machine Learning Task</h2> <ol> <li>Train a Logistic Regression classifier on the original, unbalanced training dataset. Evaluate its performance on the test set using precision, recall, and F1-score for the minority class.</li> <li>Train a second Logistic Regression classifier on the new, augmented training dataset. Evaluate its performance on the same test set.</li> <li>Compare the performance metrics from both models. Did augmenting the training data with synthetic samples improve the model’s ability to identify the minority class on the unseen test data? Explain why or why not.</li> </ol> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span>
+
+<span class="c1"># 1. Preprocess: One-Hot Encoding for categorical variables
+</span><span class="n">cat_features</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="c1"># We apply get_dummies and ensure both train and test have the same columns
+</span><span class="n">X_train_enc</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">get_dummies</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">X_test_enc</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">get_dummies</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Align columns between train and test
+</span><span class="n">X_test_enc</span> <span class="o">=</span> <span class="n">X_test_enc</span><span class="p">.</span><span class="nf">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">X_train_enc</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Train Logistic Regression on Original Data
+</span><span class="n">model_orig</span> <span class="o">=</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_orig</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_enc</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluate on Test Set
+</span><span class="n">y_pred_orig</span> <span class="o">=</span> <span class="n">model_orig</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_enc</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">--- Performance on Original Dataset ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_orig</span><span class="p">))</span>
+
+<span class="c1"># Store metrics for minority class (0)
+</span><span class="n">prec_orig</span> <span class="o">=</span> <span class="nf">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_orig</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">rec_orig</span> <span class="o">=</span> <span class="nf">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_orig</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">f1_orig</span> <span class="o">=</span> <span class="nf">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_orig</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+
+<span class="c1"># 2. Prepare Augmented Data
+</span><span class="n">X_train_aug_enc</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">get_dummies</span><span class="p">(</span><span class="n">X_train_augmented</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1"># Ensure columns match the original encoded training set
+</span><span class="n">X_train_aug_enc</span> <span class="o">=</span> <span class="n">X_train_aug_enc</span><span class="p">.</span><span class="nf">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">X_train_enc</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Train Logistic Regression on Augmented Data
+</span><span class="n">model_aug</span> <span class="o">=</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_aug</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_aug_enc</span><span class="p">,</span> <span class="n">y_train_augmented</span><span class="p">)</span>
+
+<span class="c1"># Evaluate on same Test Set
+</span><span class="n">y_pred_aug</span> <span class="o">=</span> <span class="n">model_aug</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_enc</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">--- Performance on Augmented Dataset ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_aug</span><span class="p">))</span>
+
+<span class="c1"># Store metrics for minority class (0)
+</span><span class="n">prec_aug</span> <span class="o">=</span> <span class="nf">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_aug</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">rec_aug</span> <span class="o">=</span> <span class="nf">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_aug</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">f1_aug</span> <span class="o">=</span> <span class="nf">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_aug</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 3. Comparison Table
+</span><span class="n">comparison_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">Metric (Minority Class 0)</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">Precision</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Recall</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">F1-Score</span><span class="sh">'</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">Original Model</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">prec_orig</span><span class="p">,</span> <span class="n">rec_orig</span><span class="p">,</span> <span class="n">f1_orig</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">Augmented Model</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">prec_aug</span><span class="p">,</span> <span class="n">rec_aug</span><span class="p">,</span> <span class="n">f1_aug</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nf">display</span><span class="p">(</span><span class="n">comparison_df</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">rec_aug</span> <span class="o">&gt;</span> <span class="n">rec_orig</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">Analysis: The augmented model improved recall for the minority class, meaning it successfully learned to identify more instances of the underrepresented class.</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">Analysis: The augmentation had minimal or negative impact. This can happen if synthetic samples are too similar to noise or if the original imbalance was not severe enough.</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div> <h3 id="answer-to-the-final-quesiton">Answer to the final quesiton</h3> <p>The augmentation improved the model’s ability to identify the minority class only marginally. This is predictable because initial imbalance was mild.</p> <h1 id="question-2-generating-and-validating-data-with-specific-correlations">Question 2: Generating and Validating Data with Specific Correlations</h1> <p>You hypothesize a negative relationship between a patient’s cholesterol level (<code class="language-plaintext highlighter-rouge">chol</code>) and their maximum heart rate achieved (<code class="language-plaintext highlighter-rouge">thalch</code>). You will use an LLM to create data that models this relationship and then validate it.</p> <h2 id="llm-task-1">LLM Task</h2> <ol> <li>Write a prompt for an LLM to generate a synthetic dataset of 40 new patients.</li> <li>In your prompt, instruct the LLM to create profiles where there is a clear negative correlation: as <code class="language-plaintext highlighter-rouge">chol</code> increases, <code class="language-plaintext highlighter-rouge">thalch</code> should generally decrease. The other features should be medically plausible.</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Prompt
+
+You are tasked with generating and validating a synthetic cardiovascular dataset based on a specific hypothesis.
+
+### Hypothesis
+There is a negative relationship between a patient’s cholesterol level (`chol`) and their maximum heart rate achieved (`thalch`). As `chol` increases, `thalch` should generally decrease.
+
+---
+
+### Dataset Schema (Fixed)
+
+**Numerical columns:**
+- `trestbps` (resting blood pressure, mm Hg)
+- `chol` (serum cholesterol, mg/dL)
+- `thalch` (maximum heart rate achieved)
+- `oldpeak` (ST depression induced by exercise)
+
+**Categorical columns:**
+- `fbs` (fasting blood sugar &gt; 120 mg/dL; 0 = false, 1 = true)
+- `restecg` (resting ECG results; values: 0, 1, 2)
+- `exang` (exercise-induced angina; 0 = no, 1 = yes)
+- `slope` (slope of peak exercise ST segment; values: 0, 1, 2)
+- `ca` (number of major vessels; values: 0–3)
+- `thal` (thalassemia; values: 1 = normal, 2 = fixed defect, 3 = reversible defect)
+
+---
+
+### Tasks
+
+#### 1. Generate Synthetic Data
+- Create a dataset of **40 patients**.
+- Use exactly the columns specified above.
+- Ensure all values fall within **medically realistic ranges**:
+  - `trestbps`: 90–180
+  - `chol`: 150–350
+  - `thalch`: 90–200
+  - `oldpeak`: 0.0–6.0
+- Ensure categorical values are valid and within allowed codes.
+
+#### 2. Model the Relationship
+- Ensure a **clear negative correlation** between `chol` and `thalch`.
+- The relationship should include some randomness/noise but maintain a clear downward trend.
+
+#### 3. Medical Plausibility
+- Maintain realistic feature interactions (e.g., higher `oldpeak` more likely when `exang = 1`).
+- Avoid implausible or contradictory combinations.
+
+#### 4. Validation
+- Compute the **Pearson correlation coefficient** between `chol` and `thalch`.
+- Explicitly confirm that the correlation is negative.
+- Optionally generate a **scatter plot** to visualize the relationship.
+
+#### 5. Output
+- Return the dataset as a **pandas DataFrame**.
+- Display the **first 5 rows**.
+- Provide **summary statistics**.
+- Report the **correlation coefficient**.
+- Include visualization if generated.
+
+---
+
+### Constraints
+- Use Python with `numpy`, `pandas`, and optionally `matplotlib` or `seaborn`.
+- Set a **random seed** for reproducibility.
+- Write clean, modular, and well-documented code.
+</code></pre></div></div> <p>Python code generated by gemini 3 flash:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#I'll generate the synthetic dataset of 40 patients now. I'll use a linear model to enforce the negative correlation between cholesterol and maximum heart rate, then I'll provide the summary statistics, the correlation coefficient, and a scatter plot for validation.
+</span>
+<span class="c1"># The synthetic dataset has been successfully generated and validated.
+</span>
+<span class="c1"># Key Findings:
+# First 5 Rows: The data follows the prescribed schema with realistic values (e.g., resting BP between 90-180 and cholesterol between 150-350).
+# Summary Statistics: All numerical features fall within the required medical ranges.
+# Hypothesis Validation: The Pearson correlation coefficient between chol and thalch is -0.9338, confirming a strong negative relationship. As cholesterol levels increase, the maximum heart rate achieved decreases, as predicted.
+# Medical Plausibility: I included logic to ensure that features like oldpeak (ST depression) are higher when exercise-induced angina (exang) is present, mirroring real-world clinical observations.
+# The regression plot further visualizes this clear downward trend.
+</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="n">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">from</span> <span class="n">scipy.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span>
+
+<span class="c1"># Set seed for reproducibility
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">generate_synthetic_cardio_data</span><span class="p">(</span><span class="n">n_patients</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+    <span class="c1"># 1. Generate Cholesterol (Independent variable)
+</span>    <span class="n">chol</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="n">n_patients</span><span class="p">)</span>
+    
+    <span class="c1"># 2. Model the Negative Relationship for thalch
+</span>    <span class="c1"># Formula: thalch = baseline - (factor * chol) + noise
+</span>    <span class="c1"># We want thalch between 90-200
+</span>    <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n_patients</span><span class="p">)</span>
+    <span class="n">thalch</span> <span class="o">=</span> <span class="mi">250</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.4</span> <span class="o">*</span> <span class="n">chol</span><span class="p">)</span> <span class="o">+</span> <span class="n">noise</span>
+    <span class="n">thalch</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">thalch</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+    <span class="c1"># 3. Generate other numerical columns within realistic ranges
+</span>    <span class="n">trestbps</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="n">n_patients</span><span class="p">)</span>
+    <span class="c1"># Logical interaction: higher oldpeak more likely if exang is 1
+</span>    <span class="n">exang</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">n_patients</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">])</span>
+    <span class="n">oldpeak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">n_patients</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_patients</span><span class="p">):</span>
+        <span class="n">base_peak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">oldpeak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_peak</span> <span class="o">+</span> <span class="p">(</span><span class="mf">2.0</span> <span class="k">if</span> <span class="n">exang</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">oldpeak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">oldpeak</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span>
+
+    <span class="c1"># 4. Generate Categorical columns
+</span>    <span class="n">fbs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">n_patients</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+    <span class="n">restecg</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">n_patients</span><span class="p">)</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">n_patients</span><span class="p">)</span>
+    <span class="n">ca</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">n_patients</span><span class="p">)</span>
+    <span class="n">thal</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">n_patients</span><span class="p">)</span>
+
+    <span class="c1"># Construct DataFrame
+</span>    <span class="n">df_synthetic</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+        <span class="sh">'</span><span class="s">trestbps</span><span class="sh">'</span><span class="p">:</span> <span class="n">trestbps</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">:</span> <span class="n">chol</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">:</span> <span class="n">thalch</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">oldpeak</span><span class="sh">'</span><span class="p">:</span> <span class="n">oldpeak</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">:</span> <span class="n">fbs</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">:</span> <span class="n">restecg</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">:</span> <span class="n">exang</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">:</span> <span class="n">slope</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">:</span> <span class="n">ca</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">:</span> <span class="n">thal</span>
+    <span class="p">})</span>
+    
+    <span class="k">return</span> <span class="n">df_synthetic</span>
+
+<span class="c1"># Create the dataset
+</span><span class="n">data</span> <span class="o">=</span> <span class="nf">generate_synthetic_cardio_data</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+
+<span class="c1"># Validation
+</span><span class="n">corr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">pearsonr</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">])</span>
+
+<span class="c1"># Outputs
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">--- First 5 Rows ---</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">head</span><span class="p">())</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">--- Summary Statistics ---</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">describe</span><span class="p">())</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">--- Correlation Analysis ---</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Pearson correlation between chol and thalch: </span><span class="si">{</span><span class="n">corr</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">corr</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Validation Success: The relationship is negatively correlated as hypothesized.</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Validation Failed: The relationship is not negatively correlated.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Visualization
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="nf">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="sh">'</span><span class="s">color</span><span class="sh">'</span><span class="p">:</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">})</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">Relationship between Cholesterol and Max Heart Rate</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Cholesterol (mg/dL)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Max Heart Rate (thalch)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="machine-learning-task-1">Machine Learning Task</h2> <ol> <li>Using only the 40-sample synthetic dataset you just generated, train a Simple Linear Regression model to predict <code class="language-plaintext highlighter-rouge">thalch</code> using <code class="language-plaintext highlighter-rouge">chol</code> as the only predictor.</li> <li>What is the coefficient for <code class="language-plaintext highlighter-rouge">chol</code>? Is it negative, as you requested? What is the R-squared value? Does this analysis confirm that the LLM successfully generated data with the specified relationship?</li> </ol> <p>python code</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+
+<span class="c1"># Prepare features (X) and target (y)
+</span><span class="n">X_lr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">]]</span>
+<span class="n">y_lr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="c1"># Initialize and fit the model
+</span><span class="n">lr_model</span> <span class="o">=</span> <span class="nc">LinearRegression</span><span class="p">()</span>
+<span class="n">lr_model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_lr</span><span class="p">,</span> <span class="n">y_lr</span><span class="p">)</span>
+
+<span class="c1"># Extract metrics
+</span><span class="n">coefficient</span> <span class="o">=</span> <span class="n">lr_model</span><span class="p">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="n">lr_model</span><span class="p">.</span><span class="n">intercept_</span>
+<span class="n">r_squared</span> <span class="o">=</span> <span class="n">lr_model</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">X_lr</span><span class="p">,</span> <span class="n">y_lr</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">--- Linear Regression Results ---</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Coefficient for </span><span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="s">: </span><span class="si">{</span><span class="n">coefficient</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Intercept: </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">R-squared value: </span><span class="si">{</span><span class="n">r_squared</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Check if coefficient is negative
+</span><span class="k">if</span> <span class="n">coefficient</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Confirmation: The coefficient is negative, matching the hypothesized downward trend.</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Warning: The coefficient is not negative.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h3 id="answer-to-the-final-question">Answer to the final question</h3> <p>Coefficient for ‘chol’ is -0.3933 and R-squared value is 0.8720. This confirms that the LLM successfully generated data with the specified relationship.</p> <h1 id="question-3-using-an-llm-for-intelligent-data-imputation">Question 3: Using an LLM for Intelligent Data Imputation</h1> <p>The <code class="language-plaintext highlighter-rouge">ca</code> column (number of major vessels) has over 60% missing values. Instead of simple imputation, you will use an LLM to predict these values based on other patient data.</p> <h2 id="llm-task-2">LLM Task</h2> <ol> <li>Identify 5 rows from the original data (before imputation) where the <code class="language-plaintext highlighter-rouge">ca</code> value was missing.</li> <li>For each of these 5 rows, write a prompt for an LLM. Provide the LLM with all the other available features for that patient (<code class="language-plaintext highlighter-rouge">age</code>, <code class="language-plaintext highlighter-rouge">sex</code>, <code class="language-plaintext highlighter-rouge">chol</code>, <code class="language-plaintext highlighter-rouge">target</code>, etc.) and ask it to predict the most likely value for <code class="language-plaintext highlighter-rouge">ca</code> (a number from 0-3).</li> </ol> <p>prompt generated by chatgpt</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Prompt
+
+You are working with the **UCI Heart Disease dataset**, where some values in the `ca` column (number of major vessels, range 0–3) are missing. Instead of using traditional imputation methods, you will use reasoning to predict plausible values for missing entries.
+
+---
+
+### Dataset Context
+
+**Numerical columns:**
+- `trestbps`, `chol`, `thalch`, `oldpeak`
+
+**Categorical columns:**
+- `fbs`, `restecg`, `exang`, `slope`, `ca`, `thal`
+
+**Other relevant columns in the dataset:**
+- `age`, `sex`, `cp`, `target`, etc.
+
+The `ca` column has **over 60% missing values** and represents the number of major vessels colored by fluoroscopy (0–3).
+
+---
+
+### Tasks
+
+#### 1. Identify Missing Rows
+- From the **original dataset (before any imputation)**, identify **5 rows where `ca` is missing**.
+- Display these rows clearly (as a table or DataFrame preview).
+
+#### 2. Predict Missing `ca` Values Using Reasoning
+For each of the 5 selected rows:
+
+- Use **all other available patient features** (e.g., `age`, `sex`, `chol`, `thalch`, `exang`, `oldpeak`, `target`, etc.).
+- Predict the **most likely value of `ca`** (must be an integer: 0, 1, 2, or 3).
+
+#### 3. Justify Each Prediction
+- Provide a **brief explanation** for each predicted value.
+- Base your reasoning on medically plausible patterns, for example:
+  - Higher risk profiles (e.g., high `chol`, `exang = 1`, high `oldpeak`, `target = 1`) may correlate with higher `ca`.
+  - Lower-risk profiles may correspond to lower `ca`.
+
+#### 4. Output Format
+- Return results in a structured format (e.g., a table or list) with:
+  - Row index
+  - Original feature values (excluding `ca`)
+  - Predicted `ca`
+  - Explanation for the prediction
+
+---
+
+### Constraints
+- Do **not** use simple statistical imputation (mean, median, mode).
+- Do **not** train a machine learning model.
+- Use **reasoning based on feature patterns and medical plausibility**.
+- Ensure predictions are within the valid range (0–3).
+- Keep explanations concise but meaningful.
+
+</code></pre></div></div> <p>code generated by gemini 3 flash:</p> <p>import pandas as pd</p> <h1 id="reload-the-original-data-to-get-genuine-missing-values-for-ca">Reload the original data to get genuine missing values for ‘ca’</h1> <p>df_orig = pd.read_csv(‘heart_disease_uci.csv’)</p> <h1 id="identify-rows-where-ca-is-missing">Identify rows where ‘ca’ is missing</h1> <p>missing_ca_df = df_orig[df_orig[‘ca’].isnull()]</p> <h1 id="select-5-representative-rows-for-the-task">Select 5 representative rows for the task</h1> <p>selected_rows = missing_ca_df.head(5).copy()</p> <p>print(f”Found {len(missing_ca_df)} rows with missing ‘ca’ values.”) print(“Selected 5 rows for reasoning-based prediction:”) display(selected_rows[[‘id’, ‘age’, ‘sex’, ‘cp’, ‘trestbps’, ‘chol’, ‘thalch’, ‘exang’, ‘oldpeak’, ‘num’]])</p> <h1 id="defining-the-predictions-and-justifications-based-on-medical-plausibility-patterns">Defining the predictions and justifications based on medical plausibility patterns</h1> <h1 id="pattern-higher-age-asymptomatic-cp-high-oldpeak-and-positive-num-target-suggest-higher-ca">Pattern: Higher age, asymptomatic CP, high oldpeak, and positive ‘num’ (target) suggest higher CA.</h1> <p>predictions = [ { ‘Row Index’: 303, ‘Patient Profile’: ‘56yo Male, Typical Angina, Low Oldpeak (0.0), num=0’, ‘Predicted ca’: 0, ‘Justification’: ‘Patient presents with typical angina but has no ST depression (oldpeak=0) and a target of 0 (no disease), suggesting clear vessels.’ }, { ‘Row Index’: 304, ‘Patient Profile’: ‘62yo Male, Asymptomatic, high trestbps (160), num=3’, ‘Predicted ca’: 2, ‘Justification’: ‘Advanced age, hypertension, and a high disease severity (num=3) strongly correlate with multi-vessel involvement.’ }, { ‘Row Index’: 305, ‘Patient Profile’: ‘43yo Female, Asymptomatic, exang=1, num=2’, ‘Predicted ca’: 1, ‘Justification’: ‘Presence of exercise-induced angina and a confirmed disease state (num=2) suggest at least one major vessel is likely obstructed.’ }, { ‘Row Index’: 306, ‘Patient Profile’: ‘58yo Male, Non-anginal, high chol (298), num=0’, ‘Predicted ca’: 0, ‘Justification’: ‘Despite high cholesterol, the absence of symptoms (non-anginal) and a target of 0 suggest the vessels are likely not significantly calcified.’ }, { ‘Row Index’: 307, ‘Patient Profile’: ‘64yo Female, Asymptomatic, Oldpeak (1.5), num=1’, ‘Predicted ca’: 1, ‘Justification’: ‘Older age combined with asymptomatic presentation and ST depression (oldpeak) indicates a high probability of at least one diseased vessel.’ } ]</p> <p>predict_df = pd.DataFrame(predictions) display(predict_df)</p> <h2 id="machine-learning-task-2">Machine Learning Task</h2> <ol> <li>Create two versions of your training and test sets: <ul> <li> <strong>Dataset A:</strong> The datasets you already created where all missing <code class="language-plaintext highlighter-rouge">ca</code> values were filled with the mode.</li> <li> <strong>Dataset B:</strong> Start with Dataset A, but replace the <code class="language-plaintext highlighter-rouge">ca</code> values for your 5 chosen rows with the predictions from the LLM.</li> </ul> </li> <li>Train a K-Nearest Neighbors (KNN) classifier on the training data from Dataset A and record its accuracy on the test set from Dataset A.</li> <li>Train another K-Nearest Neighbors (KNN) classifier on the training data from Dataset B and record its accuracy on the test set from Dataset B.</li> <li>Compare the accuracies. Did the “intelligent” LLM-based imputation for just a few samples make any difference in model performance? Explain your findings.</li> </ol> <p>python code generated by gemini 3 flash:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="c1"># 1. Prepare Dataset A (Already handled via mode imputation in early steps)
+# X_train_enc and X_test_enc contain the mode-imputed data (categorical encoded)
+# Let's ensure we have a clean copy of the original split with 'ca' as numeric where possible
+</span>
+<span class="c1"># 2. Create Dataset B
+# We need to map our reasoning back to the indices
+# Reasoning predictions: {303: 0, 304: 2, 305: 1, 306: 0, 307: 1}
+</span><span class="n">custom_preds</span> <span class="o">=</span> <span class="p">{</span><span class="mi">303</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">304</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">305</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">306</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">307</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+
+<span class="c1"># We'll work with the dataframes before one-hot encoding for easier replacement
+</span><span class="n">X_train_B</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+<span class="n">X_test_B</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+
+<span class="c1"># Update values if the index exists in the split
+</span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">custom_preds</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">X_train_B</span><span class="p">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">X_train_B</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Updated index </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s"> in Train B with ca=</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">X_test_B</span><span class="p">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">X_test_B</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Updated index </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s"> in Test B with ca=</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># One-hot encode Dataset B
+</span><span class="n">cat_features</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">X_train_B_enc</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">get_dummies</span><span class="p">(</span><span class="n">X_train_B</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">X_test_B_enc</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">get_dummies</span><span class="p">(</span><span class="n">X_test_B</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Align columns with Dataset A encoding
+</span><span class="n">X_train_B_enc</span> <span class="o">=</span> <span class="n">X_train_B_enc</span><span class="p">.</span><span class="nf">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">X_train_enc</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X_test_B_enc</span> <span class="o">=</span> <span class="n">X_test_B_enc</span><span class="p">.</span><span class="nf">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">X_train_enc</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Initialize KNN
+</span><span class="n">knn_a</span> <span class="o">=</span> <span class="nc">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">knn_b</span> <span class="o">=</span> <span class="nc">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Train and evaluate Dataset A
+</span><span class="n">knn_a</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_enc</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_a</span> <span class="o">=</span> <span class="n">knn_a</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_enc</span><span class="p">)</span>
+<span class="n">acc_a</span> <span class="o">=</span> <span class="nf">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_a</span><span class="p">)</span>
+
+<span class="c1"># Train and evaluate Dataset B
+</span><span class="n">knn_b</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_B_enc</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_b</span> <span class="o">=</span> <span class="n">knn_b</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_B_enc</span><span class="p">)</span>
+<span class="n">acc_b</span> <span class="o">=</span> <span class="nf">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_b</span><span class="p">)</span>
+
+<span class="c1"># Results
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">--- KNN Performance Comparison ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Dataset A (Mode Imputation) Accuracy: </span><span class="si">{</span><span class="n">acc_a</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Dataset B (Reasoning Imputation) Accuracy: </span><span class="si">{</span><span class="n">acc_b</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">acc_b</span> <span class="o">&gt;</span> <span class="n">acc_a</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">Insight: The reasoning-based imputation improved the model accuracy.</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">acc_b</span> <span class="o">&lt;</span> <span class="n">acc_a</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">Insight: Mode imputation performed better in this specific split.</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">Insight: The accuracy remains the same. This is expected given only 5 rows out of hundreds were changed.</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div> <h3 id="answer-to-the-final-question-1">Answer to the final question</h3> <p>KNN performance remains the same: 0.6902 vs 0.6902. This is expected given only 5 rows out of hundreds were changed.</p> <h1 id="question-4-scenario-based-generation-for-model-stress-testing">Question 4: Scenario-Based Generation for Model Stress Testing</h1> <p>You want to test how a model trained on general data performs on a specific, high-risk sub-population. You will use an LLM to generate data for this scenario.</p> <h2 id="llm-task-3">LLM Task</h2> <ol> <li>Write a prompt for an LLM to generate 30 synthetic patient profiles that meet a high-risk profile: patients older than 60 who are smokers and have a <code class="language-plaintext highlighter-rouge">cp</code> (chest pain type) of “asymptomatic”.</li> <li>The LLM should generate all other features and, based on these high-risk inputs, also assign a <code class="language-plaintext highlighter-rouge">target</code> value of 1 (heart disease present) for each synthetic patient.</li> </ol> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Prompt
+
+You are working with the **UCI Heart Disease dataset** and want to evaluate how a model trained on general data performs on a **specific high-risk sub-population**.
+
+---
+
+### Objective
+
+Generate a synthetic dataset representing **high-risk patients** and ensure their profiles are medically plausible and consistent with elevated heart disease risk.
+
+---
+
+### High-Risk Criteria (Must Be Satisfied for All Rows)
+
+Each synthetic patient must meet the following conditions:
+- `age` &gt; 60
+- Smoker (you may represent this via an appropriate feature or assume smoking status explicitly if not present in the dataset)
+- `cp` (chest pain type) = **asymptomatic** (use the correct encoded value based on the dataset, typically `cp = 3`)
+
+---
+
+### Dataset Features
+
+Generate all relevant features from the UCI Heart Disease dataset, including:
+
+**Numerical columns:**
+- `age`, `trestbps`, `chol`, `thalch`, `oldpeak`
+
+**Categorical columns:**
+- `sex`, `cp`, `fbs`, `restecg`, `exang`, `slope`, `ca`, `thal`
+
+**Target:**
+- `target` (0 = no disease, 1 = heart disease)
+
+---
+
+### Tasks
+
+#### 1. Generate Synthetic Data
+- Create **30 patient profiles**.
+- Ensure all patients satisfy the high-risk criteria above.
+- Generate all other feature values so they are:
+  - Within **realistic medical ranges**
+  - **Consistent with high cardiovascular risk**
+
+#### 2. Assign Target Variable
+- Assign `target = 1` (heart disease present) for **all 30 patients**.
+- Ensure the rest of the features support this classification (e.g., elevated `chol`, presence of `exang`, higher `oldpeak`, etc.).
+
+#### 3. Medical Plausibility
+- Maintain realistic relationships between variables, for example:
+  - Higher `age` → generally lower `thalch`
+  - `exang = 1` more likely in high-risk individuals
+  - Higher `oldpeak` associated with abnormal exercise response
+  - `ca` values skewed toward higher numbers (e.g., 1–3) for high-risk patients
+
+#### 4. Output
+- Return the dataset as a **pandas DataFrame**.
+- Display the **first 5 rows**.
+- Provide **summary statistics**.
+- Briefly explain how the generated data reflects a high-risk population.
+
+---
+
+### Constraints
+- Use Python with `numpy` and `pandas`.
+- Set a **random seed** for reproducibility.
+- Do **not** copy real data; all data must be synthetically generated.
+- Keep the code clean, modular, and well-documented.
+</code></pre></div></div> <p>python code generated by gemini 3 flash:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+<span class="c1">#Medical Plausibility of the High-Risk Data:
+#Age and Vitals: The average age is 73.7, paired with an average blood pressure (trestbps) of 153.2 and cholesterol (chol) of 350.6, both of which are significantly elevated.
+#Diagnostic Markers: The average oldpeak (ST depression) is 2.91, which is well above the high-risk threshold of 1.5, indicating a strong likelihood of heart disease during exercise.
+#Vessel Involvement: The average ca value is 2.07, reflecting that most patients in this group have multiple major vessels involved, consistent with the target = 1 assignment.
+#Heart Rate: The maximum heart rate (thalch) was modeled to be lower (averaging 143.3) to account for age and reduced cardiovascular efficiency in a high-risk state.
+</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c1"># Set seed for reproducibility
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">generate_high_risk_patients</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="c1"># 1. Criteria: age &gt; 60, cp = asymptomatic
+</span>    <span class="n">age</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">61</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">cp</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">asymptomatic</span><span class="sh">'</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    
+    <span class="c1"># 2. High-Risk Numerical Features
+</span>    <span class="c1"># High blood pressure (trestbps: 130-180)
+</span>    <span class="n">trestbps</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mi">130</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="c1"># High cholesterol (chol: 240-450)
+</span>    <span class="n">chol</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="c1"># Lower max heart rate (thalch: 90-140 due to age/risk)
+</span>    <span class="n">thalch</span> <span class="o">=</span> <span class="mi">200</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="n">age</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="c1"># Significant ST depression (oldpeak: 1.5-5.0)
+</span>    <span class="n">oldpeak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    
+    <span class="c1"># 3. Categorical Features (Skewed toward high risk)
+</span>    <span class="n">sex</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">Male</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Female</span><span class="sh">'</span><span class="p">],</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+    <span class="n">fbs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span> <span class="c1"># Higher prevalence of high fasting blood sugar
+</span>    <span class="n">restecg</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">lv hypertrophy</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">st-t abnormality</span><span class="sh">'</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">exang</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="c1"># Exercise induced angina is highly likely in this group
+</span>    <span class="n">slope</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">flat</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">downsloping</span><span class="sh">'</span><span class="p">],</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">])</span>
+    <span class="n">ca</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span> <span class="c1"># Multiple major vessels involved
+</span>    <span class="n">thal</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">reversable defect</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">fixed defect</span><span class="sh">'</span><span class="p">],</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+    
+    <span class="c1"># 4. Target is 1 for all
+</span>    <span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+
+    <span class="n">df_high_risk</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+        <span class="sh">'</span><span class="s">age</span><span class="sh">'</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">:</span> <span class="n">sex</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">:</span> <span class="n">cp</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">trestbps</span><span class="sh">'</span><span class="p">:</span> <span class="n">trestbps</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">:</span> <span class="n">chol</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">:</span> <span class="n">fbs</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">:</span> <span class="n">restecg</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">:</span> <span class="n">thalch</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">:</span> <span class="n">exang</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">oldpeak</span><span class="sh">'</span><span class="p">:</span> <span class="n">oldpeak</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">:</span> <span class="n">slope</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">:</span> <span class="n">ca</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">:</span> <span class="n">thal</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">:</span> <span class="n">target</span>
+    <span class="p">})</span>
+    
+    <span class="k">return</span> <span class="n">df_high_risk</span>
+
+<span class="c1"># Generate and Display
+</span><span class="n">df_high_risk</span> <span class="o">=</span> <span class="nf">generate_high_risk_patients</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">--- High-Risk Synthetic Dataset (First 5 Rows) ---</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">df_high_risk</span><span class="p">.</span><span class="nf">head</span><span class="p">())</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">--- Summary Statistics ---</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">df_high_risk</span><span class="p">.</span><span class="nf">describe</span><span class="p">())</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Medical Plausibility Check:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Average Age: </span><span class="si">{</span><span class="n">df_high_risk</span><span class="p">[</span><span class="sh">'</span><span class="s">age</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> (Criteria: &gt;60)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Average Oldpeak: </span><span class="si">{</span><span class="n">df_high_risk</span><span class="p">[</span><span class="sh">'</span><span class="s">oldpeak</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> (High risk indicated by &gt;1.5)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Average vessels (ca): </span><span class="si">{</span><span class="n">df_high_risk</span><span class="p">[</span><span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> (High risk indicated by multi-vessel involvement)</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="machine-learning-task-3">Machine Learning Task</h2> <ol> <li>Train a Decision Tree Classifier on your original training dataset.</li> <li>Use this trained model to make predictions on the 30 synthetic high-risk patients you generated.</li> <li>How many of the high-risk patients did your model correctly classify as having heart disease (<code class="language-plaintext highlighter-rouge">target=1</code>)? Discuss why your model might have failed to identify certain high-risk individuals, even though they were generated to fit a dangerous profile.</li> </ol> <p>Python code generated by gemin 3 flash:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># 1. Train Decision Tree on Original Data (A)
+</span><span class="n">dt_model</span> <span class="o">=</span> <span class="nc">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">dt_model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_enc</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># 2. Preprocess Synthetic High-Risk Data
+# Map boolean/categorical columns to match the training set encoding
+# Note: cp is already 'asymptomatic', exang is True, fbs is True/False
+# ca is 1.0, 2.0, or 3.0
+</span>
+<span class="c1"># One-hot encode the high-risk synthetic data
+</span><span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">df_high_risk_enc</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">get_dummies</span><span class="p">(</span><span class="n">df_high_risk</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]),</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_cols</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Align columns with X_train_enc
+</span><span class="n">df_high_risk_enc</span> <span class="o">=</span> <span class="n">df_high_risk_enc</span><span class="p">.</span><span class="nf">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">X_train_enc</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 3. Predict
+</span><span class="n">y_pred_high_risk</span> <span class="o">=</span> <span class="n">dt_model</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">df_high_risk_enc</span><span class="p">)</span>
+<span class="n">y_true_high_risk</span> <span class="o">=</span> <span class="n">df_high_risk</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="c1"># 4. Results
+</span><span class="n">correct_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_pred_high_risk</span> <span class="o">==</span> <span class="mi">1</span><span class="p">).</span><span class="nf">sum</span><span class="p">()</span>
+<span class="n">total_count</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">df_high_risk</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">--- Decision Tree Evaluation on High-Risk Synthetic Data ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Total High-Risk Patients: </span><span class="si">{</span><span class="n">total_count</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Correctly Classified (Target=1): </span><span class="si">{</span><span class="n">correct_count</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Classification Accuracy for High-Risk Sub-Population: </span><span class="si">{</span><span class="n">correct_count</span><span class="o">/</span><span class="n">total_count</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div> <h3 id="answer-to-the-final-question-2">Answer to the final question</h3> <p>Classification Accuracy for High-Risk Sub-Population was 1.0000.</p> <p>This result demonstrates that the decision tree heavily weights the clinical markers we used to generate the high-risk data—specifically advanced age, asymptomatic chest pain, exercise-induced angina, and significant ST depression.</p> <h1 id="question-5-analyzing-the-impact-of-synthetic-outliers">Question 5: Analyzing the Impact of Synthetic Outliers</h1> <p>Outliers can influence machine learning models. You will generate synthetic “outlier” data and measure its effect on a Support Vector Machine (SVM).</p> <h2 id="llm-task-4">LLM Task</h2> <ol> <li>Write a prompt for an LLM to generate 20 new, synthetic patient records representing individuals with extreme health metrics.</li> <li>Instruct the LLM that these patients should have cholesterol (<code class="language-plaintext highlighter-rouge">chol</code>) levels above 400 mg/dl and resting blood pressure (<code class="language-plaintext highlighter-rouge">trestbps</code>) above 180 mmHg. The LLM should generate the remaining features and a target label for each.</li> </ol> <p>prompt generated by chatgpt:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Prompt
+
+You are working with the **UCI Heart Disease dataset** and want to evaluate how **extreme outlier data** affects the performance of a machine learning model, specifically a **Support Vector Machine (SVM)**.
+
+---
+
+### Objective
+
+Generate synthetic outlier patient data and measure how adding these extreme cases impacts SVM model performance.
+
+---
+
+### Dataset Features
+
+Use the standard UCI Heart Disease feature set:
+
+**Numerical columns:**
+- `age`, `trestbps`, `chol`, `thalch`, `oldpeak`
+
+**Categorical columns:**
+- `sex`, `cp`, `fbs`, `restecg`, `exang`, `slope`, `ca`, `thal`
+
+**Target:**
+- `target` (0 = no disease, 1 = heart disease)
+
+---
+
+### Tasks
+
+#### 1. Generate Synthetic Outlier Data
+- Create **20 synthetic patient records** representing **extreme health profiles**.
+- Enforce the following conditions for all 20 patients:
+  - `chol` &gt; 400 mg/dL
+  - `trestbps` &gt; 180 mmHg
+- Generate all other features such that:
+  - Values remain **medically plausible**, even if extreme
+  - Profiles are internally consistent (e.g., high-risk indicators align)
+
+#### 2. Assign Target Labels
+- Assign a `target` value (0 or 1) for each patient.
+- Base the assignment on the overall risk profile:
+  - Most extreme profiles should reasonably map to `target = 1`
+  - Some variation is allowed if justified
+
+#### 3. Train Baseline Model
+- Using the **original dataset (without outliers)**:
+  - Split data into training and testing sets
+  - Train a **Support Vector Machine (SVM)** classifier
+  - Evaluate performance using metrics such as:
+    - Accuracy
+    - Precision
+    - Recall
+    - F1-score
+
+#### 4. Evaluate Impact of Outliers
+- Append the 20 synthetic outlier records to the dataset.
+- Retrain the same SVM model using the **augmented dataset**.
+- Re-evaluate using the same metrics.
+
+#### 5. Compare Results
+- Clearly compare model performance:
+  - Before adding outliers
+  - After adding outliers
+- Highlight any degradation or changes in model behavior.
+
+#### 6. Output
+- Display:
+  - The synthetic outlier dataset
+  - Performance metrics (before vs after)
+- Provide a brief analysis explaining:
+  - How outliers influenced the SVM
+  - Why SVMs may be sensitive (or robust) to such extreme values
+
+---
+
+### Constraints
+- Use Python with `numpy`, `pandas`, and `scikit-learn`.
+- Set a **random seed** for reproducibility.
+- Keep code clean, modular, and well-documented.
+- Do **not** use real outliers from the dataset—generate them synthetically.
+</code></pre></div></div> <p>python code generated by gemini 3 flash:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="n">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Set seed for reproducibility
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">generate_extreme_outliers</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="c1"># Constraints: chol &gt; 400, trestbps &gt; 180
+</span>    <span class="n">chol</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mi">401</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">trestbps</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mi">181</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    
+    <span class="c1"># Other features reflecting high risk
+</span>    <span class="n">age</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">thalch</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">oldpeak</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    
+    <span class="n">sex</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">Male</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Female</span><span class="sh">'</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">cp</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">asymptomatic</span><span class="sh">'</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">fbs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">restecg</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">lv hypertrophy</span><span class="sh">'</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">exang</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">flat</span><span class="sh">'</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">ca</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">thal</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">reversable defect</span><span class="sh">'</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    
+    <span class="c1"># Assign target = 1 for these extreme profiles
+</span>    <span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+
+    <span class="n">df_outliers</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+        <span class="sh">'</span><span class="s">age</span><span class="sh">'</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span> <span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">:</span> <span class="n">sex</span><span class="p">,</span> <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">:</span> <span class="n">cp</span><span class="p">,</span> <span class="sh">'</span><span class="s">trestbps</span><span class="sh">'</span><span class="p">:</span> <span class="n">trestbps</span><span class="p">,</span> <span class="sh">'</span><span class="s">chol</span><span class="sh">'</span><span class="p">:</span> <span class="n">chol</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">:</span> <span class="n">fbs</span><span class="p">,</span> <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">:</span> <span class="n">restecg</span><span class="p">,</span> <span class="sh">'</span><span class="s">thalch</span><span class="sh">'</span><span class="p">:</span> <span class="n">thalch</span><span class="p">,</span> <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">:</span> <span class="n">exang</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">oldpeak</span><span class="sh">'</span><span class="p">:</span> <span class="n">oldpeak</span><span class="p">,</span> <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">:</span> <span class="n">slope</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">:</span> <span class="n">ca</span><span class="p">,</span> <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">:</span> <span class="n">thal</span><span class="p">,</span> <span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">:</span> <span class="n">target</span>
+    <span class="p">})</span>
+    <span class="k">return</span> <span class="n">df_outliers</span>
+
+<span class="c1"># 1. Generate Outliers
+</span><span class="n">df_outliers</span> <span class="o">=</span> <span class="nf">generate_extreme_outliers</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">--- Synthetic Outlier Samples (First 5) ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">df_outliers</span><span class="p">.</span><span class="nf">head</span><span class="p">())</span>
+
+<span class="c1"># 2. Prepare Data for SVM
+# We use X_train_enc and X_test_enc (mode-imputed and one-hot encoded from previous steps)
+</span><span class="n">scaler</span> <span class="o">=</span> <span class="nc">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">X_train_enc</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test_enc</span><span class="p">)</span>
+
+<span class="c1"># 3. Train Baseline SVM
+</span><span class="n">svm_baseline</span> <span class="o">=</span> <span class="nc">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="sh">'</span><span class="s">rbf</span><span class="sh">'</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">svm_baseline</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_base</span> <span class="o">=</span> <span class="n">svm_baseline</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">--- Baseline SVM Performance ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_base</span><span class="p">))</span>
+</code></pre></div></div> <h2 id="machine-learning-task-4">Machine Learning Task</h2> <ol> <li>Train a Support Vector Machine (SVM) classifier with a linear kernel on the original training dataset. Evaluate its accuracy on the test set.</li> <li>Create a new “outlier-included training dataset” by adding your 20 synthetic records to the original training data.</li> <li>Train a new SVM classifier on this “outlier-included training dataset” and evaluate it on the same test set.</li> <li>Compare the performance. Did the inclusion of synthetic outliers in the training data improve or degrade the model’s performance on the test set? Explain how extreme data points can affect the decision boundary of an SVM.</li> </ol> <p>python code generated by gemini 3 flash</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="c1"># 1. Prepare Original Scaled Data (using linear kernel)
+# We reuse X_train_scaled and X_test_scaled from previous steps
+</span><span class="n">svc_linear_orig</span> <span class="o">=</span> <span class="nc">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="sh">'</span><span class="s">linear</span><span class="sh">'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">svc_linear_orig</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluate Original
+</span><span class="n">y_pred_linear_orig</span> <span class="o">=</span> <span class="n">svc_linear_orig</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+<span class="n">acc_linear_orig</span> <span class="o">=</span> <span class="nf">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_linear_orig</span><span class="p">)</span>
+
+<span class="c1"># 2. Prepare Outlier-Augmented Scaled Data
+# We reuse X_train_out_scaled from the previous SVM step
+</span><span class="n">svc_linear_out</span> <span class="o">=</span> <span class="nc">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="sh">'</span><span class="s">linear</span><span class="sh">'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">svc_linear_out</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_out_scaled</span><span class="p">,</span> <span class="n">y_train_out</span><span class="p">)</span>
+
+<span class="c1"># Evaluate Augmented (using the scaled test set corresponding to the new scaler fit)
+</span><span class="n">X_test_scaled_out</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test_enc</span><span class="p">)</span>
+<span class="n">y_pred_linear_out</span> <span class="o">=</span> <span class="n">svc_linear_out</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_scaled_out</span><span class="p">)</span>
+<span class="n">acc_linear_out</span> <span class="o">=</span> <span class="nf">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_linear_out</span><span class="p">)</span>
+
+<span class="c1"># 3. Comparison
+</span><span class="n">linear_comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">Metric</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">Accuracy</span><span class="sh">'</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">Linear SVM (Original)</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">acc_linear_orig</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">Linear SVM (Outlier-Augmented)</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">acc_linear_out</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">--- Linear SVM Performance Comparison ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">linear_comparison</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">--- Original Model Report ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_linear_orig</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">--- Augmented Model Report ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_linear_out</span><span class="p">))</span>
+
+<span class="c1"># 4. Augment Dataset with Outliers
+# Encode outliers to match X_train_enc structure
+</span><span class="n">cat_features</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">sex</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cp</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">fbs</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">restecg</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">exang</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">slope</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ca</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">thal</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">df_outliers_enc</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">get_dummies</span><span class="p">(</span><span class="n">df_outliers</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]),</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df_outliers_enc</span> <span class="o">=</span> <span class="n">df_outliers_enc</span><span class="p">.</span><span class="nf">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">X_train_enc</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Combine
+</span><span class="n">X_train_out</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">concat</span><span class="p">([</span><span class="n">X_train_enc</span><span class="p">,</span> <span class="n">df_outliers_enc</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">y_train_out</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">concat</span><span class="p">([</span><span class="n">y_train</span><span class="p">,</span> <span class="n">df_outliers</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Scale Augmented Data
+</span><span class="n">X_train_out_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">X_train_out</span><span class="p">)</span>
+<span class="n">X_test_scaled_out</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test_enc</span><span class="p">)</span> <span class="c1"># Test on same original test set
+</span>
+<span class="c1"># 5. Train SVM on Augmented Data
+</span><span class="n">svm_outlier</span> <span class="o">=</span> <span class="nc">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="sh">'</span><span class="s">rbf</span><span class="sh">'</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">svm_outlier</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train_out_scaled</span><span class="p">,</span> <span class="n">y_train_out</span><span class="p">)</span>
+<span class="n">y_pred_out</span> <span class="o">=</span> <span class="n">svm_outlier</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test_scaled_out</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="s">--- SVM Performance with Outliers ---</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_out</span><span class="p">))</span>
+
+<span class="c1"># 6. Comparison Table
+</span><span class="n">base_acc</span> <span class="o">=</span> <span class="nf">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_base</span><span class="p">)</span>
+<span class="n">out_acc</span> <span class="o">=</span> <span class="nf">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_out</span><span class="p">)</span>
+
+<span class="n">comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">Metric</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">Accuracy</span><span class="sh">'</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">Baseline SVM</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">base_acc</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">Outlier-Augmented SVM</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">out_acc</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="nf">display</span><span class="p">(</span><span class="n">comparison</span><span class="p">)</span>
+</code></pre></div></div> <h3 id="answer-to-the-final-question-3">Answer to the final question:</h3> <p>The Linear SVM evaluation is complete. The results show that both the original model and the outlier-augmented model achieved an accuracy of 79.89%.</p> <p>This outcome indicates that the 20 synthetic extreme outliers (Cholesterol &gt; 400, BP &gt; 180) did not significantly alter the linear decision boundary. In a clinical context, this suggests that the features defining ‘high-risk’ in your outliers were already well-represented or aligned with the patterns the model learned from the original training set, demonstrating model stability even when exposed to extreme clinical profiles.</p> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2026 Jongmin Mun. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
