@@ -32,9 +32,9 @@ To evaluate this, Uber ran an experiment: showing drivers the payment method upf
 However, standard A/B testing fails here due to network interference (the spillover effect). If drivers in the treatment group prefer cash and systematically decline card trips, they will consume the supply of cash trips. Consequently, the control group is starved of cash trips, artificially skewing the experiment's results even though they cannot see the payment types.
 
 How about switchback experiment? We can fix city and switch back and forth between treatment and control, over different time intervals. See [here](https://jong-min.org/blog/2025/switchback-experiments/) for the example from Doordash's algorithm change experiment and Lyft's surge pricing subsidy experiment. Note that these features are not user-facing. They can be silently deployed.
-<img src="switchback_uber_pydata_amsterdam_2019.png" alt="alt text" style="width: 100%; height: auto;">
+<img src="/assets/img/dso-603/switchback_uber_pydata_amsterdam_2019.png" alt="Switchback experiment diagram from Uber PyData Amsterdam 2019" style="width: 100%; height: auto;">
 
-Cash trip is a user facing feature. Driver can be both in control and treatment group across different time bucket.  Therefore we cannot use switchback experiment for this cash trip experiment.
+Cash trip is a user facing feature. Driver can be both in control and treatment group across different time bucket.  Therefore we cannot use switchback experiment for this cash trip experiment. Even for the algorithmic changes, the user might notice the switchback experiment these days so it is getting harder to run switchback experiments. For example, Nick Jones at Uber mentioned that they could not use switchback experiment for their surge pricing algorithm change experiment.
 
 # Synthetic Control
 
@@ -73,9 +73,9 @@ Cash trip is a user facing feature. Driver can be both in control and treatment 
 - ### Another city 
   - e.g., Houston or Atlanta from Time $T$ to $2T$
   - seasonlaity and future event problem addressed? maybe, if the city is very similar to miami in relevent aspects
-  - Some city can be similar to Miami. If we buy this *common trend assumption* that Miami and Atlanta share the same trend in the absence of treatment, we can use the celebrated diff-in-diff method.
+  - Some city can be similar to Miami. If we buy this *common trend assumption* that Miami and Atlanta share the same trend in the absence of treatment, we can use the celebrated diff-in-diff method. We compare before-and-after difference in Miami with that of Atlanta. This difference of differences captures the causal effect.
   - But it is hard to find a perfect analogue for Miami.
-<img src="diffdiff_uber_pydata_amsterdam_2019.png" alt="alt text" style="width: 100%; height: auto;">
+<img src="/assets/img/dso-603/diffdiff_uber_pydata_amsterdam_2019.png" alt="Difference-in-differences diagram from Uber PyData Amsterdam 2019" style="width: 100%; height: auto;">
 
 ## The Main Idea
 
@@ -89,7 +89,7 @@ Cash trip is a user facing feature. Driver can be both in control and treatment 
 - The treatment is lauching a new feature in Miami at Noveber 2017.
 - The metric is the number of ridesc completed.
 - We find weights so that the weighted average of control cities' number of rides (time series curve) matches Miami's number of rides (time series curve) in the pre-treatment period.
-![alt text](synthetic_city.png)
+![Synthetic city matching pre-treatment period](/assets/img/dso-603/synthetic_city.png)
 - there are numerous algorithms to find these weights. 
 The treatment effect is simply the divergence between the actual data in Miami and the projection of Synthetic Miami after time $T$.
 

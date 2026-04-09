@@ -31,7 +31,7 @@ authors:
 - **Definition**: Switchback tests randomize experiment buckets on geographic region and time "units" rather than users to reduce the impact of **dependencies in observations** on our experiment results.
 - By randomizing on these **regional-time "units"**, all deliveries and Dashers in each unit are exposed to the same type of algorithm, in turn reducing the impact of dependencies among deliveries in two different experiment buckets.
 - An illustration of this randomization structure is shown below.
-<img src="switchback_bucket.png" alt="alt text" style="width: 100%; height: auto;">
+<img src="/assets/img/dso-603/switchback_bucket.png" alt="Switchback bucket randomization structure" style="width: 100%; height: auto;">
 
 - Once randomization happens on the region-time buckets, each delivery is bucketed into to a treatment or control group based on that of its region and time, and as a result, we get 
 1. a nested data structure: multiple deliveries are part one of one bucket, and thus, observations are not independent of each other.
@@ -81,7 +81,7 @@ The core plan is determining the experimental unit and number of it.
    - 12:30 PM - 1:00 PM: Treatment (New dispatch algorithm for *all* users).
    - 1:00 PM - 1:30 PM: Treatment ...
 
-<img src="switchback_design_overview.png" alt="alt text" style="width: 100%; height: auto;">
+<img src="/assets/img/dso-603/switchback_design_overview.png" alt="Switchback experiment design overview" style="width: 100%; height: auto;">
 
 # Trade-offs and Challenges
 
