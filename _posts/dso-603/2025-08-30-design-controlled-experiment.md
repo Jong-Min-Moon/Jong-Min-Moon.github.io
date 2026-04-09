@@ -14,22 +14,42 @@ bibliography: 2025-08-29-eta-reduction-case-study.bib
 
 
 # Quick Summary
+### 1. Set the Context for the Experiment
+- **Define the objective**
+  - Clarify the business goal  
+  - Determine the purpose of the experiment  
+  - Assess whether an A/B test is appropriate  
 
-1. Set the context for the experiment
-   1. Clarify the business goal. Clarify the purpose of the experiment. Is it even worth running an A/B test?
-   2. Specify treatment and hypothesis. Set success, guardrail, tracking metrics.
-   
-2. Design the experiment
-   1. Unit of randomization. you should consider
-    1. measure success your metrics
-    2. avoid interference and network effects
-    3. consider user experience
-   2. Statistical tests
-      1. usually t or z test
-      2. sometimes quasi-experimental techniques like difference in differences
-      3. Do you require heteroskedastic robust standard errors or clustered standard errors?
-   3. Power analysis and sample size calculation
-      1. Ask for MDE, power, type I error
+- **Formulate the hypothesis**
+  - Define treatment and control  
+  - State the hypothesis clearly  
+  - Identify:
+    - Success metrics  
+    - Guardrail metrics  
+    - Tracking metrics  
+
+---
+
+### 2. Design the Experiment
+- **Choose the unit of randomization**
+  - Ensure metrics can be accurately measured  
+  - Minimize interference and network effects  
+  - Consider user experience  
+
+- **Select statistical methods**
+  - Common tests:
+    - t-test or z-test  
+  - Alternative approaches:
+    - Quasi-experimental methods (e.g., difference-in-differences)  
+  - Determine if adjustments are needed:
+    - Heteroskedasticity-robust standard errors  
+    - Clustered standard errors  
+
+- **Plan sample size and power**
+  - Conduct power analysis using:
+    - Minimum Detectable Effect (MDE)  
+    - Statistical power  
+    - Type I error rate (α)  
 
 3. Analyze the experiment
 
