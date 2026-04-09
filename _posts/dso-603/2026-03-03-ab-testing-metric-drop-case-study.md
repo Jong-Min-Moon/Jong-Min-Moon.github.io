@@ -11,7 +11,50 @@ authors:
     url: "https://jong-min.org"
 ---
 
-# Part 1: Diagnosing the Metric Drop
+Remember the framework:
+
+### 1. Set the Context for the Experiment
+- **Define the objective**
+  - Clarify the business goal  
+  - Determine the purpose of the experiment  
+  - Assess whether an A/B test is appropriate  
+
+- **Formulate the hypothesis**
+  - Define treatment and control  
+  - State the hypothesis clearly  
+  - Identify:
+    - Success metrics  
+    - Guardrail metrics  
+    - Tracking metrics  
+
+---
+
+### 2. Design the Experiment
+- **Choose the unit of randomization**
+  - Ensure metrics can be accurately measured  
+  - Minimize interference and network effects  
+  - Consider user experience  
+
+- **Select statistical methods**
+  - Common tests:
+    - t-test or z-test  
+  - Alternative approaches:
+    - Quasi-experimental methods (e.g., difference-in-differences)  
+  - Determine if adjustments are needed:
+    - Heteroskedasticity-robust standard errors  
+    - Clustered standard errors  
+
+- **Plan sample size and power**
+  - Conduct power analysis using:
+    - Minimum Detectable Effect (MDE)  
+    - Statistical power  
+    - Type I error rate (α)  
+
+Monthly active users (MAU) is a key performance indicator (KPI) that measures the number of unique users who engage with a site or app within a month. It serves as a main metric for assessing a company's overall health and user engagement, often influencing investor sentiment.
+
+While MAU is usually tracked using unique identifiers like emails or usernames, measurement methods vary across platforms, making direct comparisons between companies difficult.
+
+# Phase  1: Diagnosing the Metric Drop
 
 Before designing an experiment, you have to find the root cause of the problem.
 
