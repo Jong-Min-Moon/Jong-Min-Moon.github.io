@@ -2,7 +2,7 @@
 layout: distill
 title: "Paper review: Statistical Challenges in Online Controlled Experiments"
 description: "A review of Larsen et al. (2024) on the statistical landscape and challenges of A/B testing in large-scale online environments."
-date: 2026-04-08
+date: 2025-08-31
 categories: dso-603 experiment-design statistics
 tags: a-b-testing online-experiments sutva sequential-testing
 project: dso-603
@@ -30,7 +30,9 @@ Online Controlled Experiments (OCEs), commonly known as A/B testing, have become
 
 In this paper, **Larsen et al. (2024)** provide a comprehensive review of these challenges, bridging the gap between academic statistical theory and industrial practice.
 
-# Key Statistical Challenges
+# Sensitivity and Small Treatment Effects
+
+
 
 ## Experimental Power
 
