@@ -9,6 +9,17 @@ category: [differential privacy, nonparametric statistics, causal inference, rei
 related_publications: munOfflineDynamicPricing2025
 ---
 
+# Personalized (implicit) pricing
+- Explicit dynamic pricing faces public backlash.
+- Still, dynamic pricing is widely used in practice by firm in implicit form
+- A good example ad-supported subscription services such as Netflix and YouTube. Although these platforms typically offer only two plan types (free and paid), free users may receive a personalized level of advertising exposure, which can vary continuously. LLM tokens can be another example.
+- Consumers seem to be accepting this type of implicit dynamic pricing.
+- Therefore learning a good dynamic pricing policy from customer features is still an important problem.
+
+# propnseity assumption
+Assumption 4.
+
+
 We study pricing policy learning from batched contextual bandit data under market
 shift and privacy protection. Market shift is modeled as covariate shift, where
 the relationship among treatments, features, and rewards remains invariant, while
