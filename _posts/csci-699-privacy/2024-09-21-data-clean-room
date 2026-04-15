@@ -1,0 +1,75 @@
+---
+layout: distill
+title: "Data Clean Rooms (DCR)"
+description: "Understanding Data Clean Rooms: Secure data collaboration in a privacy-first world."
+tags: distill formatting
+categories: data-privacy
+date: 2024-09-21
+featured: false
+mermaid:
+  enabled: true
+  zoomable: true
+project: csci-699-privacy
+authors:
+  - name: Jongmin Mun
+    url: "https://jongminmoon.github.io"
+bibliography: 2026-04-14-dcr.bib
+toc:
+  - name: "The Core Problem: An Analogy"
+  - name: "The Solution: A Secure Vault"
+  - name: "The Workflow"
+  - name: "Why Data Clean Rooms?"
+
+_styles: >
+  .fake-img {
+    margin-bottom: 12px;
+  }
+  .fake-img p {
+    text-align: center;
+    margin: 12px 0;
+  }
+---
+
+
+## What is a Data Clean Room?
+
+- Simply put, they are secure environments where sensitive data from various sources can be analyzed together without actually sharing the raw data.
+- think of it as a virtual room where participants can come and collaborate but can't take any data out. 
+- This allows for privacy compliant analysis, enabling companies to glean insights while keeping users protected. 
+- They offer a way of collaborate without compromising on privacy. 
+
+
+---
+
+## How Data Clean Rooms Work (Step-by-Step)
+
+The operation of a data clean room involves several secure stages:
+
+1. **Collection & Anonymization:** Data is collected from various sources and anonymized to protect user identities. This is achieved by removing or encrypting Personally Identifiable Information (PII).
+2. **Secure Transfer:** This anonymized data is then securely transferred into the clean room.
+3. **Aggregation:** Inside, the data is aggregated from the different sources, allowing for comprehensive analysis.
+4. **Secure Analysis:** Analysts perform secure analyses on this aggregated data without ever accessing the raw data. Multiple parties can collaborate within the clean room, sharing insights without directly accessing each other's datasets.
+5. **Exporting Results:** Finally, only the approved, anonymized results can leave the clean room, ensuring the raw data remains secure and private.
+
+---
+
+## Why Are Data Clean Rooms Trending?
+
+Data privacy has become a top priority, driven by numerous high-profile data breaches and growing awareness among consumers. 
+
+### 1. Evolving Privacy Regulations
+Laws like **GDPR** in Europe and **CCPA** in California have set stringent guidelines for data protection. Companies need to find a balance between leveraging data for insights and respecting user privacy, and this is where data clean rooms come in—they offer a way to collaborate without compromising on privacy.
+
+### 2. Changes in the Mobile Privacy Ecosystem
+Major shifts by tech platforms have fundamentally changed how advertisers collect data:
+
+* **Apple's iOS Updates (ATT):** iOS 14.5 introduced stricter privacy measures such as App Tracking Transparency (ATT). This requires apps to get user permission before tracking their data across other apps and websites. While great for user privacy, this poses challenges for advertisers. Many have seen increased CPMs, lower click-through rates, and reduced Return on Ad Spend (ROAS) due to the lack of user-level data.
+* **Google's Privacy Sandbox (Android):** Google aims to enhance user privacy by deprecating the use of traditional identifiers like the Advertising ID (Ad ID). This limits the ability to track users across apps and websites, posing similar challenges for targeting and measurement.
+
+## Conclusion
+
+Data clean rooms offer a compliant way to overcome these challenges on both platforms. By allowing advertisers to analyze data within a secure environment, they can still gain valuable insights and measure campaign performance without breaching privacy guidelines. As privacy regulations continue to evolve, data clean rooms will undoubtedly play a pivotal role in enabling secure and effective data analysis.
+
+
+# References
+- Kochava, [How Data Clean Rooms Work for Privacy-First Advertising](https://youtu.be/l0xNnQ81glo?si=vV7ZbFK7vk0qk2ju)
