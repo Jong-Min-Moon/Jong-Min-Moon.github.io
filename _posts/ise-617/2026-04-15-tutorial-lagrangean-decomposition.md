@@ -82,7 +82,7 @@ $$\text{Minimize}_{x_1} \quad f_1(x_1, y)$$
 $$\text{Minimize}_{x_2} \quad f_2(x_2, y)$$
 
 - Each problem is independently solved by each firm. Any method each likes. no communicaiton needed between firms.
-- Resulting optimal values $\phi_1(y)$ and $\phi_2(y)$, 
+- Resulting optimal values denoted as $\phi_1(y)$ and $\phi_2(y)$. We view it as a function of $y$.
   
 ### Master problem
 - the original problem is equivalent to the **master problem**:
@@ -91,8 +91,74 @@ $$\text{Minimize}_{x_2} \quad f_2(x_2, y)$$
 
 with variable $y$.
 
+- If the original subproblems are convex, then the master problem is convex due to partial minimizaiton rule
 * This is called **primal decomposition** since the master problem manipulates primal (complicating) variables.
-* 
+
+### The algorithm for primal decomposition
+* If the original problem is convex, so is the master problem.
+* Vairous ways to solve the master problem. For example, **bisection** (if $y$ is scalar), **gradient or Newton methods** (if $\phi_i$ is differentiable; but they are rarely differentiable in practice), or **subgradient, cutting-plane, or ellipsoid methods**.
+* Each iteration of the master problem requires solving the two subproblems (in parallel).
+* If the master algorithm converges fast enough and the subproblems are sufficiently easier to solve than the original problem, we achieve computational savings.
+
+### Primal Decomposition Algorithm
+*(Using subgradient algorithm for master)*
+
+**Repeat:**
+
+1. **Solve the subproblems (in parallel).** Find $x_1$ that minimizes $f_1(x_1, y)$ with subgradient $g_1 \in \partial\phi_1(y)$, and find $x_2$ that minimizes $f_2(x_2, y)$ with subgradient $g_2 \in \partial\phi_2(y)$.
+2. **Update the complicating variable:** $$y := y - \alpha_k(g_1 + g_2)$$
+
+*Note: The step length $\alpha_k$ can be chosen in any of the standard ways.*
+- the subproblem solver do not even have to reveal their x value. they just send their subgradient to the master problem solver. In the simplest setting doesnot even have to reveal what $f_1$ vlaue it achieved .
+
+### Modern viewpoint
+- the decomposition above was develpoped in 1960s where technology was primintive
+- Nowdays, if you can collect the problem data for all $f_1, ... f_k$, just solving in one shot is better.
+- Still nowadays this is meaningful because in many cases firms do not share data. so not for efficiency but for  .
+
+
+### Hessian
+in the linear algebra level, sturctuer can be exploted.
+how the hessian look like for complicating variable case?
+
+block elimination
+shur complement
+block diagonal submatrix
+
+
+## Dual decomposition
+- Copy and link.
+  
+**Step 1: introduce new variables $y_1$, $y_2$**
+
+$$
+\begin{aligned}
+\text{minimize} \quad & f(x) = f_1(x_1, y_1) + f_2(x_2, y_2) \\
+\text{subject to} \quad & y_1 = y_2
+\end{aligned}
+$$
+
+* $y_1$, $y_2$ are **local** versions of complicating variable $y$
+* $y_1 = y_2$ is consistency constraint
+
+**Step 2: form dual problem**
+
+$$L(x_1, y_1, x_2, y_2) = f_1(x_1, y_1) + f_2(x_2, y_2) + \nu^T(y_1 - y_2)$$
+
+**separable**; can minimize over $(x_1, y_1)$ and $(x_2, y_2)$ separately
+
+$$
+\begin{aligned}
+g_1(\nu) &= \inf_{x_1, y_1} (f_1(x_1, y_1) + \nu^T y_1) = -f_1^*(0, -\nu) \\
+g_2(\nu) &= \inf_{x_2, y_2} (f_2(x_2, y_2) - \nu^T y_2) = -f_2^*(0, \nu)
+\end{aligned}
+$$
+
+dual problem is: $\text{maximize} \quad g(\nu) = g_1(\nu) + g_2(\nu)$
+
+* computing $g_i(\nu)$ are the **dual subproblems**
+* can be done in parallel. link is via the lagrange multiplier now. subproblems can yield different $y$ value
+* a subgradient of $-g$ is $y_2 - y_1$ (from solutions of subproblems)
 # Introduction
 
 In large-scale optimization, the challenge often lies in **complicating constraints**—constraints that, if removed, would allow the problem to decompose into smaller, independent subproblems. **Lagrangean Decomposition** is a powerful technique designed to exploit such structures, providing tighter bounds than standard LP relaxations and enabling the solution of massive-scale Mixed-Integer Linear Programs (MILP) and Nonlinear Programs (MINLP).
