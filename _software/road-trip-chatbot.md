@@ -506,10 +506,7 @@ for k, v in results["Helpfulness"].items():
 
 ## Save Finetuned Models
 
-To save the final model as LoRA adapters, either use Hugging Face's `push_to_hub` for an online save or `save_pretrained` for a local save. 
-
-> **Note:** This *only* saves the LoRA adapters, not the full model. To save to 16bit or GGUF, scroll down!
-
+ 
 ```python
 # Create a free account at huggingface.co and get an Access Token from your settings
 HF_TOKEN = " "
