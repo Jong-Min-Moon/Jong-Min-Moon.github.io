@@ -9,5 +9,5 @@ importance: 3
 	src="https://jongminm-roadtrip-advisor.hf.space"
 	frameborder="0"
 	width="850"
-	height="450"
+	height="650"
 ></iframe>
