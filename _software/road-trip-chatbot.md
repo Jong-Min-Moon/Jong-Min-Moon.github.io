@@ -6,7 +6,7 @@ importance: 3
 ---
 
 <iframe 
-    src="https://huggingface.co/spaces/jongminm/roadtrip-advisor" 
+    src="https://jongminm-roadtrip-advisor-bot.hf.space" 
     frameborder="0" 
     width="100%" 
     height="800"
