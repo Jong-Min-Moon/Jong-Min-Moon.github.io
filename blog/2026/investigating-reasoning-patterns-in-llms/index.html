@@ -1,0 +1,542 @@
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Comparative Analysis of Chain-of-Thought Reasoning in Large Language Models | Jongmin Mun</title> <meta name="author" content="Jongmin Mun"> <meta name="description" content="Assignment examining different Chain-of-Thought (CoT) prompting strategies in LLMs."> <meta name="keywords" content="Jongmin Mun, USC"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="/assets/css/main.css?v=1776930660"> <link rel="canonical" href="https://jong-min-moon.github.io/blog/2026/investigating-reasoning-patterns-in-llms/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> <script src="/assets/js/distillpub/overrides.js"></script> </head> <body> <d-front-matter> <script async type="text/json">{
+      "title": "Comparative Analysis of Chain-of-Thought Reasoning in Large Language Models",
+      "description": "Assignment examining different Chain-of-Thought (CoT) prompting strategies in LLMs.",
+      "published": "April 20, 2026",
+      "authors": [
+        {
+          "author": "Jongmin Mun",
+          "authorURL": "https://jongminmoon.github.io",
+          "affiliations": [
+            {
+              "name": "",
+              "url": ""
+            }
+          ]
+        }
+        
+      ],
+      "katex": {
+        "delimiters": [
+          {
+            "left": "$",
+            "right": "$",
+            "display": false
+          },
+          {
+            "left": "$$",
+            "right": "$$",
+            "display": true
+          }
+        ]
+      }
+    }</script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Jongmin </span>Mun</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About</a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">Publications</a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects</a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Study</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/coursework/">Coursework</a> <a class="dropdown-item" href="/study/papers/">Papers</a> <div class="dropdown-submenu"> <a class="dropdown-item dropdown-toggle" href="#">Coding Test</a> <div class="dropdown-menu dropdown-menu-right"> <a class="dropdown-item" href="/coding-test/data-structure-algorithm/">Data Structure / Algorithm</a> <a class="dropdown-item" href="/coding-test/database/">Database</a> </div> </div> </div> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv</a> </li> <li class="nav-item "> <a class="nav-link" href="/software/">Software</a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">Posts<span class="sr-only">(current)</span></a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill "> <d-title> <h1>Comparative Analysis of Chain-of-Thought Reasoning in Large Language Models</h1> <p>Assignment examining different Chain-of-Thought (CoT) prompting strategies in LLMs.</p> </d-title> <d-article> <p>We investigate how different Chain-of-Thought (CoT) prompting strategies influence reasoning quality in a large-language-model environment. We compare five prompting methods on a set of reasoning problems and analyze:</p> <ul> <li>accuracy of final answers</li> <li>structure and clarity of intermediate reasoning</li> <li>typical reasoning errors (omission, over-reasoning, hallucination, arithmetic slips)</li> </ul> <h1 id="2-task-overview">2. Task Overview</h1> <p>You will:</p> <ol> <li>Apply five CoT prompting methods to every question.</li> <li>Record reasoning traces and evaluate correctness.</li> <li>Write a short report comparing the results.</li> </ol> <h1 id="3-questions-and-prompts">3. Questions and prompts</h1> <p>We use the following questions: | # | Domain | Question | |—|—|—| | 1 | Math (GSM8K) | A shop sells 3 apples for $5. If the price increases by 20%, how much will 12 apples cost? | | 2 | Math | A farmer has 8 cows and buys 5 more. He then sells half of his total cows and later buys 3 calves. How many cows does he have now? | | 3 | Science (ARC) | Copper wire, wooden stick, and rubber band are placed in an electric circuit. Which one lets current flow and why? | | 4 | Causal | A plant receives less sunlight but the same amount of water and nutrients. How will its rate of photosynthesis and growth change, and why? | | 5 | Multisentence reasoning | Mary put her cup on the table and left. John came, moved it to the shelf, and took the book that was under it. Where is the cup now, and who has the book? | | 6 | Data Science | You run a two-sample Z-test for the difference in means and the confidence interval length is too wide. How to fix it? | | 7 | Data Science | You are a data scientist at Doordash and run a regression with conversion as response and ETA as predictor. The coefficient is negative. How to fix it? |</p> <p>For each of the questions, we use the following Chain-of-Thought prompts:</p> <table> <thead> <tr> <th>#</th> <th>Method</th> <th>Prompting Instruction</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>Zero-Shot CoT</td> <td>Ask the question and append “Let’s think step by step.”</td> </tr> <tr> <td>2</td> <td>Few-Shot CoT</td> <td>Provide 2–3 solved examples before the target question.</td> </tr> <tr> <td>3</td> <td>Self-Refine / Critic</td> <td>After the first answer, re-prompt: “Review your reasoning and correct any mistakes.”</td> </tr> <tr> <td>4</td> <td>Sub-Question Decomposition</td> <td>Use a prompt to break the main problem into sub-questions, answer each, then combine.</td> </tr> <tr> <td>5</td> <td>Self-Consistency</td> <td>Generate 5 independent reasoning traces and take a majority-vote answer. To obtain independent traces, use slightly different prompts for each trace.</td> </tr> </tbody> </table> <p>For Few-shot CoT, we use the following examples:</p> <h2 id="1-apples-price-increase">1) Apples Price Increase</h2> <h3 id="example-1">Example 1</h3> <p><strong>Question:</strong> 3 apples cost $5. Price increases by 20%. Cost of 12 apples?</p> <p><strong>Solution:</strong></p> <ul> <li>Original price per apple = 5 ÷ 3 = $1.67</li> <li>New price = 1.67 × 1.20 = $2.00</li> <li>Cost of 12 apples = 12 × 2 = <strong>$24</strong> </li> </ul> <hr> <h3 id="example-2">Example 2</h3> <p><strong>Question:</strong> 3 apples cost $6. Price increases by 20%. Cost of 12 apples?</p> <p><strong>Solution:</strong></p> <ul> <li>Price per apple = 6 ÷ 3 = $2</li> <li>New price = 2 × 1.20 = $2.40</li> <li>Cost of 12 apples = 12 × 2.40 = <strong>$28.80</strong> </li> </ul> <hr> <h3 id="example-3">Example 3</h3> <p><strong>Question:</strong> 3 apples cost $9. Price increases by 20%. Cost of 12 apples?</p> <p><strong>Solution:</strong></p> <ul> <li>Price per apple = 9 ÷ 3 = $3</li> <li>New price = 3 × 1.20 = $3.60</li> <li>Cost of 12 apples = 12 × 3.60 = <strong>$43.20</strong> </li> </ul> <hr> <h2 id="2-farmer-and-cows">2) Farmer and Cows</h2> <h3 id="example-1-1">Example 1</h3> <p><strong>Solution:</strong></p> <ul> <li>Start: 8 cows</li> <li>Buys 5 → 13 cows</li> <li>Sells half → 13 ÷ 2 = 6.5 (assume 6 sold, 7 left)</li> <li>Buys 3 → 7 + 3 = <strong>10 cows</strong> </li> </ul> <hr> <h3 id="example-2-1">Example 2</h3> <p><strong>Variation:</strong> Start with 10 cows</p> <ul> <li>Buys 6 → 16</li> <li>Sells half → 8</li> <li>Buys 2 → <strong>10 cows</strong> </li> </ul> <hr> <h3 id="example-3-1">Example 3</h3> <p><strong>Variation:</strong> Start with 12 cows</p> <ul> <li>Buys 4 → 16</li> <li>Sells half → 8</li> <li>Buys 5 → <strong>13 cows</strong> </li> </ul> <hr> <h2 id="3-electric-circuit-materials">3) Electric Circuit Materials</h2> <h3 id="example-1-2">Example 1</h3> <p><strong>Answer:</strong> Copper wire lets current flow<br> <strong>Why:</strong> Copper is a good conductor due to free electrons</p> <hr> <h3 id="example-2-2">Example 2</h3> <p><strong>Answer:</strong> Wooden stick does NOT let current flow<br> <strong>Why:</strong> Wood is an insulator (no free electrons)</p> <hr> <h3 id="example-3-2">Example 3</h3> <p><strong>Answer:</strong> Rubber band does NOT let current flow<br> <strong>Why:</strong> Rubber is an insulator and blocks current</p> <hr> <h2 id="4-plant-with-less-sunlight">4) Plant with Less Sunlight</h2> <h3 id="example-1-3">Example 1</h3> <p><strong>Answer:</strong></p> <ul> <li>Photosynthesis decreases</li> <li>Growth slows<br> <strong>Why:</strong> Light is essential for photosynthesis</li> </ul> <hr> <h3 id="example-2-3">Example 2</h3> <p><strong>Answer:</strong></p> <ul> <li>Very low sunlight → very low photosynthesis</li> <li>Plant may become weak or die<br> <strong>Why:</strong> Energy production is limited</li> </ul> <hr> <h3 id="example-3-3">Example 3</h3> <p><strong>Answer:</strong></p> <ul> <li>Moderate reduction → slower growth, not stopped<br> <strong>Why:</strong> Some photosynthesis still occurs</li> </ul> <hr> <h2 id="5-cup-and-book-logic">5) Cup and Book Logic</h2> <h3 id="example-1-4">Example 1</h3> <p><strong>Answer:</strong></p> <ul> <li>Cup → on the shelf</li> <li>Book → with John</li> </ul> <hr> <h3 id="example-2-4">Example 2</h3> <p><strong>Variation:</strong> If John moves cup to desk</p> <ul> <li>Cup → desk</li> <li>Book → with John</li> </ul> <hr> <h3 id="example-3-4">Example 3</h3> <p><strong>Variation:</strong> If John doesn’t take the book</p> <ul> <li>Cup → shelf</li> <li>Book → remains where it was</li> </ul> <hr> <h2 id="6-z-test-wide-confidence-interval">6) Z-test Wide Confidence Interval</h2> <h3 id="example-1-5">Example 1</h3> <p><strong>Fix:</strong> Increase sample size<br> <strong>Why:</strong> Larger samples reduce standard error</p> <hr> <h3 id="example-2-5">Example 2</h3> <p><strong>Fix:</strong> Reduce variability<br> <strong>Why:</strong> Lower variance narrows interval</p> <hr> <h3 id="example-3-5">Example 3</h3> <p><strong>Fix:</strong> Use lower confidence level (e.g., 95% → 90%)<br> <strong>Why:</strong> Smaller margin of error</p> <hr> <h2 id="7-regression-negative-eta-coefficient">7) Regression (Negative ETA Coefficient)</h2> <h3 id="example-1-6">Example 1</h3> <p><strong>Issue:</strong> Longer ETA reduces conversion (negative coefficient)<br> <strong>Fix:</strong> This may be correct — interpret it<br> <strong>Reason:</strong> Customers prefer faster delivery</p> <hr> <h3 id="example-2-6">Example 2</h3> <p><strong>Fix:</strong> Check confounders</p> <ul> <li>Add variables (price, restaurant rating)<br> <strong>Why:</strong> Omitted variables bias results</li> </ul> <hr> <h3 id="example-3-6">Example 3</h3> <p><strong>Fix:</strong> Check causality</p> <ul> <li>Use experiment or instrumental variables<br> <strong>Why:</strong> Correlation ≠ causation</li> </ul> <h1 id="results">Results</h1> <p>Due to the time restriction, I was able to evaluate the first three strategies. The average correctess was:</p> <p>6/7 for Zero-Shot CoT 7/7 for Few-Shot CoT 7/7 for Self-Refine / Critic</p> <p>The wrong answer by Zero-shot was: 9.5 cows. The question was “A farmer has 8 cows and buys 5 more. He then sells half of his total cows and later buys 3 calves. How many cows does he have now?”</p> <h2 id="qualitative-analysis">Qualitative analysis:</h2> <p>Zero-shot CoT displayed <strong>hallucination</strong>: answering 9.5 cows where there cannot be 0.5 cow in this world. For the other questions and prompt strategies the reasoning was sound and logical.</p> <h2 id="full-prompts-of-all-five-methods-you-used-for-the-first-question">Full prompts of all five methods you used for the first question:</h2> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Question: A shop sells 3 apples for $5. If the price increases by 20%, how much will 12 apples cost? Let's think step by step.
+
+
+2. Question: A shop sells 3 apples for $5. If the price increases by 20%, how much will 12 apples cost? Learn from the following examples.
+Question: 3 apples cost $6. Price increases by 20%. Cost of 12 apples?
+Generated Reasoning: Price per apple = 6 ÷ 3 = $2
+New price = 2 × 1.20 = $2.40
+Cost of 12 apples = 12 × 2.40 = $28.80
+Final Answer: Price per apple = 6 ÷ 3 = $2
+New price = 2 × 1.20 = $2.40
+Cost of 12 apples = 12 × 2.40 = $28.80
+
+
+Question: 3 apples cost $9. Price increases by 20%. Cost of 12 apples?
+Generated Reasoning: Price per apple = 9 ÷ 3 = $3
+New price = 3 × 1.20 = $3.60
+Cost of 12 apples = 12 × 3.60 = $43.20
+Final Answer: Price per apple = 9 ÷ 3 = $3
+New price = 3 × 1.20 = $3.60
+Cost of 12 apples = 12 × 3.60 = $43.20
+
+
+3. Original Question: A shop sells 3 apples for $5. If the price increases by 20%, how much will 12 apples cost? ... Review your reasoning and correct any mistakes. Provide your revised reasoning and final answer.
+
+
+</code></pre></div></div> <h2 id="conclusion">Conclusion</h2> <p>Self-Refine / Critic and Few-Shot CoT performs similarly in terms of interpretability and correctness. However, Few-Shot CoT requires external examples. Therefore Self-Refine / Critic is the best method among the three.</p> <h1 id="code-and-meta-prompts">Code and Meta-prompts</h1> <p>Prompt used to run the experiment:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You are given 7 questions. For EACH question, apply the following 5 prompting strategies and return both the reasoning (as text) and the final answer.
+<span class="p">
+---
+</span>
+<span class="gu">## Prompting Strategies to Apply</span>
+<span class="p">
+1.</span> <span class="gs">**Zero-Shot Chain-of-Thought (CoT)**</span>  
+<span class="p">   -</span> Prompt: Ask the question and append:  
+     <span class="gs">**"Let's think step by step."**</span>
+<span class="p">
+2.</span> <span class="gs">**Few-Shot Chain-of-Thought (CoT)**</span>  
+<span class="p">   -</span> Prompt: Provide 2–3 solved examples before the target question.  
+<span class="p">   -</span> Then ask the target question.
+<span class="p">
+3.</span> <span class="gs">**Self-Refine / Critic**</span>  
+<span class="p">   -</span> Step 1: Generate an initial answer with reasoning.  
+<span class="p">   -</span> Step 2: Re-prompt with:  
+     <span class="gs">**"Review your reasoning and correct any mistakes."**</span>  
+<span class="p">   -</span> Return the refined reasoning and final answer.
+<span class="p">
+4.</span> <span class="gs">**Sub-Question Decomposition**</span>  
+<span class="p">   -</span> Prompt the model to:
+<span class="p">     -</span> Break the problem into smaller sub-questions  
+<span class="p">     -</span> Solve each sub-question  
+<span class="p">     -</span> Combine them into a final answer  
+<span class="p">
+5.</span> <span class="gs">**Self-Consistency**</span>  
+<span class="p">   -</span> Generate <span class="gs">**5 independent reasoning traces**</span> using slightly different prompts  
+<span class="p">   -</span> Extract the final answer from each trace  
+<span class="p">   -</span> Return:
+<span class="p">     -</span> All reasoning traces  
+<span class="p">     -</span> The <span class="gs">**majority-vote final answer**</span>
+<span class="p">
+---
+</span>
+<span class="gu">## Output Format (STRICT)</span>
+
+Return results in a table with the following columns:
+
+| Question | CoT Method | Generated Reasoning | Final Answer |
+|----------|------------|---------------------|--------------|
+<span class="p">
+-</span> Each question should have <span class="gs">**5 rows**</span> (one per method).
+<span class="p">-</span> Include <span class="gs">**full reasoning text**</span> (not summarized).
+<span class="p">-</span> For Self-Consistency:
+<span class="p">  -</span> Include all 5 reasoning traces in the "Generated Reasoning" column.
+<span class="p">  -</span> Clearly indicate the majority answer.
+<span class="p">
+---
+</span>
+<span class="gu">## Questions</span>
+<span class="p">
+1.</span> A shop sells 3 apples for $5. If the price increases by 20%, how much will 12 apples cost?  
+<span class="p">2.</span> A farmer has 8 cows and buys 5 more. He then sells half of his total cows and later buys 3 calves. How many cows does he have now?  
+<span class="p">3.</span> Copper wire, wooden stick, and rubber band are placed in an electric circuit. Which one lets current flow and why?  
+<span class="p">4.</span> A plant receives less sunlight but the same amount of water and nutrients. How will its rate of photosynthesis and growth change, and why?  
+<span class="p">5.</span> Mary put her cup on the table and left. John came, moved it to the shelf, and took the book that was under it. Where is the cup now, and who has the book?  
+<span class="p">6.</span> You run a two-sample Z-test for the difference in means and the confidence interval length is too wide. How to fix it?  
+<span class="p">7.</span> You are a data scientist at Doordash and run a regression with conversion as response and ETA as predictor. The coefficient is negative. How to fix it?
+<span class="p">
+---
+</span>
+<span class="gu">## Additional Instructions</span>
+<span class="p">
+-</span> Be precise and structured.
+<span class="p">-</span> Do not skip reasoning steps.
+<span class="p">-</span> Ensure answers are logically consistent.
+<span class="p">-</span> Use clear formatting for readability.
+</code></pre></div></div> <p>Python code</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+## Preparation
+```python
+from google import genai
+
+client = genai.Client(api_key="AIzaSyC1SUudY4R2tslnwivz1r8hsVYtWiq4mqM")
+
+# Testing with the Lite model
+response = client.models.generate_content(
+    model="gemini-3.1-flash-lite-preview", contents="Explain how AI works in a few words"
+)
+print(response.text)
+</code></pre></div></div> <h2 id="questions">Questions</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">questions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sh">"</span><span class="s">A shop sells 3 apples for $5. If the price increases by 20%, how much will 12 apples cost?</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">A farmer has 8 cows and buys 5 more. He then sells half of his total cows and later buys 3 calves. How many cows does he have now?</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">Copper wire, wooden stick, and rubber band are placed in an electric circuit. Which one lets current flow and why?</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">A plant receives less sunlight but the same amount of water and nutrients. How will its rate of photosynthesis and growth change, and why?</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">Mary put her cup on the table and left. John came, moved it to the shelf, and took the book that was under it. Where is the cup now, and who has the book?</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">You run a two-sample Z-test for the difference in means and the confidence interval length is too wide. How to fix it?</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">You are a data scientist at Doordash and run a regression with conversion as response and ETA as predictor. The coefficient is negative. How to fix it?</span><span class="sh">"</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">question</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">questions</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="solved-examples">Solved examples</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">solved_examples</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">A shop sells 3 apples for $5. If the price increases by 20%, how much will 12 apples cost?</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">3 apples cost $5. Price increases by 20%. Cost of 12 apples?</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">solution</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Original price per apple = 5 </span><span class="se">\u00f7</span><span class="s"> 3 = $1.67</span><span class="se">\n</span><span class="s">New price = 1.67 </span><span class="se">\u00d7</span><span class="s"> 1.20 = $2.00</span><span class="se">\n</span><span class="s">Cost of 12 apples = 12 </span><span class="se">\u00d7</span><span class="s"> 2 = $24</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">3 apples cost $6. Price increases by 20%. Cost of 12 apples?</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">solution</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Price per apple = 6 </span><span class="se">\u00f7</span><span class="s"> 3 = $2</span><span class="se">\n</span><span class="s">New price = 2 </span><span class="se">\u00d7</span><span class="s"> 1.20 = $2.40</span><span class="se">\n</span><span class="s">Cost of 12 apples = 12 </span><span class="se">\u00d7</span><span class="s"> 2.40 = $28.80</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">3 apples cost $9. Price increases by 20%. Cost of 12 apples?</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">solution</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Price per apple = 9 </span><span class="se">\u00f7</span><span class="s"> 3 = $3</span><span class="se">\n</span><span class="s">New price = 3 </span><span class="se">\u00d7</span><span class="s"> 1.20 = $3.60</span><span class="se">\n</span><span class="s">Cost of 12 apples = 12 </span><span class="se">\u00d7</span><span class="s"> 3.60 = $43.20</span><span class="sh">"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">A farmer has 8 cows and buys 5 more. He then sells half of his total cows and later buys 3 calves. How many cows does he have now?</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Start: 8 cows</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">solution</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Start: 8 cows</span><span class="se">\n</span><span class="s">Buys 5 </span><span class="se">\u2192</span><span class="s"> 13 cows</span><span class="se">\n</span><span class="s">Sells half </span><span class="se">\u2192</span><span class="s"> 13 </span><span class="se">\u00f7</span><span class="s"> 2 = 6.5 (realistically 6 or 7; assume 6 sold, 7 left)</span><span class="se">\n</span><span class="s">Buys 3 </span><span class="se">\u2192</span><span class="s"> 7 + 3 = 10 cows</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Variation: Start with 10 cows</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">solution</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Buys 6 </span><span class="se">\u2192</span><span class="s"> 16</span><span class="se">\n</span><span class="s">Sells half </span><span class="se">\u2192</span><span class="s"> 8</span><span class="se">\n</span><span class="s">Buys 2 </span><span class="se">\u2192</span><span class="s"> 10 cows</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Variation: Start with 12 cows</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">solution</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Buys 4 </span><span class="se">\u2192</span><span class="s"> 16</span><span class="se">\n</span><span class="s">Sells half </span><span class="se">\u2192</span><span class="s"> 8</span><span class="se">\n</span><span class="s">Buys 5 </span><span class="se">\u2192</span><span class="s"> 13 cows</span><span class="sh">"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Copper wire, wooden stick, and rubber band are placed in an electric circuit. Which one lets current flow and why?</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Copper wire lets current flow</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Copper is a good conductor due to free electrons</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Wooden stick does NOT let current flow</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Wood is an insulator (no free electrons)</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Rubber band does NOT let current flow</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Rubber is an insulator and blocks current</span><span class="sh">"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">A plant receives less sunlight but the same amount of water and nutrients. How will its rate of photosynthesis and growth change, and why?</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Photosynthesis decreases</span><span class="se">\n</span><span class="s">Growth slows</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Light is essential for photosynthesis</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Very low sunlight </span><span class="se">\u2192</span><span class="s"> very low photosynthesis</span><span class="se">\n</span><span class="s">Plant may become weak or die</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Energy production is limited</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Moderate reduction </span><span class="se">\u2192</span><span class="s"> slower growth, not stopped</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Some photosynthesis still occurs</span><span class="sh">"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Mary put her cup on the table and left. John came, moved it to the shelf, and took the book that was under it. Where is the cup now, and who has the book?</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Cup </span><span class="se">\u2192</span><span class="s"> on the shelf</span><span class="se">\n</span><span class="s">Book </span><span class="se">\u2192</span><span class="s"> with John</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Variation: If John moves cup to desk</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Cup </span><span class="se">\u2192</span><span class="s"> desk</span><span class="se">\n</span><span class="s">Book </span><span class="se">\u2192</span><span class="s"> with John</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Variation: If John doesn</span><span class="se">\u2019</span><span class="s">t take the book</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Cup </span><span class="se">\u2192</span><span class="s"> shelf</span><span class="se">\n</span><span class="s">Book </span><span class="se">\u2192</span><span class="s"> remains where it was</span><span class="sh">"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">You run a two-sample Z-test for the difference in means and the confidence interval length is too wide. How to fix it?</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">fix</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Increase sample size</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Larger samples reduce standard error</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">fix</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Reduce variability</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Lower variance narrows interval</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">fix</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Use lower confidence level (e.g., 95% </span><span class="se">\u2192</span><span class="s"> 90%)</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">why</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Smaller margin of error</span><span class="sh">"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">You are a data scientist at Doordash and run a regression with conversion as response and ETA as predictor. The coefficient is negative. How to fix it?</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">issue</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Longer ETA reduces conversion (negative coefficient)</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">fix</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">This may be correct </span><span class="se">\u2014</span><span class="s"> interpret it</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">reason</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Customers prefer faster delivery</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">fix</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Check confounders</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">reason</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Add variables (price, restaurant rating)</span><span class="se">\n</span><span class="s">Omitted variables bias results</span><span class="sh">"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">fix</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Check causality</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">reason</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Use experiment or instrumental variables</span><span class="se">\n</span><span class="s">Correlation </span><span class="se">\u2260</span><span class="s"> causation</span><span class="sh">"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></div> <h2 id="response-parsor">Response Parsor</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="n">response_text</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Parses the text responses from a language model to extract </span><span class="sh">'</span><span class="s">Generated Reasoning</span><span class="sh">'</span><span class="s">
+    and </span><span class="sh">'</span><span class="s">Final Answer</span><span class="sh">'</span><span class="s">.
+
+    Args:
+        response_text (str): The raw text response from the language model.
+
+    Returns:
+        dict: A dictionary with two keys: </span><span class="sh">'</span><span class="s">reasoning</span><span class="sh">'</span><span class="s"> and </span><span class="sh">'</span><span class="s">answer</span><span class="sh">'</span><span class="s">,
+              containing the extracted strings. Returns empty string if a component
+              cannot be extracted.
+    </span><span class="sh">"""</span>
+    <span class="n">reasoning</span> <span class="o">=</span> <span class="sh">""</span>
+    <span class="n">final_answer</span> <span class="o">=</span> <span class="sh">""</span>
+
+    <span class="n">response_text</span> <span class="o">=</span> <span class="n">response_text</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+
+    <span class="c1"># Try to extract Final Answer first (case-insensitive)
+</span>    <span class="n">final_answer_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="sh">"</span><span class="s">Final Answer:\s*(.*)</span><span class="sh">"</span>
+    <span class="n">final_answer_match</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="n">final_answer_pattern</span><span class="p">,</span> <span class="n">response_text</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="p">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">final_answer_match</span><span class="p">:</span>
+        <span class="n">final_answer</span> <span class="o">=</span> <span class="n">final_answer_match</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span>
+        <span class="c1"># The reasoning should be in the text before the "Final Answer:" marker
+</span>        <span class="n">text_for_reasoning</span> <span class="o">=</span> <span class="n">response_text</span><span class="p">[:</span><span class="n">final_answer_match</span><span class="p">.</span><span class="nf">start</span><span class="p">()].</span><span class="nf">strip</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If no "Final Answer:" marker, the entire text might contain reasoning or be just an answer
+</span>        <span class="n">text_for_reasoning</span> <span class="o">=</span> <span class="n">response_text</span>
+
+    <span class="c1"># Now try to extract Generated Reasoning from the relevant text (case-insensitive)
+</span>    <span class="n">reasoning_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="sh">"</span><span class="s">Generated Reasoning:\s*(.*)</span><span class="sh">"</span>
+    <span class="n">reasoning_match</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="n">reasoning_pattern</span><span class="p">,</span> <span class="n">text_for_reasoning</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="p">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">reasoning_match</span><span class="p">:</span>
+        <span class="n">reasoning</span> <span class="o">=</span> <span class="n">reasoning_match</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span>
+
+    <span class="c1"># Special handling: If no explicit markers for either, assume the whole text is the answer.
+</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">final_answer_match</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">reasoning_match</span><span class="p">:</span>
+        <span class="n">final_answer</span> <span class="o">=</span> <span class="n">response_text</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="n">reasoning</span><span class="p">,</span> <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="n">final_answer</span><span class="p">}</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Function `parse_response` defined.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="zero-shot-cot-strategy">Zero-shot COT strategy</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+
+<span class="n">model_name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">gemini-3.1-flash-lite-preview</span><span class="sh">"</span>
+<span class="n">max_retries</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">retry_delay_seconds</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Applying Zero-Shot CoT strategy with model: </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">question_text</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">questions</span><span class="p">):</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">question_text</span><span class="si">}</span><span class="s"> Let</span><span class="sh">'</span><span class="s">s think step by step.</span><span class="sh">"</span>
+    
+    <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">while</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Generate content from the model
+</span>            <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="nf">generate_content</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+                <span class="n">contents</span><span class="o">=</span><span class="n">prompt</span>
+            <span class="p">)</span>
+            <span class="n">model_response_text</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span>
+
+            <span class="c1"># Parse the response
+</span>            <span class="n">parsed_output</span> <span class="o">=</span> <span class="nf">parse_response</span><span class="p">(</span><span class="n">model_response_text</span><span class="p">)</span>
+
+            <span class="c1"># Store the results
+</span>            <span class="n">all_results</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
+                <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="n">question_text</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">method</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Zero-Shot CoT</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="n">parsed_output</span><span class="p">[</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">],</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="n">parsed_output</span><span class="p">[</span><span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">]</span>
+            <span class="p">})</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Processed question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">questions</span><span class="p">)</span><span class="si">}</span><span class="s"> (Attempt </span><span class="si">{</span><span class="n">attempt</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Error processing question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> (Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="si">}</span><span class="s">): </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s">. Retrying in </span><span class="si">{</span><span class="n">retry_delay_seconds</span><span class="si">}</span><span class="s"> seconds...</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="n">retry_delay_seconds</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Failed to process question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> after </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s"> attempts: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">all_results</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
+                    <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="n">question_text</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">method</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Zero-Shot CoT</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span>
+                <span class="p">})</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Finished processing </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">all_results</span><span class="p">)</span><span class="si">}</span><span class="s"> questions with Zero-Shot CoT.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">First result entry: </span><span class="si">{</span><span class="n">all_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">all_results</span> <span class="k">else</span> <span class="sh">'</span><span class="s">No results</span><span class="sh">'</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="few-shot-cot-strategy">Few-shot COT strategy</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+
+<span class="n">model_name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">gemini-3.1-flash-lite-preview</span><span class="sh">"</span>
+<span class="n">max_retries</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">retry_delay_seconds</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Applying Few-Shot CoT strategy with model: </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># It's good practice to clear results or use a separate list for Few-Shot CoT if you want to compare.
+# For this task, we will append to all_results, assuming previous runs populated it with Zero-Shot results.
+# If you wanted to run Few-Shot exclusively, you might do: all_results = [] here.
+</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">question_text</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">questions</span><span class="p">):</span>
+    <span class="c1"># Find the corresponding solved_example for the current question
+</span>    <span class="n">current_solved_example</span> <span class="o">=</span> <span class="nf">next</span><span class="p">((</span><span class="n">ex</span> <span class="k">for</span> <span class="n">ex</span> <span class="ow">in</span> <span class="n">solved_examples</span> <span class="k">if</span> <span class="n">ex</span><span class="p">[</span><span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="n">question_text</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">current_solved_example</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Warning: No solved example found for question: </span><span class="si">{</span><span class="n">question_text</span><span class="si">}</span><span class="s">. Skipping Few-Shot CoT for this question.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># Construct the examples part of the prompt
+</span>    <span class="n">example_prompt_parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">current_solved_example</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">examples</span><span class="sh">"</span><span class="p">,</span> <span class="p">[]):</span>
+        <span class="k">if</span> <span class="sh">"</span><span class="s">context</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">example</span> <span class="ow">and</span> <span class="n">example</span><span class="p">[</span><span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">example_prompt_parts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Question: </span><span class="si">{</span><span class="n">example</span><span class="p">[</span><span class="sh">"</span><span class="s">context</span><span class="sh">"</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">example</span><span class="p">:</span>
+            <span class="c1"># Handle cases where examples might have a simple answer structure
+</span>            <span class="n">example_prompt_parts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Question: </span><span class="si">{</span><span class="n">current_solved_example</span><span class="p">[</span><span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># Re-use original question for context if example context is missing
+</span>
+        <span class="n">example_prompt_parts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated Reasoning: </span><span class="si">{</span><span class="n">example</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">solution</span><span class="sh">'</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">why</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">))</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">example_prompt_parts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Final Answer: </span><span class="si">{</span><span class="n">example</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">answer</span><span class="sh">'</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">solution</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">)).</span><span class="nf">strip</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">example_prompt_parts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># Add a newline to separate examples
+</span>
+    <span class="c1"># Combine example parts, current question, and instruction
+</span>    <span class="n">prompt</span> <span class="o">=</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">example_prompt_parts</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Question: </span><span class="si">{</span><span class="n">question_text</span><span class="si">}</span><span class="s"> Let</span><span class="sh">'</span><span class="s">s think step by step.</span><span class="sh">"</span>
+
+    <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">while</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Generate content from the model
+</span>            <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="nf">generate_content</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+                <span class="n">contents</span><span class="o">=</span><span class="n">prompt</span>
+            <span class="p">)</span>
+            <span class="n">model_response_text</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span>
+
+            <span class="c1"># Parse the response
+</span>            <span class="n">parsed_output</span> <span class="o">=</span> <span class="nf">parse_response</span><span class="p">(</span><span class="n">model_response_text</span><span class="p">)</span>
+
+            <span class="c1"># Store the results
+</span>            <span class="n">all_results</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
+                <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="n">question_text</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">method</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Few-Shot CoT</span><span class="sh">"</span><span class="p">,</span>
+                <span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="n">parsed_output</span><span class="p">[</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">],</span>
+                <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="n">parsed_output</span><span class="p">[</span><span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">]</span>
+            <span class="p">})</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Processed question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">questions</span><span class="p">)</span><span class="si">}</span><span class="s"> (Few-Shot CoT, Attempt </span><span class="si">{</span><span class="n">attempt</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Error processing question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> (Few-Shot CoT, Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="si">}</span><span class="s">): </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s">. Retrying in </span><span class="si">{</span><span class="n">retry_delay_seconds</span><span class="si">}</span><span class="s"> seconds...</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="n">retry_delay_seconds</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Failed to process question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> (Few-Shot CoT) after </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s"> attempts: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">all_results</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
+                    <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="n">question_text</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">method</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Few-Shot CoT</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span>
+                <span class="p">})</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Finished processing </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">questions</span><span class="p">)</span><span class="si">}</span><span class="s"> questions with Few-Shot CoT.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">First Few-Shot result entry: </span><span class="si">{</span><span class="nf">next</span><span class="p">((</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">all_results</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="sh">'</span><span class="s">method</span><span class="sh">'</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">Few-Shot CoT</span><span class="sh">'</span><span class="p">),</span> <span class="sh">'</span><span class="s">No results</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="self-refine-cot-strategy">Self-refine COT strategy</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+
+<span class="n">model_name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">gemini-3.1-flash-lite-preview</span><span class="sh">"</span>
+<span class="n">max_retries</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">retry_delay_seconds</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Applying Self-Refine / Critic Strategy with model: </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">question_text</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">questions</span><span class="p">):</span>
+    <span class="c1"># --- Step 1: Generate initial response ---
+</span>    <span class="n">initial_prompt</span> <span class="o">=</span> <span class="n">question_text</span>
+
+    <span class="n">initial_response_text</span> <span class="o">=</span> <span class="sh">""</span>
+    <span class="n">parsed_initial_output</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="sh">""</span><span class="p">,</span> <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">""</span><span class="p">}</span>
+    
+    <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">while</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="nf">generate_content</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+                <span class="n">contents</span><span class="o">=</span><span class="n">initial_prompt</span>
+            <span class="p">)</span>
+            <span class="n">initial_response_text</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span>
+            <span class="n">parsed_initial_output</span> <span class="o">=</span> <span class="nf">parse_response</span><span class="p">(</span><span class="n">initial_response_text</span><span class="p">)</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Error generating initial response for question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> (Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="si">}</span><span class="s">): </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s">. Retrying in </span><span class="si">{</span><span class="n">retry_delay_seconds</span><span class="si">}</span><span class="s"> seconds...</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="n">retry_delay_seconds</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Failed to generate initial response for question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> after </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s"> attempts: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">parsed_initial_output</span><span class="p">[</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during initial generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span>
+                <span class="n">parsed_initial_output</span><span class="p">[</span><span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during initial generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span>
+                <span class="k">break</span> <span class="c1"># Exit retry loop if all retries fail
+</span>
+    <span class="c1"># --- Step 2: Construct self-refine prompt ---
+</span>    <span class="n">self_refine_prompt</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="sh">"</span><span class="s">Original Question: </span><span class="si">{</span><span class="n">question_text</span><span class="si">}</span><span class="se">\n\n</span><span class="sh">"</span>
+        <span class="sa">f</span><span class="sh">"</span><span class="s">Initial Generated Reasoning: </span><span class="si">{</span><span class="n">parsed_initial_output</span><span class="p">[</span><span class="sh">'</span><span class="s">reasoning</span><span class="sh">'</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="sh">"</span>
+        <span class="sa">f</span><span class="sh">"</span><span class="s">Initial Final Answer: </span><span class="si">{</span><span class="n">parsed_initial_output</span><span class="p">[</span><span class="sh">'</span><span class="s">answer</span><span class="sh">'</span><span class="p">]</span><span class="si">}</span><span class="se">\n\n</span><span class="sh">"</span>
+        <span class="sh">"</span><span class="s">Review your reasoning and correct any mistakes. Provide your revised reasoning and final answer.</span><span class="sh">"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># --- Step 3: Generate refined response ---
+</span>    <span class="n">refined_response_text</span> <span class="o">=</span> <span class="sh">""</span>
+    <span class="n">parsed_refined_output</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="sh">""</span><span class="p">,</span> <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="sh">""</span><span class="p">}</span>
+
+    <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">while</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="nf">generate_content</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+                <span class="n">contents</span><span class="o">=</span><span class="n">self_refine_prompt</span>
+            <span class="p">)</span>
+            <span class="n">refined_response_text</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span>
+            <span class="n">parsed_refined_output</span> <span class="o">=</span> <span class="nf">parse_response</span><span class="p">(</span><span class="n">refined_response_text</span><span class="p">)</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Error generating refined response for question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> (Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="si">}</span><span class="s">): </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s">. Retrying in </span><span class="si">{</span><span class="n">retry_delay_seconds</span><span class="si">}</span><span class="s"> seconds...</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="n">retry_delay_seconds</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Failed to generate refined response for question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s"> after </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s"> attempts: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+                <span class="n">parsed_refined_output</span><span class="p">[</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during refinement generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span>
+                <span class="n">parsed_refined_output</span><span class="p">[</span><span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Error during refinement generation: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="sh">"</span>
+                <span class="k">break</span> <span class="c1"># Exit retry loop if all retries fail
+</span>
+    <span class="c1"># Store the results of the refined response
+</span>    <span class="n">all_results</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
+        <span class="sh">"</span><span class="s">question</span><span class="sh">"</span><span class="p">:</span> <span class="n">question_text</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">method</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Self-Refine / Critic</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">:</span> <span class="n">parsed_refined_output</span><span class="p">[</span><span class="sh">"</span><span class="s">reasoning</span><span class="sh">"</span><span class="p">],</span>
+        <span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">:</span> <span class="n">parsed_refined_output</span><span class="p">[</span><span class="sh">"</span><span class="s">answer</span><span class="sh">"</span><span class="p">]</span>
+    <span class="p">})</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Processed question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">questions</span><span class="p">)</span><span class="si">}</span><span class="s"> (Self-Refine / Critic, Attempt </span><span class="si">{</span><span class="n">attempt</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">success</span> <span class="k">else</span> <span class="sh">'</span><span class="s">Failed</span><span class="sh">'</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Finished processing </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">questions</span><span class="p">)</span><span class="si">}</span><span class="s"> questions with Self-Refine / Critic.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">First Self-Refine result entry: </span><span class="si">{</span><span class="nf">next</span><span class="p">((</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">all_results</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="sh">'</span><span class="s">method</span><span class="sh">'</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">Self-Refine / Critic</span><span class="sh">'</span><span class="p">),</span> <span class="sh">'</span><span class="s">No results</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2026 Jongmin Mun. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
