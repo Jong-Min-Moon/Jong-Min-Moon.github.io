@@ -1,1 +1,1547 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Hybrid PLS | Jongmin Mun</title> <meta name="author" content="Jongmin Mun"> <meta name="description" content="Code for hybrid partial least squares."> <meta name="keywords" content="Jongmin Mun, USC"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="/assets/css/main.css?v=1776976220"> <link rel="canonical" href="https://jong-min-moon.github.io/software/hybrid-pls/"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Jongmin </span>Mun</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About</a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">Publications</a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects</a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Study</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/coursework/">Coursework</a> <a class="dropdown-item" href="/study/papers/">Papers</a> <div class="dropdown-submenu"> <a class="dropdown-item dropdown-toggle" href="#">Coding Test</a> <div class="dropdown-menu dropdown-menu-right"> <a class="dropdown-item" href="/coding-test/data-structure-algorithm/">Data Structure / Algorithm</a> <a class="dropdown-item" href="/coding-test/database/">Database</a> </div> </div> </div> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv</a> </li> <li class="nav-item "> <a class="nav-link" href="/software/">Software</a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">Posts</a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5"> <div class="post"> <header class="post-header"> <h1 class="post-title">Hybrid PLS</h1> <p class="post-description">Code for hybrid partial least squares.</p> </header> <article> <p>More details to be added.</p> </article> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2026 Jongmin Mun. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> <script src="/assets/js/no_defer.js"></script> <script defer src="/assets/js/common.js"></script> <script defer src="/assets/js/copy_code.js" type="text/javascript"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <p><a href="https://github.com/Jong-Min-Moon/FShybridPLS" rel="external nofollow noopener" target="_blank">https://github.com/Jong-Min-Moon/FShybridPLS</a></p> <p><strong>FSHybridPLS</strong> is an R package designed to perform Partial Least Squares (PLS) regression on “hybrid” predictors. A hybrid predictor is a single mathematical object containing both <strong>functional data</strong> (curves, time-series represented as <code class="language-plaintext highlighter-rouge">fd</code> objects) and <strong>scalar covariates</strong> (standard numeric matrices).</p> <p>This package defines a joint Hilbert space $\mathcal{H} = \mathcal{F} \times \mathbb{R}^p$ and implements the arithmetic and algorithms necessary to perform penalized PLS directly on this space. This package provides an R implementation and simulation replications of my paper, “Hybrid Partial Least Squares Regression with Multiple Functional and Scalar Predictors,” co-authored with Professor Jeong Hoon Jang of the University of Texas Medical Branch.</p> <h2 id="installation">Installation</h2> <p>This package is generated using <code class="language-plaintext highlighter-rouge">litr</code>, a literate programming tool developed by Jacob Bien and Patrick Vossler (https://jacobbien.github.io/litr-project/). I used litr to build the package and you don’t have to install litr just to use the package. To install the package:</p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">devtools</span><span class="o">::</span><span class="n">install</span><span class="p">(</span><span class="s2">"your_downloaded_directory/FSHybridPLS"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div> <hr> <h4 id="table-of-contents">Table of Contents</h4> <ul> <li> <a href="#fshybridpls-functional-and-scalar-hybrid-partial-least-squares">FSHybridPLS: Functional and Scalar Hybrid Partial Least Squares</a> <ul> <li> <a href="#installation">Installation</a> <ul> <li><a href="#table-of-contents">Table of Contents</a></li> </ul> </li> </ul> </li> <li> <a href="#helper-functions">Helper Functions</a> <ul> <li><a href="#compute_gram_matrix">compute_gram_matrix</a></li> <li><a href="#is_same_basis">is_same_basis</a></li> <li><a href="#are_all_gram_matrices_identical">are_all_gram_matrices_identical</a></li> <li><a href="#rep_fd">rep_fd</a></li> </ul> </li> <li> <a href="#hybrid-predictor-class">Hybrid predictor class</a> <ul> <li> <a href="#class-definition-and-constructor">Class definition and constructor</a> <ul> <li><a href="#predictor_hybrid">predictor_hybrid</a></li> <li><a href="#predictor_hybrid_from_coef">predictor_hybrid_from_coef</a></li> </ul> </li> <li> <a href="#basic-arithmetic">Basic arithmetic</a> <ul> <li><a href="#addpredictor_hybrid">add.predictor_hybrid</a></li> <li><a href="#subtrpredictor_hybrid">subtr.predictor_hybrid</a></li> <li><a href="#scalar_mulpredictor_hybrid">scalar_mul.predictor_hybrid</a></li> <li><a href="#inprodpredictor_hybrid">inprod.predictor_hybrid</a></li> <li><a href="#inprod_penpredictor_hybrid">inprod_pen.predictor_hybrid</a></li> <li><a href="#subset_predictor_hybrid">subset_predictor_hybrid</a></li> <li><a href="#replace_obs_hybrid">replace_obs_hybrid</a></li> <li><a href="#add_broadcast-matrix">add_broadcast (Matrix)</a></li> <li><a href="#subtr_broadcast-matrix">subtr_broadcast (Matrix)</a></li> </ul> </li> </ul> </li> <li> <a href="#one-iteration">One iteration</a> <ul> <li> <a href="#small-functions">small functions</a> <ul> <li><a href="#get_gram_matrix_block">get_gram_matrix_block</a></li> <li><a href="#get_smoothing_param_hybrid">get_smoothing_param_hybrid</a></li> </ul> </li> <li> <a href="#pls-component-computation">PLS component computation</a> <ul> <li><a href="#get_xi_hat_linear_pen">get_xi_hat_linear_pen</a></li> <li><a href="#get_rho">get_rho</a></li> </ul> </li> <li> <a href="#response-residualization">Response Residualization</a> <ul> <li><a href="#get_nu">get_nu</a></li> <li><a href="#residualize_y">residualize_y</a></li> </ul> </li> <li> <a href="#predictor-residualization">Predictor Residualization</a> <ul> <li><a href="#get_delta">get_delta</a></li> <li><a href="#residualize_predictor">residualize_predictor</a></li> </ul> </li> </ul> </li> <li> <a href="#main-algorithm">Main algorithm</a> <ul> <li><a href="#fithybridpls">fit.hybridPLS</a></li> </ul> </li> <li> <a href="#simulation-tools">Simulation tools</a> <ul> <li> <a href="#sample-splitting">sample splitting</a> <ul> <li><a href="#create_idx_train_test">create_idx_train_test</a></li> <li><a href="#get_idx_train">get_idx_train</a></li> <li><a href="#create_idx_kfold">create_idx_kfold</a></li> <li><a href="#n_samplefd">n_sample.fd</a></li> <li><a href="#splitall">split.all</a></li> </ul> </li> <li> <a href="#normalization">normalization</a> <ul> <li><a href="#curve_normalize">curve_normalize</a></li> <li><a href="#curve_normalize_train_test">curve_normalize_train_test</a></li> <li><a href="#scalar_normalize">scalar_normalize</a></li> <li><a href="#scalar_normalize_train_test">scalar_normalize_train_test</a></li> <li><a href="#btwn_normalize_train_test">btwn_normalize_train_test</a></li> <li><a href="#split_and_normalizeall">split_and_normalize.all</a></li> </ul> </li> <li> <a href="#baseline-methods">Baseline methods</a> <ul> <li> <a href="#fit_hybrid_pcr_iterative">fit_hybrid_pcr_iterative</a> <ul> <li><a href="#1-dimensionality-reduction">1. Dimensionality Reduction</a></li> <li><a href="#2-iterative-model-fitting">2. Iterative Model Fitting</a></li> </ul> </li> <li><a href="#fit_pfr">fit_pfr</a></li> </ul> </li> </ul> </li> <li><a href="#kidney-data-preprocessing-pipeline">Kidney Data Preprocessing Pipeline</a></li> <li> <a href="#numerical-studies">Numerical Studies</a> <ul> <li><a href="#1-6_1_geometric_validationr">1. <code class="language-plaintext highlighter-rouge">6_1_geometric_validation.R</code></a></li> <li><a href="#2-6_2_beta_estimationr">2. <code class="language-plaintext highlighter-rouge">6_2_beta_estimation.R</code></a></li> <li><a href="#3-6_3_1_scenario_1r">3. <code class="language-plaintext highlighter-rouge">6_3_1_scenario_1.R</code></a></li> <li><a href="#4-6_3_2_scenario_2r">4. <code class="language-plaintext highlighter-rouge">6_3_2_scenario_2.R</code></a></li> <li><a href="#5-6_4_kidney_single_repr">5. <code class="language-plaintext highlighter-rouge">6_4_kidney_single_rep.R</code></a></li> </ul> </li> </ul> <h1 id="helper-functions">Helper Functions</h1> <h3 id="compute_gram_matrix">compute_gram_matrix</h3> <p><strong>Description:</strong> Calculates the Gram matrix for a given functional basis. The Gram matrix $G$ is a symmetric positive semi-definite matrix containing the inner products of the basis functions. Specifically, the entry $(i, j)$ corresponds to the integral of the product of the $i$-th and $j$-th basis functions over the domain: \(G_{ij} = \langle b_i, b_j \rangle = \int b_i(t) b_j(t) \, dt\)</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">basis</code>: A basis object of class <code class="language-plaintext highlighter-rouge">basisfd</code> (typically created using the <code class="language-plaintext highlighter-rouge">fda</code> package).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>Returns a square numeric matrix where the entry at row $i$ and column $j$ is the inner product of basis functions $i$ and $j$.</li> </ul> <pre><code class="language-{r}">#' Compute the Gram matrix for a basis object
+#'
+#' This function calculates the inner product of a basis with itself to form
+#' the Gram matrix.
+#'
+#' @param basis A basis object of class `basisfd` from the `fda` package.
+#' @return A square matrix where entry (i,j) is the inner product of basis functions i and j.
+#' @export
+compute_gram_matrix &lt;- function(basis) {
+  # Ensure the input is a valid basis object from the fda package
+  stopifnot(inherits(basis, "basisfd"))
+  
+  # Compute the inner product of the basis with itself
+  # This calculates the integral of b_i(t) * b_j(t) using the metric defined on the basis
+  fda::inprod(basis, basis) 
+}
+</code></pre> <h3 id="is_same_basis">is_same_basis</h3> <p><strong>Description:</strong> Checks if two composite functional data objects (represented as lists containing functional data) share the exact same basis functions. It verifies that both lists have the same length and that the basis for every corresponding element is identical.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">input</code>: A list containing functional data objects (expected to have a <code class="language-plaintext highlighter-rouge">$functional_list</code> structure).</li> <li> <code class="language-plaintext highlighter-rouge">other</code>: Another list containing functional data objects to compare against.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>Returns <code class="language-plaintext highlighter-rouge">TRUE</code> if both lists have the same length and every corresponding basis is equivalent; otherwise returns <code class="language-plaintext highlighter-rouge">FALSE</code>.</li> </ul> <pre><code class="language-{r}">#' Check if two functional data lists share the same basis
+#'
+#' @description
+#' Checks if two composite functional data objects share the exact same basis functions
+#' by comparing their internal list structures.
+#'
+#' @param input A list containing functional data objects (expected to have a `$functional_list` structure).
+#' @param other Another list containing functional data objects to compare against.
+#' @return `TRUE` if both lists have the same length and every corresponding basis is equivalent; otherwise `FALSE`.
+#' @export
+is_same_basis &lt;- function(input, other) {
+  all(
+    # Check if both lists have the same number of functional elements
+    length(input$functional_list) == length(other$functional_list),
+    
+    # Check if the basis for each corresponding element is identical
+    all(
+      mapply(function(fd1, fd2) {
+        # Use fda package function to check basis equality
+        fda::is.eqbasis(fd1$basis, fd2$basis)
+      }, input$functional_list, other$functional_list)
+    )
+  )
+}
+</code></pre> <h3 id="are_all_gram_matrices_identical">are_all_gram_matrices_identical</h3> <p><strong>Description:</strong> Iterates through a list of matrices to verify if they are all numerically identical to the first matrix in the list. This function handles floating-point inaccuracies by using a tolerance parameter.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">gram_list</code>: A list containing matrix objects to be compared.</li> <li> <code class="language-plaintext highlighter-rouge">tolerance</code> (Optional): A numeric value defining the tolerance for floating-point comparison. Defaults to the square root of machine epsilon.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>Returns <code class="language-plaintext highlighter-rouge">TRUE</code> if the list is empty, has one element, or if all matrices are identical to the first. Returns <code class="language-plaintext highlighter-rouge">FALSE</code> if any matrix differs.</li> </ul> <pre><code class="language-{r}">#' Check if all matrices in a list are identical (with tolerance for numeric comparison)
+#'
+#' This function iterates through a list of matrices and checks if all subsequent
+#' matrices are numerically identical to the first matrix in the list.
+#' It uses `all.equal` for robust comparison of numeric matrices, which accounts
+#' for small floating-point differences.
+#'
+#' @param gram_list A list of matrices.
+#' @param tolerance A numeric tolerance for comparing floating-point numbers.
+#'                  Defaults to `sqrt(.Machine$double.eps)`.
+#' @return A logical value: `TRUE` if all matrices are identical, `FALSE` otherwise.
+#' @export
+are_all_gram_matrices_identical &lt;- function(gram_list, tolerance = sqrt(.Machine$double.eps)) {
+  # Handle edge cases: empty list or list with a single matrix
+  if (length(gram_list) == 0) {
+    message("The input list is empty. Returning TRUE as there are no differences.")
+    return(TRUE)
+  }
+  if (length(gram_list) == 1) {
+    message("The input list contains only one matrix. Returning TRUE.")
+    return(TRUE)
+  }
+  
+  # Get the first matrix as the reference
+  first_matrix &lt;- gram_list[[1]]
+  
+  # Ensure the first element is a matrix
+  if (!is.matrix(first_matrix)) {
+    stop("The first element of 'gram_list' is not a matrix.")
+  }
+  
+  # Iterate from the second matrix onwards and compare with the first
+  for (i in 2:length(gram_list)) {
+    current_matrix &lt;- gram_list[[i]]
+    
+    # Ensure current element is a matrix
+    if (!is.matrix(current_matrix)) {
+      stop(paste("Element", i, "of 'gram_list' is not a matrix."))
+    }
+    
+    # Compare the current matrix with the first matrix
+    # all.equal returns TRUE if identical, or a character string describing differences
+    # We convert the result to a logical TRUE/FALSE
+    if (!isTRUE(all.equal(first_matrix, current_matrix, tolerance = tolerance))) {
+      # If not equal, return FALSE immediately
+      message(paste("Matrices at index 1 and", i, "are not identical."))
+      return(FALSE)
+    }
+  }
+  
+  # If the loop completes, all matrices are identical
+  return(TRUE)
+}
+</code></pre> <h3 id="rep_fd">rep_fd</h3> <p><strong>Description:</strong> Takes a list of functional data objects (where each object represents a single sample/curve) and broadcasts them by replicating their coefficients. This creates new functional objects containing $n$ identical copies of the original curve.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">fd_list</code>: A list of <code class="language-plaintext highlighter-rouge">fd</code> objects (functional data objects). Each object must have exactly one column of coefficients (a single sample).</li> <li> <code class="language-plaintext highlighter-rouge">n</code>: An integer specifying the number of replications desired.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>Returns a list of <code class="language-plaintext highlighter-rouge">fd</code> objects, where each object now contains $n$ replications of the original coefficients.</li> </ul> <pre><code class="language-{r}">#' Replicate a list of single-sample fd objects multiple times
+#'
+#' This function broadcasts a list of single-sample functional predictors
+#' by replicating their coefficient columns.
+#'
+#' @param fd_list A list of `fd` objects, each representing a single sample.
+#' @param n The number of replications desired.
+#'
+#' @return A list of `fd` objects, each with `n` replications.
+#' @export
+rep_fd &lt;- function(fd_list, n) {
+  # Validate input: must be a list of 'fd' objects
+  if (!is.list(fd_list) || any(!vapply(fd_list, inherits, logical(1), "fd"))) {
+    stop("Input must be a list of 'fd' objects.")
+  }
+  
+  lapply(fd_list, function(fd_obj) {
+    coef_mat &lt;- fd_obj$coefs
+    
+    # Ensure the object represents a single sample (one column of coefficients)
+    if (is.null(dim(coef_mat)) || ncol(coef_mat) != 1) {
+      stop("Each fd object in the list must have one column of coefficients.")
+    }
+    
+    # Create a new coefficient matrix by repeating the column 'n' times
+    new_coefs &lt;- matrix(rep(coef_mat, n), nrow = nrow(coef_mat), ncol = n)
+    
+    # Return a new fd object with the replicated coefficients and original basis
+    fd(coef = new_coefs, basisobj = fd_obj$basis)
+  })
+}
+</code></pre> <h1 id="hybrid-predictor-class">Hybrid predictor class</h1> <h2 id="class-definition-and-constructor">Class definition and constructor</h2> <h3 id="predictor_hybrid">predictor_hybrid</h3> <p><strong>Description:</strong> The <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> class represents a hybrid random object $\mathbf{W} = (X, \mathbf{Z})$ that combines functional and scalar covariates into a unified Hilbert space structure.</p> <ul> <li> <strong>Functional Part:</strong> Let ${X^{(k)}}_{k=1, \ldots, K}$ be a collection of random functions defined on unit interval $\mathcal{T}_k := [0,1]$. Each $X^{(k)}$ belongs to $L^2([0,1])$, a Hilbert space of square-integrable functions. The multivariate functional object $X$ resides in the cartesian product space $\mathcal{F} = L^2([0,1]) \times \cdots \times L^2([0,1])$.</li> <li> <strong>Hybrid Object:</strong> We define the hybrid object $\mathbf{W} = (X, \mathbf{Z})$, where $\mathbf{Z}$ is a $p$-dimensional scalar covariate vector. This object belongs to the product space $\mathcal{H} = \mathcal{F} \times \mathbb{R}^p$.</li> <li> <strong>Vector Notation:</strong> The object can be evaluated at a multi-dimensional argument $\mathbf{t}$ as a $(K+p)$-dimensional vector: $\mathbf{W}[\mathbf{t}] = (X(\mathbf{t}), \mathbf{Z})^\top$.</li> <li> <strong>Implementation:</strong> The class is implemented as an S3 object containing a matrix for scalar parts, a list of <code class="language-plaintext highlighter-rouge">fd</code> objects for functional parts, and pre-computed Gram matrices to facilitate Hilbert space operations.</li> </ul> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">Z</code>: A numeric matrix of dimension $n/_sample /times n/_scalar$ representing the scalar predictors.</li> <li> <code class="language-plaintext highlighter-rouge">functional_list</code>: A list of functional predictors (typically <code class="language-plaintext highlighter-rouge">fd</code> objects from the <code class="language-plaintext highlighter-rouge">fda</code> package).</li> <li> <code class="language-plaintext highlighter-rouge">eval_point</code>: A specification for evaluation points (stored as metadata).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>Returns an object of class <code class="language-plaintext highlighter-rouge">predictor_hybrid</code>, which includes the original data, pre-computed Gram matrices, and roughness penalty matrices.</li> </ul> <p>```{r Create a predictor_hybrid object} #’ Create a predictor_hybrid object #’ #’ @param Z Numeric matrix (n_sample x n_scalar). #’ @param functional_list List of ‘fd’ objects. #’ @param eval_point Evaluation points. #’ @param penalty_order Integer. Derivative order for roughness penalty (default 2). #’ #’ @export predictor_hybrid &lt;- function(Z, functional_list, eval_point, penalty_order = 2) { stopifnot(is.matrix(Z), is.numeric(Z), is.list(functional_list))</p> <p>n_sample &lt;- nrow(Z) n_functional &lt;- length(functional_list)</p> <p>gram_list &lt;- vector(“list”, n_functional) gram_deriv_list &lt;- vector(“list”, n_functional) n_basis_list &lt;- numeric(n_functional)</p> <p>for (i in seq_len(n_functional)) { fd_i &lt;- functional_list[[i]] basis_i &lt;- fd_i$basis</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 1. Validation
+if (ncol(fd_i$coefs) != n_sample) {
+  stop(sprintf("Functional predictor %d sample count mismatch.", i))
+}
+
+# 2. Pre-compute Gram Matrix (Inner product of basis functions)
+# This is the "J" matrix: J_ij = &lt;phi_i, phi_j&gt;
+gram_list[[i]] &lt;- fda::eval.penalty(basis_i, Lfdobj = 0)
+
+# 3. Pre-compute Penalty Matrix
+# This is the "R" matrix: R_ij = &lt;D^2 phi_i, D^2 phi_j&gt;
+gram_deriv_list[[i]] &lt;- fda::eval.penalty(basis_i, Lfdobj = penalty_order)
+
+n_basis_list[i] &lt;- basis_i$nbasis   }
+</code></pre></div></div> <p>structure( list( Z = Z, functional_list = functional_list, gram_list = gram_list, # J matrices gram_deriv_list = gram_deriv_list, # R matrices eval_point = eval_point, n_basis_list = n_basis_list, n_sample = n_sample, n_functional = n_functional, n_scalar = ncol(Z) ), class = “predictor_hybrid” ) }</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+### predictor_hybrid_from_coef
+
+**Description:**
+An alternative constructor that creates a single-sample `predictor_hybrid` object from a flat numeric coefficient vector. It reconstructs both the functional and scalar components by mapping the coefficients back onto the basis functions defined in a template `format` object.
+
+**Important:** This function strictly assumes that all functional predictors in the `format` object share the same number of basis functions (). It verifies this assumption before proceeding.
+
+**Inputs:**
+
+- `format`: A `predictor_hybrid` object serving as a template. It must contain the necessary basis information (`functional_list`) and structural metadata (`n_scalar`, `n_functional`).
+- `coef`: A numeric vector of length , where:
+-  is the number of functional predictors.
+-  is the number of basis functions (strictly enforced to be identical across all functional predictors).
+-  is the number of scalar predictors.
+
+
+
+**Output:**
+
+- Returns a `predictor_hybrid` object representing a single sample (`n_sample = 1`), containing:
+- Functional predictors rebuilt from the first  coefficients.
+- A scalar predictor matrix `Z` derived from the remaining  coefficients.
+
+```{r}
+#' Construct a Single-Sample Predictor Hybrid Object from Coefficients
+#'
+#' Reconstructs a \code{predictor_hybrid} object representing one observation, using a numeric
+#' coefficient vector. This alternative constructor maps the coefficients back into their functional
+#' and scalar predictor representations based on the structure of a template \code{predictor_hybrid} object.
+#'
+#' @param format A \code{predictor_hybrid} object that provides the structure and basis information.
+#' @param coef A numeric vector containing coefficients for both functional and scalar predictors.
+#'
+#' @return A \code{predictor_hybrid} object with updated \code{functional_list}, \code{Z}, and \code{n_sample = 1}.
+#' @export
+predictor_hybrid_from_coef &lt;- function(format, coef) {
+  # Extract metadata from the template
+  basis_counts &lt;- format$n_basis_list
+  
+  # Check if all functional predictors have the same number of basis functions
+  if (length(unique(basis_counts)) != 1) {
+    stop("All functional predictors must have the same number of basis functions (M).")
+  }
+  
+  M &lt;- basis_counts[1]  # Number of basis functions (identical across predictors)
+  K &lt;- format$n_functional # Number of functional predictors
+  
+  # Reconstruct each functional predictor
+  for (ii in 1:K) {
+    # Calculate indices for the current functional predictor in the flat vector
+    start_idx &lt;- (ii - 1) * M + 1
+    end_idx   &lt;- ii * M
+    
+    # Create a new fd object using the sliced coefficients and original basis
+    format$functional_list[[ii]] &lt;- fd(
+      coef = as.matrix(coef[start_idx:end_idx]),
+      basisobj = format$functional_list[[ii]]$basis
+    )
+  }
+  
+  # Reconstruct the scalar predictor part (Z)
+  # The remaining coefficients after K*M belong to the scalar predictors
+  scalar_start_idx &lt;- K * M + 1
+  format$Z &lt;- t(as.matrix(coef[scalar_start_idx:length(coef)]))
+  
+  # Update sample count to 1 as this constructor creates a single observation
+  format$n_sample &lt;- 1
+  
+  return(format)
+}
+</code></pre></div></div> <h2 id="basic-arithmetic">Basic arithmetic</h2> <h3 id="addpredictor_hybrid">add.predictor_hybrid</h3> <p><strong>Description:</strong> Performs element-wise addition of two <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> objects. Functional predictors are combined using <code class="language-plaintext highlighter-rouge">plus.fd()</code> and <code class="language-plaintext highlighter-rouge">times.fd()</code> from the <code class="language-plaintext highlighter-rouge">fda</code> package.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">add.predictor_hybrid</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">input</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">other</code>: Another <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object to be added.</li> <li> <code class="language-plaintext highlighter-rouge">alpha</code>: A scalar multiplier applied to <code class="language-plaintext highlighter-rouge">other</code> before addition (default is 1).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>Returns a new <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object representing the result of the addition.</li> </ul> <p><strong>Details:</strong></p> <ul> <li>This function assumes both objects have the same number and structure of functional and scalar predictors.</li> <li>Functional parts are scaled by <code class="language-plaintext highlighter-rouge">alpha</code> using <code class="language-plaintext highlighter-rouge">times.fd()</code> and then summed using <code class="language-plaintext highlighter-rouge">plus.fd()</code>.</li> <li>Scalar predictors are added using standard matrix addition.</li> <li>Supports broadcasting if one object represents a single sample (<code class="language-plaintext highlighter-rouge">n_sample = 1</code>) and the other represents multiple samples.</li> </ul> <pre><code class="language-{r}">#' Add two predictor_hybrid objects
+#'
+#' Performs element-wise addition of two \code{predictor_hybrid} objects. 
+#' Supports broadcasting if one object is a single sample.
+#'
+#' @param xi_1 A \code{predictor_hybrid} object.
+#' @param xi_2 Another \code{predictor_hybrid} object to be added.
+#' @param alpha A scalar multiplier applied to \code{xi_2} before addition (default is 1).
+#'
+#' @return A new \code{predictor_hybrid} object representing the result of the addition.
+#' @export
+add.predictor_hybrid &lt;- function(xi_1, xi_2, alpha = 1) {
+  # Safe access to is.eqbasis() from the fda namespace
+  is_eqbasis &lt;- getFromNamespace("is.eqbasis", "fda")
+  
+  # Type checks
+  if (!inherits(xi_1, "predictor_hybrid") || !inherits(xi_2, "predictor_hybrid")) {
+    stop("Both inputs must be of class 'predictor_hybrid'.")
+  }
+  
+  # Structural checks: Number of functional and scalar predictors must match
+  if (xi_1$n_functional != xi_2$n_functional) {
+    stop("Mismatch in number of functional predictors.")
+  }
+  if (xi_1$n_scalar != xi_2$n_scalar) {
+    stop("Mismatch in number of scalar predictors.")
+  }
+  
+  # Basis checks: Ensure corresponding functional predictors share the same basis
+  for (i in seq_len(xi_1$n_functional)) {
+    if (!is_eqbasis(xi_1$functional_list[[i]]$basis, xi_2$functional_list[[i]]$basis)) {
+      stop("Functional predictors must have the same basis.")
+    }
+  }
+  
+  # Broadcasting Logic:
+  # Ensure xi_1 is always the larger object (or equal) to simplify broadcasting
+  if (xi_1$n_sample == 1 &amp;&amp; xi_2$n_sample &gt; 1) {
+    tmp &lt;- xi_1
+    xi_1 &lt;- xi_2
+    xi_2 &lt;- tmp
+  }
+  
+  n1 &lt;- xi_1$n_sample
+  n2 &lt;- xi_2$n_sample
+  
+  # Validate sample compatibility
+  if (!(n1 == n2 || n2 == 1)) {
+    stop("Sample sizes are incompatible for broadcasting.")
+  }
+  
+  # Prepare components
+  f1 &lt;- xi_1$functional_list
+  f2 &lt;- xi_2$functional_list
+  Z1 &lt;- xi_1$Z
+  Z2 &lt;- xi_2$Z
+  
+  # Replicate fd and Z if broadcasting is needed (n2 == 1)
+  if (n2 == 1 &amp;&amp; n1 &gt; 1) {
+    f2 &lt;- rep_fd(f2, n1)
+    Z2 &lt;- matrix(rep(c(Z2), n1), nrow = n1, byrow = TRUE)
+  }
+  
+  # Combine functional predictors: f1 + alpha * f2
+  new_functional_list &lt;- Map(
+    function(fd1, fd2) plus.fd(fd1, times.fd(alpha, fd2)),
+    f1,
+    f2
+  )
+  
+  # Combine scalar predictors: Z1 + alpha * Z2
+  new_Z &lt;- Z1 + alpha * Z2
+  
+  # Construct and return the new predictor_hybrid object
+  # Note: eval_point is carried over from the first object
+  predictor_hybrid(Z = new_Z, functional_list = new_functional_list, eval_point = xi_1$eval_point)
+}
+</code></pre> <h3 id="subtrpredictor_hybrid">subtr.predictor_hybrid</h3> <p><strong>Description:</strong> Performs element-wise subtraction of two <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> objects. Internally uses <code class="language-plaintext highlighter-rouge">add.predictor_hybrid</code> to compute the result by negating the second operand.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">subtr.predictor_hybrid</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">input</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">other</code>: Another <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object to be subtracted.</li> <li> <code class="language-plaintext highlighter-rouge">alpha</code>: A scalar multiplier applied to <code class="language-plaintext highlighter-rouge">other</code> before subtraction (default is 1).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>Returns a new <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object representing the result of the subtraction.</li> </ul> <p><strong>Details:</strong></p> <ul> <li>This function assumes both objects have the same number and structure of functional and scalar predictors.</li> <li>It performs subtraction by internally calling <code class="language-plaintext highlighter-rouge">add.predictor_hybrid()</code> with <code class="language-plaintext highlighter-rouge">-alpha</code>.</li> <li>Functional parts are scaled using <code class="language-plaintext highlighter-rouge">times.fd()</code> and subtracted via <code class="language-plaintext highlighter-rouge">plus.fd()</code> with a negated factor.</li> <li>Scalar predictors are subtracted using standard matrix arithmetic.</li> </ul> <pre><code class="language-{r}">#' Subtract two predictor_hybrid objects
+#'
+#' Performs element-wise subtraction of two `predictor_hybrid` objects.
+#' Internally uses `add.predictor_hybrid(input, other, alpha = -1)`.
+#'
+#' @param input A `predictor_hybrid` object.
+#' @param other Another `predictor_hybrid` object to subtract.
+#' @param alpha A scalar multiplier applied to `other` before subtraction (default is 1).
+#'
+#' @return A new `predictor_hybrid` object representing the result of subtraction.
+#' @export
+subtr.predictor_hybrid &lt;- function(input, other, alpha = 1) {
+  
+  add.predictor_hybrid(input, other, alpha = -alpha)
+}
+</code></pre> <h3 id="scalar_mulpredictor_hybrid">scalar_mul.predictor_hybrid</h3> <p><strong>Description:</strong> Multiplies all components of a <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object by a scalar. Functional components are scaled using <code class="language-plaintext highlighter-rouge">times.fd()</code> from the <code class="language-plaintext highlighter-rouge">fda</code> package, and scalar predictors are multiplied directly using matrix operations.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scalar_mul.predictor_hybrid</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">scalar</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">input</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">scalar</code>: A numeric value used to scale both scalar and functional components.</li> </ul> <p><strong>Value:</strong></p> <ul> <li>Returns a new <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object with all components scaled by <code class="language-plaintext highlighter-rouge">scalar</code>.</li> </ul> <p><strong>Details:</strong></p> <ul> <li>Functional predictors are scaled using <code class="language-plaintext highlighter-rouge">times.fd(scalar, fd_obj)</code> for each element.</li> <li>Scalar predictors (the matrix <code class="language-plaintext highlighter-rouge">Z</code>) are scaled elementwise using matrix multiplication.</li> </ul> <pre><code class="language-{r}">#' Multiply a predictor_hybrid object by a scalar
+#'
+#' Performs scalar multiplication on both the scalar and functional components
+#' of a `predictor_hybrid` object. Functional predictors are scaled using
+#' `times.fd()` from the `fda` package.
+#'
+#' @param input A `predictor_hybrid` object.
+#' @param scalar A numeric value to multiply all components by.
+#'
+#' @return A new `predictor_hybrid` object scaled by `scalar`.
+#' @export
+scalar_mul.predictor_hybrid &lt;- function(input, scalar) {
+  if (!inherits(input, "predictor_hybrid")) {
+    stop("Input must be of class 'predictor_hybrid'.")
+  }
+  if (!is.numeric(scalar) || length(scalar) != 1) {
+    stop("Scalar must be a single numeric value.")
+  }
+
+  # Scale functional components
+  new_functional_list &lt;- lapply(input$functional_list, function(fd_obj) {
+    times.fd(scalar, fd_obj)
+  })
+
+  # Scale scalar predictors
+  new_Z &lt;- scalar * input$Z
+
+  # Reconstruct hybrid object
+  # Passing eval_point from the original input to maintain metadata
+  predictor_hybrid(
+    Z = new_Z,
+    functional_list = new_functional_list,
+    eval_point = input$eval_point
+  )
+}
+</code></pre> <h3 id="inprodpredictor_hybrid">inprod.predictor_hybrid</h3> <p><strong>Description:</strong> Computes the inner product between two <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> objects. The inner product in the hybrid space is defined as the sum of the inner products of the functional components in and the scalar components in :</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">xi_1</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">xi_2</code>: (Optional) Another <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object. Defaults to <code class="language-plaintext highlighter-rouge">xi_1</code> (computes norm squared if <code class="language-plaintext highlighter-rouge">xi_1</code> is a single sample).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A numeric vector of inner products. If both inputs are single samples, returns a scalar.</li> </ul> <p><strong>Details:</strong></p> <ul> <li>Supports broadcasting: if one input has a single observation (<code class="language-plaintext highlighter-rouge">n_sample = 1</code>) and the other has multiple, the single observation is broadcast across the others.</li> <li>Uses <code class="language-plaintext highlighter-rouge">fda::inprod</code> for functional integration and matrix multiplication for scalar parts. <pre><code class="language-{r}">#' Algebraic Inner Product for Hybrid Objects
+#' 
+#' Uses pre-computed Gram matrices to calculate inner products 
+#' without numerical integration.
+#'
+#' @export
+inprod.predictor_hybrid &lt;- function(xi_1, xi_2 = NULL) {
+if (is.null(xi_2)) xi_2 &lt;- xi_1
+  
+# --- 1. Identify Broadcasting Case ---
+n1 &lt;- xi_1$n_sample
+n2 &lt;- xi_2$n_sample
+  
+# Case A: 1-to-1 (Self-norm or pair-wise)
+# Case B: N-to-1 (Broadcasting / Projection)
+is_broadcasting &lt;- (n2 == 1 &amp;&amp; n1 &gt; 1)
+  
+if (n1 != n2 &amp;&amp; !is_broadcasting) {
+  # Attempt to swap if the user passed (1, N) instead of (N, 1)
+  if (n1 == 1 &amp;&amp; n2 &gt; 1) {
+     tmp &lt;- xi_1; xi_1 &lt;- xi_2; xi_2 &lt;- tmp
+     n1 &lt;- xi_1$n_sample; n2 &lt;- xi_2$n_sample
+     is_broadcasting &lt;- TRUE
+  } else {
+     stop("Incompatible sample sizes.")
+  }
+}
+
+# --- 2. Scalar Component ---
+# Z1: (N x P), Z2: (N x P) or (1 x P)
+if (is_broadcasting) {
+  # Project rows of Z1 onto single vector Z2
+  # Result: (N x 1) -&gt; vector
+  term_scalar &lt;- as.vector(xi_1$Z %*% t(xi_2$Z)) 
+} else {
+  # Element-wise row sums
+  term_scalar &lt;- rowSums(xi_1$Z * xi_2$Z)
+}
+  
+# --- 3. Functional Component (Algebraic) ---
+term_functional &lt;- numeric(n1)
+  
+for (k in seq_len(xi_1$n_functional)) {
+  J &lt;- xi_1$gram_list[[k]]       # (M x M)
+  C1 &lt;- xi_1$functional_list[[k]]$coefs # (M x N)
+  C2 &lt;- xi_2$functional_list[[k]]$coefs # (M x N) or (M x 1)
+    
+  # Calculate weighted coefficients: J * C2
+  J_C2 &lt;- J %*% C2 # (M x N) or (M x 1)
+    
+  if (is_broadcasting) {
+    # Proj = C1^T * J * c2
+    # Dimension: (N x M) * (M x 1) = (N x 1)
+    term_functional &lt;- term_functional + as.vector(t(C1) %*% J_C2)
+  } else {
+    # Pairwise = diag(C1^T * J * C2)
+    # Efficiently: colSums(C1 * (J * C2))
+    # This calculates dot product of each column pair
+    term_functional &lt;- term_functional + colSums(C1 * J_C2)
+  }
+}
+  
+return(term_scalar + term_functional)
+}
+</code></pre> </li> </ul> <h3 id="inprod_penpredictor_hybrid">inprod_pen.predictor_hybrid</h3> <p><strong>Description:</strong> Computes the penalized inner product between two <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> objects. This adds a roughness penalty term to the standard inner product, typically used for regularization.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">xi_1</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">xi_2</code>: (Optional) Another <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">lambda</code>: A numeric vector of length (number of functional predictors) specifying the smoothing parameter for each function.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A numeric vector (or scalar) representing the penalized inner product. ```{r Penalized Inner Product} #’ Penalized Inner Product (Algebraic) #’ #’ @export inprod_pen.predictor_hybrid &lt;- function(xi_1, xi_2 = NULL, lambda) { <h1 id="1-base-inner-product-unpenalized">1. Base Inner Product (Unpenalized)</h1> <p>base_val &lt;- inprod.predictor_hybrid(xi_1, xi_2)</p> <p>if (is.null(xi_2)) xi_2 &lt;- xi_1</p> <h1 id="determine-dimensions-for-manual-penalty-calculation">Determine dimensions for manual penalty calculation</h1> <p>n1 &lt;- xi_1$n_sample n2 &lt;- xi_2$n_sample is_broadcasting &lt;- (n2 == 1 &amp;&amp; n1 &gt; 1)</p> <h1 id="handle-the-swap-if-inprod-swapped-them-or-just-rely-on-logic">Handle the swap if inprod swapped them, or just rely on logic</h1> <p>if (n1 == 1 &amp;&amp; n2 &gt; 1) { tmp &lt;- xi_1; xi_1 &lt;- xi_2; xi_2 &lt;- tmp n1 &lt;- xi_1$n_sample; n2 &lt;- xi_2$n_sample is_broadcasting &lt;- TRUE }</p> <p>penalty_val &lt;- numeric(n1)</p> <h1 id="2-add-roughness-penalty">2. Add Roughness Penalty</h1> <p>for (k in seq_len(xi_1$n_functional)) { if (lambda[k] == 0) next # Skip if no penalty</p> <p>R &lt;- xi_1$gram_deriv_list[[k]] # (M x M) - The penalty matrix C1 &lt;- xi_1$functional_list[[k]]$coefs C2 &lt;- xi_2$functional_list[[k]]$coefs</p> <p>R_C2 &lt;- R %*% C2</p> <p>if (is_broadcasting) { term &lt;- as.vector(t(C1) %*% R_C2) } else { term &lt;- colSums(C1 * R_C2) }</p> <p>penalty_val &lt;- penalty_val + (lambda[k] * term) }</p> <p>return(base_val + penalty_val) } ```</p> </li> </ul> <h3 id="subset_predictor_hybrid">subset_predictor_hybrid</h3> <p><strong>Description:</strong> Extracts a specific observation from a multi-sample <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object and returns it as a new, single-sample <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object containing multiple samples.</li> <li> <code class="language-plaintext highlighter-rouge">i</code>: Integer index of the sample to extract.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object containing only the -th observation.</li> </ul> <pre><code class="language-{r}">#' Extract a single observation from a predictor_hybrid object
+#'
+#' @param W A predictor_hybrid object with multiple samples.
+#' @param i Integer index of the sample to extract.
+#' @return A single-sample predictor_hybrid object.
+#' @export
+subset_predictor_hybrid &lt;- function(W, i) {
+  # Extract the i-th row of the scalar matrix
+  new_Z &lt;- matrix(W$Z[i, ], nrow = 1)
+  
+  # Extract the i-th column of coefficients for each functional object
+  new_functional_list &lt;- lapply(W$functional_list, function(fdobj) {
+    fd(coef = matrix(coef(fdobj)[, i], ncol = 1), basisobj = fdobj$basis)
+  })
+  
+  # Construct new object
+  new_predictor &lt;- predictor_hybrid(
+    Z = new_Z, 
+    functional_list = new_functional_list,
+    eval_point = W$eval_point
+  )
+  
+  return(new_predictor)
+}
+</code></pre> <h3 id="replace_obs_hybrid">replace_obs_hybrid</h3> <p><strong>Description:</strong> Replaces a specific observation within a <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object with a new single-sample hybrid object. This effectively updates the -th row of the scalar matrix and the -th column of the functional coefficients.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W</code>: The target <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">i</code>: The integer index of the observation to replace.</li> <li> <code class="language-plaintext highlighter-rouge">new_W</code>: The source <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object (must be a single sample).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>The modified <code class="language-plaintext highlighter-rouge">W</code> object.</li> </ul> <pre><code class="language-{r}">#' Replace a single observation in a predictor_hybrid object
+#'
+#' Replaces the i-th observation of a predictor_hybrid object with a new
+#' single-sample predictor_hybrid object.
+#'
+#' @param W A predictor_hybrid object with one or more samples.
+#' @param i An integer index specifying the observation to replace.
+#' @param new_W A single-sample predictor_hybrid object to use for replacement.
+#'
+#' @return A predictor_hybrid object with the i-th observation replaced.
+#' @export
+replace_obs_hybrid &lt;- function(W, i, new_W) {
+  # Input validation
+  if (!inherits(W, "predictor_hybrid") || !inherits(new_W, "predictor_hybrid")) {
+    stop("Both W and new_W must be of class 'predictor_hybrid'.")
+  }
+  if (new_W$n_sample != 1) {
+    stop("new_W must be a single-sample predictor_hybrid object.")
+  }
+  if (i &lt; 1 || i &gt; W$n_sample) {
+    stop(paste("Index i must be between 1 and", W$n_sample))
+  }
+  if (W$n_scalar != new_W$n_scalar) {
+    stop("Mismatch in number of scalar predictors.")
+  }
+  if (W$n_functional != new_W$n_functional) {
+    stop("Mismatch in number of functional predictors.")
+  }
+
+  # Check for compatible basis objects
+  is_eqbasis &lt;- getFromNamespace("is.eqbasis", "fda")
+  for (j in seq_len(W$n_functional)) {
+    if (!is_eqbasis(W$functional_list[[j]]$basis, new_W$functional_list[[j]]$basis)) {
+      stop("Functional predictors must have the same basis objects.")
+    }
+  }
+
+  # Replace the i-th observation in the scalar matrix Z
+  W$Z[i, ] &lt;- new_W$Z[1, ]
+
+  # Replace the i-th observation in each functional predictor
+  for (j in seq_along(W$functional_list)) {
+    # The coefficients are stored as a matrix, with columns corresponding to samples
+    W$functional_list[[j]]$coefs[, i] &lt;- new_W$functional_list[[j]]$coefs[, 1]
+  }
+
+  return(W)
+}
+</code></pre> <h3 id="add_broadcast-matrix">add_broadcast (Matrix)</h3> <p><strong>Description:</strong> A function that performs row-wise addition of a vector to a matrix. It broadcasts a single observation (vector) across all rows of the target matrix, verifying that the input is a matrix and the operand is a single observation.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">input</code>: A numeric matrix.</li> <li> <code class="language-plaintext highlighter-rouge">other</code>: A numeric vector or a 1-row matrix to be added to every row of <code class="language-plaintext highlighter-rouge">input</code>.</li> <li> <code class="language-plaintext highlighter-rouge">alpha</code>: A scalar multiplier applied to <code class="language-plaintext highlighter-rouge">other</code> before addition.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A matrix of the same dimensions as <code class="language-plaintext highlighter-rouge">input</code>.</li> </ul> <pre><code class="language-{r}">#' Broadcast Addition for Matrices
+#'
+#' Adds a single observation (vector) to every row of a matrix.
+#' Checks that the input is a matrix and the operand is a single observation.
+#'
+#' @param input A numeric matrix.
+#' @param other A numeric vector or a 1-row matrix.
+#' @param alpha A scalar multiplier (default 1).
+#' @return A matrix with the broadcasted addition applied.
+#' @export
+add_broadcast &lt;- function(input, other, alpha = 1) {
+  
+  # 1. Type Check: Ensure input is a matrix
+  if (!is.matrix(input)) {
+    stop("Argument 'input' must be a matrix.")
+  }
+
+  # 2. Structural Check: Ensure RHS is a single observation.
+  # This uses length() for vectors, and dim()[1] for matrices.
+  is_matrix_other &lt;- is.matrix(other)
+  if (is_matrix_other &amp;&amp; dim(other)[1] &gt; 1) {
+    stop("Argument 'other' must be a vector or a single-row matrix.")
+  }
+
+  # 3. Conversion: Convert a single-row matrix into a vector for broadcasting.
+  # If 'other' is already a vector, this does nothing.
+  if (is_matrix_other) {
+    other &lt;- as.vector(other)
+  }
+  
+  # 4. Dimension Check: Ensure vector length matches matrix columns
+  if (length(other) != ncol(input)) {
+    stop("Length of 'other' must match number of columns in 'input'.")
+  }
+
+  # 5. Native Arithmetic: Use simple R arithmetic for high performance.
+  # R broadcasts the vector 'other' across the rows of the matrix 'input'.
+  # Transposing twice (t(t(...) ...)) ensures correct column-wise recycling 
+  # logic is applied to rows.
+  return(t(t(input) + alpha * other))
+}
+</code></pre> <h3 id="subtr_broadcast-matrix">subtr_broadcast (Matrix)</h3> <p><strong>Description:</strong> A function that performs row-wise subtraction of a vector from a matrix. It is a wrapper around <code class="language-plaintext highlighter-rouge">add_broadcast</code> that applies a negative multiplier.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">input</code>: A numeric matrix.</li> <li> <code class="language-plaintext highlighter-rouge">other</code>: A numeric vector or a 1-row matrix to subtract from every row of <code class="language-plaintext highlighter-rouge">input</code>.</li> <li> <code class="language-plaintext highlighter-rouge">alpha</code>: A scalar multiplier applied to <code class="language-plaintext highlighter-rouge">other</code> (default 1).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A matrix of the same dimensions as <code class="language-plaintext highlighter-rouge">input</code>.</li> </ul> <pre><code class="language-{r}">#' Broadcast Subtraction for Matrices
+#'
+#' Subtracts a single observation (vector) from every row of a matrix.
+#'
+#' @param input A numeric matrix.
+#' @param other A numeric vector or a 1-row matrix.
+#' @param alpha A scalar multiplier (default 1).
+#' @return A matrix with the broadcasted subtraction applied.
+#' @export
+subtr_broadcast &lt;- function(input, other, alpha = 1) {
+  # Reuse add_broadcast with negated alpha
+  add_broadcast(input, other, (-1 * alpha))
+}
+</code></pre> <h1 id="one-iteration">One iteration</h1> <h2 id="small-functions">small functions</h2> <h3 id="get_gram_matrix_block">get_gram_matrix_block</h3> <p><strong>Description:</strong> Constructs the block-diagonal Gram matrix for a hybrid predictor object. This matrix represents the inner product structure of the combined functional and scalar space. It is defined as:</p> <p>where:</p> <ul> <li>is the Gram matrix of the basis functions for the -th functional predictor, with entries .</li> <li>is the identity matrix corresponding to the scalar predictors (implying a standard Euclidean inner product for the scalar part).</li> </ul> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">obj</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object containing the pre-computed Gram matrices (<code class="language-plaintext highlighter-rouge">gram_list</code>) and metadata.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A sparse block-diagonal matrix (class <code class="language-plaintext highlighter-rouge">dgCMatrix</code> from the <code class="language-plaintext highlighter-rouge">Matrix</code> package) representing the global Gram matrix. <pre><code class="language-{r}">#' Construct block-diagonal Gram matrix for hybrid predictor
+#'
+#' Creates a unified Gram matrix by placing the pre-computed functional Gram matrices
+#' and a scalar identity matrix into a block-diagonal structure.
+#'
+#' @param obj A `predictor_hybrid` object.
+#'
+#' @return A sparse block-diagonal matrix of size `(total_dim x total_dim)`, where
+#' `total_dim` is the sum of all functional basis sizes plus the number of scalar predictors.
+#' @export
+get_gram_matrix_block &lt;- function(obj) {
+# Input validation
+if (!inherits(obj, "predictor_hybrid")) {
+  stop("Input must be of class 'predictor_hybrid'.")
+}
+
+# 1. Retrieve the list of functional Gram matrices (pre-computed in the object)
+#    These correspond to the J^(k) blocks.
+gram_blocks &lt;- obj$gram_list
+  
+# 2. Append the Identity matrix for the scalar components
+#    This corresponds to the I_p block.
+#    We use 'diag' to create an Identity matrix of size n_scalar x n_scalar.
+gram_blocks[[length(gram_blocks) + 1]] &lt;- diag(obj$n_scalar)
+  
+# 3. Construct the sparse block-diagonal matrix
+#    Matrix::bdiag efficiently handles the block construction.
+Matrix::bdiag(gram_blocks)
+}
+</code></pre> </li> </ul> <h3 id="get_smoothing_param_hybrid">get_smoothing_param_hybrid</h3> <p><strong>Description:</strong> Constructs the block-diagonal smoothing parameter matrix . This matrix defines the regularization penalties applied to the coefficients. It is defined as:</p> <p>where:</p> <ul> <li>is the smoothing parameter for the -th functional predictor.</li> <li>is the identity matrix of size (the number of basis functions for predictor ).</li> <li>is a zero matrix, indicating that the scalar predictors are not penalized in this step.</li> </ul> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object providing dimension information.</li> <li> <code class="language-plaintext highlighter-rouge">lambda</code>: A numeric vector of length (number of functional predictors). Each entry represents the penalty weight .</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A sparse block-diagonal matrix where the diagonal blocks contain the penalty weights for functional parts and zeros for the scalar part. <pre><code class="language-{r}">#' Construct block-diagonal smoothing parameter matrix
+#'
+#' Generates a block-diagonal matrix containing regularization parameters. 
+#' Functional coefficients are penalized by scaled identity matrices, while 
+#' scalar coefficients receive zero penalty.
+#'
+#' @param W A `predictor_hybrid` object.
+#' @param lambda A numeric vector of smoothing parameters, one for each functional predictor.
+#'
+#' @return A sparse block-diagonal matrix. The top-left blocks are `lambda[k] * I`, 
+#' and the bottom-right block is a zero matrix for scalar covariates.
+#' @export
+get_smoothing_param_hybrid &lt;- function(W, lambda) {
+# Input validation
+if (!inherits(W, "predictor_hybrid")) {
+  stop("Input W must be of class 'predictor_hybrid'.")
+}
+if (length(lambda) != W$n_functional) {
+  stop("Length of lambda must match the number of functional predictors.")
+}
+
+# 1. Create penalty blocks for functional predictors
+#    For each predictor k, create a scaled identity matrix: lambda[k] * I_Mk
+lambda_blocks &lt;- lapply(seq_len(W$n_functional), function(ii) {
+  nb &lt;- W$functional_list[[ii]]$basis$nbasis
+  lambda[ii] * diag(nb)
+})
+
+# 2. Create zero block for scalar predictors
+#    Scalar predictors are not penalized in this matrix, so we append a p x p zero matrix.
+lambda_blocks[[W$n_functional + 1]] &lt;- matrix(0, nrow = W$n_scalar, ncol = W$n_scalar)
+
+# 3. Construct the sparse block-diagonal matrix
+Matrix::bdiag(lambda_blocks)
+}
+</code></pre> </li> </ul> <h2 id="pls-component-computation">PLS component computation</h2> <h3 id="get_xi_hat_linear_pen">get_xi_hat_linear_pen</h3> <p><strong>Description:</strong> Computes the penalized PLS weight vector (direction) , represented as a <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object. This function solves for the coefficients that maximize the covariance between the predictor and the response , subject to a roughness penalty.</p> <p>The optimization problem leads to a system of linear equations for each functional component :</p> <p>where:</p> <ul> <li>is the Gram matrix (<code class="language-plaintext highlighter-rouge">gram_list</code>).</li> <li>is the penalty matrix (<code class="language-plaintext highlighter-rouge">gram_deriv_list</code>).</li> <li>are the basis coefficients of the functional data.</li> <li>are the coefficients for the -th functional weight.</li> </ul> <p>For the scalar part, the weights are simply the inner products . The final coefficient vector is normalized by the -norm (defined by the penalized inner product structure).</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object containing the predictors.</li> <li> <code class="language-plaintext highlighter-rouge">y</code>: A numeric vector of response values (length ).</li> <li> <code class="language-plaintext highlighter-rouge">lambda</code>: A numeric vector of smoothing parameters (one for each functional predictor).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A single-sample <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object representing the estimated direction .</li> </ul> <pre><code class="language-{r}">#' Compute Penalized PLS Weight Vector (Linear)
+#'
+#' Solves for the PLS weight direction xi that maximizes the covariance with y,
+#' subject to roughness penalties on the functional components.
+#'
+#' @param W A `predictor_hybrid` object.
+#' @param y A numeric vector of response values.
+#' @param lambda A numeric vector of smoothing parameters.
+#'
+#' @return A single-sample `predictor_hybrid` object representing the weight direction xi.
+#' @export
+get_xi_hat_linear_pen &lt;- function(W, y, lambda) {
+  
+  n &lt;- W$n_sample
+  K &lt;- W$n_functional
+  u &lt;- gamma &lt;- list()
+
+  # --- Scalar Component ---
+  # Compute scalar weights: v = Z^T * y
+  v &lt;- t(W$Z) %*% y
+  
+  # Initialize squared norm q with scalar part contribution
+  # q = ||xi||^2_pen = sum(v^2) + functional_parts
+  q &lt;- sum(v^2)
+
+  # --- Functional Components ---
+  for (j in 1:K) {
+    # Theta_t: coefficient matrix of the functional data (basis x samples)
+    Theta_t &lt;- W$functional_list[[j]]$coefs
+    
+    # B: Gram matrix for the j-th basis
+    B &lt;- W$gram_list[[j]]
+    
+    # Compute RHS of the linear system: u = B * Theta * y
+    # This represents the unpenalized gradient term
+    u[[j]] &lt;- B %*% Theta_t %*% y
+
+    # Linear System Matrix: R = Gram + lambda * Penalty
+    R &lt;- W$gram_list[[j]] + lambda[j] * W$gram_deriv_list[[j]]
+    
+    # Solve for gamma_j: (Gram + Penalty) * gamma = Gram * Theta * y
+    gamma[[j]] &lt;- solve(R, u[[j]])
+
+    # Update squared norm q:
+    # Add contribution gamma^T * R * gamma (penalized norm of functional weight)
+    q &lt;- q + sum(gamma[[j]] * (R %*% gamma[[j]]))
+  }
+  
+  # --- Combine and Normalize ---
+  # Flatten gamma list and append scalar weights v
+  d_vec &lt;- c(do.call(c, gamma), v)
+  
+  # Normalize the vector to have unit penalized norm
+  d_vec &lt;- d_vec / sqrt(q)
+  
+  # Reconstruct the result as a predictor_hybrid object
+  xi_hat &lt;- predictor_hybrid_from_coef(format = W, coef = d_vec)
+  
+  return(xi_hat)
+}
+</code></pre> <h3 id="get_rho">get_rho</h3> <p><strong>Description:</strong> Computes the vector of PLS scores by projecting the hybrid predictor data onto the weight direction vector (which represents ).</p> <p>The projection is computed as:</p> <p>where:</p> <ul> <li>is the coefficient matrix for the -th functional predictor ().</li> <li>is the Gram matrix ().</li> <li>are the coefficients for the -th functional weight.</li> <li>are the coefficients for the scalar weight.</li> </ul> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">d_vec</code>: A numeric vector containing the concatenated coefficients for all functional and scalar weights.</li> <li> <code class="language-plaintext highlighter-rouge">W</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object providing the data and Gram matrices.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A numeric vector of length containing the PLS scores.</li> </ul> <pre><code class="language-{r}">#' Exact Hybrid Inner Product
+#' Computes &lt;W, xi&gt; using basis inner product matrices.
+#' @param W The hybrid predictor object (contains coefs for N samples)
+#' @param xi The hybrid weight object (contains coefs for 1 direction)
+#' @return A vector of scores (length N)
+get_rho &lt;- function(W, xi) {
+  
+  # 1. Scalar Part (Standard dot product)
+  # (N x p_scalar) %*% (p_scalar x 1)
+  scores &lt;- as.matrix(W$Z) %*% as.matrix(xi$Z)
+  
+  # 2. Functional Part (Basis Matrix Algebra)
+  # Loop through each functional variable
+  for(k in seq_along(W$functional_list)) {
+    
+    # Extract basis and coefficients
+    # Coefs_W is (Basis_Dim x N)
+    # Coefs_xi is (Basis_Dim x 1)
+    fd_W  &lt;- W$functional_list[[k]]
+    fd_xi &lt;- xi$functional_list[[k]]
+    
+    # A. Compute J Matrix (Basis Inner Product)
+    # J[i,j] = Integral(phi_i(t) * phi_j(t) dt)
+    # Note: computed once per variable, very fast for B-splines
+    J &lt;- fda::inprod(fd_W$basis, fd_W$basis)
+    
+    # B. Compute Integral via Matrix Multiplication
+    # Formula: Score = Coefs_W^T * J * Coefs_xi
+    # Dimensions: (N x B) * (B x B) * (B x 1) -&gt; (N x 1)
+    
+    # Optimization: Pre-multiply J * xi to get a "weighted weight"
+    weighted_xi &lt;- J %*% fd_xi$coefs 
+    
+    # Project data onto this weighted weight
+    scores &lt;- scores + t(fd_W$coefs) %*% weighted_xi
+  }
+  
+  return(as.vector(scores))
+}
+</code></pre> <h2 id="response-residualization">Response Residualization</h2> <h3 id="get_nu">get_nu</h3> <p><strong>Description:</strong> Calculates the scalar regression coefficient obtained by regressing the response vector onto the PLS score vector . This minimizes the least squares error .</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">y</code>: A numeric vector of response values.</li> <li> <code class="language-plaintext highlighter-rouge">rho</code>: A numeric vector of PLS scores.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A scalar value . <pre><code class="language-{r}">#' Compute scalar regression coefficient (nu)
+#'
+#' Calculates the projection coefficient of the response vector y onto the score vector rho.
+#'
+#' @param y A numeric vector of response values.
+#' @param rho A numeric vector of PLS scores.
+#'
+#' @return A scalar regression coefficient.
+#' @export
+get_nu &lt;- function(y, rho) {
+# Compute numerator: inner product of y and rho
+# Compute denominator: squared norm of rho
+nu &lt;- sum(y * rho) / sum(rho * rho)
+return(nu)
+}
+</code></pre> </li> </ul> <h3 id="residualize_y">residualize_y</h3> <p><strong>Description:</strong> Computes the residual of the response vector after removing the component explained by the current PLS score .</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">y</code>: The current response vector.</li> <li> <code class="language-plaintext highlighter-rouge">rho</code>: The current PLS score vector.</li> <li> <code class="language-plaintext highlighter-rouge">nu</code>: The regression coefficient computed by <code class="language-plaintext highlighter-rouge">get_nu</code>.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A numeric vector of residuals.</li> </ul> <pre><code class="language-{r}">#' Residualize the response vector
+#'
+#' Subtracts the projection of y onto rho from y.
+#'
+#' @param y The current response vector.
+#' @param rho The current PLS score vector.
+#' @param nu The regression coefficient.
+#'
+#' @return The residualized response vector.
+#' @export
+residualize_y &lt;- function(y, rho, nu) {
+  y_next &lt;- y - nu * rho
+  return(y_next)
+}
+</code></pre> <h2 id="predictor-residualization">Predictor Residualization</h2> <h3 id="get_delta">get_delta</h3> <p><strong>Description:</strong> Computes the hybrid regression coefficient for regressing the predictor onto the PLS scores . is a single-sample <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object representing the direction in the predictor space that corresponds to .</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object containing samples.</li> <li> <code class="language-plaintext highlighter-rouge">rho</code>: A numeric vector of PLS scores (length ).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A single-sample <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object . <pre><code class="language-{r}">#' Compute hybrid regression coefficient (delta)
+#'
+#' Calculates the weighted average of the predictor observations W_i,
+#' weighted by the scores rho_i.
+#'
+#' @param W A `predictor_hybrid` object.
+#' @param rho A numeric vector of PLS scores.
+#'
+#' @return A single-sample `predictor_hybrid` object representing delta.
+#' @export
+get_delta &lt;- function(W, rho) {
+# Initialize delta with the first weighted observation: rho[1] * W[1]
+delta &lt;- scalar_mul.predictor_hybrid(subset_predictor_hybrid(W, 1), rho[1])
+  
+# Iteratively add the remaining weighted observations: delta += rho[i] * W[i]
+for (i in 2:length(rho)) {
+  W_i &lt;- subset_predictor_hybrid(W, i)
+  delta &lt;- add.predictor_hybrid(delta, W_i, rho[i])
+}
+  
+# Normalize by the squared norm of rho
+delta &lt;- scalar_mul.predictor_hybrid(delta, 1 / sum(rho * rho))
+  
+return(delta)
+}
+</code></pre> </li> </ul> <h3 id="residualize_predictor">residualize_predictor</h3> <p><strong>Description:</strong> Computes the residuals of the predictor object by subtracting the component explained by .</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W</code>: The current <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">rho</code>: The current PLS score vector.</li> <li> <code class="language-plaintext highlighter-rouge">delta</code>: The hybrid regression coefficient (from <code class="language-plaintext highlighter-rouge">get_delta</code>).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object containing the residualized predictors. <pre><code class="language-{r}">#' Residualize the hybrid predictor
+#'
+#' Updates each observation in W by subtracting the projection onto rho (rho_i * delta).
+#'
+#' @param W The current `predictor_hybrid` object.
+#' @param rho The current PLS score vector.
+#' @param delta The hybrid regression coefficient (single-sample object).
+#'
+#' @return The residualized `predictor_hybrid` object.
+#' @export
+residualize_predictor &lt;- function(W, rho, delta) {
+n &lt;- length(rho)
+W_res &lt;- W
+  
+# Iterate through each sample to compute residuals
+for (i in 1:n) {
+  # Extract the i-th observation
+  W_i &lt;- subset_predictor_hybrid(W, i)
+    
+  # Calculate residual: W_i_new = W_i - rho[i] * delta
+  W_res_i &lt;- subtr.predictor_hybrid(W_i, delta, rho[i])
+    
+  # Replace the observation in the result object
+  W_res &lt;- replace_obs_hybrid(W_res, i, W_res_i)
+}
+  
+return(W_res)
+}
+</code></pre> </li> </ul> <h1 id="main-algorithm">Main algorithm</h1> <h3 id="fithybridpls">fit.hybridPLS</h3> <p><strong>Description:</strong> Implements the Hybrid Penalized Partial Least Squares (PLS) algorithm. This function iteratively extracts latent components that maximize the covariance between the hybrid predictors and the response, subject to roughness penalties.</p> <p><strong>Algorithm Steps:</strong> For each iteration :</p> <ol> <li> <strong>Weight Direction ():</strong> Computes the penalized weight vector that maximizes covariance with the current response residual .</li> <li> <strong>Scores ():</strong> Projects the current predictor residuals onto the weight direction to obtain PLS scores.</li> <li> <strong>loadings ():</strong> Computes the regression coefficients for projecting and onto the scores .</li> <li> <strong>Deflation:</strong> Updates the predictor and response by removing the variance explained by the current component (residualization).</li> <li> <strong>Coefficient Update:</strong> Computes the “whitened” direction (transforming weights back to the original predictor space) and updates the cumulative regression coefficient .</li> </ol> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W</code>: Initial <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object.</li> <li> <code class="language-plaintext highlighter-rouge">y</code>: Numeric vector of response values.</li> <li> <code class="language-plaintext highlighter-rouge">n_iter</code>: Integer specifying the number of PLS components to extract.</li> <li> <code class="language-plaintext highlighter-rouge">lambda</code>: Numeric vector of smoothing parameters (one for each functional predictor).</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A list containing:</li> <li> <code class="language-plaintext highlighter-rouge">rho</code>: List of score vectors for each component.</li> <li> <code class="language-plaintext highlighter-rouge">xi</code>: List of weight directions (hybrid objects).</li> <li> <code class="language-plaintext highlighter-rouge">W</code>: List of residualized predictor objects at each step.</li> <li> <code class="language-plaintext highlighter-rouge">beta</code>: List of cumulative regression coefficients (hybrid objects) at each step.</li> </ul> <pre><code class="language-{r}">#' Fit Hybrid Penalized PLS with Optional Validation
+#'
+#' Runs the iterative PLS algorithm. If 'validation_data' is provided,
+#' it computes and stores the RMSE on the validation set for each component.
+#'
+#' @param W Initial `predictor_hybrid` object (Training).
+#' @param y Numeric vector of response values (Training).
+#' @param n_iter Integer, number of components to extract.
+#' @param lambda Numeric vector of smoothing parameters.
+#' @param validation_data (Optional) A list containing `W_test` (predictor_hybrid) and `y_test`.
+#'
+#' @return A list containing the model (rho, xi, beta) and optional `validation_rmse`.
+#' @export
+fit.hybridPLS &lt;- function(W, y, n_iter, lambda, validation_data = NULL) {
+  # 1. Initialize storage
+  W_now &lt;- rho &lt;- xi &lt;- delta &lt;- nu &lt;- iota &lt;- beta &lt;- list()
+  validation_rmse &lt;- numeric(n_iter)
+  
+  # 2. Initialize current state
+  W_now[[1]] &lt;- W
+  y_now &lt;- y
+  
+  # 3. Main PLS Loop
+  for (l in 1:n_iter) {
+    # --- Step A: Weight Direction (xi) ---
+    xi[[l]] &lt;- get_xi_hat_linear_pen(W_now[[l]], y_now, lambda)
+    
+    # --- Step B: Scores (rho) ---
+    rho[[l]] &lt;- inprod.predictor_hybrid(W_now[[l]], xi[[l]])
+    
+    # --- Step C: Loadings (delta, nu) ---
+    delta[[l]] &lt;- get_delta(W_now[[l]], rho[[l]])
+    nu[[l]] &lt;- get_nu(y_now, rho[[l]])
+    
+    # --- Step D: Deflation ---
+    W_now[[l + 1]] &lt;- residualize_predictor(W_now[[l]], rho[[l]], delta[[l]])
+    y_now &lt;- residualize_y(y_now, rho[[l]], nu[[l]])
+    
+    # --- Step E: Cumulative Coefficient (Beta) ---
+    iota[[l]] &lt;- xi[[l]]
+    
+    if (l == 1) {
+      beta[[l]] &lt;- scalar_mul.predictor_hybrid(iota[[l]], nu[[l]])
+    } else {
+      for (u in 1:(l - 1)) {
+        adjustment &lt;- inprod.predictor_hybrid(delta[[u]], xi[[l]])
+        iota[[l]] &lt;- subtr.predictor_hybrid(iota[[l]], iota[[u]], adjustment)
+      }
+      beta[[l]] &lt;- add.predictor_hybrid(beta[[l - 1]], iota[[l]], nu[[l]])
+    }
+    
+    # --- Step F: Validation (Optional) ---
+    if (!is.null(validation_data)) {
+      # Predict on test set using the current cumulative beta
+      y_pred_test &lt;- inprod.predictor_hybrid(validation_data$W_test, beta[[l]])
+      
+      # Compute RMSE (standardized scale usually, but here just raw RMSE)
+      validation_rmse[l] &lt;- sqrt(mean((validation_data$y_test - y_pred_test)^2))
+    }
+  }
+  
+  return(list(
+    rho = rho,
+    xi = xi,
+    beta = beta,
+    W = W_now,
+    delta = delta,
+    nu = nu,
+    validation_rmse = if (!is.null(validation_data)) validation_rmse else NULL
+  ))
+}
+</code></pre> <h1 id="simulation-tools">Simulation tools</h1> <h2 id="sample-splitting">sample splitting</h2> <h3 id="create_idx_train_test">create_idx_train_test</h3> <p><strong>Description:</strong> Randomly splits the indices of a dataset into training and testing sets based on a specified ratio. This function ensures that the indices are sorted and returned as a list containing both sets.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create_idx_train_test</span><span class="p">(</span><span class="n">n_sample</span><span class="p">,</span><span class="w"> </span><span class="n">train_ratio</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">n_sample</code>: Integer. The total number of samples in the dataset.</li> <li> <code class="language-plaintext highlighter-rouge">train_ratio</code>: Numeric. The proportion of samples to include in the training set (between 0 and 1).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A list containing: <ul> <li> <code class="language-plaintext highlighter-rouge">idx_train</code>: A sorted integer vector of training indices.</li> <li> <code class="language-plaintext highlighter-rouge">idx_test</code>: A sorted integer vector of testing indices.</li> </ul> </li> </ul> <pre><code class="language-{r}">#' Split Sample Indices into Train and Test Sets
+#'
+#' Randomly partitions the indices of a dataset into training and testing sets.
+#'
+#' @param n_sample Integer. The total number of samples.
+#' @param train_ratio Numeric. The proportion of samples for the training set (0 to 1).
+#'
+#' @return A list with named elements `idx_train` and `idx_test`.
+#' @export
+create_idx_train_test &lt;- function(n_sample, train_ratio) {
+  # Calculate number of training samples
+  n_train &lt;- floor(n_sample * train_ratio)
+  
+  # Sample indices without replacement
+  idx_train &lt;- sort(sample(seq_len(n_sample), n_train, replace = FALSE))
+  
+  # The remaining indices form the test set
+  idx_test &lt;- sort(setdiff(seq_len(n_sample), idx_train))
+  
+  return(list(
+    idx_train = idx_train,
+    idx_test = idx_test
+  ))
+}
+</code></pre> <h3 id="get_idx_train">get_idx_train</h3> <p><strong>Description:</strong> A simplified version of the splitting function that returns only the training indices. Useful when the testing set is defined implicitly as the complement or not immediately needed.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">get_idx_train</span><span class="p">(</span><span class="n">n_sample</span><span class="p">,</span><span class="w"> </span><span class="n">train_ratio</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">n_sample</code>: Integer. The total number of samples.</li> <li> <code class="language-plaintext highlighter-rouge">train_ratio</code>: Numeric. The proportion of samples for the training set.</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A sorted integer vector of training indices.</li> </ul> <pre><code class="language-{r}">#' Generate Train Indices
+#'
+#' Randomly generates a sorted vector of indices for a training set.
+#'
+#' @param n_sample Integer. Number of samples.
+#' @param train_ratio Numeric. Ratio of train samples.
+#' @return Vector of sorted train indices.
+#' @export
+get_idx_train &lt;- function(n_sample, train_ratio) {
+  n_train &lt;- floor(n_sample * train_ratio)
+  idx_train &lt;- sort(sample(seq_len(n_sample), n_train, replace = FALSE))
+  return(idx_train)
+}
+</code></pre> <h3 id="create_idx_kfold">create_idx_kfold</h3> <p><strong>Description:</strong> Generates indices for K-fold cross-validation. It relies on the <code class="language-plaintext highlighter-rouge">caret</code> package to create balanced folds and organizes them into pairs of training and validation indices for each fold.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create_idx_kfold</span><span class="p">(</span><span class="n">n_sample</span><span class="p">,</span><span class="w"> </span><span class="n">n_fold</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">n_sample</code>: Integer. The total number of samples.</li> <li> <code class="language-plaintext highlighter-rouge">n_fold</code>: Integer. The number of folds to create.</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A list of length <code class="language-plaintext highlighter-rouge">n_fold</code>. Each element is a list containing: <ul> <li> <code class="language-plaintext highlighter-rouge">idx_train</code>: Indices for training in this fold.</li> <li> <code class="language-plaintext highlighter-rouge">idx_valid</code>: Indices for validation in this fold.</li> </ul> </li> </ul> <pre><code class="language-{r}">#' Generate K-Fold Cross-Validation Indices
+#'
+#' Creates a list of training and validation indices for K-fold cross-validation.
+#' Uses `caret::createFolds` to ensure stratified or random splitting.
+#'
+#' @param n_sample Integer. The total number of samples.
+#' @param n_fold Integer. The number of folds.
+#'
+#' @return A list of lists, where each sub-list contains `idx_train` and `idx_valid`.
+#' @export
+create_idx_kfold &lt;- function(n_sample, n_fold) {
+  # Generate folds using caret (returns validation indices by default)
+  idx_list &lt;- caret::createFolds(seq_len(n_sample), k = n_fold, list = TRUE, returnTrain = FALSE)
+  
+  idx_list_list &lt;- vector("list", length(idx_list))
+  
+  for (i in seq_along(idx_list)) {
+    valid_hyper_index &lt;- idx_list[[i]]
+    # Training set is the complement of the validation set
+    train_hyper_index &lt;- setdiff(seq_len(n_sample), valid_hyper_index)
+    
+    idx_list_list[[i]] &lt;- list(
+      "idx_train" = train_hyper_index, 
+      "idx_valid" = valid_hyper_index
+    )
+  }
+  
+  return(idx_list_list)
+}
+</code></pre> <h3 id="n_samplefd">n_sample.fd</h3> <p><strong>Description:</strong> Extracts the number of samples (replications) from a functional data object (<code class="language-plaintext highlighter-rouge">fd</code> class from the <code class="language-plaintext highlighter-rouge">fda</code> package). This implementation robustly checks the dimensions of the coefficient matrix.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_sample.fd</span><span class="p">(</span><span class="n">fd_obj</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">fd_obj</code>: An object of class <code class="language-plaintext highlighter-rouge">fd</code>.</li> </ul> <p><strong>Value:</strong></p> <ul> <li>Integer. The number of samples (curves) in the object.</li> </ul> <pre><code class="language-{r}">#' Get Number of Samples from an fd Object
+#'
+#' Extracts the number of observations (replications) stored in a functional data object.
+#'
+#' @param fd_obj An object of class `fd`.
+#' @return Integer representing the number of samples.
+#' @export
+n_sample.fd &lt;- function(fd_obj) {
+  if (!inherits(fd_obj, "fd")) {
+    stop("Input must be of class 'fd'.")
+  }
+  # The coefficient matrix has dimensions (nbasis x n_sample)
+  return(ncol(fd_obj$coefs))
+}
+</code></pre> <h3 id="splitall">split.all</h3> <p><strong>Description:</strong> Splits a <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object and a corresponding response vector into training and testing sets based on a specified ratio. This function ensures that both the scalar matrix and the list of functional predictors are subsetted consistently.</p> <p><strong>Inputs:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W_hybrid</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object containing the covariates.</li> <li> <code class="language-plaintext highlighter-rouge">response</code>: A numeric vector of response values.</li> <li> <code class="language-plaintext highlighter-rouge">train_ratio</code>: A numeric scalar (0 &lt; ratio &lt; 1) determining the size of the training set.</li> </ul> <p><strong>Output:</strong></p> <ul> <li>A list containing: <ul> <li> <code class="language-plaintext highlighter-rouge">predictor_train</code>: The <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object for training.</li> <li> <code class="language-plaintext highlighter-rouge">predictor_test</code>: The <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object for testing.</li> <li> <code class="language-plaintext highlighter-rouge">response_train</code>: The response vector for training.</li> <li> <code class="language-plaintext highlighter-rouge">response_test</code>: The response vector for testing.</li> </ul> </li> </ul> <pre><code class="language-{r}">#' Split Hybrid Predictor and Response Data
+#'
+#' Randomly partitions the hybrid predictor object and response vector into 
+#' training and testing sets based on a given ratio. Handles any number of 
+#' functional predictors.
+#'
+#' @param W_hybrid A `predictor_hybrid` object containing all functional and scalar data.
+#' @param response A numeric vector. The response variable corresponding to the samples in W_hybrid.
+#' @param train_ratio A numeric scalar between 0 and 1 indicating the proportion of data to use for training.
+#'
+#' @return A list containing split train and test sets for predictors and response.
+#' @export
+split.all &lt;- function(W_hybrid, response, train_ratio) {
+  # --- Input Validation ---
+  if (!inherits(W_hybrid, "predictor_hybrid")) {
+    stop("'W_hybrid' must be a predictor_hybrid object.")
+  }
+  if (!is.vector(response) &amp;&amp; !is.factor(response)) {
+    stop("'response' must be a vector.")
+  }
+  if (length(response) != W_hybrid$n_sample) {
+    stop("Response length must match the number of samples in W_hybrid.")
+  }
+  if (!is.numeric(train_ratio) || train_ratio &lt;= 0 || train_ratio &gt;= 1) {
+    stop("'train_ratio' must be a numeric value strictly between 0 and 1.")
+  }
+
+  N &lt;- W_hybrid$n_sample
+  N_train &lt;- floor(N * train_ratio)
+
+  # Generate random indices
+  # set.seed() should be called by the user before this function if reproducibility is needed
+  train_idx &lt;- sort(sample(seq_len(N), N_train))
+  test_idx  &lt;- sort(setdiff(seq_len(N), train_idx))
+
+  # --- Subset Scalar Predictors ---
+  Z_train &lt;- W_hybrid$Z[train_idx, , drop = FALSE]
+  Z_test  &lt;- W_hybrid$Z[test_idx,  , drop = FALSE]
+
+  # --- Subset Functional Predictors ---
+  # Use lapply to handle any number of functional predictors (K)
+  # The '[' operator on an fd object subsets the samples (replicates)
+  fun_list_train &lt;- lapply(W_hybrid$functional_list, function(fd_obj) fd_obj[train_idx])
+  fun_list_test  &lt;- lapply(W_hybrid$functional_list, function(fd_obj) fd_obj[test_idx])
+
+  # --- Reconstruct Hybrid Objects ---
+  # We reuse the original evaluation points
+  W_train &lt;- predictor_hybrid(Z = Z_train, functional_list = fun_list_train, eval_point = W_hybrid$eval_point)
+  W_test  &lt;- predictor_hybrid(Z = Z_test,  functional_list = fun_list_test,  eval_point = W_hybrid$eval_point)
+
+  return(list(
+    predictor_train = W_train,
+    predictor_test  = W_test,
+    response_train  = response[train_idx],
+    response_test   = response[test_idx],
+    train_idx       = train_idx, # Useful to return indices for reference
+    test_idx        = test_idx
+  ))
+}
+</code></pre> <h2 id="normalization">normalization</h2> <p>The goal is to perform a two-step standardization: first normalizing <em>within</em> each data type (functional vs. scalar) to account for unit differences, and second normalizing <em>between</em> the two types to balance their variances for the PLS framework.</p> <h3 id="curve_normalize">curve_normalize</h3> <p><strong>Description:</strong> Performs pointwise centering and scalar scaling on a functional data object. It subtracts a mean function and divides by a scaling constant (denominator). This implementation manually broadcasts the mean subtraction to ensure compatibility with <code class="language-plaintext highlighter-rouge">fda</code> objects where standard <code class="language-plaintext highlighter-rouge">minus.fd</code> can sometimes struggle with broadcasting single mean functions across multiple samples.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">curve_normalize</span><span class="p">(</span><span class="n">functional</span><span class="p">,</span><span class="w"> </span><span class="n">mean_functional</span><span class="p">,</span><span class="w"> </span><span class="n">deno</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">functional</code>: The <code class="language-plaintext highlighter-rouge">fd</code> object to be normalized.</li> <li> <code class="language-plaintext highlighter-rouge">mean_functional</code>: An <code class="language-plaintext highlighter-rouge">fd</code> object representing the mean (centroid) to subtract.</li> <li> <code class="language-plaintext highlighter-rouge">deno</code>: A numeric scalar scaling factor (e.g., total standard deviation).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A normalized <code class="language-plaintext highlighter-rouge">fd</code> object.</li> </ul> <pre><code class="language-{r}">#' Normalize a functional data object
+#'
+#' Subtracts a mean function and divides by a scalar constant.
+#' Manual broadcasting is used to ensure robust subtraction across samples.
+#'
+#' @param functional An `fd` object to normalize.
+#' @param mean_functional An `fd` object representing the mean.
+#' @param deno A numeric scalar for scaling (division).
+#'
+#' @return A normalized `fd` object.
+#' @export
+curve_normalize &lt;- function(functional, mean_functional, deno) {
+  # Replicate the mean coefficients to match the number of samples in 'functional'
+  # This creates a matrix of identical mean columns for broadcasting
+  mean_coefs_matrix &lt;- coef(mean_functional) %*% matrix(1, ncol = ncol(coef(functional)))
+  
+  # Subtract mean and create new fd object
+  functional_normalized &lt;- fd(
+    coef = coef(functional) - mean_coefs_matrix,
+    basisobj = functional$basis
+  )
+  
+  # Apply scaling factor
+  # times.fd usually handles scalar multiplication well
+  functional_normalized &lt;- times.fd(1 / deno, functional_normalized)
+  
+  return(functional_normalized)
+}
+</code></pre> <h3 id="curve_normalize_train_test">curve_normalize_train_test</h3> <p><strong>Description:</strong> Standardizes the <em>functional</em> components of hybrid predictors. It centers them to have mean zero and scales them to have unit integrated variance. Crucially, the mean and standard deviation are derived <strong>only from the training data</strong> to prevent data leakage. These training statistics are then applied to normalize the test set.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">curve_normalize_train_test</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">train</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object (training set).</li> <li> <code class="language-plaintext highlighter-rouge">test</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object (test set).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A list containing the normalized training and testing objects, along with the scaling factors used.</li> </ul> <pre><code class="language-{r}">#' Normalize Functional Predictors (Train/Test Split)
+#'
+#' Standardizes functional predictors to have mean zero and unit integrated variance.
+#' Statistics (mean and SD) are computed from the training set and applied to the test set.
+#'
+#' @param train A `predictor_hybrid` object representing the training set.
+#' @param test A `predictor_hybrid` object representing the testing set.
+#'
+#' @return A list containing:
+#'   \item{predictor_train}{The normalized training object.}
+#'   \item{predictor_test}{The normalized testing object.}
+#'   \item{mean_train}{List of mean functions used for centering.}
+#'   \item{deno_train}{Vector of scaling factors used.}
+#' @export
+curve_normalize_train_test &lt;- function(train, test) {
+  stopifnot(
+    inherits(train, "predictor_hybrid"),
+    inherits(test, "predictor_hybrid"),
+    train$n_functional == test$n_functional
+  )
+
+  train_normalized &lt;- train
+  test_normalized &lt;- test
+  deno_train &lt;- numeric(train$n_functional)
+  mean_train &lt;- list()
+
+  # Iterate through each functional predictor
+  for (k in seq_len(train$n_functional)) {
+    # 1. Compute Statistics from TRAINING data
+    train_fd &lt;- train$functional_list[[k]]
+    
+    mean_train[[k]] &lt;- fda::mean.fd(train_fd)
+    sd_train &lt;- fda::sd.fd(train_fd)
+    
+    # Scaling factor is the L2 norm of the standard deviation function
+    deno_train[k] &lt;- sqrt(fda::inprod(sd_train, sd_train))
+
+    # Safety check for zero variance
+    if (deno_train[k] &lt;= 1e-10) {
+      warning(paste("Functional predictor", k, "has near-zero variance. Skipping scaling."))
+      deno_train[k] &lt;- 1 
+    }
+
+    # 2. Normalize TRAINING set
+    train_normalized$functional_list[[k]] &lt;- curve_normalize(
+      train_fd, 
+      mean_train[[k]], 
+      deno_train[k]
+    )
+
+    # 3. Normalize TEST set using TRAIN stats
+    test_normalized$functional_list[[k]] &lt;- curve_normalize(
+      test$functional_list[[k]], 
+      mean_train[[k]], 
+      deno_train[k]
+    )
+  }
+
+  return(list(
+    predictor_train = train_normalized,
+    predictor_test = test_normalized,
+    mean_train = mean_train,
+    deno_train = deno_train
+  ))
+}
+</code></pre> <h3 id="scalar_normalize">scalar_normalize</h3> <p><strong>Description:</strong> Helper function to normalize a scalar matrix. It subtracts a mean vector and divides by a standard deviation vector.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scalar_normalize</span><span class="p">(</span><span class="n">scalar_predictor</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">deno</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">scalar_predictor</code>: A numeric matrix ().</li> <li> <code class="language-plaintext highlighter-rouge">mean</code>: A numeric vector of length (means).</li> <li> <code class="language-plaintext highlighter-rouge">deno</code>: A numeric vector of length (standard deviations).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A normalized numeric matrix.</li> </ul> <pre><code class="language-{r}">#' Normalize a scalar predictor matrix
+#'
+#' Centers columns by 'mean' and scales them by 'deno'.
+#'
+#' @param scalar_predictor Numeric matrix.
+#' @param mean Numeric vector of column means.
+#' @param deno Numeric vector of column standard deviations.
+#' @return Normalized matrix.
+#' @export
+scalar_normalize &lt;- function(scalar_predictor, mean, deno) {
+  # Subtract mean from each row (broadcasted)
+  # Uses the helper subtr_broadcast function defined previously
+  scalar_predictor_normalized &lt;- subtr_broadcast(scalar_predictor, mean)
+  
+  # Create a matrix of denominators matching the dimensions of the predictor
+  deno_mat &lt;- matrix(rep(deno, each = nrow(scalar_predictor)), 
+                     nrow = nrow(scalar_predictor), 
+                     ncol = length(deno))
+  
+  # Element-wise division
+  scalar_predictor_normalized &lt;- scalar_predictor_normalized / deno_mat
+  return(scalar_predictor_normalized)
+}
+</code></pre> <h3 id="scalar_normalize_train_test">scalar_normalize_train_test</h3> <p><strong>Description:</strong> Standardizes the <em>scalar</em> components () of the hybrid predictors. It ensures each scalar covariate has mean zero and unit variance. As with the functional part, statistics are derived solely from the training set.</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scalar_normalize_train_test</span><span class="p">(</span><span class="n">predictor_train</span><span class="p">,</span><span class="w"> </span><span class="n">predictor_test</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">predictor_train</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object (train set).</li> <li> <code class="language-plaintext highlighter-rouge">predictor_test</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object (test set).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A list containing the normalized hybrid objects and the statistics used.</li> </ul> <pre><code class="language-{r}">#' Normalize Scalar Predictors (Train/Test Split)
+#'
+#' Standardizes scalar predictors (Z) to have mean zero and unit variance.
+#' Statistics are computed from the training set.
+#'
+#' @param predictor_train A `predictor_hybrid` object (train).
+#' @param predictor_test A `predictor_hybrid` object (test).
+#'
+#' @return A list containing normalized objects and statistics.
+#' @export
+scalar_normalize_train_test &lt;- function(predictor_train, predictor_test) {
+  stopifnot(
+    inherits(predictor_train, "predictor_hybrid"),
+    inherits(predictor_test, "predictor_hybrid"),
+    predictor_train$n_scalar == predictor_test$n_scalar
+  )
+
+  predictor_train_normalized &lt;- predictor_train
+  predictor_test_normalized &lt;- predictor_test
+
+  # 1. Compute Statistics from TRAINING data
+  mean_train &lt;- colMeans(predictor_train$Z)
+  sd_train &lt;- apply(predictor_train$Z, 2, sd)
+  
+  # Handle zero variance columns
+  sd_train[sd_train == 0] &lt;- 1
+
+  # 2. Normalize TRAINING set
+  predictor_train_normalized$Z &lt;- scalar_normalize(
+    predictor_train$Z,
+    mean_train,
+    sd_train
+  )
+
+  # 3. Normalize TEST set using TRAIN stats
+  predictor_test_normalized$Z &lt;- scalar_normalize(
+    predictor_test$Z,
+    mean_train,
+    sd_train
+  )
+
+  return(list(
+    predictor_train = predictor_train_normalized,
+    predictor_test = predictor_test_normalized,
+    mean_train = mean_train,
+    sd_train = sd_train
+  ))
+}
+</code></pre> <h3 id="btwn_normalize_train_test">btwn_normalize_train_test</h3> <p><strong>Description:</strong> Performs the second step of standardization: balancing the variance <em>between</em> functional and scalar predictors. It scales the scalar component by a factor so that the total variance of the scalar part matches the total variance of the functional parts.</p> <p>The weight is calculated as:</p> <p>where the numerator is the sum of squared norms of all functional predictors, and the denominator is the sum of squared Euclidean norms of the scalar predictors (calculated on the training set).</p> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">btwn_normalize_train_test</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">train</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object (train set).</li> <li> <code class="language-plaintext highlighter-rouge">test</code>: A <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> object (test set).</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A list containing the scaled hybrid objects and the scaling factor .</li> </ul> <pre><code class="language-{r}">#' Inter-Modality Normalization (Between Functional and Scalar)
+#'
+#' Scales the scalar predictors (Z) so that their total variability is comparable
+#' to the total variability of the functional predictors. This addresses the 
+#' scale invariance issue in PLS by weighting the scalar part.
+#'
+#' @param train A `predictor_hybrid` object (train).
+#' @param test A `predictor_hybrid` object (test).
+#'
+#' @return A list containing normalized objects and the scaling factor.
+#' @export
+btwn_normalize_train_test &lt;- function(train, test) {
+  stopifnot(inherits(train, "predictor_hybrid"), inherits(test, "predictor_hybrid"))
+
+  train_normalized &lt;- train
+  test_normalized &lt;- test
+  Z_s &lt;- train$Z
+
+  # --- 1. Calculate Numerator (Total Variance of Functional Parts) ---
+  omega_numerator &lt;- 0
+  for (k in seq_len(train$n_functional)) {
+    # Compute inner product matrix &lt;X_i, X_j&gt;
+    # The diagonal elements &lt;X_i, X_i&gt; represent the squared L2 norm ||X_i||^2
+    functional_inprod_matrix &lt;- fda::inprod(
+      train$functional_list[[k]],
+      train$functional_list[[k]]
+    )
+    omega_numerator &lt;- omega_numerator + sum(diag(functional_inprod_matrix))
+  }
+
+  # --- 2. Calculate Denominator (Total Variance of Scalar Part) ---
+  omega_denominator &lt;- sum(Z_s^2)
+
+  # --- 3. Compute Weight omega ---
+  if (omega_denominator == 0) {
+    warning("Scalar component has zero variance. Skipping inter-modality scaling.")
+    omega &lt;- 1
+  } else {
+    omega &lt;- omega_numerator / omega_denominator
+  }
+
+  # --- 4. Apply Scaling (sqrt(omega)) ---
+  # This effectively weights the scalar inner product by omega
+  scaling_factor &lt;- sqrt(omega)
+  
+  train_normalized$Z &lt;- scaling_factor * train$Z
+  test_normalized$Z  &lt;- scaling_factor * test$Z
+
+  return(list(
+    predictor_train = train_normalized,
+    predictor_test = test_normalized,
+    scaling_factor = scaling_factor
+  ))
+}
+</code></pre> <h3 id="split_and_normalizeall">split_and_normalize.all</h3> <p><strong>Description:</strong> A wrapper function that orchestrates the entire data preprocessing pipeline. It performs the following steps in order:</p> <ol> <li> <strong>Splitting:</strong> divides predictors and response into training and testing sets.</li> <li> <strong>Within-Normalization (Functional):</strong> Standardizes functional predictors (mean 0, unit integrated var).</li> <li> <strong>Within-Normalization (Scalar):</strong> Standardizes scalar predictors (mean 0, unit var).</li> <li> <strong>Between-Normalization:</strong> Balances variance between functional and scalar components.</li> <li> <strong>Response Normalization:</strong> Standardizes the response variable (mean 0, unit var).</li> </ol> <p><strong>Usage:</strong></p> <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">split_and_normalize.all</span><span class="p">(</span><span class="n">W_hybrid</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">train_ratio</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div> <p><strong>Arguments:</strong></p> <ul> <li> <code class="language-plaintext highlighter-rouge">W_hybrid</code>: The full <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> dataset.</li> <li> <code class="language-plaintext highlighter-rouge">response</code>: The full response vector.</li> <li> <code class="language-plaintext highlighter-rouge">train_ratio</code>: Ratio for training data split.</li> </ul> <p><strong>Value:</strong></p> <ul> <li>A comprehensive list containing processed training/testing sets for predictors and response, along with all normalization statistics.</li> </ul> <pre><code class="language-{r}">#' Split and Preprocess Hybrid Data
+#'
+#' Executes the full preprocessing pipeline: splitting data, standardizing within
+#' modalities (functional/scalar), balancing variance between modalities, and 
+#' standardizing the response.
+#'
+#' @param W_hybrid The full `predictor_hybrid` object.
+#' @param response The numeric response vector.
+#' @param train_ratio Numeric scalar (0-1) for train/test split.
+#'
+#' @return A list containing processed datasets and normalization parameters.
+#' @export
+split_and_normalize.all &lt;- function(W_hybrid, response, train_ratio) {
+  
+  # 1. Split Data
+  # Note: Requires the previously defined split.all function
+  split_result &lt;- split.all(W_hybrid, response, train_ratio)
+
+  # 2. Normalize Functional Predictors (Within)
+  curve_norm &lt;- curve_normalize_train_test(
+    split_result$predictor_train, 
+    split_result$predictor_test
+  )
+  
+  # 3. Normalize Scalar Predictors (Within)
+  scalar_norm &lt;- scalar_normalize_train_test(
+    curve_norm$predictor_train, 
+    curve_norm$predictor_test
+  )
+  
+  # 4. Normalize Between Modalities (Balance Variances)
+  btwn_norm &lt;- btwn_normalize_train_test(
+    scalar_norm$predictor_train,
+    scalar_norm$predictor_test
+  )
+  
+  # 5. Normalize Response Variable
+  response_mean_train &lt;- mean(split_result$response_train)
+  response_sd_train   &lt;- sd(split_result$response_train)
+  
+  # Prevent division by zero if response is constant
+  if (response_sd_train == 0) response_sd_train &lt;- 1
+  
+  response_train_std &lt;- (split_result$response_train - response_mean_train) / response_sd_train
+  response_test_std  &lt;- (split_result$response_test  - response_mean_train) / response_sd_train
+  
+  response_norm &lt;- list(mean_train = response_mean_train, sd_train = response_sd_train)
+
+  # Return comprehensive results
+  return(list(
+    predictor_train = btwn_norm$predictor_train,
+    predictor_test  = btwn_norm$predictor_test,
+    response_train  = response_train_std,
+    response_test   = response_test_std,
+    
+    # Store intermediate results and statistics for reference/reconstruction
+    details = list(
+      curve_normalize_result  = curve_norm,
+      scalar_normalize_result = scalar_norm,
+      btwn_normalize_result   = btwn_norm,
+      response_normalize_result = response_norm,
+      split_indices = list(train = split_result$train_idx, test = split_result$test_idx)
+    )
+  ))
+}
+</code></pre> <h2 id="baseline-methods">Baseline methods</h2> <h3 id="fit_hybrid_pcr_iterative">fit_hybrid_pcr_iterative</h3> <p><strong>Description:</strong> This function implements a <strong>Hybrid Principal Component Regression (PCR)</strong> algorithm designed to handle high-dimensional data containing both scalar vectors and functional curves. The core strategy is <strong>dimensionality reduction via PCA</strong> applied separately to each data modality, followed by a linear regression on the resulting scores.</p> <h4 id="1-dimensionality-reduction">1. Dimensionality Reduction</h4> <p>The function decouples the dimensionality reduction step for scalar and functional predictors:</p> <ul> <li> <strong>Scalar Predictors ($\mathbf{Z}$):</strong> Standard PCA is applied to the training matrix $\mathbf{Z}<em>{train}$. The data is centered and scaled. Test data $\mathbf{Z}</em>{test}$ is projected onto the rotation matrix derived from the training set.</li> <li> <strong>Functional Predictors ($\mathbf{X}(t)$):</strong> Functional PCA (FPCA) is applied to each functional variable. <ul> <li> <strong>Training:</strong> We decompose the training functions into a mean function $\mu(t)$ and a set of orthogonal eigenfunctions (harmonics) $\phi_k(t)$: \(X_{i}(t) \approx \mu(t) + \sum_{k=1}^{K} \xi_{ik} \phi_k(t)\)</li> <li> <strong>Testing (Robust Centering):</strong> A critical step in this function is the robust projection of test data. We explicitly subtract the <strong>training mean</strong> $\mu_{train}(t)$ from the raw test curves before computing inner products with the training eigenfunctions. This ensures the test scores are strictly comparable to the training scores: \(\xi_{test, k} = \int \left( X_{test}(t) - \mu_{train}(t) \right) \phi_{k, train}(t) \, dt\)</li> </ul> </li> </ul> <h4 id="2-iterative-model-fitting">2. Iterative Model Fitting</h4> <p>Instead of selecting a single fixed number of components, the function iterates through a range of model complexities ($l = 1, \dots, \text{n_comp_max}$).</p> <p>At iteration $l$, the regression model is formulated as: \(Y = \beta_0 + \sum_{j=1}^{\min(l, \text{rank}(Z))} \alpha_j \text{Score}_{Z,j} + \sum_{p=1}^{P} \sum_{k=1}^{l} \gamma_{p,k} \text{Score}_{X^{(p)}, k} + \epsilon\)</p> <p>This allows us to observe the full trajectory of the Root Mean Squared Error (RMSE) as the model complexity increases, facilitating the selection of the optimal number of components.</p> <p>```{r fit_hybrid_pcr_iterative} #’ Iterative Hybrid Principal Component Regression #’ #’ @description #’ Fits a Principal Component Regression (PCR) model that integrates both scalar and #’ functional predictors. The function performs dimensionality reduction separately #’ for each modality and iteratively fits linear models with an increasing number #’ of principal components. #’ #’ @details #’ The workflow consists of three main stages: #’ \enumerate{ #’ \item \strong{Scalar PCA:} Performs standard PCA on the scalar matrix \code{Z}. #’ Test data is projected onto the training rotation matrix. #’ \item \strong{Functional PCA:} Performs FPCA on each functional predictor using #’ the \code{fda} package. Crucially, test curves are centered using the #’ \emph{training mean function} before projection onto training harmonics #’ to prevent data leakage. #’ \item \strong{Iterative Regression:} Fits a series of linear models (\code{lm}). #’ Model \code{l} includes the first \code{l} principal components from #’ both the scalar and functional sets. #’ } #’ #’ @param W_train A \code{predictor_hybrid} object containing training data. #’ @param y_train A numeric vector of training response values. #’ @param W_test A \code{predictor_hybrid} object containing test data. #’ @param y_test A numeric vector of test response values. #’ @param n_comp_max Integer. The maximum number of principal components to include #’ in the regression models. Defaults to 10. #’ #’ @return A list containing: #’ \item{validation_rmse}{A numeric vector of length \code{n_comp_max} containing #’ the RMSE on the test set for each model complexity level.} #’ #’ @importFrom stats prcomp predict lm #’ @importFrom fda pca.fd fd inprod #’ @export fit_hybrid_pcr_iterative &lt;- function(W_train, y_train, W_test, y_test, n_comp_max = 10) {</p> <p>validation_rmse &lt;- numeric(n_comp_max)</p> <p># 1. Scalar PCA (Train) # Computes rotation matrix on training data only k_z_max &lt;- min(n_comp_max, ncol(W_train$Z)) pca_z &lt;- prcomp(W_train$Z, center = TRUE, scale. = TRUE)</p> <p># Extract training scores and project test data onto training rotation all_z_scores_train &lt;- pca_z$x[, 1:k_z_max, drop = FALSE] all_z_scores_test &lt;- predict(pca_z, newdata = W_test$Z)[, 1:k_z_max, drop = FALSE]</p> <p># 2. Functional PCA (Train) n_funcs &lt;- length(W_train$functional_list) all_f_scores_train_list &lt;- list() all_f_scores_test_list &lt;- list()</p> <p>for(i in 1:n_funcs) { # Fit FPCA on Training Data to get harmonics and mean pca_fd &lt;- fda::pca.fd(W_train$functional_list[[i]], nharm = n_comp_max) all_f_scores_train_list[[i]] &lt;- pca_fd$scores</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Project Test Data (Robust Manual Centering)
+mean_fd &lt;- pca_fd$meanfd
+harmonics &lt;- pca_fd$harmonics
+
+# Extract test coefficients and training mean coefficients
+coefs_test &lt;- W_test$functional_list[[i]]$coefs
+coefs_mean &lt;- as.vector(mean_fd$coefs)
+
+# Sweep subtract: Test_Centered = Test_Raw - Mean_Train
+coefs_centered &lt;- sweep(coefs_test, 1, coefs_mean, "-")
+centered_test  &lt;- fd(coefs_centered, W_test$functional_list[[i]]$basis)
+
+# Project centered test data onto training harmonics
+all_f_scores_test_list[[i]] &lt;- fda::inprod(centered_test, harmonics)   }
+</code></pre></div></div> <p># 3. Iterative Regression Loop for (l in 1:n_comp_max) { # Scalar Scores Subset k_curr &lt;- min(l, k_z_max) z_train_curr &lt;- all_z_scores_train[, 1:k_curr, drop=FALSE] z_test_curr &lt;- all_z_scores_test[, 1:k_curr, drop=FALSE]</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Functional Scores Subset
+f_train_curr_list &lt;- list()
+f_test_curr_list  &lt;- list()
+for(i in 1:n_funcs) {
+  f_train_curr_list[[i]] &lt;- all_f_scores_train_list[[i]][, 1:l, drop=FALSE]
+  f_test_curr_list[[i]]  &lt;- all_f_scores_test_list[[i]][, 1:l, drop=FALSE]
+}
+
+# Construct Design Matrices
+df_train &lt;- data.frame(z_train_curr, do.call(cbind, f_train_curr_list))
+df_test  &lt;- data.frame(z_test_curr,  do.call(cbind, f_test_curr_list))
+
+# Fit Linear Model
+df_train$Y &lt;- y_train
+model &lt;- lm(Y ~ ., data = df_train)
+
+# Predict and Compute RMSE
+y_pred &lt;- predict(model, newdata = df_test)
+validation_rmse[l] &lt;- sqrt(mean((y_test - y_pred)^2))   }
+</code></pre></div></div> <p>return(list(validation_rmse = validation_rmse)) }</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+### fit_pfr
+
+**Description:**
+The `fit_pfr` function serves as a wrapper for fitting a Penalized Functional Regression (PFR) model (using the `refund` package in R) within a simulation or cross-validation pipeline. It is designed to handle a specific data structure where predictors are split into scalar matrices and functional data objects.
+
+**Key Implementation Details:**
+
+* **Scalar Predictor Unrolling:** A common issue when using `pfr()` or `gam()` is that passing a matrix column (e.g., `df$Z`) can sometimes trigger "length mismatch" errors during prediction. This function addresses this by converting the scalar matrix `Z` into individual columns (`Z1`, `Z2`, etc.) within the data frame.
+
+* **Functional Data Evaluation:** The function assumes inputs are `fd` objects (from the `fda` package). It evaluates these functions at specified time points (`eval_pts`) to create a dense matrix representation required by the `lf()` (linear functional) term in `pfr`.
+
+* **Dynamic Formula Construction:** Since the number of scalar predictors may vary, the regression formula is constructed dynamically as a string before being passed to `pfr`.
+
+* **FPCA Smoothing:** The term `lf(..., presmooth = 'fpca.sc')` indicates that the functional predictors are pre-smoothed using Functional Principal Component Analysis (FPCA). This allows the model to handle noisy or irregular functional data effectively by regressing on the principal component scores.
+ 
+
+```{r}
+#' Fit Penalized Functional Regression (PFR)
+#'
+#' This function formats training and testing data, fits a PFR model using the `refund` package,
+#' and evaluates predictive performance via RMSE. It explicitly handles the "unrolling" of
+#' scalar matrix predictors to avoid common dimension errors in `gam`/`pfr`.
+#'
+#' @param W_train A list containing training predictors:
+#'   \itemize{
+#'     \item \code{Z}: Matrix of scalar predictors.
+#'     \item \code{functional_list}: List of `fd` objects (functional predictors).
+#'     \item \code{eval_point}: Vector of evaluation time points.
+#'   }
+#' @param y_train Vector of scalar response values for training.
+#' @param W_test A list containing testing predictors (same structure as \code{W_train}).
+#' @param y_test Vector of scalar response values for testing (used for RMSE calculation).
+#'
+#' @return A numeric value representing the Root Mean Squared Error (RMSE) on the test set.
+#'         Returns \code{NA} if the model fit fails.
+#' @export
+fit_pfr &lt;- function(W_train, y_train, W_test, y_test) {
+  
+  # Extract common evaluation points for the functional curves
+  eval_pts &lt;- W_train$eval_point
+  
+  # ------------------------------------------------------------------
+  # 1. Prepare Scalar Predictors (Unrolling)
+  # ------------------------------------------------------------------
+  # Convert the scalar matrix Z into a data frame with explicit column names 
+  # (Z1, Z2, ...). This "unrolling" is critical because `pfr`/`gam` can 
+  # throw "variable length differs" errors if predictors are stored as a 
+  # single matrix column inside the data frame during prediction.
+  Z_train_df &lt;- as.data.frame(W_train$Z)
+  colnames(Z_train_df) &lt;- paste0("Z", 1:ncol(Z_train_df))
+  
+  Z_test_df  &lt;- as.data.frame(W_test$Z)
+  colnames(Z_test_df) &lt;- paste0("Z", 1:ncol(Z_test_df))
+  
+  # ------------------------------------------------------------------
+  # 2. Construct Data Frames for Model Fitting
+  # ------------------------------------------------------------------
+  # Combine response, unrolled scalars, and evaluated functional matrices.
+  
+  # Training Data
+  df_train &lt;- cbind(response = y_train, Z_train_df)
+  
+  # Evaluate functional objects (fd) at discrete points to create predictor matrices.
+  # t() is used because eval.fd returns (time x subjects), but pfr expects (subjects x time).
+  df_train$F1 &lt;- t(eval.fd(eval_pts, W_train$functional_list[[1]])) 
+  df_train$F2 &lt;- t(eval.fd(eval_pts, W_train$functional_list[[2]]))
+  
+  # Testing Data
+  df_test &lt;- cbind(response = y_test, Z_test_df)
+  df_test$F1 &lt;- t(eval.fd(eval_pts, W_test$functional_list[[1]]))
+  df_test$F2 &lt;- t(eval.fd(eval_pts, W_test$functional_list[[2]]))
+  
+  # ------------------------------------------------------------------
+  # 3. Dynamically Build the Formula
+  # ------------------------------------------------------------------
+  # Create the scalar part of the formula: "Z1 + Z2 + ... + Zp"
+  scalar_formula_part &lt;- paste(colnames(Z_train_df), collapse = " + ")
+  
+  # Construct the full formula string.
+  # lf(): Defines a linear functional term.
+  # presmooth = 'fpca.sc': Applies FPCA to smooth functions and reduce dimensionality 
+  # prior to regression, which is robust for noisy data.
+  f_str &lt;- paste0(
+    "response ~ ", scalar_formula_part, " + ",
+    "lf(F1, argvals = eval_pts, presmooth = 'fpca.sc') + ",
+    "lf(F2, argvals = eval_pts, presmooth = 'fpca.sc')"
+  )
+  
+  # ------------------------------------------------------------------
+  # 4. Fit Model and Predict
+  # ------------------------------------------------------------------
+  tryCatch({
+    # Fit the PFR model.
+    # method = "GCV.Cp": Uses Generalized Cross-Validation for smoothing parameter selection.
+    # gamma = 1.2: Inflation factor for GCV to prevent overfitting (smoother results).
+    fit &lt;- pfr(as.formula(f_str), data = df_train, method = "GCV.Cp", gamma = 1.2)
+    
+    # Predict on test data
+    pred &lt;- predict(fit, newdata = df_test)
+    
+    # Calculate RMSE
+    rmse &lt;- sqrt(mean((y_test - pred)^2))
+    return(rmse)
+    
+  }, error = function(e) {
+    # Graceful error handling prevents the entire simulation loop from crashing
+    message("PFR Error: ", e$message)
+    return(NA)
+  })
+}
+</code></pre></div></div> <h1 id="kidney-data-preprocessing-pipeline">Kidney Data Preprocessing Pipeline</h1> <p>This section details the transformation of raw renogram data into a structured <strong>Hybrid Predictor</strong> object suitable for the <code class="language-plaintext highlighter-rouge">FSHybridPLS</code> package. The process involves extracting patient metadata, averaging and transforming response variables, and applying a domain-specific normalization to the functional curves.</p> <ul> <li> <p><strong>Mathematical Formulation:</strong> Let $N$ be the number of unique subjects. For the $i$-th subject ($i = 1, \ldots, N$), the data consists of:</p> <ul> <li> <p><strong>Scalar Predictors ($\mathbf{z}$):</strong> We extract 15 scalar covariates (Age + 14 physiological metrics). Let $\mathbf{z}_i \in \mathbb{R}^{15}$ denote the scalar predictor vector for subject $i$.</p> </li> <li> <p><strong>Response Variable ($y$):</strong> The raw data contains three diagnostic metrics for the response. We first calculate the arithmetic mean of these three indicators: \(y_i^{\text{raw}} = \frac{1}{3} \sum_{k=1}^{3} y_{i,k}\) and then apply min-max transformation to the range $[0,1]$: \(y_i = \frac{y_i^{\text{raw}} - \min(y_i^{\text{raw}})}{\max(y_i^{\text{raw}}) - \min(y_i^{\text{raw}})}\)</p> </li> <li> <p><strong>Functional Predictors ($X$):</strong> Each subject has two distinct time-series curves (Renograms):</p> <ul> <li> <strong>Baseline Renogram:</strong> $X_{i}^{(1)}(t)$ observed at $T_1 = 59$ time points.</li> <li> <strong>Post-Furosemide Renogram:</strong> $X_{i}^{(2)}(t)$ observed at $T_2 = 40$ time points.</li> </ul> </li> </ul> </li> <li> <p><strong>Medical Normalization:</strong> To ensure comparability across patients with varying absolute kidney uptake levels, we normalize both curves relative to the peak of the <strong>baseline</strong> curve. Let $m_i$ be the maximum value of the baseline curve for subject $i$: \(m_i = \max_{t} X_{i}^{(1)}(t)\) The normalized functions, $\tilde{X}$, are computed as: \(\tilde{X}_{i}^{(1)}(t) = \frac{X_{i}^{(1)}(t)}{m_i} \quad \text{and} \quad \tilde{X}_{i}^{(2)}(t) = \frac{X_{i}^{(2)}(t)}{m_i}\)</p> <blockquote> <p><strong>Note:</strong> The divisor $m_i$ is derived strictly from the <em>baseline</em> curve but is applied to <em>both</em> curves. This preserves the relative magnitude of the post-furosemide response compared to the baseline peak.</p> </blockquote> </li> <li> <p><strong>Implementation Logic:</strong> The function <code class="language-plaintext highlighter-rouge">load_and_preprocess_kidney_data</code> performs these mathematical operations using vectorized algebra for efficiency:</p> <ul> <li> <strong>Extraction &amp; Alignment:</strong> Filters the dataframe to separate “Baseline” and “Post-Furosemide” entries and reshapes time-series data into wide matrices ($N \times T$).</li> <li> <strong>Response Transformation:</strong> Computes the mean response, scales it to $[0,1]$, applies a safety squeeze (to map $[0,1] \to [\epsilon, 1-\epsilon]$), and finally applies the <code class="language-plaintext highlighter-rouge">qlogis</code> (logit) function.</li> <li> <strong>Vectorized Normalization:</strong> Computes the scaling factor vector $\mathbf{m} = (m_1, \ldots, m_N)^\top$ and applies it row-wise to the functional data matrices.</li> <li> <strong>Basis Smoothing:</strong> Smooths the discrete points into continuous B-spline functions over the standardized domain $t \in [0,1]$.</li> <li> <strong>Hybrid Object Construction:</strong> Encapsulates components into the <code class="language-plaintext highlighter-rouge">predictor_hybrid</code> S3 class: $\mathbf{W} = \left{ \mathbf{Z}, \left( \tilde{X}^{(1)}, \tilde{X}^{(2)} \right) \right}$.</li> </ul> </li> </ul> <pre><code class="language-{r}">#' Load and Preprocess Kidney Data for FSHybridPLS
+#'
+#' This function processes the raw 'kidney' dataframe into a `predictor_hybrid` object.
+#' It performs:
+#' 1. Extraction of scalar and functional covariates.
+#' 2. Specific medical normalization (scaling by baseline max).
+#' 3. Smoothing of functional curves into B-spline basis objects.
+#' 4. Transformation of Response: Min-Max scaling followed by Logit transformation.
+#' 5. Construction of the hybrid predictor object.
+#'
+#' @param kidney_df The raw dataframe containing kidney data (columns: ID, Study, renogram_value, etc.)
+#' @param n_basis Integer. Number of B-spline basis functions to use for smoothing (default 20).
+#'
+#' @return A list containing:
+#'   \item{W}{A `predictor_hybrid` object containing the predictors.}
+#'   \item{y}{A numeric vector representing the transformed response (logit of min-max scaled mean diagnosis metrics).}
+#' @export
+load_and_preprocess_kidney_data &lt;- function(kidney_df, n_basis = 20) {
+  
+  # --- 1. Data Extraction ---
+  # Split data by ID to ensure order consistency
+  ids &lt;- unique(kidney_df$ID)
+  n_sample &lt;- length(ids)
+  
+  # Helper to extract scalar/response from the first row of each patient's baseline
+  base_data_idx &lt;- which(kidney_df$Study == "Baseline")
+  patient_meta &lt;- kidney_df[base_data_idx, ]
+  patient_meta &lt;- patient_meta[!duplicated(patient_meta$ID), ]
+  
+  # --- Response Extraction &amp; Transformation ---
+  # 1. Raw Mean (Columns 13, 14, 15)
+  y_mat &lt;- as.matrix(patient_meta[, c(13, 14, 15)])
+  y_raw &lt;- rowMeans(y_mat, na.rm = TRUE)
+  
+  # 2. Min-Max Scaling to [0, 1]
+  y_min &lt;- min(y_raw, na.rm = TRUE)
+  y_max &lt;- max(y_raw, na.rm = TRUE)
+  # Prevent division by zero if all y are identical
+  if (y_max == y_min) {
+    warning("Response variable has zero variance. Skipping scaling/logit.")
+    y &lt;- y_raw
+  } else {
+    y_scaled &lt;- (y_raw - y_min) / (y_max - y_min)
+    
+    # 3. Safety Squeeze (avoid Inf/-Inf at boundaries)
+    # Maps [0, 1] -&gt; [epsilon, 1-epsilon]
+    epsilon &lt;- 1e-5
+    y_safe &lt;- y_scaled * (1 - 2 * epsilon) + epsilon
+    
+    # 4. Logit Transformation: log(p / (1-p))
+    #y &lt;- qlogis(y_safe)
+    y &lt;- y_scaled
+    # &lt;- y_raw
+  }
+  
+  # --- Scalar Predictors (Z) ---
+  # Columns: 12 (Age) + 16:29
+  Z &lt;- as.matrix(patient_meta[, c(12, 16:29)])
+  colnames(Z) &lt;- c("Age", colnames(patient_meta)[16:29])
+  
+  # --- Functional Data Extraction ---
+  # Filter and sort
+  df_base &lt;- kidney_df[kidney_df$Study == "Baseline", ]
+  df_post &lt;- kidney_df[kidney_df$Study != "Baseline", ]
+  
+  # Reshape to (ID x Time) matrices
+  reno_base_mat &lt;- matrix(df_base$renogram_value, nrow = n_sample, byrow = TRUE)
+  reno_post_mat &lt;- matrix(df_post$renogram_value, nrow = n_sample, byrow = TRUE)
+  
+  # --- 2. Medical Preprocessing (Normalization) ---
+  # Calculate max of baseline for each patient
+  max_base &lt;- apply(reno_base_mat, 1, max)
+  max_base[max_base == 0] &lt;- 1 
+  
+  # Scale matrices
+  reno_base_norm &lt;- reno_base_mat / max_base
+  reno_post_norm &lt;- reno_post_mat / max_base
+  
+  # --- 3. Smoothing (Convert to fd objects) ---
+  # Define time grids normalized to [0,1]
+  t_base &lt;- seq(0, 1, length.out = ncol(reno_base_norm))
+  t_post &lt;- seq(0, 1, length.out = ncol(reno_post_norm))
+  
+  # Create Basis (B-spline)
+  basis_base &lt;- create.bspline.basis(rangeval = c(0, 1), nbasis = n_basis)
+  basis_post &lt;- create.bspline.basis(rangeval = c(0, 1), nbasis = n_basis)
+  
+  # Smooth (Transpose: Time x Samples)
+  fd_base &lt;- Data2fd(t_base, t(reno_base_norm), basis_base)
+  fd_post &lt;- Data2fd(t_post, t(reno_post_norm), basis_post)
+  
+  # Assign Names
+  fd_base$fdnames &lt;- list("Time", "Patient", "Baseline Renogram")
+  fd_post$fdnames &lt;- list("Time", "Patient", "Post-Furosemide Renogram")
+  
+  # --- 4. Construct Hybrid Predictor ---
+  common_eval &lt;- seq(0, 1, length.out = 100)
+  
+  W &lt;- predictor_hybrid(
+    Z = Z,
+    functional_list = list(fd_base, fd_post),
+    eval_point = common_eval
+  )
+  
+  return(list(W = W, y = y))
+}
+</code></pre> <h1 id="numerical-studies">Numerical Studies</h1> <p>This repository contains R scripts to replicate the numerical studies presented in the paper. All scripts are located in the <code class="language-plaintext highlighter-rouge">numerical_studies</code> directory.</p> <h3 id="1-6_1_geometric_validationr">1. <code class="language-plaintext highlighter-rouge">6_1_geometric_validation.R</code> </h3> <p>Validates the geometric properties of the hybrid space (orthonormality, weighted norms).</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rscript numerical_studies/6_1_geometric_validation.R <span class="o">[</span>RepID]
+</code></pre></div></div> <h3 id="2-6_2_beta_estimationr">2. <code class="language-plaintext highlighter-rouge">6_2_beta_estimation.R</code> </h3> <p>Estimates the $\beta$ coefficient function for a single hyperparameter pair.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rscript numerical_studies/6_2_beta_estimation.R <span class="o">[</span>RepID] <span class="o">[</span>N] <span class="o">[</span>Lam1] <span class="o">[</span>Lam2]
+</code></pre></div></div> <h3 id="3-6_3_1_scenario_1r">3. <code class="language-plaintext highlighter-rouge">6_3_1_scenario_1.R</code> </h3> <p>Runs the simulation for <strong>Scenario 1:</strong> Orthogonal Nuisance Variance.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rscript numerical_studies/6_3_1_scenario_1.R <span class="o">[</span>RepID]
+</code></pre></div></div> <h3 id="4-6_3_2_scenario_2r">4. <code class="language-plaintext highlighter-rouge">6_3_2_scenario_2.R</code> </h3> <p>Runs the simulation for <strong>Scenario 2:</strong> Function-Driven Intermodal Correlation.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rscript numerical_studies/6_3_2_scenario_2.R <span class="o">[</span>RepID]
+</code></pre></div></div> <h3 id="5-6_4_kidney_single_repr">5. <code class="language-plaintext highlighter-rouge">6_4_kidney_single_rep.R</code> </h3> <p>Runs the comparative analysis on the kidney dataset (HybridPLS vs. OLS, PCR, PFR). <em>Note: Requires <code class="language-plaintext highlighter-rouge">renogram_data.csv</code> in the <code class="language-plaintext highlighter-rouge">../data/</code> directory.</em></p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rscript numerical_studies/6_4_kidney_single_rep.R <span class="o">[</span>Lam1] <span class="o">[</span>Lam2] <span class="o">[</span>RepID]
+</code></pre></div></div> </body></html>
