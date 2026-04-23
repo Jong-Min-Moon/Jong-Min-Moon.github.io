@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Road Trip Advisor Chatbot
-description: Code and implementation of a road trip advisor chatbot.
+description: Llama-3.1-8B-Instruct fine-tuned chatbot trained on road trip questions and answers data.
 importance: 3
 ---
 
