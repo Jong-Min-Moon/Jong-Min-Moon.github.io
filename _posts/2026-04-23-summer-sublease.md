@@ -16,6 +16,14 @@ My current rent is $1,750/month, but I’m offering it for $1,200/month, includi
 
 If you’re interested, feel free to reach out at: [jongmmun@gmail.com](mailto:jongmmun@gmail.com)
 
+### Apartment Video Walkthrough
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include video.html path="assets/img/KakaoTalk_20260423_173507724.mp4" class="img-fluid rounded z-depth-1" controls=true autoplay=true loop=true %}
+    </div>
+</div>
+
 ### Apartment Photos
 
 <div class="row mt-3">
