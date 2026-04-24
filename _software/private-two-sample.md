@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Private Two Sample Testing
+title: "Package `privateAB`: Two-Sample Testing under Local Differential Privacy"
 description: Implementation of private two-sample testing algorithms.
 importance: 1
 ---
 
-# package `privateAB`:  two-sample testing under local differential privacy
+ 
 The package `privateAB` and the codes in this repository implement the private testing method introduced in the JMLR paper *Minimax Optimal Two-Sample Testing under Local Differential Privacy*, authored by Jongmin Mun, Seungwoo Kwak, and Ilmun Kim.  
 
 The full paper can be accessed at: [https://www.jmlr.org/papers/volume26/24-2016/24-2016.pdf](https://www.jmlr.org/papers/volume26/24-2016/24-2016.pdf).  
