@@ -32,7 +32,7 @@ paper_key: qianPerformanceGuaranteesIndividualized2011
 - pretreatment variables representing patient characteristics ($X$)
 - a finite treatment space ($A$)
 - an outcome ($R$)
-- known randomization distribution of A given X by $p(\cdot|X)$ (pp. 60, 63).
+- known randomization distribution of A given X by $p(\cdot \mid X)$
 
 - The objective is to formulate an individualized treatment rule (ITR), defined as a deterministic decision rule from $\mathcal{X}$ into the treatment space $\mathcal{A}$ 
 
@@ -43,7 +43,7 @@ paper_key: qianPerformanceGuaranteesIndividualized2011
 
 <p>
 \begin{equation*}
-V(d)=E\left[\frac{1_{A=d(X)}}{p(A|X)}R\right]
+V(d)=E\left[\frac{1_{A=d(X)}}{p(A \mid X)}R\right]
 \end{equation*}
 <\p>
 
