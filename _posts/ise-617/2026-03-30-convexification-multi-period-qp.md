@@ -180,3 +180,29 @@ $$\ell_{ij} = \begin{cases} 0, & i = 0, \; 1 \le j \le n+1, \\[2mm] c_i - \dfrac
 **Proposition 10 and Corollary 4** state that when side constraints ($\tilde{C}$) are present, the shortest path algorithm cannot be used directly. Instead, the PSD matrix $W$ is decomposed, allowing the convex hull to be formatted as a tight Second-Order Cone Program (SOCP). This preserves the convex geometry while seamlessly integrating the real-world side constraints.
 
 
+# Case study 1: Deconvolution of calcium imaging data
+
+This paper models the generative process of calcium concentration using an **AR(1) model**, which expresses the observed fluorescence trace $r_i$ as a noisy version of the unobserved calcium concentration $s_i$. 
+
+In this model, the calcium concentration $s_i$ decays exponentially over time until a spike $x_i$ occurs, instantaneously increasing the concentration. With a decay rate $\alpha \in (0, 1)$ and Gaussian noise $\epsilon_i \overset{i.i.d.}{\sim} N(0, \sigma^2)$, $i \in [n]$, the generative model is expressed by:
+
+<p>
+\begin{align}\label{generative_model}
+r_i &= \rho_0 + \rho_1 s_i + \epsilon_i, \quad i \in [n + 1] \\
+s_{i+1} &= \alpha s_i + x_i, \quad i \in [n]
+\end{align}
+</p>
+
+where $x_i \geq 0, i \in [n]$. As the spike detection is scale-invariant, we assume $\rho_1 = 1$, and $\rho_0$ can be set to $0$ with a minor modification. Then, the calcium concentration can be estimated by solving the following optimization problem:
+
+<p>
+\begin{align*}
+\min \quad & \frac{1}{2} \sum_{i=1}^{n+1} (s_i - r_i)^2 + \lambda \sum_{i=1}^{n} z_i \\    
+\text{s.t.} \quad & x_i = s_{i+1} - \alpha s_i \geq 0, \quad i \in [n] \\
+& x_i (1 - z_i) = 0, \quad i \in [n] \\
+& z_i \in \{0, 1\}, \quad i \in [n]
+\end{align*}
+</p>
+
+### Synthetic Data Generation
+This paper do not use real data. It only uses synthetic data, generated using the model $\eqref{generative_model}$, where $x_i$ is i.i.d. drawn from Poisson($\mu$).  We randomly generate ten instances for each combination of ($n, \mu, \sigma$), where $n \in \{50, 100, 150, 200, 250, 300\}$, $\mu \in \{0.01, 0.02, 0.03, 0.04, 0.05\}$ and $\sigma \in \{0.05, 0.1, 0.15, 0.2, 0.25\}$.
