@@ -45,7 +45,7 @@ paper_key: qianPerformanceGuaranteesIndividualized2011
 \begin{equation*}
 V(d)=E\left[\frac{1_{A=d(X)}}{p(A \mid X)}R\right]
 \end{equation*}
-<\p>
+</p>
 
 - Does not work well for high-dimensional $X$ and large policy space.
 
