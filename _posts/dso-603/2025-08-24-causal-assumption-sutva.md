@@ -3,27 +3,29 @@ layout: distill
 title: "Causal Assumption: SUTVA and Ignorability"
 description: "Understanding SUTVA and ignorability, fundamental assumptions in causal inference, what they mean, and what happens when they are violated."
 date: 2025-08-24
-categories: dso-603 statistics
-tags: causal-basics
+categories: [dso-603, statistics]
+tags: [causal-basics]
 project: dso-603
 authors:
-  - name: Jongmin Mun
-    url: "https://jongminmoon.github.io"
+  - name: Jong Min Moon
+    url: "https://github.com/Jong-Min-Moon"
+    affiliations:
+      name: USC Marshall
 toc:
   - name: Rubin Potential Outcomes Framework
   - name: SUTVA
     subsections:
-      - name: 1. Consistency: One Version of the Treatment
-      - name: 2. No Interference
-      - name: What Happens When SUTVA is Violated?
-      - name: How to Handle SUTVA Violations (Interference)
-  - name: Ignorability: When Does Linear Regression Yield Causal Inference?
+      - name: "1. Consistency: One Version of the Treatment"
+      - name: "2. No Interference"
+      - name: "What Happens When SUTVA is Violated?"
+      - name: "How to Handle SUTVA Violations (Interference)"
+  - name: "Ignorability: When Does Linear Regression Yield Causal Inference?"
     subsections:
-      - name: RCT is the gold standard
-      - name: Observational studies
-      - name: Ignorability
-      - name: Overlap
-      - name: Well specified linear model
+      - name: "RCT is the gold standard"
+      - name: "Observational studies"
+      - name: "Ignorability"
+      - name: "Overlap"
+      - name: "Well specified linear model"
   - name: References
 ---
 
@@ -57,78 +59,67 @@ For observational studies, in addition to SUTVA,another important assumption is 
 - **Software Rollouts:** If a UI feature performs very fast on iOS but is buggy and slow on Android, treating "Feature X" as a single uniform treatment will blur the causal effect.
 
 ## 2. No Interference
-
-**Definition:** The potential outcomes for any unit do not vary with the treatments assigned to other units
-
-<p align="center">
-\begin{equation*}
-    Y_1(W_1) = Y_1(W_1 | W_2=0) = Y_1(W_1 | W_2=1) =  ... = Y_1(W_1 | W_n=w_n)
-\end{equation*}
-</p>
-
-Simply put, what happens to *you* under a treatment or control condition is not affected by whether *someone else* is in the treatment or control group. 
-
-### Examples Validating "No Interference"
-- **Medical Trials (Non-Infectious):** If a patient takes a pill for a headache, it does not alleviate or worsen another patient's headache. The outcome for Patient A only depends on Patient A's treatment.
-- **Standard E-commerce A/B Tests:** If User A sees a blue "Buy" button and User B sees a red one, User A's likelihood to purchase is  independent of User B's experience.
+- **Definition:** The potential outcomes for any unit do not vary with the treatments assigned to other units (Imbens and Rubin 2015, 10). 
+- **Interpretation:** One unit's treatment assignment should not affect another unit's outcome. If you are in the treatment group, it shouldn't matter if your neighbor is in the treatment or control group. 
 
 ### Examples of "Interference" (SUTVA Violation)
-- **Vaccines:** In infectious diseases, if everyone around you is vaccinated (Treatment), your potential outcome of getting sick (Control) drops drastically due to herd immunity. Even if not seriously infectious, the control group patient might share his drug with his friends because the drug is a cure and expensive.
-- **Social Networks:** If Facebook tests a feature that makes users post more, and your friends get the treatment, your feed will have more posts—even if you are in the control group. This is often called **network spillover**.
-- **Two-Sided Marketplaces (Ride-sharing):** If a new feature makes treatment riders match with drivers much faster, it removes available drivers from the road, making control riders wait longer ("crowd-out effect"). 
-
-
+- **Vaccination Programs:** If your neighbor gets a flu shot, your probability of getting the flu decreases even if you don't get the shot yourself (herd immunity). This is a classic example of interference.
+- **Ridesharing Marketplaces:** If one driver is given a bonus to work in a certain area, it might affect the earnings and availability of other drivers in that same area, regardless of whether they also received the bonus.
+- **Social Networks:** If your friend starts using a new social feature, you might be more likely to use it too, even if the feature wasn't directly rolled out to you.
 
 ## What Happens When SUTVA is Violated?
 
 When SUTVA is violated, our estimates of the **Average Treatment Effect (ATE)** become biased. 
+Specifically, the standard difference-in-means estimator $\hat{\tau} = \bar{Y}_{treated} - \bar{Y}_{control}$ no longer purely measures the effect of the treatment itself. 
+It now also includes the "spillover" effects from other units' assignments.
 
-Without one version of the treatment, the ATE becomes a muddy average of several wildly different treatments rather than a clear estimate of one specific intervention.
-
-If there is interference, the difference between the Treatment and Control groups might look artificially large.
-For example, in the ride-sharing case, the treatment riders got rides *at the expense* of control riders, making the control group perform worse than they would have if the treatment never existed. See [Lyft blog post](https://eng.lyft.com/challenges-in-experimentation-be9ab98a7ef4) for detailed discussion.
-
-
+In many marketplaces (like Uber or Lyft), this bias is typically negative. 
+If we treat some users and they consume all the available drivers, the control group users will have worse outcomes (longer wait times) than they would have in a pure control world. 
+This makes the treatment look better than it actually is.
 
 ## How to Handle SUTVA Violations (Interference)
 
 In modern tech, interference is the most common and difficult SUTVA violation. To deal with it, data scientists use alternative experimental designs:
 
-1. **Cluster Randomization:** Instead of randomizing the treatment at the user level, you randomize at the cluster level (e.g., schools, cities, or highly connected friendship clusters). While individuals within a city interact, different cities rarely interfere with each other.
-2. **Switchback (Time-Split) Experiments:** Used heavily in delivery and ride-sharing networks, this involves alternating entire regions between Treatment and Control over time (e.g., treating a city on Monday, turning it off Tuesday, treating again Wednesday). 
-3. **Synthetic Controls:** Evaluating a treatment in a specific geographic region by comparing it against a mathematically constructed "synthetic" region that mirrors the treated region's pre-experiment trends.
+1.  **Cluster Randomization:** Instead of randomizing at the user level, we randomize at a higher level where interference is less likely (e.g., randomizing by city or by geographic neighborhood).
+2.  **Switchback (Time-Series) Experiments:** We randomize the entire system between treatment and control states over different time windows.
+3.  **Graph-based Randomization:** If we know the social or network connections between units, we can use graph-partitioning algorithms to ensure that treated units are mostly surrounded by other treated units (and same for control).
+
+---
 
 # Ignorability: When Does Linear Regression Yield Causal Inference?
 
 ## RCT is the gold standard
-The simplest solution to the fundamental problem of causal inference is to run a Randomized Controlled Trial (RCT). In an RCT, the treatment and control groups are **balanced** on average, meaning they are **drawn from the same underlying distribution**. In other words, the sample means $\bar{y}_0$ and $\bar{y}_1$ estimate the average outcomes under control and treatment for the **exact same population** <d-cite key="frangakis2004principal"></d-cite>. ATE estimation is simple: just take the difference in means: $$\text{ATE} = \bar{y}_1 - \bar{y}_0$$
+- In a Randomized Controlled Trial (RCT), we randomly assign units to treatment or control. 
+- This ensures that, on average, the treatment and control groups are identical in all aspects (both observed and unobserved) except for the treatment itself. 
+- Therefore, any difference in outcomes can be attributed directly to the treatment.
 
 ## Observational studies
-In reality, RCTs are often prohibitively expensive, meaning we frequently must rely on observational data. Unlike in an RCT, treatments in observational studies are not randomly assigned; they are simply observed. As a result, systematic differences usually exist between the treated and untreated groups—a problem known as confounding.
+- In observational studies, units are not randomly assigned. 
+- People choose to take a treatment, or doctors decide who gets a drug based on their health status. 
+- This leads to **confounding**: the treated group might be different from the control group in ways that also affect the outcome (e.g., wealthier people being more likely to buy a health supplement and also having better general health).
 
-However, if certain assumptions are met, we can still estimate the Average Treatment Effect (ATE) from observational data. Doing so simply requires more sophisticated estimators, moving beyond a naive difference in means to methods like linear regression.
+## Ignorability
+To make causal claims from observational data, we need the **Ignorability Assumption** (also known as "Unconfoundedness" or "Selection on Observables"):
 
-
-## Ignorability:
-The key assumption is ignorability (also known as unconfoundedness). Intuitively, this means that instead of having a single randomized trial for the entire population, we essentially have a "mini-RCT" for every specific value of our observed covariates. Mathematically, this is expressed as conditional independence :
-$$Y^{(0)},Y^{(1)} \perp T \mid X$$
-This is a strong assumption! It requires that we haven't missed any pre-treatment covariates (unobserved confounders) that affect both the treatment assignment and the outcome. However, if this assumption holds—alongside the positivity assumption—we can estimate the Average Treatment Effect (ATE) from observational data using linear regression.
+- **Definition:** $(Y_i(0), Y_i(1)) \perp W_i \mid X_i$
+- **Interpretation:** Given a set of observed covariates $X$, the treatment assignment $W$ is as if it were random. There are no *unobserved* variables that affect both the treatment assignment and the potential outcomes.
 
 ## Overlap
-While ignorability concerns the dependence structure of the data, our second requirement restricts the assignment probabilities. This assumption—known as positivity or overlap—requires that for every possible value of our covariates, we observe subjects in both the treatment and control groups. Mathematically, the probability of receiving treatment given the covariates must be strictly between zero and one:
-$$0 < P(T=1 \mid X=x) < 1$$
-for all $x$ in the support of $X$.
+- **Definition:** $0 < P(W_i = 1 \mid X_i) < 1$ for all $X$.
+- **Interpretation:** For every possible value of the covariates, there is a non-zero probability of being in either the treatment or the control group. We can't compare treated and control units if some types of people *only* ever receive treatment or *only* ever receive control.
 
 ## Well specified linear model
-The final requirement for using linear regression in causal inference is that the model must be correctly specified. This means the underlying true data-generating process must follow this exact linear form:
-$$Y = D\theta_0 + X^\top b_0 + \varepsilon$$
-where the error term, $\varepsilon$, is independent of both the treatment $D$ and the covariates $X$. In other words, $D$ and $X$ must genuinely have a linear relationship with the outcome $Y$. Because this is an incredibly stringent and rarely realistic assumption, basic linear regression is often impractical for real-world causal inference. Instead, it serves primarily as a conceptual stepping stone for understanding more advanced methodologies.
+If ignorability and overlap hold, we can estimate the causal effect by adjusting for $X$. A common way is using linear regression:
+<p>
+$$
+Y_i = \alpha + \tau W_i + \beta X_i + \epsilon_i
+$$
+</p>
+In this model, $\tau$ can be interpreted as the causal effect if the model correctly captures the relationship between $X$ and $Y$.
+
 
 # References
-- Imbens, Guido W, and Donald B Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge University Press.
-- Keele, Luke. 2015b. “The Statistics of Causal Inference: A View from Political Methodology.” Polit. Anal. 23 (3): 313–35.
-- Applied Causal Inference (with R) Paul C. Bauer, Version: 29 May, 2020. [link](https://bookdown.org/paul/applied-causal-analysis/sutva1.html)
+- Imbens, G. W., & Rubin, D. B. (2015). Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge University Press.
+- Keele, L. (2015). The Statistics of Causal Inference: A View from Political Methodology. Political Analysis.
 - SUTVA (Stable Unit Treatment Value Assumption) - Causal Inference, Data Talks, Youtube Video. [link](https://youtu.be/wFpUKGNgb0Y?si=kf7eE0bYyNOMXaYi)
-- Nicholas Chamandy, Experimentation in a Ridesharing Marketplace. Lyft Engineering blog post. [link](https://medium.com/@nicholas.chamandy/experimentation-in-a-ridesharing-marketplace-5b8701973677)
-- Yingying Fan, Lecture note for DSO 603: Causal Inference with Modern Machine Learning Methods. Department of Data Sciences and Operations, University of Southern California.
-- Stefan Wager, Lecture note for STA 361: Causal inference. Department of Statistics, Stanford University.
