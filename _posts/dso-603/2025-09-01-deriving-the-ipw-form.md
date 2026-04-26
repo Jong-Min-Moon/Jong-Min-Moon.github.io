@@ -4,7 +4,7 @@ title: "Deriving the IPW Estimator: From One RCT to Infinite RCTs under Unconfou
 description: "An intuitive derivation of the Inverse Probability Weighting (IPW) estimator from a single RCT to multiple RCTs and observational data."
 date: 2025-09-01
 categories: dso-603 statistics
-tags: causal-inference ipw
+tags: ate-estimation ipw
 project: causal_inference
 authors:
   - name: Jong Min Moon
@@ -21,11 +21,9 @@ toc:
 This post shows that somewhat intimitating form of IPW estimator 
 
 <p>
-$$
 \begin{equation*}
 \hat{\tau}_{IPW} = \frac{1}{n} \sum_{i=1}^n \left( \frac{W_i Y_i}{\hat{e}(X_i)} - \frac{(1 - W_i) Y_i}{1 - \hat{e}(X_i)} \right)
 \end{equation*}
-$$
 </p>
 
 is actually just a weighted average of many mean differences.

@@ -29,17 +29,32 @@ toc:
   - name: References
 ---
 
-# Rubin Potential Outcomes Framework
+
+1. Individual treatment effect is estimable if we have parallel universes: two outcomes observed for each unit. we just subtract.
+2. SUTVA + RCT → estimable ATE. 
+3. SUTVA + ignorability + overlap + well specified linear model → estimable ATE. 
+
+
+
+# Rubin Potential Outcomes Framework and individual treatment effect
 - Every experimental  unit (e.g. user) walks around with two pieces of paper, one in each back pocket.
 - On one of these papers is written that subject’s inevitable outcome should she happen to be assigned to the control group.
 On the other piece of paper is written her outcome given assignment to the treatment. Together, the two pieces of paper are a unit’s potential outcomes.
-- In ideal universe, we will take one unit and observe both potential outcomes. The causal inference is done.
+- In ideal universe, we will take one unit and observe both potential outcomes. The causal inference is done by subtracting the control outcome from the treatment outcome.
+- The estimand is individual treatment effect.
+
+
+
+
+
+
+# SUTVA, RCT, ATE
 - But in reality, we can only observe one of the potential outcomes for each unit. Therefore we need at least to units: one for treatment and one for control.
-- When there are many units, whether in a randomized A/B test or an observational study, we rely heavily on the **Stable Unit Treatment Value Assumption (SUTVA)**. 
-For observational studies, in addition to SUTVA,another important assumption is ignorability (or unconfoundedness).
+  
+- Since there are multiple units,  whether in a randomized A/B test or an observational study, we rely heavily on the **Stable Unit Treatment Value Assumption (SUTVA)**. 
 
+- SUTVA resolves problem arising from using two units instead of one.
 
-# SUTVA
 - SUTVA consists of two distinct components:
   1.  **Consistency**: No hidden variations of treatment.
   2.  **No Interference** 
@@ -85,7 +100,12 @@ In modern tech, interference is the most common and difficult SUTVA violation. T
 2.  **Switchback (Time-Series) Experiments:** We randomize the entire system between treatment and control states over different time windows.
 3.  **Graph-based Randomization:** If we know the social or network connections between units, we can use graph-partitioning algorithms to ensure that treated units are mostly surrounded by other treated units (and same for control).
 
----
+## ATE by RCT
+- It would be good if we had pairs of twins. Then we might be able to estimate ITE.
+- But we don't have twins. So we cannot do apple to apple. We don't know which one to subtract from which one.
+- We can but do portfolio to portfolio (or population to population). 
+- If we do RCT, we can ensure that two groups are identical except the treatment. So we moved from identical individuals to identical populations. 
+- ATE is simply the difference in the mean outcomes between the two groups: $\hat{\tau} = \bar{Y}_{treated} - \bar{Y}_{control}$. The assumption we need is SUTVA and RCT.
 
 # Ignorability: When Does Linear Regression Yield Causal Inference?
 
