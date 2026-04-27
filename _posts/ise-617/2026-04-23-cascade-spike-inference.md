@@ -20,3 +20,13 @@ Building upon this comprehensive dataset, the authors introduce **CASCADE**, a s
 - **Superior Performance:** It directly infers absolute spike rates, outperforming traditional model-based inference algorithms.
 - **Parameter-Free Generalization:** To ensure high performance on novel, unseen data, CASCADE automatically retrains itself by resampling ground truth data to perfectly match the sampling rate and noise characteristics of the new input data. This eliminates the need for manual parameter tuning by the user.
 - **Accessibility:** Alongside the algorithm, the authors developed systematic performance assessments for unseen data and released the tool as an open-source resource, complete with a user-friendly cloud-based implementation.
+
+
+
+
+simultaneous measurements of action potentials and calcium signals (‘ground truth’)
+
+The relationship between spikes and the evoked calcium signals depends on multiple factors, including neuron type, calcium indicator type and concentration, optical resolution, sampling rate and noise level. Many of these parameters can vary substantially between experiments and even among neurons within the same experiment
+
+
+we performed juxtacellular recordings and two-photon calcium imaging using different calcium indicators and in different brain regions of zebrafish and mice

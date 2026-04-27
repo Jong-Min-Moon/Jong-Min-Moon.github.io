@@ -206,3 +206,128 @@ where $x_i \geq 0, i \in [n]$. As the spike detection is scale-invariant, we ass
 
 ### Synthetic Data Generation
 This paper do not use real data. It only uses synthetic data, generated using the model $\eqref{generative_model}$, where $x_i$ is i.i.d. drawn from Poisson($\mu$).  We randomly generate ten instances for each combination of ($n, \mu, \sigma$), where $n \in \{50, 100, 150, 200, 250, 300\}$, $\mu \in \{0.01, 0.02, 0.03, 0.04, 0.05\}$ and $\sigma \in \{0.05, 0.1, 0.15, 0.2, 0.25\}$.
+
+
+
+
+
+
+# TBD 1
+To truly grasp the Linear Matrix Inequality (LMI) used here, it helps to see it not just as a block of algebra, but as a clever geometric "trick." 
+
+The specific LMI we are looking at is:
+$$
+\begin{bmatrix} \mathbf{W} & \mathbf{x} \\ \mathbf{x}^\top & \tau \end{bmatrix} \succeq 0
+$$
+
+Here is the step-by-step breakdown of exactly what this matrix inequality is doing, why it is necessary, and how it connects to your original problem.
+
+### 1. The Core Problem: Quadratic "Bowls"
+In your original problem, you had the constraint:
+$$\tau \ge \mathbf{x}^\top \mathbf{Q} \mathbf{x}$$
+
+The term $\mathbf{x}^\top \mathbf{Q} \mathbf{x}$ forms a curved, multidimensional "bowl" (a parabola). Optimization solvers that handle mixed-integer problems (like your binary $\mathbf{z}$ variables) **hate** curves. They are designed to slide along flat planes and straight edges. We need a way to represent this curved bowl using only flat, linear math.
+
+### 2. The Trace Trick (Lifting)
+By the rules of linear algebra, a quadratic form can be rewritten using the **Trace** operator (the sum of the diagonal elements of a matrix):
+$$\mathbf{x}^\top \mathbf{Q} \mathbf{x} = \text{Tr}(\mathbf{Q} \mathbf{x} \mathbf{x}^\top)$$
+
+Notice the term $\mathbf{x} \mathbf{x}^\top$. This is an $n \times n$ matrix created by multiplying the vector $\mathbf{x}$ by itself. 
+
+Because we want to get rid of the $\mathbf{x}$ multiplying by $\mathbf{x}$ (which creates the curve), we **invent a brand new matrix variable** and call it $\mathbf{W}$. We want $\mathbf{W}$ to perfectly replace $\mathbf{x} \mathbf{x}^\top$. If we do this, our objective/constraints become beautifully linear: we just multiply the constants in $\mathbf{Q}$ by the variables in $\mathbf{W}$.
+
+### 3. The Rank Problem
+Here is the catch: if we strictly demand that $\mathbf{W} = \mathbf{x} \mathbf{x}^\top$, we haven't actually made the problem easier. The constraint $\mathbf{W} = \mathbf{x} \mathbf{x}^\top$ forces $\mathbf{W}$ to be a "Rank-1" matrix. 
+
+In mathematics, a Rank-1 constraint is highly non-convex. It is like taking a solid block of clay and demanding that the solver only look at the exact outer surface of one sharp edge. It shatters convexity.
+
+### 4. The LMI Relaxation (The "Shrink Wrap")
+Because we cannot demand exactly $\mathbf{W} = \mathbf{x} \mathbf{x}^\top$, we **relax** the problem. Instead of forcing them to be exactly equal, we demand that $\mathbf{W}$ is *greater than or equal to* $\mathbf{x} \mathbf{x}^\top$ in a matrix sense. 
+
+In matrix math, "greater than or equal to" means the difference between them is a **Positive Semidefinite** matrix:
+$$\mathbf{W} - \frac{1}{\tau} \mathbf{x} \mathbf{x}^\top \succeq 0$$
+*(Note: the $\tau$ is included here to bound the specific geometry of your epigraph formulation).*
+
+This relaxation is exactly what creates the "convex hull" or the "shrink wrap" around the problem. It turns the hollow, impossible-to-solve Rank-1 shell into a solid, convex shape that solvers can easily navigate.
+
+### 5. The Schur Complement
+So, how do we get from $\mathbf{W} - \frac{1}{\tau} \mathbf{x} \mathbf{x}^\top \succeq 0$ to the final LMI? We use a famous theorem in linear algebra called the **Schur Complement**. 
+
+The Schur Complement theorem states that for any matrices $\mathbf{A}, \mathbf{B}, \mathbf{C}$, the non-linear matrix inequality:
+$$\mathbf{A} - \mathbf{B} \mathbf{C}^{-1} \mathbf{B}^\top \succeq 0$$
+is mathematically **100% equivalent** to the much simpler, linear block matrix:
+$$\begin{bmatrix} \mathbf{A} & \mathbf{B} \\ \mathbf{B}^\top & \mathbf{C} \end{bmatrix} \succeq 0$$
+
+If we map our variables to this theorem ($\mathbf{A} = \mathbf{W}$, $\mathbf{B} = \mathbf{x}$, and $\mathbf{C} = \tau$), we instantly get your LMI:
+$$
+\begin{bmatrix} \mathbf{W} & \mathbf{x} \\ \mathbf{x}^\top & \tau \end{bmatrix} \succeq 0
+$$
+
+### Summary
+The LMI is a mathematical translation. It takes the difficult, non-convex quadratic curve $\tau \ge \mathbf{x}^\top \mathbf{Q} \mathbf{x}$, pulls it into a higher dimension using a surrogate matrix $\mathbf{W}$, and uses the Schur Complement to write it as a perfectly flat, convex Positive Semidefinite block. This allows the algorithm to solve your spike-train inference problem exactly and efficiently.
+
+# TBD 2
+This is a fantastic and highly insightful question. You have spotted the exact conceptual leap that makes these proofs tricky to read. 
+
+If the feasible region is formed by an intersection of an LMI (a giant, curved convex cone) and a polytope (flat planes with sharp corners), why does proving that *only the flat part* has integer corners guarantee that the solution to the *entire* problem is an integer?
+
+Here is why Proposition 5 is the final nail in the coffin that guarantees a tight relaxation, broken down into three logical steps.
+
+### 1. The "Division of Labor" in the Variables
+In this extended formulation, the math divides the variables into two distinct groups that are handled by two distinct geometries:
+
+* **The Continuous "Bowl" (The LMI):** The LMI $\begin{bmatrix} \mathbf{W} & \mathbf{x} \\ \mathbf{x}^\top & \tau \end{bmatrix} \succeq 0$ strictly governs the continuous variables. Its only job is to describe the smooth, quadratic relationship between $\mathbf{x}$, $\mathbf{W}$, and the epigraph variable $\tau$. **Notice what is missing from the LMI: $\mathbf{z}$ and $\mathbf{w}$.** The LMI contains absolutely no constraints on the integer variables. 
+* **The Discrete "Walls" (The Polytope):** The polytope defined by (14) governs the logic of the spike train. It dictates the rules for $\mathbf{z}$ (when a spike happens) and $\mathbf{w}$ (the lifted variables representing combinations of spikes). 
+
+Because the LMI doesn't constrain $\mathbf{z}$ at all, the geometric boundaries—the "walls" and "corners"—in the $\mathbf{z}$-dimension of this mathematical space are **entirely defined by the polytope**. 
+
+### 2. Linear Objectives Seek Extreme Points
+Look at the objective function of the relaxed problem: 
+$$\min \quad \tau + \mathbf{a}^\top \mathbf{x} + \lambda \sum_{i=1}^n z_i$$
+
+Notice that this objective function is **perfectly linear**. There are no squares or curves in the objective itself; all the curvature was pushed into the LMI constraint.
+
+A fundamental rule of optimization is that when you minimize a linear objective function over a closed convex set, the optimal solution will always lie on the boundary of that set, and specifically at an **extreme point** (a vertex/corner). 
+
+### 3. Why Proposition 5 Seals the Deal
+The optimization solver is trying to push the value of $\mathbf{z}$ down as far as possible because of the penalty $\lambda \sum z_i$. 
+
+As the solver pushes $\mathbf{z}$ down, it slides along the smooth surface of the LMI until it slams into the "walls" created by the polytope constraints (14). Because the objective is linear, the solver won't stop in the middle of a flat wall; it will slide all the way into the sharpest corner (the extreme point) of the $\mathbf{z}$-space to find the absolute minimum cost.
+
+This is exactly what Proposition 5 proves: **Every single corner (extreme point) of the polytope (14) happens to be a perfect integer in $\mathbf{z}$.**
+
+### Summary
+Even though the overall shape is partially curved due to the LMI, the curvature only exists in the $\mathbf{x}$, $\mathbf{W}$, and $\tau$ directions. In the $\mathbf{z}$ direction, the shape is a flat-sided polytope. Because the linear objective forces the solver into the corners of this polytope, and Proposition 5 guarantees all those corners are integers, the solver is mathematically forced to hand you a solution where $\mathbf{z} \in \{0,1\}$, making the continuous relaxation perfectly **tight**.
+
+
+# TBD 3
+Yes, they are! You have hit on the exact reason why finding the closed convex hull is the "holy grail" of optimization. 
+
+Because the binary variables $\mathbf{z}^*$ are guaranteed to be integers at the optimum, the continuous variables $\mathbf{x}^*$ and the epigraph variable $\tau^*$ **automatically collapse back into the exact, globally optimal solutions for the original non-convex problem.**
+
+Here is the step-by-step mechanical breakdown of why finding an integer $\mathbf{z}$ mathematically forces $\mathbf{x}$ and $\tau$ to be correct.
+
+### 1. The Collapse of the Continuous Boundaries (Handling $\mathbf{x}$)
+In the original problem, the relationship between $\mathbf{x}$ and $\mathbf{z}$ was the non-linear logic switch: $x_i(1 - z_i) = 0$. 
+
+To build the convex hull (the polytope part), the authors had to replace that logic switch with continuous linear inequalities (often called perspective or big-M relaxations). For example, bounding $x_i$ so that as $z_i$ shrinks toward $0$, $x_i$ is forced to shrink too. 
+
+However, once Proposition 5 guarantees that the optimal $z_i^*$ lands exactly on $0$ or $1$, those continuous relaxed inequalities instantly "snap" back into their strict logical forms:
+* If the solver chooses $z_i^* = 0$, the polytope boundaries immediately clamp down and force $x_i^* = 0$.
+* If the solver chooses $z_i^* = 1$, the boundaries open up, allowing $x_i^*$ to freely take whatever continuous value perfectly minimizes the quadratic bowl.
+
+Because $\mathbf{z}^*$ is integral, $\mathbf{x}^*$ is perfectly valid under the original rules.
+
+### 2. The Tightness of the Epigraph (Handling $\tau$)
+Remember that we relaxed the exact quadratic equation into an inequality using the LMI: $\tau \ge \mathbf{x}^\top \mathbf{Q} \mathbf{x}$. 
+
+Because the objective function ($\min \tau + \dots$) constantly pushes $\tau$ downward, the only thing stopping $\tau$ from dropping to negative infinity is that LMI boundary. The solver will always push $\tau$ until it hits the floor. 
+
+When $\mathbf{z}$ is fractional (in a bad relaxation), the "floor" of the LMI might be artificially lower than the true quadratic bowl, resulting in a $\tau$ that is "cheating." But because we are operating on the exact closed convex hull, and $\mathbf{z}^*$ is integral, the "floor" of the relaxation at that specific integer point touches the original quadratic bowl perfectly. Therefore, the solver naturally stops pushing exactly where $\tau^* = (\mathbf{x}^*)^\top \mathbf{Q} \mathbf{x}^*$.
+
+### The Fundamental Theorem of Relaxations
+There is a foundational rule in optimization that governs this exact scenario:
+
+> **If you solve a relaxed version of a problem, and the optimal solution happens to be perfectly feasible in the original unrelaxed problem, then it is the guaranteed global optimum of the original problem.**
+
+Because solving over $\text{cl conv}(X_Q)$ gives you a strictly binary $\mathbf{z}^*$, the point $(\mathbf{x}^*, \mathbf{z}^*, \tau^*)$ is $100\%$ feasible in your original, non-convex $X_Q$. Therefore, the continuous $\mathbf{x}^*$ you get out of the solver is the exact physiological spike amplitude you are looking for, and $\tau^*$ is the exact quadratic loss.

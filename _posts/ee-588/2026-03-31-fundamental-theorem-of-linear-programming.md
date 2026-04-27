@@ -3,9 +3,9 @@ layout: distill
 title: "The Fundamental Theorem of Linear Programming"
 description: "A quick intuition and justification of why linear programming optima occur at extreme points."
 date: 2026-03-31
-categories: ise-617
+categories: ee-588
 tags: optimization linear-programming convex-optimization
-project: ise-617
+project: ee-588
 math: true
 authors:
   - name: Jongmin Mun

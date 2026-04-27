@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.27)  24 APR 2026 20:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.27)  26 APR 2026 02:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1037,9 +1037,6 @@ LaTeX Warning: Label `fig:neuron' multiply defined.
 
 LaTeX Warning: Label `fig:neuron_fire' multiply defined.
 
-
-LaTeX Warning: Label `fig:neuron_fire' multiply defined.
-
 )
 \openout1 = `spike_train.aux'.
 
@@ -1241,17 +1238,17 @@ thkerncmss.
 [3
 
 ]
-<neuron.png, id=132, 1032.85875pt x 554.82281pt>
+<neuron.png, id=126, 1032.85875pt x 554.82281pt>
 File: neuron.png Graphic file (type png)
 <use neuron.png>
 Package pdftex.def Info: neuron.png  used on input line 104.
 (pdftex.def)             Requested size: 147.49782pt x 79.23239pt.
-<neuron_fire.png, id=134, 1082.54437pt x 559.33969pt>
+<neuron_fire.png, id=128, 1082.54437pt x 559.33969pt>
 File: neuron_fire.png Graphic file (type png)
 <use neuron_fire.png>
 Package pdftex.def Info: neuron_fire.png  used on input line 104.
 (pdftex.def)             Requested size: 147.49782pt x 76.20744pt.
-<binary_train.png, id=135, 284.56313pt x 112.16907pt>
+<binary_train.png, id=129, 284.56313pt x 112.16907pt>
 File: binary_train.png Graphic file (type png)
 <use binary_train.png>
 Package pdftex.def Info: binary_train.png  used on input line 104.
@@ -1261,7 +1258,7 @@ Package pdftex.def Info: binary_train.png  used on input line 104.
 [4
 
  <./neuron.png> <./neuron_fire.png> <./binary_train.png>]
-<neuralink.png, id=168, 511.9125pt x 341.02406pt>
+<neuralink.png, id=162, 511.9125pt x 341.02406pt>
 File: neuralink.png Graphic file (type png)
 <use neuralink.png>
 Package pdftex.def Info: neuralink.png  used on input line 124.
@@ -1273,7 +1270,7 @@ has been already used, duplicate ignored
                    \relax 
 l.124 \end{frame}
                  
-<neuralink_prod.png, id=169, 556.32843pt x 274.77657pt>
+<neuralink_prod.png, id=163, 556.32843pt x 274.77657pt>
 File: neuralink_prod.png Graphic file (type png)
 <use neuralink_prod.png>
 Package pdftex.def Info: neuralink_prod.png  used on input line 124.
@@ -1289,7 +1286,7 @@ l.124 \end{frame}
 [5
 
  <./neuralink.png> <./neuralink_prod.png>]
-<electrode.png, id=197, 1450.6697pt x 564.60938pt>
+<electrode.png, id=191, 1450.6697pt x 564.60938pt>
 File: electrode.png Graphic file (type png)
 <use electrode.png>
 Package pdftex.def Info: electrode.png  used on input line 135.
@@ -1299,7 +1296,7 @@ Package pdftex.def Info: electrode.png  used on input line 135.
 [6
 
  <./electrode.png>]
-<spikeTrain.png, id=224, 742.27313pt x 636.87938pt>
+<spikeTrain.png, id=218, 742.27313pt x 636.87938pt>
 File: spikeTrain.png Graphic file (type png)
 <use spikeTrain.png>
 Package pdftex.def Info: spikeTrain.png  used on input line 147.
@@ -1313,7 +1310,7 @@ Overfull \vbox (4.8103pt too high) detected at line 147
 [7
 
  <./spikeTrain.png>]
-<variables.png, id=252, 825.0825pt x 384.6872pt>
+<variables.png, id=246, 825.0825pt x 384.6872pt>
 File: variables.png Graphic file (type png)
 <use variables.png>
 Package pdftex.def Info: variables.png  used on input line 158.
@@ -1359,6 +1356,11 @@ LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <5> not available
 [11
 
 ]
+Overfull \hbox (24.25029pt too wide) detected at line 246
+[]
+ []
+
+
 
 [12
 
@@ -1367,86 +1369,24 @@ LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <5> not available
 [13
 
 ]
-<calcium.png, id=412, 822.82407pt x 332.74312pt>
-File: calcium.png Graphic file (type png)
-<use calcium.png>
-Package pdftex.def Info: calcium.png  used on input line 250.
-(pdftex.def)             Requested size: 276.559pt x 111.83646pt.
+LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <14.4> not available
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 289.
 
-pdfTeX warning (ext4): destination with the same identifier (name{fig:neuron_fi
-re}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.250 	\end{frame}
-                  
+
 
 [14
 
- <./calcium.png>]
+]
 
 [15
 
 ]
-LaTeX Font Info:    Trying to load font information for U+bbm on input line 277
-.
- (c:/texlive/2025/texmf-dist/tex/latex/bbm-macros/ubbm.fd
-File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)
 
 [16
 
 ]
 
 [17
-
-]
-
-[18
-
-]
-
-[19
-
-]
-
-[20
-
-]
-
-[21
-
-]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 338.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 338.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 338.
-
-
-
-[22
-
-]
-LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <9> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 368.
-
-
-
-[23
-
-]
-
-[24
-
-]
-
-[25
 
 ] (./spike_train.bbl
 
@@ -1475,42 +1415,64 @@ L3 programming layer <2025-03-26>
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `spike_train.out' has not changed.
-(rerunfilecheck)             Checksum: 0B3CFED6A067C990F3529A19D167DF2C;719.
+
+Package rerunfilecheck Warning: File `spike_train.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `spike_train.out':
+(rerunfilecheck)             Before: C67922937B3C04BB15228D5AC2AE4390;573
+(rerunfilecheck)             After:  553DCD9C174429AD5E368085DD9A0E61;353.
  ) 
 Here is how much of TeX's memory you used:
- 38414 strings out of 469626
- 888117 string characters out of 5475183
- 1376412 words of memory out of 5000000
- 64464 multiletter control sequences out of 15000+600000
- 644617 words of font info for 107 fonts, out of 8000000 for 9000
+ 38323 strings out of 469626
+ 886525 string characters out of 5475183
+ 1376411 words of memory out of 5000000
+ 64400 multiletter control sequences out of 15000+600000
+ 643390 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,14n,133p,752b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <c:/Users/jongmin/.texlive2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.60
-0pk><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/t
-exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><c:/texliv
-e/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pf
-b><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/tex
-live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><c:/texlive/2025/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb><c:/texlive/2025/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><c:/texlive/2025/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmssi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmssi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmssi9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb>
-<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texliv
-e/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2025/texmf-dist/fo
-nts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on spike_train.pdf (25 pages, 3176822 bytes).
+ 128i,15n,133p,752b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{Navigation18} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{Navigation19} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{Navigation20} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{Navigation23} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{Outline0.5} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{Outline0.4} has been referenced but does not exist,
+ replaced by a fixed one
+
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texli
+ve/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmss10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmss12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmss8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx
+10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb><
+c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb><c:/texliv
+e/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/f
+onts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2025/texmf-dist/fonts
+/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on spike_train.pdf (17 pages, 3023581 bytes).
 PDF statistics:
- 837 PDF objects out of 1000 (max. 8388607)
- 732 compressed objects within 8 object streams
- 59 named destinations out of 1000 (max. 500000)
- 136 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 583 PDF objects out of 1000 (max. 8388607)
+ 507 compressed objects within 6 object streams
+ 46 named destinations out of 1000 (max. 500000)
+ 123 words of extra memory for PDF output out of 10000 (max. 10000000)
 

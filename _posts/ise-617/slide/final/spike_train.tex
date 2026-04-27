@@ -183,215 +183,150 @@ pdfpagemode=UseOutlines
 	
 \end{frame}
 \section{Contributions}
-\begin{frame}
-	\frametitle{Contributions}
-\begin{itemize}
-	\item Formulates the spike detection as $\ell_0$ regularized optimization
-	\item Transforms the problem in to change-point detection problem
-	\item Devise an $O(T^2)$ solver based on dynamic programming
-	\item Faster and more accurate than $\ell_1$ regularization.
-	\end{itemize}
-\end{frame}
-
-\section{Model}
-\begin{frame}
-	\frametitle{Three stages of models}
-\begin{itemize}
-	\item Spike sequence (fixed, unobserved)
-	\item Underlying calcium concentration process (fixed, unobserved)
-	\item Noise-added observations (random, observed)
-\end{itemize}
-\end{frame}
-%
-%
-\begin{frame}
-	\frametitle{1. Spike sequence}
-
-\( s_t \geq 0 \), $t  1, \ldots, T$
-	\begin{itemize}
-		\item Example: \( 0,\, 3.5,\, 0,\, 0,\, 1.1,\, 0,\, 0,\, 2,\, \dots \)
-		\item If \( s_t > 0 \): spike at time \( t \)
-		\item If \( s_t = 0 \): no spike at time \( t \)
-		\item Fixed unknown parameter of interest
-		\item Sparsity assumption
-\end{itemize}
-
-\end{frame}
-
-
-%
-\begin{frame}
-	\frametitle{2. Underlying calcium concentration}
-
-	\begin{itemize}
-		\item First-order autoregressive process
-		\[
-		C_t = \gamma C_{t-1} + s_t, \quad t = 2, 3, \dots, T
-		\]
-		\item Spike appears abrupt, and gradually disappears. 
-		\item The effect of spikes can overlap
-		\item Fixed unknown parameter
-	\end{itemize}
-
-	\end{frame}
-	%
-	
-\begin{frame}
-
-	\begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{calcium}
-	\caption{ Spike appears abrupt, and gradually disappears}
-	\label{fig:neuron_fire}
-\end{figure}
-
-	
-		
-	\end{frame}
-	
-	
-	\begin{frame}
-		\frametitle{3. Observed fluorescence process}
-	\[
-	Y_t = c_t + \varepsilon_t, \quad \varepsilon_t \sim_{\text{ind}} (0, \sigma^2)
-	\]
-	\\
-	$\text{for} \quad t = 1, \ldots, T$
-\end{frame}
-
-\section{Optimization problem}
-\begin{frame}
-	\frametitle{Optimization problem}
-\small
+\begin{frame}{Convexification}
+The linear dynamic $x_i = s_{i+1} - \alpha s_i$ allows us to project out  $s_i$:
 \begin{align*}
-	\min_{c_1, \ldots, c_T,\, s_2, \ldots, s_T}~& \frac{1}{2} \sum_{t=1}^T (y_t - c_t)^2 + \lambda \sum_{t=2}^T 
-	\mathbbm{1}(s_t = 0) \\
-	\text{s.t.}~& s_t = c_t - \gamma c_{t-1}.
+	\min_{\mathbf{x}, \mathbf{z}} \quad & \mathbf{x}^\top \mathbf{Q} \mathbf{x} + \mathbf{a}^\top \mathbf{x} + \lambda \sum_{i=1}^n z_i \\
+	\text{s.t.} \quad 
+	& \mathbf{x} \circ (\mathbf{e} - \mathbf{z}) = 0 
+	\quad
+ \mathbf{z} \in \{0, 1\}^n,
 \end{align*}
-\begin{itemize}
-	\item Regularization $\lambda \mathbbm{1}(c_t \neq \gamma c_{t-1})$ ties $c_t$ and $c_{t+1}$.
-	\item This tie is active only when $c_t = \gamma C_{t-1}$ ($s_t = 0$) (no spike)
-\end{itemize}
+where $\mathbf{Q}$ is symmetric and 
+$q_{ij} = u_i v_j$, for $i \le j$, where
+\begin{align*}
+	u_i := \alpha^{n-i}, \quad
+	v_i := \frac{\alpha^{2(n-i+1)} - 1}{2\alpha^{n-i}(\alpha^2 - 1)}, 
+\end{align*}
+\begin{equation*}
+	a_i := -\sum_{t=i+1}^{n+1} \alpha^{t-(i+1)} r_t.
+\end{equation*}
 
 
-\end{frame}
-
-\begin{frame}
-	\frametitle{Another viewpoint}
-
-		Thus, if the solution sets $s_t > 0$, than we actually solved the problem that decouples into $[1, t-1]$ and $[t+1, T]$, and $t$ is a changepoint.
-
-\end{frame}
-
-
-\begin{frame}
-
-Thus, problem is equivalent to the changepoint detection problem:
-\[
-\text{(spike magnitude} \;\longleftrightarrow\; \text{timepoint)}
-\]
-\[
-\begin{array}{ccccccccc}
-	0 & 1.1 & 0 & 0 & 3.5 & 0 & 2.33 & \cdots \\
-	& 2 &  &  & 5 &  & 8 & 
-\end{array}
-\]
 
  
 \end{frame}
 
-\begin{frame}
-	\frametitle{Proposition 1}
-	\small
-The problem is equivalent to
+\section{Model}
+\begin{frame}{Convexification}
+epigraph formulation:
+\begin{align*}
+	\min_{\mathbf{x}, \mathbf{z}, \tau} \quad & \tau + \mathbf{a}^\top \mathbf{x} + \lambda \sum_{i=1}^n z_i \\
+	\text{s.t.} \quad 
+	& (\mathbf{x}, \mathbf{z}, \tau) \in X_Q,
+\end{align*}
+where
+\begin{align*}
+	X_Q := \{& (\mathbf{x}, \mathbf{z}, \tau) \in \mathbb{R}^n \times \{0, 1\}^n \times \mathbb{R}_+ :
+	\\  &\tau \ge \mathbf{x}^\top \mathbf{Q} \mathbf{x}, \ x_i(1 - z_i) = 0,  i \in [n] \}
+\end{align*}
+\end{frame}
+%
+%
+\begin{frame}{Convexification}
+
 \begin{equation*}
-	\min_{0 = \tau_0 < \tau_1 < \cdots < \tau_k < \tau_{k+1} = T} 
-	\left\{ \sum_{j=0}^k \mathcal{D}(\tau_j+1, \tau_{j+1}) + \lambda k \right\}.
+	\text{cl conv}(X_Q) = C \cap P,   
 \end{equation*}
-for two timepoints $a = \tau_j + 1, \quad b = \tau_{j+1}$,
-\begin{align*}
-\mathcal{D}(a,b) := &\arg\min_{c_a, c_{a+1}, \ldots, c_b} \frac{1}{2} \sum_{t=a}^b (y_t - c_t)^2\\& \text{s.t.} \quad c_t = \gamma c_{t-1}.
-\end{align*}
-
-	\end{frame}
-\begin{frame}
-\begin{align*}
-	\mathcal{D}(a,b) := &\arg\min_{c_a, c_{a+1}, \ldots, c_b} \frac{1}{2} \sum_{t=a}^b (y_t - c_t)^2\\& \text{s.t.} \quad c_t = \gamma c_{t-1}.
-\end{align*}
+where
 \begin{itemize}
-	\item Measures homogeneity of the measurement
-	\item Has a closed-form formula (Proposition 2).
+	\item 
+	$C$ do not restrict   $\mathbf{z}$:
+	\begin{align*}
+		C :=
+		\{& (\mathbf{x}, \mathbf{z}, \tau) \in \mathbb{R}^{2n+1} : \exists \mathbf{W} \in \mathbb{R}^{n \times n}, \mathbf{w} \in \mathbb{R}_+^{(n+1)(n+2)/2} \text{ such that }\\& \begin{bmatrix} \mathbf{W} & \mathbf{x} \\ \mathbf{x}^\top & \tau \end{bmatrix} \succeq 0 \},
+	\end{align*}
+	
+	\item $P$ is a polytope that restricts $\mathbf{z}$ whose corners are integral in $\mathbf{z}$. 
 \end{itemize}
+
+
+ 
+
+\end{frame}
+
+
 %
-\end{frame}
-%
-\begin{frame}
-	\small
-	\begin{equation*}
-		\min_{0 = \tau_0 < \tau_1 < \cdots < \tau_k < \tau_{k+1} = T} 
-		\left\{ \sum_{j=0}^k \mathcal{D}(\tau_j+1, \tau_{j+1}) + \lambda k \right\}.
-	\end{equation*}
-Find not too many timepoints such that  
-between two consecutive timepoints, the measurements are homogeneous
-\end{frame}
-
-\section{$O(T^2)$ algorithm}
-\begin{frame}
-Apply the dynamic programming algorithm proposed by Jackson et al.\ (2005, \textit{IEEE Signal Processing Letters}) developed for changepoint detection.
-
-\end{frame}
-
-\begin{frame}
-	\footnotesize
-	\[
-	F(T) := \min_{\substack{0 = \tau_0 < \tau_1 < \cdots < \tau_k < \tau_{k+1} = T}} 
-	\left\{ 
-	\underbrace{
-		\sum_{j=0}^{k} \mathcal{D}(\tau_j+1, \tau_{j+1}) + \lambda k
-	}_{\text{(A)}}
-	\right\}
-	\quad \text{($k$ intervals)}
-	\]
-	
-	\[
-	\text{(A)} =
-	\sum_{j=0}^{k} \left[ \mathcal{D}(\tau_j+1, \tau_{j+1}) + \lambda \right] - \lambda
-	\quad \text{($k+1$ terms)}
-	\]
-	
-	\[
-	= \underbrace{
-		\sum_{j=0}^{k-1} \left[ \mathcal{D}(\tau_j+1, \tau_{j+1}) + \lambda \right] - \lambda
-	}_{\text{$\tau_0, \ldots, \tau_k$: $k$ intervals, contributes to } F(\tau_k)}
-	+ \underbrace{\mathcal{D}(\tau_k+1, \tau_{k+1}) + \lambda}_{\text{$\tau_k+1, \tau_{k+1}$}}
-	\]
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Dynamic programming}
-	\small
-Set $F(0) = -\lambda$ 
-
-\[
-F(1) = \min_{\tau \in \{0\}} \left\{ F(\tau) + \mathcal{D}(y_{\tau+1:1}) + \lambda \right\} 
-\]
-\[
-F(2) = \min_{\tau \in \{0,1\}} \left\{ F(\tau) + \mathcal{D}(y_{\tau+1:2}) + \lambda \right\}
-\]
-$\mathcal{D}$ calculation in constant time, at  step $t$, reads  $t$ data: $O(\sum_{t=1}^T T) = O(T^2)$
-\end{frame}
-
-\section{Conclusion}
-\begin{frame}
+\begin{frame}{Convexification}
 	\begin{itemize}
-		\item Formulates the spike detection as $\ell_0$ regularized optimization
-		\item Transforms the problem in to change-point detection problem
-		\item Devise an $O(T^2)$ solver based on dynamic programming
-		\item Faster and more accurate than $\ell_1$ regularization (numerically).
-		\item No statistical theory, just optimization
+\item Therefore, the solution of the convex relaxation
+ 
+\begin{align*}
+	\min_{\mathbf{x}, \mathbf{z}, \tau} \quad & \tau + \mathbf{a}^\top \mathbf{x} + \lambda \sum_{i=1}^n z_i \\
+	\text{s.t.} \quad 
+	& (\mathbf{x}, \mathbf{z}, \tau) \in \text{cl conv}(X_Q),
+\end{align*}
+is feasible for the original problem. 
+\item 
+This relaxation can be reformulated into shortest path problem for DAG with arc cost which can be solved in $O(n^2)$:
+$$
+\ell_{ij} = 
+\begin{cases} 
+	0, & i = 0, \ 1 \le j \le n + 1 \\ 
+	\lambda - \dfrac{(1 - \alpha^2) \left( a_i - \alpha^{j-i} a_j \right)^2}{2\left(1 - \alpha^{2(j-i)}\right)}, & 1 \le i < j \le n \\ 
+	\lambda - \dfrac{(1 - \alpha^2)a_i^2}{2\left(1 - \alpha^{2(n-i+1)}\right)}, & 1 \le i \le n, \ j = n + 1.
+\end{cases}
+$$
+ \end{itemize}
+	\end{frame}
+	%
+	
+ 
+	
+	
+	\begin{frame}{The AR(1) paramter $\alpha$}
+\begin{itemize}
+	\item  $\bar{r} = \frac{1}{n} \sum_{t=1}^n r_t$
+	\item   empirical autocovariance at lag $\tau$ is estimated as:
+	$$
+	\hat{C}_r(\tau) = \frac{1}{N-\tau} \sum_{t=1}^{N-\tau} (r_t - \bar{r})(r_{t+\tau} - \bar{r}).
+	$$
+	\item Assuming the underlying spiking signal $\mathbf{x}$ originates from a homogeneous Poisson process, and AR(1), we have $C_r(\tau) = \alpha C_r(\tau - 1)$, which yields an estimator:
+			$$
+	\hat{\alpha} = \frac{\hat{C}_r(2)}{\hat{C}_r(1)}.
+	$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Observational noise $\sigma^2$}
+ 
+ 
+\begin{itemize}
+	\item Calcium dynamics are smooth and slow, and therefore primarily concentrated in low-frequency components.
+	\item Random jitter from the microscope sensor is distributed uniformly across all frequencies.
+	\item Therefore, $\sigma^2$ is estimated by isolating the high-frequency components and computing their variance.
+\end{itemize}
+
+
+\end{frame}
+
+ 
+
+\begin{frame}{Sparsity parameter $\lambda$}
+	\begin{itemize}
+		\item We select $\lambda$ such that the residual sum of squares satisfies
+		\begin{equation*}
+			\sum_{i=1}^{n} (s_i - r_i)^2 \approx n \sigma^2
+		\end{equation*}
+		\item For a given $\lambda$, we solve the optimization problem and compute the resulting mean squared error (MSE).
+		\item We then compare the MSE to $n \hat{\sigma}^2$ and use a bisection search over $\lambda$ until the target value is reached.
 	\end{itemize}
 \end{frame}
+
+
+ 
+
+\begin{frame}{Dataset and Comparison}
+	\begin{itemize}
+		\item 25 real datasets spanning different species (mouse, zebrafish), brain regions, and calcium indicators.
+		\item Comparison with a dynamic programming algorithm developed by statisticians (\textit{Jewell and Witten, 2018}).
+		\item Precision: TP / (TP + FP)
+		\item Recall: TP / (TP + FN)
+		\item F1 score: harmonic mean of precision and recall
+	\end{itemize}
+
+
+	\end{frame}
 
 %
 %
