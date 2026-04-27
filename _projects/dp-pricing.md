@@ -33,8 +33,7 @@ This work was presented at NeurIPS 2025 MLxOR workshop. You can also check out t
   
 - Consequently, a policy trained on the historical data will not perform as effectively in the new market.
 
-- First, we quantify how shifts in the consumer base affect learning accuracy.   
-
+ 
 ## Under-exploration on price
 - Even if the market does not shift, since we are not actively collecting data but relying on historical observational data, there is always risk of underexploration.
 - To identify a profit-maximizing price for each customer ($\mathbf{x}$), the historical data must contain enough variability in price ($p$) to allow the algorithm to compare counterfactual outcomes.
