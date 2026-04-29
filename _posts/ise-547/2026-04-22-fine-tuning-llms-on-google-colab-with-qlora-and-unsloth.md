@@ -10,6 +10,7 @@ project: ise-547
 authors:
   - name: Jongmin Mun
     url: "https://jongminmoon.github.io"
+bibliography: 2026-04-22-fine-tuning-llms-on-google-colab-with-qlora-and-unsloth.bib
 ---
 
 # Fine-Tuning an LLM for Critical Road Trip Planning
@@ -18,7 +19,7 @@ authors:
 Planning a road trip can be complex, and users often turn to Large Language Models (LLMs) to refine their itineraries. However, standard LLMs tend to be overly flattering and agreeable; they often fail to identify fundamental flaws in a user's initial plan. In contrast, communities like Reddit's road trip subreddits offer highly critical but incredibly practical and helpful advice. This project aims to fine-tune an LLM to emulate this "critical-but-helpful" persona, actively calling out bad ideas while providing grounded routing alternatives.
 
 ## 2. Data
-Guided by the principles of the *LIMA: Less Is More for Alignment* paper (NeurIPS 2025), which demonstrates that a small volume of high-quality data outweighs sheer quantity, this project utilized a micro-dataset. 
+Guided by the principles of the LIMA <d-cite key="NEURIPS2023_ac662d74"></d-cite> paper (NeurIPS 2025), which demonstrates that a small volume of high-quality data outweighs sheer quantity, this project utilized a micro-dataset. 
 
 I manually collected 30 high-quality question-and-answer pairs from Reddit road trip communities. The selected samples explicitly showcase the desired behavior: direct criticism of the initial plan followed by highly relevant advice.
 
@@ -29,7 +30,7 @@ I manually collected 30 high-quality question-and-answer pairs from Reddit road 
 The data was pre-processed into standard JSON chat format (user/assistant roles) for training.
 
 ## 3. Method
-The project utilized **Llama-3.1-8B-Instruct** with max sequence length 1024 as the base model. To enable training on a Google Colab instance equipped with a single Tesla T4 GPU (16GB VRAM), I employed 4-bit Quantization (QLoRA) alongside the Unsloth library, which heavily optimizes memory usage and training speed. 
+The project utilized **Llama-3.1-8B-Instruct** with max sequence length 1024 as the base model. To enable training on a Google Colab instance equipped with a single Tesla T4 GPU (16GB VRAM), I employed 4-bit Quantization (QLoRA) <d-cite key="10.5555/3666122.3666563"></d-cite> alongside the Unsloth library, which heavily optimizes memory usage and training speed. 
 
 **Training Hyperparameters:**
 * **Method:** Low-Rank Adaptation (LoRA)
@@ -152,32 +153,42 @@ LLM types:
 1. Qwen/Qwen2.5-7B-Instruct
 2. microsoft/Phi-3.5-mini-instruct
 3. mistralai/Mistral-Nemo-Instruct-2407
-4. google/gemma-2-9b-it
+4. Yi-1.5-9B-Chat
 
 # 5. Results
-
+The quantitative results are as follows. Most judges favor the baseline model, except for the tone metric
 ## Judgement summary by Qwen2.5-7B-Instruct
-=======================================================
-                  FINAL EVALUATION SUMMARY
-=======================================================
 
---- LIKERT 1 AVERAGES (Out of 5.0) ---
-  Criticism:   Baseline 3.62  |  Fine-Tuned 2.56
-  Helpfulness: Baseline 3.75  |  Fine-Tuned 2.79
-  Tone:        Baseline 4.18  |  Fine-Tuned 4.31
 
---- LIKERT 2 AVERAGES (Out of 5.0) ---
-  Criticism:   Baseline 4.68  |  Fine-Tuned 3.36
-  Helpfulness: Baseline 4.53  |  Fine-Tuned 3.17
-  Tone:        Baseline 4.63  |  Fine-Tuned 4.07
+**LIKERT 1 AVERAGES (Out of 5.0)**
 
---- PAIRWISE 1 (Dimension-Specific Wins) ---
-  Criticism:   Base 23 | FT 5 | Ties 0 | Errs 72
-  Helpfulness: Base 14 | FT 4 | Ties 0 | Errs 82
-  Tone:        Base 9 | FT 4 | Ties 0 | Errs 87
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 3.62     | 2.56       |
+| Helpfulness | 3.75     | 2.79       |
+| Tone        | 4.18     | 4.31       |
 
---- PAIRWISE 2 (Overall Winner) ---
-  Overall: Base 77 | FT 23 | Ties 0 | Errs 0
+**LIKERT 2 AVERAGES (Out of 5.0)**
+
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 4.68     | 3.36       |
+| Helpfulness | 4.53     | 3.17       |
+| Tone        | 4.63     | 4.07       |
+
+**PAIRWISE 1 (Dimension-Specific Wins)**
+
+| Metric      | Base | FT   | Ties | Errs |
+| :---------- | :--- | :--- | :--- | :--- |
+| Criticism   | 23   | 5    | 0    | 72   |
+| Helpfulness | 14   | 4    | 0    | 82   |
+| Tone        | 9    | 4    | 0    | 87   |
+
+**PAIRWISE 2 (Overall Winner)**
+
+| Metric  | Base | FT   | Ties | Errs |
+| :------ | :--- | :--- | :--- | :--- |
+| Overall | 77   | 23   | 0    | 0    |
 
 
 
@@ -185,60 +196,105 @@ LLM types:
 ## Judgement summary by Phi-3.5-mini-instruct
 
 
---- LIKERT 1 AVERAGES (Out of 5.0) ---
-  Criticism:   Baseline 4.85  |  Fine-Tuned 3.63
-  Helpfulness: Baseline 4.48  |  Fine-Tuned 3.35
-  Tone:        Baseline 2.00  |  Fine-Tuned 0.00
+**LIKERT 1 AVERAGES (Out of 5.0)**
 
---- LIKERT 2 AVERAGES (Out of 5.0) ---
-  Criticism:   Baseline 4.77  |  Fine-Tuned 3.24
-  Helpfulness: Baseline 4.63  |  Fine-Tuned 3.21
-  Tone:        Baseline 4.80  |  Fine-Tuned 3.88
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 4.85     | 3.63       |
+| Helpfulness | 4.48     | 3.35       |
+| Tone        | 2.00     | 0.00       |
 
---- PAIRWISE 1 (Dimension-Specific Wins) ---
-  Criticism:   Base 76 | FT 22 | Ties 0 | Errs 2
-  Helpfulness: Base 65 | FT 32 | Ties 1 | Errs 2
-  Tone:        Base 30 | FT 25 | Ties 0 | Errs 45
+**LIKERT 2 AVERAGES (Out of 5.0)**
 
---- PAIRWISE 2 (Overall Winner) ---
-  Overall: Base 70 | FT 26 | Ties 2 | Errs 2
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 4.77     | 3.24       |
+| Helpfulness | 4.63     | 3.21       |
+| Tone        | 4.80     | 3.88       |
+
+**PAIRWISE 1 (Dimension-Specific Wins)**
+
+| Metric      | Base | FT   | Ties | Errs |
+| :---------- | :--- | :--- | :--- | :--- |
+| Criticism   | 76   | 22   | 0    | 2    |
+| Helpfulness | 65   | 32   | 1    | 2    |
+| Tone        | 30   | 25   | 0    | 45   |
+
+**PAIRWISE 2 (Overall Winner)**
+
+| Metric  | Base | FT   | Ties | Errs |
+| :------ | :--- | :--- | :--- | :--- |
+| Overall | 70   | 26   | 2    | 2    |
 
 
-## Judgement summary by
+## Judgement summary by mistralai/Mistral-Nemo-Instruct-2407
 
---- LIKERT 1 AVERAGES (Out of 5.0) ---
-  Criticism:   Baseline 4.45  |  Fine-Tuned 3.75
-  Helpfulness: Baseline 4.13  |  Fine-Tuned 3.18
-  Tone:        Baseline 4.13  |  Fine-Tuned 4.13
+**LIKERT 1 AVERAGES (Out of 5.0)**
 
---- LIKERT 2 AVERAGES (Out of 5.0) ---
-  Criticism:   Baseline 4.95  |  Fine-Tuned 4.17
-  Helpfulness: Baseline 4.33  |  Fine-Tuned 3.16
-  Tone:        Baseline 3.96  |  Fine-Tuned 3.66
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 4.45     | 3.75       |
+| Helpfulness | 4.13     | 3.18       |
+| Tone        | 4.13     | 4.13       |
 
---- PAIRWISE 1 (Dimension-Specific Wins) ---
-  Criticism:   Base 0 | FT 1 | Ties 0 | Errs 99
-  Helpfulness: Base 0 | FT 0 | Ties 0 | Errs 100
-  Tone:        Base 0 | FT 0 | Ties 0 | Errs 100
+**LIKERT 2 AVERAGES (Out of 5.0)**
 
---- PAIRWISE 2 (Overall Winner) ---
-  Overall: Base 37 | FT 16 | Ties 1 | Errs 46
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 4.95     | 4.17       |
+| Helpfulness | 4.33     | 3.16       |
+| Tone        | 3.96     | 3.66       |
 
-**Key Qualitative Observations:**
-* **The Baseline's Strength:** The prompt-engineered model excelled at geographic reasoning and math. It accurately broke down drive times to prove itineraries were impossible and offered realistic detours.
-* **The Fine-Tuned Model's Strength:** The fine-tuned model perfectly captured the desired stylistic tone. In situations requiring a pure, blunt shutdown without complex routing math, it excelled (e.g., responding to a plan to camp in Death Valley in August with: *"Don't do that. I live here. You will be dead by noon."*).
+**PAIRWISE 1 (Dimension-Specific Wins)**
 
-## 6. Conclusion
-This experiment demonstrates the pitfalls of utilizing a micro-dataset ($N=30$) for fine-tuning.
+| Metric      | Base | FT   | Ties | Errs |
+| :---------- | :--- | :--- | :--- | :--- |
+| Criticism   | 0    | 1    | 0    | 99   |
+| Helpfulness | 0    | 0    | 0    | 100  |
+| Tone        | 0    | 0    | 0    | 100  |
 
-While the fine-tuned model successfully absorbed the short, sarcastic, Reddit-style persona, it over-indexed on style at the expense of its foundational knowledge. It lost vital geographic and mathematical reasoning capabilities—evidenced by suggesting drivers take closed mountain passes in January, or attempting to compress 48 hours of driving into two days. Conversely, the prompt-engineered baseline retained its deep factual grounding, allowing it to dismantle bad plans with verifiable facts. 
+**PAIRWISE 2 (Overall Winner)**
 
-Ultimately, while micro-fine-tuning is highly effective for adopting specific tonal behaviors, complex reasoning tasks involving geography and logistics remain better served by robust prompt engineering on a knowledgeable base model.
+| Metric  | Base | FT   | Ties | Errs |
+| :------ | :--- | :--- | :--- | :--- |
+| Overall | 37   | 16   | 1    | 46   |
+
+
+## Judgement summary by Yi-1.5-9B-Chat
+
+
+
+## Comments on the Results: What Worked and What Did Not
+
+* **The Baseline's Robust Prior Knowledge:** The heavily prompt-engineered baseline consistently retained its pre-trained geographic reasoning and mathematical logic. It successfully decomposed complex itineraries, calculated accurate drive times, and used those verifiable facts to dismantle impossible plans. The system prompt acted as a sufficient behavioral steer without interfering with the model's underlying spatial knowledge.
+
+* **The Fine-Tuned Model's Stylistic Overfit:** The qLoRA fine-tuned model achieved the targeted persona perfectly, exhibiting the blunt, sarcastic tone characteristic of Reddit. In simple, non-technical scenarios, such as responding to a user wanting to camp in Death Valley in August with, "Don't do that. I live here. You will be dead by noon." It was highly effective. However, it over-indexed on mimicking the form of a Reddit comment at the expense of its substance.
+
+* **Reasoning Degradation:** The fine-tuned model exhibited clear signs of catastrophic forgetting regarding real-world constraints. By heavily updating the projection matrices on just 30 stylistic examples, the model lost its ability to perform basic routing math or retrieve accurate seasonal data, frequently suggesting impossible feats (like driving 48 hours over two days) or recommending closed mountain passes in January.
+
+* **LLM-as-a-Judge Volatility:** It is also worth noting the high error rates in parsing during the pairwise evaluations, particularly with Mistral-Nemo-Instruct (reaching ~100% failure rates on formatting constraints). This highlights the brittleness of smaller LLMs when tasked with complex, multi-dimensional evaluation schemas.
+
+# Conclusion
+This experiment underscores the practical limitations and tradeoffs of utilizing a micro-dataset (N=30) for supervised fine-tuning on complex, constraint-heavy tasks.
+
+While the LIMA principle suggests that a small volume of high-quality data is sufficient for alignment, for really small size of datasets, this holds true primarily for stylistic surface-level alignment, not for preserving deep reasoning capabilities. The fine-tuned model successfully absorbed the terse, critical persona, but the narrowness of the training data severely degraded the base model's zero-shot spatial and logical priors.
+
+Conversely, the prompt-engineered baseline demonstrated that when a task requires a combination of domain-specific facts (geography, weather, routing math) and a specific tone, leveraging the full, uncompromised weights of a strong base model is far superior.
+
+Key Takeaways:
+
+Micro-fine-tuning is a stylistic filter, not a knowledge builder: Use small datasets to adjust tone, formatting, or persona, but do not expect the model to maintain complex reasoning unless that reasoning is heavily represented in the training distribution.
+
+Prompt Engineering wins for Logistical Tasks: For tasks involving routing, math, or strict real-world constraints, robust prompt engineering on an untouched, highly capable model yields significantly safer and more practical results.
+
+Future Directions: A more resilient approach for this specific use case might involve a multi-agent pipeline: using a prompt-engineered baseline to generate the logical routing and constraints, followed by a dynamically fine-tuned "critic" model to rewrite the output into the desired Reddit-style persona.
 
 
 
 
 # Appendix
+
+## References
 
 ## Evaluation Dataset
 
