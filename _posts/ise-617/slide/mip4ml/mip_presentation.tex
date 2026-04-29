@@ -1,0 +1,387 @@
+\documentclass{beamer}
+\usetheme{Madrid} % You can change this to another theme like 'Metropolis' or 'Boadilla'
+\usecolortheme{default}
+
+% Title Slide Information
+\title[Representative Matched Samples]{Building Representative Matched Samples With Multi-Valued Treatments in Large Observational Studies}
+\author[Bennett, Vielma, Zubizarreta]{Magdalena Bennett, Juan Pablo Vielma, and Jos\'e R. Zubizarreta
+\\
+Journal of Computational and Graphical Statistics, 2020, vol. 29, no.4, 744-757
+\\ Presenter: Jongmin Mun
+}
+\date{}
+
+\begin{document}
+
+% Page 1
+\begin{frame}
+  \titlepage
+  \centering
+\end{frame}
+
+% Page 2
+\begin{frame}{Chile's Challenges}
+  \begin{itemize}
+ 
+    
+    \item \textbf{Income Inequality:}  
+    Chile has the highest level of income inequality (measured by the Gini index) among the all OECD countries.
+    
+    \item \textbf{Education System:}  
+    A college degree is crucial in Chile. College admission and scholarship is largely determined (about 80\%) by a single high-stakes exam called PSU, that is offered only once per year.
+    
+       \item \textbf{Earthquakes:}  
+    Chile experiences a major earthquake (magnitude $\ge$ 7.0) on average more than once every two years.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Research Objective}
+\begin{itemize}
+	\item This study examines the causal effect of the 2010 Chile earthquake, which resulted in more than 500 fatalities, on high school attendance and PSU examination scores.
+	\item Can we just take averages of affected and unaffected students and see their difference?
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{The Illusion of Averages}
+
+\begin{itemize}
+    \item A major wildfire struck Los Angeles in January 2024.
+    \item The damage was concentrated in Pacific Palisades and Altadena.
+    \item Students in South Central Los Angeles and Compton were largely unaffected.
+    \item Can differences in average SAT scores meaningfully capture the wildfire’s true impact?
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{The Illusion of Averages}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{/Users/jmmoon/Desktop/illusion_of_average.png}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{The Confounding}
+
+\begin{itemize}
+    \item Earthquake-affected areas may differ systematically from unaffected areas (e.g., in wealth or school quality).
+    \item These pre-existing differences may also influence test scores.
+    \item When factors other than the treatment (the earthquake exposure) also affect the outcome, this problem is known as \textit{confounding} in causal inference.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Matching in Causal Inference}
+
+\begin{itemize}
+    \item To make a credible causal claim, treatment and control groups must be comparable in all relevant characteristics.
+    \item Ideally, we want to observe the same unit in parallel universes--with and without the treatment.
+    \item In practice, we use \textit{matching}: we pair each treated unit with a similar control unit based on observed characteristics.
+    \item Once units are comparable, the difference in means becomes more meaningful as an estimate of the treatment effect.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Contribution of This Paper}
+
+\begin{itemize}
+    \item The dominant matching approaches rely on network flow methods that minimize covariate distance.
+    
+    \item Although mixed-integer programming (MIP) approaches exist, they have been less widely adopted, largely because NP-hard problems are often viewed as computationally infeasible in practice.
+    
+    \item This paper proposes a direct matching approach based on \textit{cardinality} rather than distance minimization.
+    
+    \item They formulate the problem as a MIP and introduce reformulation techniques that substantially improve computational speed.
+\end{itemize}
+
+\end{frame}
+
+% Page 4
+\begin{frame}{Methodology: Data and Setup}
+
+\begin{itemize}
+    \item Census data from Chile (\(\sim\)100,000 students).
+    \item Treatment: earthquake exposure (3, 5, and 10 levels).
+    \item Each student is described by 14 categorical covariates:
+    \begin{itemize}
+        \item Gender
+        \item Ethnicity
+        \item Parental education
+        \item Household income (discretized)
+        \item etc.
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Multiple Treatments and the Template Dataset}
+
+\begin{itemize}
+    \item With two treatment levels, one group can serve as a reference.
+    \item With multiple treatment levels, pairwise matching is cumbersome.
+    
+    \item Solution: construct a \textit{template population}.
+    \begin{itemize}
+        \item Hypothetical sample representing Chile’s overall covariate distribution.
+        \item Each treatment level is matched separately to this template.
+    \end{itemize}
+    \item By repeating randomized drawing of template population, we can do hypothesis testing and build confidence interval
+    \item Fix one treatment level in this presnetation, for simplicity
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Cardinality Matching via MIP}
+
+\begin{itemize}
+    \item Think of the data as a \(P \times K\) grid:
+    \begin{itemize}
+        \item Rows = covariates
+        \item Columns = categories
+    \end{itemize}
+    
+    \item The template determines how many units belong in each cell.
+    
+    \item We choose treated units to ``fill'' the grid so that
+    the cell counts match the template as closely as possible.
+    
+    \item The objective: minimize total imbalance across all cells.
+\end{itemize}
+
+
+
+\medskip
+This approach is known as \textbf{cardinality matching}.
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{/Users/jmmoon/Desktop/matching_pic.png	}
+\end{figure}
+
+\end{frame}
+
+% Page 6
+\begin{frame}{Cardinality Matching via Mixed-Integer Programming}
+    \begin{enumerate}
+\item \textbf{Exact Match:} Each template unit matches exactly one treated unit
+\item \textbf{No Reuse:} Each treated unit can match at most one template unit
+    \end{enumerate}
+\end{frame}
+
+% Page 7
+\begin{frame}{Notations}
+\begin{itemize}
+\item We consider $P$ categorical covariates, $\mathcal{P} = \{p_1, \ldots, p_P\}$ 
+\item  For ease of exposition we assume that each has exactly $K$ categories.
+\item Accordingly, each unit $i$ is represented by a covariate vector, for example, $\mathbf{x}_i \in [K]^P$.	
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Notations}
+We haave two dataset:
+\begin{enumerate}
+	\item  Treatment Dataset ($\mathcal{L}$)
+\begin{itemize}
+	\item Units that received the specific treatment level under study
+	\item  We denote this set as $\mathcal{L} = \{\ell_1, \ldots, \ell_L\}$
+	\item For example, a unit $\ell \in \mathcal{L}$ consists of an outcome $y_{\ell}$, a treatment $A_{\ell}$, and a covariate vector $\mathbf{x}_{\ell}$.
+\end{itemize}  
+	\item  Template Dataset ($\mathcal{T}$):
+	\begin{itemize}
+		\item A sample drawn from the population that represents the target covariate distribution
+		\item We denote this set as $\mathcal{T} = \{t_1, \ldots, t_T\}$
+		\item  Since this dataset is generated for matching purposes, we only care about the covariate vector $\mathbf{x}_{t}$ for a given unit $t \in \mathcal{T}$.
+	\end{itemize}
+\end{enumerate}
+
+\end{frame}
+% Page 8
+\begin{frame}{Notations}
+\begin{itemize}
+	\item Problem Coefficients: For each covariate $p \in \{1, \dots, P\}$ and category $k \in \{1, \dots, K\}$, we define
+	$N_{p,k}$ as The number of units in the $\mathcal{T}$ that belong to category $k$ of covariate $p$. These represent our target counts for a representative sample.
+	\item Decision Variables:The optimization model uses two types of variables:
+\begin{itemize}
+\item  $m_{t,\ell} \in \{0, 1\}$: A binary indicator that is $1$ if template unit $t \in \mathcal{T}$ is matched to treated unit $\ell \in \mathcal{L}$, and $0$ otherwise.
+\item $v_{p,k} \geq 0$: A continuous variable representing the "cell count margin"—the absolute difference between the number of matched treated units and the target count $N_{p,k}$. %Because this margin is not restricted to integer values, the model is formulated as a mixed-integer linear programming (MILP) problem.	
+\end{itemize}
+\item Objective: Minimize $\sum_{p,k}v_{p,k}$
+\end{itemize}
+
+
+
+\end{frame}
+
+
+\begin{frame}{Constraints}
+\begin{enumerate}
+	\item Count Balance: This constraint connects the matching decisions ($m$) to the discrepancy margins ($v$):
+    $$| \sum_{\ell \in \mathcal{L}_{p,k}} \left( \sum_{t \in \mathcal{T}} m_{t,\ell} \right) - N_{p,k} | \leq v_{p,k}$$
+    where $\mathcal{L}_{p,k}$ is the subset of treated units possessing category $k$ of covariate $p$.
+\item  Matching Requirements: These ensure a valid one-to-one mapping without replacement:
+\begin{enumerate}
+\item  Each treated unit is matched at most once: $\sum_{t \in \mathcal{T}} m_{t,\ell} \leq 1, \quad \forall \ell \in \mathcal{L}$
+\item Each template unit is matched exactly once: $\sum_{\ell \in \mathcal{L}} m_{t,\ell} = 1, \quad \forall t \in \mathcal{T}$	
+
+\end{enumerate}
+    \end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}{Optimization problem}
+	Collecting everything together, the optimization problem is:
+
+
+$$
+\begin{aligned}
+\min_{\mathbf{v}, \mathbf{m}} \quad & \sum_{p=1}^{P} \sum_{k=1}^{K} v_{p,k} \\
+\text{s.t.} \quad & \left| \sum_{\ell \in \mathcal{L}_{p,k}} \left( \sum_{t \in \mathcal{T}} m_{t,\ell} \right) - N_{p,k} \right| \leq v_{p,k}, \quad & \forall p ,k \\
+& \sum_{t \in \mathcal{T}} m_{t,\ell} \leq 1, \quad & \forall \ell \in \mathcal{L} \\
+& \sum_{\ell \in \mathcal{L}} m_{t,\ell} = 1, \quad & \forall t \in \mathcal{T} \\
+& m_{t,\ell} \in \{0, 1\}, \quad & \forall t \in \mathcal{T}, \forall \ell \in \mathcal{L}
+\end{aligned}
+$$
+\end{frame}
+
+
+\begin{frame}{Scalability}
+\begin{itemize}
+	\item The problem requires $T \times L + P \times K$ decision variables and a corresponding number of constraints.
+	\item Since the matching variables grow quadratically with the number of units ($T \times L$), Gurobi v 7.5.1 with 32GB memory crashes
+\end{itemize} 
+\end{frame}
+
+\begin{frame}{Linear-sized formulation}
+\begin{itemize}
+    \item Define a new binary variable for each treated unit: 
+    \[
+        z_\ell = \sum_{t \in \mathcal{T}} m_{t,\ell}, \quad \ell \in \mathcal{L}.
+    \]
+    
+    \item Interpretation: \(z_\ell = 1\) if treated unit \(\ell\) is matched to a template unit, and \(0\) otherwise.
+    
+    \item Using \(z_\ell\), the last three constraints of the original MIP can be rewritten.  
+    The problem remains equivalent. The new problem:
+\end{itemize}
+	
+
+$$
+\begin{aligned}
+\min_{\mathbf{v}, \mathbf{z}} \quad & \sum_{p=1}^{P} \sum_{k=1}^{K} v_{p,k} \\
+\text{s.t.} \quad & \left| \sum_{\ell \in \mathcal{L}_{p,k}} z_\ell - N_{p,k} \right| \leq v_{p,k}, \quad & \forall p, k \\
+& \sum_{\ell \in \mathcal{L}} z_\ell = T , \quad  z_\ell \in \{0, 1\}, \quad & \forall \ell \in \mathcal{L}
+\end{aligned}
+$$
+
+\end{frame}
+% Page 13
+\begin{frame}{Theoretical Guarantees of the Linear Formulation}
+\begin{enumerate}
+	\item A Mixed-Integer Program (MIP) is considered \textbf{integral} if its Linear Programming (LP) relaxation naturally yields an integer-optimal solution. 
+	\item The difference between the optimal objective value of the original integer problem and that of its LP relaxation is known as the \textbf{integrality gap} (or \textbf{LP gap}).
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+By shifting from a quadratic-size to a linear-size formulation, we do not sacrifice the tightness of the model. This is formalized in the following two propositions:
+
+\begin{itemize}
+	\item \textbf{Proposition 4.1 (Equivalence of LP Gaps)} The linear-size MIP and the quadratic-size MIP share the exact same LP gap. The linear-size formulation is integral whenever the quadratic-size formulation is integral.
+\item \textbf{Proposition 4.2 (Integrality Guarantee for Two Covariates)} In scenarios where there are at most two covariates, the linear-size MIP is strictly integral.
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{Results: Computational Speed  (Tables 1 and 2)}
+
+
+Tables 1 and 2 compare computational performance across different data sizes and levels of treatment granularity.
+
+\begin{itemize}
+	\item Formulation 1 (quadratic size): Produced an out-of-memory error with 32GB of RAM in Gurobi v7.5.1.
+	\item Formulation 2 (linear size): Successfully runs in R.
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}{Results: Computational Speed (Tables 1 and 2)}
+
+\textbf{Formulation 2 Results:}
+\begin{itemize}
+    \item \textbf{Table 1:} Template size varies from 1,000 to 10,000; total sample size from 70,000 to 700,000.  
+    The linear formulation remained scalable across all settings, with average computation time increasing from 0.2 minutes (70,000 observations) to 3.5 minutes (700,000 observations).
+    
+    \item \textbf{Table 2:} Template size fixed at 1,000; total sample size varies from 10,000 to 70,000.  
+    Different numbers of exposure levels (3, 5, 10) were also considered. Average computation time was under 0.3 minutes in all cases.
+\end{itemize}
+
+\vspace{0.3cm}
+Together, these results demonstrate the substantial efficiency gains achieved by the linear-sized formulation.
+
+\end{frame}
+
+\begin{frame}{Results: Imbalance Measure (Table 3) }
+\begin{itemize}
+	\item Table 3 reports covariate imbalance under different numbers of treatment levels (3, 5, and 10).  
+	\item In all settings, the procedure achieved \textbf{exact matching}, meaning the objective value was zero in every case.
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}{Results: Visualization of Causal Effects (Figure 2)}
+
+\textbf{Overview:}
+\begin{itemize}
+    \item Target matched sample size: \(\sim 1,000\) students.
+    \item Procedure repeated with different random seeds to check stability.
+    \item Outcomes examined:
+    \begin{itemize}
+        \item Attendance – significant effect observed.
+        \item Test scores – no significant effect detected.
+    \end{itemize}
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\textwidth]{/Users/jmmoon/Documents/GitHub/Jong-Min-Moon.github.io/assets/img/chille_diff_plot_1.png}
+  
+\end{figure}
+\end{frame}
+
+\begin{frame}{Summary and Limitations}
+
+\textbf{Summary:}
+\begin{itemize}
+    \item Introduced a scalable \textbf{cardinality matching} method using linear-sized MIP.
+    \item Applied to Chilean earthquake data:
+    \begin{itemize}
+        \item Found unexpected result  on PSU test scores.
+    \end{itemize}
+    \item Linear-sized formulation drastically improved \textbf{computational efficiency} without sacrificing exactness.
+\end{itemize}
+
+\medskip
+\textbf{Limitations:}
+\begin{itemize}
+    \item No statistical guarantee (e.g. consistency, convergence rate, asymptotic distribution)...
+    \item Only considers categorical variables
+\end{itemize}
+
+\end{frame}
+\end{document}

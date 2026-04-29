@@ -56,7 +56,7 @@ pdfpagemode=UseOutlines
 	\small
 	\begin{itemize}
 		\item 	presenter: Jongmin Mun
-		\item Based on: Lee, J., Gómez, A., and Atamtürk, A. (2024). Convexification of Multi-period Quadratic Programs
+		\item Based on: Lee, J., G\'{o}mez, A., and Atamtürk, A. (2024). Convexification of Multi-period Quadratic Programs
 with Indicators.
 	\end{itemize}
  
@@ -68,8 +68,8 @@ with Indicators.
 	\tableofcontents
 \end{frame}
 
-\section{Spike train inference}
-\begin{frame}{Spike train inference}
+\section{Spike train inference and calcium imaging}
+\begin{frame}{Spike train inference: from brain activity to binary code}
 	\begin{figure}
 		\centering
 		\begin{minipage}{0.48\textwidth}
@@ -134,11 +134,12 @@ with Indicators.
 		\includegraphics[width=0.7\linewidth]{spikeTrain}
 	\end{figure}
 	\begin{itemize}
-		\item Calcium imaging enables recording from thousands of neurons simultaneously, but its slow dynamics cause signals to overlap
-		\item new spikes can occur before previous responses have fully decayed.
+		\item Calcium imaging records  thousands of neurons simultaneously, but its slow dynamics cause signals to overlap
+		\item new spikes can occur before previous spikes have fully decayed
 	\end{itemize}
 \end{frame}
 
+\section{Optimization problem}
 \begin{frame}{Mixed Integer Programming Formulation}
 	\begin{figure}
 		\centering
@@ -175,8 +176,19 @@ with Indicators.
 	\end{itemize}
 	
 \end{frame}
-\section{Contributions}
+\section{How to solve the problem}
+
+\begin{frame}{How to solve this problem}
+	\begin{itemize}
+	\item We employee the convexification framework of Lee, J., G\'{o}mez, A., and Atamtürk, A. (2024). Convexification of Multi-period Quadratic Programs
+	\item This shows that for MIQP with special structure, convex relaxation yields MIP solution
+	\item This is a general framework for an abstract problem; but can be applied to spike train inference
+\end{itemize}
+
+\end{frame}
+
 \begin{frame}{Convexification}
+
 The linear dynamic $x_i = s_{i+1} - \alpha s_i$ allows us to project out  $s_i$:
 \begin{align*}
 	\min_{\mathbf{x}, \mathbf{z}} \quad & \mathbf{x}^\top \mathbf{Q} \mathbf{x} + \mathbf{a}^\top \mathbf{x} + \lambda \sum_{i=1}^n z_i \\
@@ -185,8 +197,8 @@ The linear dynamic $x_i = s_{i+1} - \alpha s_i$ allows us to project out  $s_i$:
 	\quad
  \mathbf{z} \in \{0, 1\}^n,
 \end{align*}
-where $\mathbf{Q}$ is symmetric and 
-$q_{ij} = u_i v_j$, for $i \le j$, where
+where $\mathbf{Q}$ is symmetric and \emph{decomposable:}
+$q_{ij} = u_i v_j$ for $i \le j$,
 \begin{align*}
 	u_i := \alpha^{n-i}, \quad
 	v_i := \frac{\alpha^{2(n-i+1)} - 1}{2\alpha^{n-i}(\alpha^2 - 1)}, 
@@ -200,8 +212,9 @@ $q_{ij} = u_i v_j$, for $i \le j$, where
  
 \end{frame}
 
-\section{Model}
+
 \begin{frame}{Convexification}
+
 epigraph formulation:
 \begin{align*}
 	\min_{\mathbf{x}, \mathbf{z}, \tau} \quad & \tau + \mathbf{a}^\top \mathbf{x} + \lambda \sum_{i=1}^n z_i \\
@@ -264,8 +277,16 @@ $$
 	\end{frame}
 	%
 	
- 
-	
+\section{How to set the hyperparameters} 
+
+\begin{frame}{Hyperparameters}
+\begin{itemize}
+	\item Decay parameter of AR(1): $\alpha$
+	\item Observational noise: $\sigma^2$
+	\item Sparsity parameter: $\lambda$
+\end{itemize}	
+Practitioners set these  based on statistical model and domain knowledge
+\end{frame}
 	
 	\begin{frame}{The AR(1) paramter $\alpha$}
 \begin{itemize}
@@ -307,22 +328,115 @@ $$
 \end{frame}
 
 
- 
+ \section{Benchmarking}
 
-\begin{frame}{Dataset and Comparison}
+\begin{frame}{Datasets and Benchmarking}
 	\begin{itemize}
-		\item 25 real datasets spanning different species (mouse, zebrafish), brain regions, and calcium indicators.
-		\item Comparison with a dynamic programming algorithm developed by statisticians (\textit{Jewell and Witten, 2018}).
-		\item Precision: TP / (TP + FP)
-		\item Recall: TP / (TP + FN)
-		\item F1 score: harmonic mean of precision and recall
+		\item 7 real datasets covering multiple species (mouse, zebrafish), brain regions, and calcium indicators
+		\item They are ground truth datasets; scientists gave shocks to the animal and recorded the timings
+		\item Benchmarked against a dynamic programming method (\textit{Jewell et al. 2020}).
+		\item Both methods are exact solvers
+		\item Evaluation metrics:
+		\begin{itemize}
+			\item Precision: $\frac{TP}{TP + FP}$
+			\item Recall: $\frac{TP}{TP + FN}$
+			\item F1 score: harmonic mean of precision and recall
+		\end{itemize}
 	\end{itemize}
-
-
-	\end{frame}
+\end{frame}
 
 %
-%
+
+\begin{frame}{Precision}
+\centering
+\begin{tabular}{lcc}
+\hline
+Dataset & Precision (spp) & Precision (dp) \\
+\hline
+OGB1-m-V1      & 0.3607 & \textbf{0.7087} \\
+OGB1-2-m-V1    & 0.0754 & \textbf{0.5200} \\
+Cal520-m-S1    & \textbf{0.1349} & 0.0353 \\
+Cal520-zf-pDp  & 0.3049 & \textbf{0.4468} \\
+GCaMP6f-zf-aDp & 0.3670 & \textbf{0.7056} \\
+GCaMP6f-zf-dD  & 0.0337 & \textbf{0.1385} \\
+GCaMP6f-m-V1   & \textbf{0.1698} & 0.1208 \\
+\hline
+\end{tabular}
+
+\vspace{0.5em}
+{\small Precision comparison (best per row in bold).}
+\end{frame}
+
+\begin{frame}{Recall}
+\centering
+\begin{tabular}{lcc}
+\hline
+Dataset & Recall (spp) & Recall (dp) \\
+\hline
+OGB1-m-V1      & \textbf{0.6364} & 0.4826 \\
+OGB1-2-m-V1    & \textbf{1.0000} & 0.8387 \\
+Cal520-m-S1    & \textbf{1.0000} & \textbf{1.0000} \\
+Cal520-zf-pDp  & \textbf{0.9804} & 0.5122 \\
+GCaMP6f-zf-aDp & \textbf{0.9877} & 0.5031 \\
+GCaMP6f-zf-dD  & \textbf{1.0000} & 0.8571 \\
+GCaMP6f-m-V1   & 0.9931 & \textbf{1.0000} \\
+\hline
+\end{tabular}
+
+\vspace{0.5em}
+{\small Recall comparison (best per row in bold).}
+\end{frame}
+
+\begin{frame}{F1 Score}
+\centering
+\begin{tabular}{lcc}
+\hline
+Dataset & F1 (spp) & F1 (dp) \\
+\hline
+OGB1-m-V1      & 0.4604 & \textbf{0.5742} \\
+OGB1-2-m-V1    & 0.1402 & \textbf{0.6420} \\
+Cal520-m-S1    & \textbf{0.2378} & 0.0682 \\
+Cal520-zf-pDp  & 0.4651 & \textbf{0.4773} \\
+GCaMP6f-zf-aDp & 0.5351 & \textbf{0.5874} \\
+GCaMP6f-zf-dD  & 0.0652 & \textbf{0.2384} \\
+GCaMP6f-m-V1   & \textbf{0.2901} & 0.2155 \\
+\hline
+\end{tabular}
+
+\vspace{0.5em}
+{\small F1 score comparison (best per row in bold).}
+\end{frame}
+\begin{frame}
+\begin{itemize}
+	\item SPP wins on recall but loses on precision: it is overestimating
+	\item Both methods are exact, thus the result is due to $\lambda$
+	\item If we want to use SPP this in practice, we should find a better way to tune $\lambda$
+	\item SPP (solved by Python igraph pacakge) is slower than Jewell's method written in C++, but still fast enough to solve 10000 variables in seconds
+\end{itemize}	
+\end{frame}
+
+\section{Final Report}
+\begin{frame}{For the Final Report}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.85\linewidth]{variables}
+	\end{figure}
+	\begin{itemize}
+		\item $x_1, \ldots, x_n$ are positive, so the constraint $x_i = s_{i+1} - \alpha s_i$ should be $x_i = s_{i+1} - \alpha s_i \geq 0$
+		\item We can also add additional constraints e.g. capacity constraint
+		\item Then SPP formulation does not work. Instead, we have SOCP formulation. We can also evaluate this on real dataset
+		\item Might need to use Lagrangian Decomposition
+	\end{itemize}
+	
+	
+\end{frame}
+
+\begin{frame}{Wrap up}
+	\begin{itemize}
+		\item Neural spike train inference on calcium imaging data is mixed integer quadratic programming
+		\item Convexification technique of Lee et al (2024), which was developed for general purpose, can successfully solve this problem
+	\end{itemize}
+\end{frame}
 
 \bibliographystyle{apalike}
 \bibliography{reference}
