@@ -42,7 +42,7 @@ Look through the rest of the fields.
 - LAE: loss adjustment claims. amounts paid by the insurance company to investigate and settle claims
 - Losses + LAE takes up most of insurance cost and thus the premium.
 
-- loss ratio: the most common loss ratio metric is reported loss retio, or reported losses divided by earned premium.
+- loss ratio: the most common loss ratio metric is reported loss retio, or reported losses divided by earned premium. A  loss ratio can be larger than 1 (or 100%).When the loss ratio exceeds 1, it indicates that the insurance company is paying out more in claims than it is collecting in earned premiums.
 
 ### TOL Category Check
 
@@ -64,8 +64,8 @@ quit;
 **Loss Ratio Analysis Plan**
 
 * The dataset is **stacked**:
-  * Rows with **nonzero `EARNED_PREMIUM`** do **not** contain `TOL`.
-  * Rows with **zero `EARNED_PREMIUM`** contain `TOL` (categorical loss type).
+  * Rows with **nonzero `EARNED_PREMIUM`** do **not** contain `TOL` and have zero LOSS_LAE_INCURRED.
+  * Rows with **zero `EARNED_PREMIUM`** contain `TOL` (categorical loss type) and have nonzero LOSS_LAE_INCURRED.
 
 * The data spans **multiple years**, so the first step is to **analyze each year separately**.
 
