@@ -11,6 +11,6 @@ proc sql;
            sum(LOSS_LAE_INCURRED) as SUM_LOSS_LAE_INCURRED,
            mean(LOSS_LAE_INCURRED) as MEAN_LOSS_LAE_INCURRED,
            std(LOSS_LAE_INCURRED) as SD_LOSS_LAE_INCURRED
-    from iso.iso_prop_20_24
+    from iso.iso_prop_18_22
     group by ST;
 quit;

@@ -44,8 +44,20 @@ Look through the rest of the fields.
 
 - loss ratio: the most common loss ratio metric is reported loss retio, or reported losses divided by earned premium.
 
----
+### TOL Category Check
 
+How many `TOL` categories are there?  
+There are fourteen distinct categories, which means it is feasible to assign one column per TOL if needed (e.g., for pivoting or wide-format analysis).
+
+```sas
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+
+proc sql;
+    select count(distinct TOL) as num_tol_categories
+    from iso.iso_prop_20_24
+    where EARNED_PREMIUM = 0 and TOL is not missing;
+quit;
+```
 ## Plan for loss ratio computation
 
 
@@ -71,15 +83,18 @@ Look through the rest of the fields.
 
 
 ### Reporting Structure
+- For each year:
+  - Perform analysis at two levels of granularity:
+    - ZIP code
+    - State
 
-For each **year**:
+- At each level:
+  - Compute the overall loss ratio
+  - Provide a breakdown of losses by TOL (composition analysis):
+    - Create 14 columns, one for each TOL category
+    - Each column represents the proportion of total loss attributable to that TOL
+    - The proportions across all TOL columns sum to 1 for each group (year × geography)
 
-* Perform analysis at two levels of granularity:
-  1. **ZIP code**
-  2. **State**
 
-* At each level:
-  * Compute **overall loss ratio**
-  * Provide a **breakdown of total losses by TOL** (composition analysis)
 
 
