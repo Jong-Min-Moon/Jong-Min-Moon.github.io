@@ -1,17 +1,17 @@
 ---
 layout: distill
-title: "ISO property data"
-description: " "
-tags: distill formatting
-categories:  
+title: "ISO Property Data: Loss Ratio Analysis by State and ZIP Code"
+description: "Aggregating earned premium and loss+LAE from ISO property data to compute loss ratios and peril compositions across states and ZIP codes."
+tags: insurance loss-ratio SAS property
+categories: insurance
 date: 2026-05-19
 featured: false
 mermaid:
   enabled: true
   zoomable: true
-project: ise-547
+project: insurance
 authors:
-  - name: Jongmin Mun
+  - name: Jongmin Moon
 
 
 _styles: >

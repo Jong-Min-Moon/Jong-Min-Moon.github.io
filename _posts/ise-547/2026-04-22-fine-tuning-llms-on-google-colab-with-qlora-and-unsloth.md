@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: "Fine-tuning LLMs on Google Colab with QLoRA and Unsloth"
+title: "Fine-Tuning an LLM for Critical Road Trip Planning"
 description: "A quick guide to fine-tuning lightweight LLMs on a Tesla T4 GPU in under an hour for ISE-547."
 tags: distill language-models fine-tuning colab unsloth
 categories: ise-547
@@ -13,7 +13,7 @@ authors:
 bibliography: 2026-04-22-fine-tuning-llms-on-google-colab-with-qlora-and-unsloth.bib
 ---
 
-# Fine-Tuning an LLM for Critical Road Trip Planning
+# 
 
 ## 1. Motivation
 Planning a road trip can be complex, and users often turn to Large Language Models (LLMs) to refine their itineraries. However, standard LLMs tend to be overly flattering and agreeable; they often fail to identify fundamental flaws in a user's initial plan. In contrast, communities like Reddit's road trip subreddits offer highly critical but incredibly practical and helpful advice. This project aims to fine-tune an LLM to emulate this "critical-but-helpful" persona, actively calling out bad ideas while providing grounded routing alternatives.
@@ -262,6 +262,35 @@ The quantitative results are as follows. Most judges favor the baseline model, e
 
 ## Judgement summary by Yi-1.5-9B-Chat
 
+**LIKERT 1 AVERAGES (Out of 5.0)**
+
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 0.00     | 0.00       |
+| Helpfulness | 0.00     | 0.00       |
+| Tone        | 0.00     | 0.00       |
+
+**LIKERT 2 AVERAGES (Out of 5.0)**
+
+| Metric      | Baseline | Fine-Tuned |
+| :---------- | :------- | :--------- |
+| Criticism   | 4.52     | 3.22       |
+| Helpfulness | 4.68     | 3.25       |
+| Tone        | 4.16     | 3.07       |
+
+**PAIRWISE 1 (Dimension-Specific Wins)**
+
+| Metric      | Base | FT   | Ties | Errs |
+| :---------- | :--- | :--- | :--- | :--- |
+| Criticism   | 0    | 0    | 0    | 100  |
+| Helpfulness | 0    | 0    | 0    | 100  |
+| Tone        | 0    | 0    | 0    | 100  |
+
+**PAIRWISE 2 (Overall Winner)**
+
+| Metric  | Base | FT   | Ties | Errs |
+| :------ | :--- | :--- | :--- | :--- |
+| Overall | 0    | 0    | 0    | 100  |
 
 
 ## Comments on the Results: What Worked and What Did Not
