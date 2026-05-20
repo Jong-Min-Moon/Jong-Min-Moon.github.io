@@ -30,6 +30,9 @@ _styles: >
 
 ## ISO DataCube™
 
+* The dataset is **stacked**:
+  * Rows with **nonzero `EARNED_PREMIUM`** do **not** contain `TOL` and have zero LOSS_LAE_INCURRED.
+  * Rows with **zero `EARNED_PREMIUM`** contain `TOL` (categorical loss type) and have nonzero LOSS_LAE_INCURRED.
 
 
 ### Variables
@@ -102,33 +105,11 @@ applicable
 - Major catastrophes: Major catastrophes (e.g., hurricanes,
 wildfires, hail events) identified separately
   - CAT_code: 308127 categories.
-## Geometric granularity
 
-- ISO data: zip code level (ZIPCD)
-- Doug's data: bg2_terr
+## Codes
 
-
-## Task
-
-Start working to aggregate EARNED_PREMIUM & LOSS_LAE_INCURRED by TOL (type of loss / peril), ZIPCD (zip code) and ST (state).
-Look through the rest of the fields. 
-
-
-## terms
-
-- premium is the amount the insured pays for insurance coverage. 
-- Written premium is the total premimum associated with policies that were issued during a specified period.
-- Earend premium represents the portion of the written premium for which coverage has laready been provied as of a certian point in time.
-
-
-- Losses: amount paid or owed to claimants under the provisions of an insurance contract
-- loss is amount of compensation, claim is demand for compensation
-- LAE: loss adjustment claims. amounts paid by the insurance company to investigate and settle claims
-- Losses + LAE takes up most of insurance cost and thus the premium.
-
-- loss ratio: the most common loss ratio metric is reported loss retio, or reported losses divided by earned premium. A  loss ratio can be larger than 1 (or 100%).When the loss ratio exceeds 1, it indicates that the insurance company is paying out more in claims than it is collecting in earned premiums.
-
-### TOL Category Check
+### Code for category check
+#### TOL Category Check
 
 How many `TOL` categories are there?  
 There are fourteen distinct categories, which means it is feasible to assign one column per TOL if needed (e.g., for pivoting or wide-format analysis).
@@ -160,7 +141,7 @@ The TOL categories are:
 - TOL_Hail
 
 
-### Coverage categories check
+#### Coverage categories check
 
 ```sas
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
@@ -181,7 +162,7 @@ quit;
 ```
 
 
-### Construction_Type categories check
+#### Construction_Type categories check
 
 ```sas
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
@@ -201,7 +182,7 @@ proc sql;
 quit;
 ```
 
-### CAT_code categories check
+#### CAT_code categories check
 
 ```sas
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
@@ -221,7 +202,7 @@ proc sql;
 quit;
 ```
 
-### CAT_event categories check
+#### CAT_event categories check
 
 ```sas
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
@@ -240,6 +221,37 @@ proc sql;
     order by CAT_event;
 quit;
 ```
+
+### Code for summary
+
+#### claim row vs premium row
+
+## Geometric granularity
+
+- ISO data: zip code level (ZIPCD)
+- Doug's data: bg2_terr
+
+
+## Task
+
+Start working to aggregate EARNED_PREMIUM & LOSS_LAE_INCURRED by TOL (type of loss / peril), ZIPCD (zip code) and ST (state).
+Look through the rest of the fields. 
+
+
+## terms
+
+- premium is the amount the insured pays for insurance coverage. 
+- Written premium is the total premimum associated with policies that were issued during a specified period.
+- Earend premium represents the portion of the written premium for which coverage has laready been provied as of a certian point in time.
+
+
+- Losses: amount paid or owed to claimants under the provisions of an insurance contract
+- loss is amount of compensation, claim is demand for compensation
+- LAE: loss adjustment claims. amounts paid by the insurance company to investigate and settle claims
+- Losses + LAE takes up most of insurance cost and thus the premium.
+
+- loss ratio: the most common loss ratio metric is reported loss retio, or reported losses divided by earned premium. A  loss ratio can be larger than 1 (or 100%).When the loss ratio exceeds 1, it indicates that the insurance company is paying out more in claims than it is collecting in earned premiums.
+
 ## Plan for loss ratio computation
 
 
@@ -282,6 +294,38 @@ quit;
 
 # 05-20 joining and preparing the tables
 
+## Task
+
+From the discussion earlier, please join Doug’s territory information onto the ISO data by zip code.
+
+Based on the feedback from Doug yesterday, we can aggregate the ISO TOL (peril) data into two groups: CAT related & non-CAT. The types of CAT events we will be getting from the simulated data are
+•	SCS = Severe convective storm – Wind + Hail
+•	HU = Hurricane
+•	EQ = Earthquake
+•	WS = winter storm (includes freezing)
+In ISO, I think hurricane is included in the wind+hail peril. Figure out a grouping method that works to group TOL into CAT & Non-CAT using this information as context.
+
+Lets produce a table that has the following fields:
+Categorical
+•	Year
+•	State
+•	EQ Zone
+•	BGII Territory
+•	Coverage [Building | Contents| time element]
+•	Subline (maybe its labeled as SUB) [BGI | BGII | SCL]
+•	Grouped TOL [CAT vs Non-CAT]
+Numeric
+•	Earned Exposure
+•	Earned Premium
+•	Loss+LAE
+
+Don’t forget to add the filter for when exposures are included in the data. I will probably have more feedback after we review this data together.
+
+Using this data, we can get the damage ratios for various segments. We will use these for the non-cat portion of the capital allocation factors.
+
+
+
+## report
 the TOL variable has categories:
   - `All Other`
   - `Fire & Lightning`
@@ -298,20 +342,61 @@ the TOL variable has categories:
   - `Riot & Civil Commotion`
   - `Hail`
   which do not provide precise information whether it is CAT or not. However, the ISO dataset also has CAT_code variable and CAT_event variable which contains CAT related information.
-  there is a category named Non-catastrophe corresponding to CAT_code=0000 having 226891 rows.
-   the problem is these variables are very descriptive and thus have 308127 cateogires.
-but they share common keywords. I will try to break down them sequentially, untill no row is unclassified
+ 
+  1.5287E8 rows where cat_code / CAT_event is blank, 308127 rows not  blank.
+  among them,   there is a category named Non-catastrophe corresponding to CAT_code=0000 having 226891 rows.
+   so 81,236 rows are catastrophes. 
 
-First, I use keywords:
-- Stars with Hurricane
+  to classify them I use keywords:
+- Starts with Hurricane
 - Ends with Fire or Fires
 - Starts with Riot / Civil
 - Tropical Storm
 - Starts with Wind & Thunderstorm / Tornadoes
 - Starts with Winter Storm
-- all the others
+
+
+the result:
+
+CAT_group /num_categories / N_obs
+Wind/Thunderstorm/Tornado 51 46315 
+Winter Storm 5 16783 
+Hurricane 14 12220 
+Tropical Storm 6 3197 
+Riot/Civil 1 1769 
+Fire 10 952 
+total 83126
+the 6 catogires exaclty sum up to 83126 rows, so all catastrpohes are classified into these 6.
 
    ## Codes
+
+
+
+
+### Cat blank or not
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+
+```
+proc sql;
+    select distinct CAT_event
+    from iso.iso_prop_20_24
+    where CAT_code ne '0000'
+          and CAT_event is not missing
+    order by CAT_event;
+quit;
+```
+num_blank
+
+num_not_blank
+
+total_rows
+
+
+1.5287E8 308127 1.5318E8 
+
+
+
+result:
 
    ### finding the CAT_code for CAT_event = Non-catastrophe
   
@@ -339,9 +424,22 @@ quit;
 
   ```
 
+### count non-cat
 
-
-### a
+```
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+proc sql;
+    select 
+        sum(case when CAT_code = '0000' then 1 else 0 end) as num_non_cat,
+        sum(case when CAT_code ne '0000' then 1 else 0 end) as num_cat,
+        count(*) as total_rows
+    from iso.iso_prop_20_24;
+quit;
+```
+result:
+num_non_cat num_cat total_rows
+226891 1.5296E8 1.5318E8 
+### overview of non-0000
 ```
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
 
@@ -352,6 +450,7 @@ proc sql;
           and CAT_event is not missing
     order by CAT_event;
 quit;
+
 ```
 
 ### Catastrpohe classification step 1
