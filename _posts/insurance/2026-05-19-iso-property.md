@@ -343,6 +343,7 @@ the TOL variable has categories:
   - `Hail`
   which do not provide precise information whether it is CAT or not. However, the ISO dataset also has CAT_code variable and CAT_event variable which contains CAT related information.
  
+ for 20-24,
   1.5287E8 rows where cat_code / CAT_event is blank, 308127 rows not  blank.
   among them,   there is a category named Non-catastrophe corresponding to CAT_code=0000 having 226891 rows.
    so 81,236 rows are catastrophes. 
@@ -354,7 +355,9 @@ the TOL variable has categories:
 - Tropical Storm
 - Starts with Wind & Thunderstorm / Tornadoes
 - Starts with Winter Storm
-
+- ends with mudslide
+- no-catastrophe
+- those with blank CAT-code
 
 the result:
 
@@ -367,6 +370,36 @@ Riot/Civil 1 1769
 Fire 10 952 
 total 83126
 the 6 catogires exaclty sum up to 83126 rows, so all catastrpohes are classified into these 6.
+
+for 18-22,
+
+
+
+CAT_group
+
+num_categories
+
+N_obs
+
+
+Blank 0 1.5799E8 
+Non-catastrophe 1 264381 
+Wind/Thunderstorm/Tornado 27 23725 
+Winter Storm 4 15469 
+Hurricane 11 9937 
+Tropical Storm 4 2678 
+Riot/Civil 1 1801 
+Fire 6 1044 
+Mudslide 1 14 
+the total row should be 158309567
+
+
+
+•	SCS = Severe convective storm – Wind + Hail
+•	HU = Hurricane
+•	EQ = Earthquake
+•	WS = winter storm (includes freezing)
+
 
    ## Codes
 
@@ -453,7 +486,7 @@ quit;
 
 ```
 
-### Catastrpohe classification step 1
+### Catastrpohe classification for 20-24
 
 ```sas
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
@@ -494,5 +527,65 @@ proc sql outobs=100;
     from work.cat_event_tagged
     where CAT_group = 'Other'
     order by CAT_event;
+quit;
+```
+
+### Catastrpohe classification for 18-22
+
+```sas
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+
+
+/* Step 1: Tag CAT_event into groups */
+proc sql;
+    create table work.cat_event_tagged as
+    select 
+        CAT_event,
+        CAT_code,
+        case
+            when CAT_event is missing then 'Blank'
+            when upcase(CAT_event) like '%NON-CATASTROPHE%' then 'Non-catastrophe'
+            when upcase(CAT_event) like '%HURRICANE%' then 'Hurricane'
+            when upcase(CAT_event) like '%FIRE' 
+              or upcase(CAT_event) like '%FIRES' then 'Fire'
+            when upcase(CAT_event) like 'RIOT%' 
+              or upcase(CAT_event) like 'CIVIL%' then 'Riot/Civil'
+            when upcase(CAT_event) like 'TROPICAL STORM%' then 'Tropical Storm'
+            when upcase(CAT_event) like 'WIND%' 
+              or upcase(CAT_event) like 'THUNDERSTORM%' 
+              or upcase(CAT_event) like 'TORNADO%' then 'Wind/Thunderstorm/Tornado'
+            when upcase(CAT_event) like 'WINTER STORM%' then 'Winter Storm'
+            when upcase(CAT_event) like '%MUDSLIDE' then 'Mudslide'
+            else 'Other'
+        end as CAT_group
+    from iso.iso_prop_18_22;
+quit;
+
+
+proc sql;
+    select CAT_group,
+           put(count(*), comma20.) as N_obs_format
+    from work.cat_event_tagged
+    group by CAT_group;
+quit;
+
+```
+
+#### is there an earthquake?
+```
+proc sql;
+    select distinct CAT_event
+    from iso.iso_prop_18_22
+    where CAT_code ne '0000'
+          and CAT_event is not missing
+          and upcase(CAT_event) like '%EARTHQUAKE%';
+quit;
+
+proc sql;
+    select distinct CAT_event
+    from iso.iso_prop_20_24
+    where CAT_code ne '0000'
+          and CAT_event is not missing
+          and upcase(CAT_event) like '%EARTHQUAKE%';
 quit;
 ```
