@@ -109,36 +109,8 @@ wildfires, hail events) identified separately
 ## Codes
 
 ### Code for category check
-#### TOL Category Check
 
-How many `TOL` categories are there?  
-There are fourteen distinct categories, which means it is feasible to assign one column per TOL if needed (e.g., for pivoting or wide-format analysis).
 
-```sas
-libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
-
-proc sql;
-    select count(distinct TOL) as num_tol_categories
-    from iso.iso_prop_20_24
-    where EARNED_PREMIUM = 0 and TOL is not missing;
-quit;
-```
-
-The TOL categories are:
-- TOL_All Other
-- TOL_Fire & Lightning
-- TOL_Not Available
-- TOL_Water Damage
-- TOL_Wind
-- TOL_Burglary & Theft
-- TOL_Mold
-- TOL_Vandalism
-- TOL_Freezing
-- TOL_Sprinkler Leakage
-- TOL_Collapse
-- TOL_Explosion
-- TOL_Riot & Civil Commotion
-- TOL_Hail
 
 
 #### Coverage categories check
@@ -321,181 +293,302 @@ Numeric
 
 Don’t forget to add the filter for when exposures are included in the data. I will probably have more feedback after we review this data together.
 
-Using this data, we can get the damage ratios for various segments. We will use these for the non-cat portion of the capital allocation factors.
+Using this data, we can get the damage ratios for various segments. 
+- We will use these for the non-cat portion of the capital allocation factors.
 
 
 
-## report
-the TOL variable has categories:
-  - `All Other`
-  - `Fire & Lightning`
-  - `Not Available`
-  - `Water Damage`
-  - `Wind`
-  - `Burglary & Theft`
-  - `Mold`
-  - `Vandalism`
-  - `Freezing`
-  - `Sprinkler Leakage`
-  - `Collapse`
-  - `Explosion`
-  - `Riot & Civil Commotion`
-  - `Hail`
-  which do not provide precise information whether it is CAT or not. However, the ISO dataset also has CAT_code variable and CAT_event variable which contains CAT related information.
- 
- for 20-24,
-  1.5287E8 rows where cat_code / CAT_event is blank, 308127 rows not  blank.
-  among them,   there is a category named Non-catastrophe corresponding to CAT_code=0000 having 226891 rows.
-   so 81,236 rows are catastrophes. 
+## Report
 
-  to classify them I use keywords:
-- Starts with Hurricane
-- Ends with Fire or Fires
-- Starts with Riot / Civil
-- Tropical Storm
-- Starts with Wind & Thunderstorm / Tornadoes
-- Starts with Winter Storm
-- ends with mudslide
-- no-catastrophe
-- those with blank CAT-code
+The `TOL` variable contains the following categories:
 
-the result:
+- All Other  
+- Fire & Lightning  
+- Not Available  
+- Water Damage  
+- Wind  
+- Burglary & Theft  
+- Mold  
+- Vandalism  
+- Freezing  
+- Sprinkler Leakage  
+- Collapse  
+- Explosion  
+- Riot & Civil Commotion  
+- Hail  
 
-CAT_group /num_categories / N_obs
-Wind/Thunderstorm/Tornado 51 46315 
-Winter Storm 5 16783 
-Hurricane 14 12220 
-Tropical Storm 6 3197 
-Riot/Civil 1 1769 
-Fire 10 952 
-total 83126
-the 6 catogires exaclty sum up to 83126 rows, so all catastrpohes are classified into these 6.
+These categories do not clearly indicate the nature of the loss, specifically whether a loss was a result of hurricane, storm or earthquake. However, the ISO datacube dataset provides two additional variables:
 
-for 18-22,
+- `CAT_code`
+- `CAT_event`
+
+These variables contain explicit catastrophe-related information.
 
 
+### CAT Event Classification Logic
 
-CAT_group
+To classify catastrophe events, the following keyword-based rules were applied:
 
-num_categories
-
-N_obs
-
-
-Blank 0 1.5799E8 
-Non-catastrophe 1 264381 
-Wind/Thunderstorm/Tornado 27 23725 
-Winter Storm 4 15469 
-Hurricane 11 9937 
-Tropical Storm 4 2678 
-Riot/Civil 1 1801 
-Fire 6 1044 
-Mudslide 1 14 
-the total row should be 158309567
+- Starts with `"Hurricane"` → Hurricane  
+- Ends with `"Fire"` or `"Fires"` → Fire  
+- Starts with `"Riot"` or `"Civil"` → Riot/Civil  
+- Starts with `"Tropical Storm"` → Tropical Storm  
+- Starts with `"Wind"`, `"Thunderstorm"`, or `"Tornado"` → Wind/Thunderstorm/Tornado  
+- Starts with `"Winter Storm"` → Winter Storm  
+- Ends with `"Mudslide"` → Mudslide  
+- `CAT_code = '0000'` → Non-catastrophe  
+- Missing `CAT_event` → Blank  
 
 
+### Classification Results (2020–2024)
 
-•	SCS = Severe convective storm – Wind + Hail
-•	HU = Hurricane
-•	EQ = Earthquake
-•	WS = winter storm (includes freezing)
+| CAT Group                         | Count       |
+|----------------------------------|------------|
+| Blank                            | 152,874,889 |
+| Non-catastrophe                  | 226,891     |
+| Wind/Thunderstorm/Tornado        | 46,315      |
+| Winter Storm                     | 16,783      |
+| Hurricane                        | 12,220      |
+| Tropical Storm                   | 3,197       |
+| Riot/Civil                       | 1,769       |
+| Fire                             | 952         |
+
+**Total: 153,183,016**
+
+
+### Classification Results (2018–2022)
+
+| CAT Group                         | Count       |
+|----------------------------------|------------|
+| Blank                            | 157,990,518 |
+| Non-catastrophe                  | 264,381     |
+| Wind/Thunderstorm/Tornado        | 23,725      |
+| Winter Storm                     | 15,469      |
+| Hurricane                        | 9,937       |
+| Tropical Storm                   | 2,678       |
+| Riot/Civil                       | 1,801       |
+| Fire                             | 1,044       |
+| Mudslide                         | 14          |
+
+**Total: 158,309,567**
+
+### Tropical storms
+
+what are tropical storms?  in 20_24 data, CAT_event that contain Tropical Storm are:
+Tropical Storm Alberto 
+Tropical Storm Elsa 
+Tropical Storm Fred 
+Tropical Storm Hilary 
+Tropical Storm Isaias 
+Tropical Storm Ophelia 
+
+Hurricane refers to a strong tropical cyclone occurs in Atlantic ocean or NE Pacific Ocean (https://en.wikipedia.org/wiki/Tropical_cyclone) (e.g. in the north america.)
+Therefore hurricane and tropical storms fall into same category. but let us disstinguish them in sub-categories.
+
+### Observations
+
+- Over 99% of rows have blank `CAT_event` values. Catastrophe events represent a **very small fraction** of total data.
+- The classification successfully partitions all rows into **mutually exclusive categories**.
+- No **Earthquake events** were identified in either dataset (2018–2022 or 2020–2024).
+
+## Feedback 05-21 morning
+tornado and hurricane are very differnt in nature.
+tornados are mostly followed by hail. so tornado can be identified as wind+hail
+
+
+
+
+wind hail
+hurricane
+winterstorm
+everything else
+
+
+completely remove anything related to catastrophic fire
+
+
+### CAT Classification 
+
+#### Objective
+Classify each row into:
+- `is_CAT` indicator (1 = catastrophe, 0 = non-catastrophe)
+- `CAT_type` (SCS, Hurricane, WinterStorm, or missing for non-cat)
+We do not analyze all catastrophes; we only do what simulation model exists. thery are scs, hurrican, winterstorm and earthquake, but the cat_event do not contain earthquakes
+
+#### Strategy
+- Classification relies on both:
+  - `CAT_event` (text-based patterns)
+  - `TOL` (for SCS identification)
+- Missing `CAT_event` values are still eligible for SCS classification
+- Categories are **mutually exclusive**
+- Priority-based logic ensures no overlap
+
+#### Rules
+#####  Exclusion Rules
+
+The following rows **must NOT be classified as CAT (is_CAT = 1)**:
+
+Rows where `CAT_event`:
+- Ends with `"Fire"` or `"Fires"`
+- Ends with `"Mudslide"`
+- Starts with `"Riot"` or `"Civil"`
+
+These rows are automatically treated as **non-catastrophe (is_CAT = 0)**. Because they are not the types of catastrpohe that we want to analyze.
+
+
+##### CAT Classification Rules (is_CAT = 1)
+A row is classified as a catastrophe (`is_CAT = 1`) only if it passes the exlusion rule and satisfies one of the following conditions:
+
+##### Severe Convective Storm (SCS)
+
+Criteria:
+- `CAT_event` **does NOT contain**:
+  - `"Tropical Storm"`
+  - `"Hurricane"`
+- AND `TOL` is:
+  - `"Wind"` OR `"Hail"`
+- `CAT_event` **can be blank or non-blank**
+
+Assignment:
+- `is_CAT = 1`
+- `CAT_type = 'SCS'`
+
+##### Hurricane
+
+Criteria:
+- `CAT_event` contains:
+  - `"Tropical Storm"` OR
+  - `"Hurricane"`
+
+Assignment:
+- `is_CAT = 1`
+- `CAT_type = 'HU'`
+
+##### Winter Storm
+
+Criteria:
+- `CAT_event` contains:
+  - `"Winter Storm"`
+
+Assignment:
+- `is_CAT = 1`
+- `CAT_type = 'WS'`
+
+
+#####  Non-CAT Classification
+
+All rows that do not get CAT_type by the criteria above gets:
+
+- `is_CAT = 0`
+- `CAT_type = NULL`
+
+
+##### Processing Order (Important)
+1. Apply **Exclusion Rules** (Fire, Mudslide, Riot/Civil)  
+2. Assign **Hurricane**  
+3. Assign **Winter Storm**  
+4. Assign **SCS**  
+5. Everything else → **Non-CAT**
+
+
+### Joining
+After creating new categorical variable, we retain variables:
+-	YEAR
+-	ST
+- ZIPCD
+- BGII_Territory
+- COV
+- SUB
+- is_CAT
+- CAT_type
+- earned_premium
+- earned_exposure
+- TOL
+
+
+SCL_Territory
+•	EQ Zone
+
+ •	Grouped TOL [CAT vs Non-CAT]
+Numeric
+•	Earned Exposure
+•	Earned Premium
+•	Loss+LAE
+
+
+
+
+
 
 
    ## Codes
 
+### TOL Category Check 20_24
 
-
-
-### Cat blank or not
+```sas
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
 
-```
 proc sql;
-    select distinct CAT_event
+    select count(distinct TOL) as num_tol_categories
     from iso.iso_prop_20_24
-    where CAT_code ne '0000'
-          and CAT_event is not missing
-    order by CAT_event;
+    where EARNED_PREMIUM = 0 and TOL is not missing;
 quit;
 ```
-num_blank
 
-num_not_blank
+The TOL categories are:
+- TOL_All Other
+- TOL_Fire & Lightning
+- TOL_Not Available
+- TOL_Water Damage
+- TOL_Wind
+- TOL_Burglary & Theft
+- TOL_Mold
+- TOL_Vandalism
+- TOL_Freezing
+- TOL_Sprinkler Leakage
+- TOL_Collapse
+- TOL_Explosion
+- TOL_Riot & Civil Commotion
+- TOL_Hail
 
-total_rows
+### TOL Category Check 20_24
 
-
-1.5287E8 308127 1.5318E8 
-
-
-
-result:
-
-   ### finding the CAT_code for CAT_event = Non-catastrophe
-  
-  ```sas
+```sas
+/* Assign library to the exact folder */
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
 
-/* Step 1: filter first */
-proc sql;
-    create table work.noncat_subset as
-    select CAT_event, CAT_code
-    from iso.iso_prop_20_24
-    where CAT_event = 'Non-catastrophe'
-          and CAT_code is not missing;
-quit;
+/* Verify dataset exists and is readable */
+proc contents data=iso.iso_prop_18_22;
+run;
 
-/* Step 2: aggregate */
+/* Your query using that dataset */
 proc sql;
-    select CAT_event,
-           CAT_code,
+    select TOL,
            count(*) as N_obs
-    from work.noncat_subset
-    group by CAT_event, CAT_code
+    from iso.iso_prop_18_22
+    where TOL is not missing
+    group by TOL
     order by N_obs desc;
-quit;
-
-  ```
-
-### count non-cat
+quit;+
 
 ```
-libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
-proc sql;
-    select 
-        sum(case when CAT_code = '0000' then 1 else 0 end) as num_non_cat,
-        sum(case when CAT_code ne '0000' then 1 else 0 end) as num_cat,
-        count(*) as total_rows
-    from iso.iso_prop_20_24;
-quit;
-```
-result:
-num_non_cat num_cat total_rows
-226891 1.5296E8 1.5318E8 
-### overview of non-0000
-```
-libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
-
-proc sql;
-    select distinct CAT_event
-    from iso.iso_prop_20_24
-    where CAT_code ne '0000'
-          and CAT_event is not missing
-    order by CAT_event;
-quit;
-
-```
+ 
 
 ### Catastrpohe classification for 20-24
 
 ```sas
 libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
 
+
+/* Step 1: Tag CAT_event into groups */
 proc sql;
     create table work.cat_event_tagged as
     select 
         CAT_event,
+        CAT_code,
         case
+            when CAT_event is missing then 'Blank'
+            when upcase(CAT_event) like '%NON-CATASTROPHE%' then 'Non-catastrophe'
             when upcase(CAT_event) like '%HURRICANE%' then 'Hurricane'
             when upcase(CAT_event) like '%FIRE' 
               or upcase(CAT_event) like '%FIRES' then 'Fire'
@@ -506,28 +599,20 @@ proc sql;
               or upcase(CAT_event) like 'THUNDERSTORM%' 
               or upcase(CAT_event) like 'TORNADO%' then 'Wind/Thunderstorm/Tornado'
             when upcase(CAT_event) like 'WINTER STORM%' then 'Winter Storm'
+            when upcase(CAT_event) like '%MUDSLIDE' then 'Mudslide'
             else 'Other'
         end as CAT_group
-    from iso.iso_prop_20_24
-    where CAT_code ne '0000'
-          and CAT_event is not missing;
+    from iso.iso_prop_20_24;
 quit;
+
 
 proc sql;
     select CAT_group,
-           count(distinct CAT_event) as num_categories,
-           count(*) as N_obs
+           put(count(*), comma20.) as N_obs_format
     from work.cat_event_tagged
-    group by CAT_group
-    order by N_obs desc;
+    group by CAT_group;
 quit;
 
-proc sql outobs=100;
-    select distinct CAT_event
-    from work.cat_event_tagged
-    where CAT_group = 'Other'
-    order by CAT_event;
-quit;
 ```
 
 ### Catastrpohe classification for 18-22
@@ -588,4 +673,27 @@ proc sql;
           and CAT_event is not missing
           and upcase(CAT_event) like '%EARTHQUAKE%';
 quit;
+```
+
+#### tropical storm overview
+```sas
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+
+/* view top 100. we can see that CAT_event is in the format of Tropical Storm XXX, for example, Tropical Strom Isaias */
+proc sql outobs=100;
+    select *
+    from iso.iso_prop_20_24
+    where CAT_event is not missing
+          and upcase(CAT_event) like '%TROPICAL STORM%';
+quit;
+
+
+proc sql;
+    select distinct CAT_event
+    from iso.iso_prop_20_24
+    where CAT_event is not missing
+          and upcase(CAT_event) like '%TROPICAL STORM%'
+    order by CAT_event;
+quit;
+
 ```
