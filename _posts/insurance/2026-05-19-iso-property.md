@@ -443,7 +443,7 @@ These rows are automatically treated as **non-catastrophe (is_CAT = 0)**. Becaus
 A row is classified as a catastrophe (`is_CAT = 1`) only if it passes the exlusion rule and satisfies one of the following conditions:
 
 ##### Severe Convective Storm (SCS)
-
+ % should add Wind & Thunderstorm / Tornadoes keyword
 Criteria:
 - `CAT_event` **does NOT contain**:
   - `"Tropical Storm"`
