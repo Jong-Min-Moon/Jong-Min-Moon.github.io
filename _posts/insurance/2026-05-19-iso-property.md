@@ -91,7 +91,8 @@ years/quarters
   - `Explosion`
   - `Riot & Civil Commotion`
   - `Hail`
-
+- exposures
+  - 
 • Type of policy: Monoline versus commercial fire and
 allied lines business written on a package policy (other
 than businessowners)
@@ -271,25 +272,25 @@ Look through the rest of the fields.
 From the discussion earlier, please join Doug’s territory information onto the ISO data by zip code.
 
 Based on the feedback from Doug yesterday, we can aggregate the ISO TOL (peril) data into two groups: CAT related & non-CAT. The types of CAT events we will be getting from the simulated data are
-•	SCS = Severe convective storm – Wind + Hail
-•	HU = Hurricane
-•	EQ = Earthquake
-•	WS = winter storm (includes freezing)
+-	SCS = Severe convective storm – Wind + Hail
+-	HU = Hurricane
+-	EQ = Earthquake
+-	WS = winter storm (includes freezing)
 In ISO, I think hurricane is included in the wind+hail peril. Figure out a grouping method that works to group TOL into CAT & Non-CAT using this information as context.
 
 Lets produce a table that has the following fields:
-Categorical
-•	Year
-•	State
-•	EQ Zone
-•	BGII Territory
-•	Coverage [Building | Contents| time element]
-•	Subline (maybe its labeled as SUB) [BGI | BGII | SCL]
-•	Grouped TOL [CAT vs Non-CAT]
-Numeric
-•	Earned Exposure
-•	Earned Premium
-•	Loss+LAE
+- Categorical
+  -	Year
+  -	State
+  -	EQ Zone
+  -	BGII Territory
+  -	Coverage [Building | Contents| time element]
+  -	Subline (maybe its labeled as SUB) [BGI | BGII | SCL]
+  -	Grouped TOL [CAT vs Non-CAT]
+- Numeric
+  -	Earned Exposure
+  -	Earned Premium
+  -	Loss+LAE
 
 Don’t forget to add the filter for when exposures are included in the data. I will probably have more feedback after we review this data together.
 
@@ -299,6 +300,7 @@ Using this data, we can get the damage ratios for various segments.
 
 
 ## Report
+The purpose of dividing into CAT / non-CAT in ISO data is, to use non-CAT part of the ISO data. ISO data is historical data. it is noisy count of rare events and can distort the actual risk for each year since it's not 1/5 hurricanes happening each year but 1 hurricane happening in one out of five years. AAL (average annual loss) is expectaion numerically compuated from model. this is smoothed value that separates into five buckets.
 
 The `TOL` variable contains the following categories:
 
@@ -323,7 +325,8 @@ These categories do not clearly indicate the nature of the loss, specifically wh
 - `CAT_event`
 
 These variables contain explicit catastrophe-related information.
-
+These are identified based on the loss date, state, ZIP code or territory, and type of loss
+associated with the catastrophe. This data is grouped by Catastrophe Type and shown individually.
 
 ### CAT Event Classification Logic
 
@@ -445,7 +448,7 @@ Criteria:
 - `CAT_event` **does NOT contain**:
   - `"Tropical Storm"`
   - `"Hurricane"`
-- AND `TOL` is:
+- AND `TOL` contains:
   - `"Wind"` OR `"Hail"`
 - `CAT_event` **can be blank or non-blank**
 
@@ -490,31 +493,43 @@ All rows that do not get CAT_type by the criteria above gets:
 4. Assign **SCS**  
 5. Everything else → **Non-CAT**
 
+### With/Without Exposure / Exposure Indicator
+Exposure is not provided for the Time Element (Business Interruption) coverage. Additionally, certain records
+have had exposure removed due to data quality issues.
 
 ### Joining
-After creating new categorical variable, we retain variables:
--	YEAR
--	ST
-- ZIPCD
-- BGII_Territory
-- COV
-- SUB
-- is_CAT
-- CAT_type
-- earned_premium
-- earned_exposure
-- TOL
+
+####  Data Source
+
+The analysis is based on the dataset:
+/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables/iso_prop_20_24.sas7bdat
+
+#### Variable Selection
+After creating the new categorical variables (`is_CAT`, `CAT_type`), retain the following fields for downstream analysis:
+
+- `YEAR`
+- `ST`
+- `ZIPCD`
+- `BGII_Territory`
+- `COV`
+- `SUB`
+- `is_CAT`
+- `CAT_type`
+- `EARNED_PREMIUM`
+- `EARNED_EXPOSURE`
+- `TOL`
+- `EXPOSURE_VIEW`
+- `LOSS_LAE_INCURRED`
 
 
-SCL_Territory
-•	EQ Zone
 
- •	Grouped TOL [CAT vs Non-CAT]
-Numeric
-•	Earned Exposure
-•	Earned Premium
-•	Loss+LAE
-
+#### ZIP Mapping
+Join the main dataset with the ZIP mapping file:
+/sas/data/project/EG/jmun/zip_mapping.sas7bdat
+with join key:
+- `ZIPCD` (main dataset) = `zip` (mapping dataset)
+to add the variable:
+  - `eq_risk_color`
 
 
 
@@ -697,3 +712,112 @@ proc sql;
 quit;
 
 ```
+
+#### earned exposure 0 and positive
+```sas
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+
+proc sql outobs=10;
+    select *
+    from iso.iso_prop_18_22
+    where EARNED_EXPOSURE > 0;
+quit;
+
+proc sql outobs=10;
+    select *
+    from iso.iso_prop_18_22
+    where EARNED_EXPOSURE > 0
+          and TOL is not missing;
+quit;
+```
+
+#### Join
+'''sas
+/* Assign libraries */
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+libname mylib "/sas/data/project/EG/jmun";
+
+/* Create final dataset with classification + join */
+proc sql;
+    create table mylib.final_iso_prop_20_24 as
+    select 
+        a.YEAR,
+        a.ST,
+        a.ZIPCD,
+        a.BGII_Territory,
+        a.COV,
+        a.SUB,
+
+        /* CAT classification */
+        case
+            /* Step 1: Exclusion rules */
+            when upcase(a.CAT_event) like '%FIRE' 
+              or upcase(a.CAT_event) like '%FIRES'
+              or upcase(a.CAT_event) like '%MUDSLIDE'
+              or upcase(a.CAT_event) like 'RIOT%'
+              or upcase(a.CAT_event) like 'CIVIL%' 
+            then 0
+
+            /* Step 2: Hurricane */
+            when upcase(a.CAT_event) like '%HURRICANE%'
+              or upcase(a.CAT_event) like '%TROPICAL STORM%' 
+            then 1
+
+            /* Step 3: Winter Storm */
+            when upcase(a.CAT_event) like '%WINTER STORM%' 
+            then 1
+
+            /* Step 4: SCS */
+            when (upcase(a.CAT_event) not like '%HURRICANE%' 
+                  and upcase(a.CAT_event) not like '%TROPICAL STORM%')
+                 and (upcase(a.TOL) like '%WIND%' 
+                      or upcase(a.TOL) like '%HAIL%')
+            then 1
+
+            /* Step 5: Non-CAT */
+            else 0
+        end as is_CAT,
+
+        case
+            /* Apply same priority logic */
+
+            when upcase(a.CAT_event) like '%FIRE' 
+              or upcase(a.CAT_event) like '%FIRES'
+              or upcase(a.CAT_event) like '%MUDSLIDE'
+              or upcase(a.CAT_event) like 'RIOT%'
+              or upcase(a.CAT_event) like 'CIVIL%' 
+            then ''
+
+            when upcase(a.CAT_event) like '%HURRICANE%'
+              or upcase(a.CAT_event) like '%TROPICAL STORM%' 
+            then 'HU'
+
+            when upcase(a.CAT_event) like '%WINTER STORM%' 
+            then 'WS'
+
+            when (upcase(a.CAT_event) not like '%HURRICANE%' 
+                  and upcase(a.CAT_event) not like '%TROPICAL STORM%')
+                 and (upcase(a.TOL) like '%WIND%' 
+                      or upcase(a.TOL) like '%HAIL%')
+            then 'SCS'
+
+            else ''
+        end as CAT_type length=3,
+
+        a.EARNED_PREMIUM,
+        a.EARNED_EXPOSURE,
+        a.TOL,
+        a.EXPOSURE_VIEW,
+        a.LOSS_LAE_INCURRED,
+
+        /* Join variable */
+        b.eq_risk_color
+
+    from iso.iso_prop_20_24 as a
+
+    /* LEFT JOIN to preserve all rows */
+    left join mylib.zip_mapping as b
+        on a.ZIPCD = put(b.zip, z5.)
+;
+quit;
+'''
