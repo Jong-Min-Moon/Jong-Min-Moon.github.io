@@ -436,7 +436,7 @@ Rows where `CAT_event`:
 - Ends with `"Mudslide"`
 - Starts with `"Riot"` or `"Civil"`
 
-These rows are automatically treated as **non-catastrophe (is_CAT = 0)**. Because they are not the types of catastrpohe that we want to analyze.
+These rows are automatically treated as **non-catastrophe (is_CAT = 0)**. Because they are not the types of catastrpohe that we want to analyze. However, we retain the catastrophe type information: CAT_type variables will have 'fire', 'mudslide' and 'civil' values.
 
 
 ##### CAT Classification Rules (is_CAT = 1)
@@ -740,6 +740,10 @@ libname mylib "/sas/data/project/EG/jmun";
 /* Create final dataset with classification + join */
 proc sql;
     create table mylib.final_iso_prop_20_24 as
+	
+    select *
+    from (
+
     select 
         a.YEAR,
         a.ST,
@@ -778,31 +782,33 @@ proc sql;
             else 0
         end as is_CAT,
 
-        case
-            /* Apply same priority logic */
+case
+    when upcase(coalescec(a.CAT_event, '')) like '%HURRICANE%'
+      or upcase(coalescec(a.CAT_event, '')) like '%TROPICAL STORM%' 
+    then 'HU'
 
-            when upcase(a.CAT_event) like '%FIRE' 
-              or upcase(a.CAT_event) like '%FIRES'
-              or upcase(a.CAT_event) like '%MUDSLIDE'
-              or upcase(a.CAT_event) like 'RIOT%'
-              or upcase(a.CAT_event) like 'CIVIL%' 
-            then ''
+    when upcase(coalescec(a.CAT_event, '')) like '%WINTER STORM%' 
+    then 'WS'
 
-            when upcase(a.CAT_event) like '%HURRICANE%'
-              or upcase(a.CAT_event) like '%TROPICAL STORM%' 
-            then 'HU'
+    when upcase(coalescec(a.CAT_event, '')) like '%FIRE' 
+      or upcase(coalescec(a.CAT_event, '')) like '%FIRES'
+    then 'Fire'
 
-            when upcase(a.CAT_event) like '%WINTER STORM%' 
-            then 'WS'
+    when upcase(coalescec(a.CAT_event, '')) like '%MUDSLIDE'
+    then 'Mudslide'
 
-            when (upcase(a.CAT_event) not like '%HURRICANE%' 
-                  and upcase(a.CAT_event) not like '%TROPICAL STORM%')
-                 and (upcase(a.TOL) like '%WIND%' 
-                      or upcase(a.TOL) like '%HAIL%')
-            then 'SCS'
+    when upcase(coalescec(a.CAT_event, '')) like 'RIOT%' 
+      or upcase(coalescec(a.CAT_event, '')) like 'CIVIL%' 
+    then 'Civil'
 
-            else ''
-        end as CAT_type length=3,
+    when (upcase(coalescec(a.CAT_event, '')) not like '%HURRICANE%' 
+          and upcase(coalescec(a.CAT_event, '')) not like '%TROPICAL STORM%')
+         and (upcase(coalescec(a.TOL, '')) like '%WIND%' 
+              or upcase(coalescec(a.TOL, '')) like '%HAIL%')
+    then 'SCS'
+
+    else ''
+end as CAT_type,
 
         a.EARNED_PREMIUM,
         a.EARNED_EXPOSURE,
@@ -818,6 +824,11 @@ proc sql;
     /* LEFT JOIN to preserve all rows */
     left join mylib.zip_mapping as b
         on a.ZIPCD = put(b.zip, z5.)
+
+    ) as sub
+
+    where CAT_type ne 'Mudslide'
 ;
 quit;
+
 '''
