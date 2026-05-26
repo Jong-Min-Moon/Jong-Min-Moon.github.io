@@ -1,0 +1,13 @@
+
+
+
+
+
+
+- indications is a quantitative analysis that shows how rate levels should be adjusted to hit target profit levels.
+- There are many adjustments (development, trend, on-leveling, large loss capping, etc.) that happen within the rate indication, but it basically boils down to a comparison of historical premiums and losses adjusted to the prospective level vs target profits.
+
+
+
+- indications is how prices ideally should be adjusted, not necessarily how they will be or are being changed.
+    - Lots of considerations come up between rate indications and rate *implementation*: regulator limitations, agency relationships, policy growth targets, etc.
