@@ -1,0 +1,10 @@
+
+- A financial perspective (also called a position) is a financial structure that determines how loss statistics are calculated.
+
+- For example:
+    - the ground up loss (GU) financial perspective represents total loss to the exposure and excludes any insurance or reinsurance terms in the loss calculations.
+    -  The gross loss (GR) financial perspective represents the loss to the insurer, accounting for the application of all insurance terms but without consideration for any reinsurance recoveries.
+
+ 
+
+ https://developer.rms.com/platform/docs/financial-perspectives

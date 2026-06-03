@@ -50,8 +50,8 @@ years/quarters
 - Causes of Loss
 - Subline ( and ) 
   - SUB, Sub_Desc
-  - Basic Group I (SUB = 1)
-  - Basic Group II (SUB = 2)
+  - Basic Group I (SUB = 1): fire
+  - Basic Group II (SUB = 2):  (Wind)
   - Special (SUB = 3)
 - ISO classification detail
   - CLASS, Class_Description
@@ -243,7 +243,7 @@ Peril mix for each region and statewise peril permissible loss ratios
 | Region 5   | 20,000  | 240,000| 5,000  | 200,000 | 465,000   |
 | **Total**  | **850,000** | **330,000** | **312,500** | **2,000,000** | **3,492,500** |
 
-### Input 2: statewise peril permisiible loss ratios
+### Input 2: statewise PLRS by perils
 The following values are assumed given:
 
 | SCS PLR | HU PLR | EQ PLR | NC PLR |
@@ -408,7 +408,13 @@ To classify catastrophe events, the following keyword-based rules were applied:
   - `CAT_event` captures **recognized catastrophe events** (event-based classification)  
   - `TOL` captures **loss mechanisms** (damage-based classification)  
 
-👉 Using both variables together provides a **more complete and robust identification of CAT risk**, especially for SCS, where many losses occur outside formally labeled CAT events.
+TOL is used to capture SCS more accurately. Aligning with the RMS data, we aim to capture catastrphes of
+- Earthquake
+- Hurricane
+- Winterstorm
+- SCS.
+
+The logic of capturing these catastrpohes is as follows:
 - Rows are classified as **CAT-related** if they fall into one of the following groups:
   - `CAT_event` starts with `"Wind"`, `"Thunderstorm"`, or `"Tornado"`  
   - `CAT_event` starts with `"Winter Storm"`  
@@ -511,6 +517,15 @@ Rows are classified as non-CAT if they **do not satisfy any CAT criteria above**
 Exposure is not provided for the Time Element (Business Interruption) coverage. Additionally, certain records
 have had exposure removed due to data quality issues.
 
+
+## Validation of cat classification
+- the ground up loss (GU) financial perspective represents total loss to the exposure and excludes any insurance or reinsurance terms in the loss calculations.
+- The gross loss (GR) financial perspective represents the loss to the insurer, accounting for the application of all insurance terms but without consideration for any reinsurance recoveries.
+
+Loss after reinsurance recoveries
+What the company actually retains
+Equivalent to
+
 ### Joining
 
 ####  Data Source
@@ -546,11 +561,127 @@ to add the variable:
   - `eq_risk_color`
 
 
+## Creating tables
+The data is noisy on the ZIPCD level. Therefore we will aggregate on a territory level. For the time being, let's prepare two tables:
+1. noncat, state level
+2. wind hail hurricane
+
+
+pseudocode for non-cat:
+create agg_iso_prop_18_22_noncat
+select year, ST, SUB, 
+sum(earned_premium), sum(earned_exposure), sum(earned_premium)/ sum(earned_exposure) as damage ratio
+group by st, sub
+from /sas/data/project/EG/jmun/agg_iso_prop_18_22.sas7bdat
+where exposure_view = 'with exposure'
+
+
+aggregate over territory
+
+for the scs hurrivan bg2 territory
+eq : eq terriorty
+non-cat: state 
 
 
 
+exposure separated by coverage:
 
-   ## Codes
+
+
+swap covereage with subline
+
+
+three tables
+
+
+# Integration with industry data
+## produce similar table for 
+
+# obsevaion OH<AK
+KA more variance
+
+ground up and gross
+
+
+iso ground up
+
+
+## 
+- [ ] in IL, there are observations where bgII_territory is blank. they have inignorable amount of exposures. maybe they correspond to zip code xxxxx- check it.
+
+
+## category mapping
+  
+
+| **Sub Class Group (ISO)**                                                                                  | **O\_DESC (ELT)**                               |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Boarding and Lodging Houses, Rooming Houses, Fraternities and Sororities, Dormitories                      | Permanent Dwelling (multi family housing)       |
+| Convents, Monasteries and Rectories, Orphan Homes, Nurses' Homes, Sisters' Homes                           | Health Care Service                             |
+| Dwellings Written in Conjunction with Commercial Risks & Rated from the CLM                                | Permanent Dwelling (multi family housing)       |
+| Large Area Housing Developments (Special Rating Treatment)                                                 | Permanent Dwelling (multi family housing)       |
+| Apartments or Condominiums without Mercantile Occupancies                                                  | Multi-Family Dwelling – Condominium Unit Owner  |
+| Apartments or Condominiums with Mercantile Occupancies                                                     | Multi-Family Dwelling – Homeowners Association  |
+| Special Mercantile Occupancy Classifications - Large Area and/or Multiple Occupancies                      | General Commercial                              |
+| Not Otherwise Classified (N O C)                                                                           | Unknown                                         |
+| Vehicles, Electrical Goods, Hardware and Machinery                                                         | General Commercial                              |
+| Clothing, Shoes, Jewelry and Accessories                                                                   | General Commercial                              |
+| Food, Beverage or Drugs                                                                                    | Food & Beverage                                 |
+| Bars and Taverns                                                                                           | Food & Beverage                                 |
+| Restaurants with Commercial Cooking (includes data for class 0545)                                         | Food & Beverage                                 |
+| Furniture and Home Furnishings other than Appliances                                                       | General Commercial                              |
+| Governmental Offices, Other Public Buildings, Penal Institutions                                           | General Commercial                              |
+| Non-Governmental Offices and Banks                                                                         | Professional, Technical and Business Services   |
+| Motels and Hotels with Restaurant                                                                          | Hotels- Large                                   |
+| Motels and Hotels without Restaurant                                                                       | Hotels- Large                                   |
+| Clubs                                                                                                      | General Commercial                              |
+| Motion Picture Studios                                                                                     | General Commercial                              |
+| Recreational Facilities other than Clubs                                                                   | General Commercial                              |
+| Hospitals                                                                                                  | Health Care Service                             |
+| Nursing and Convalescent Homes                                                                             | Health Care Service                             |
+| Churches and Synagogues                                                                                    | General Commercial                              |
+| Dry Cleaner, Laundries and Related Occupancies                                                             | General Commercial                              |
+| Funeral Homes                                                                                              | General Commercial                              |
+| Auto Parking Garages, Car Washes & Gasoline Service Stations                                               | General Commercial                              |
+| Aircraft Hangars, Motor Vehicle Repairing & Tire Recapping                                                 | Airport (Large)                                 |
+| Museums, Libraries, Art Galleries (non-profit)                                                             | General Commercial                              |
+| Schools, Academic                                                                                          | Universities and Colleges                       |
+| Builder's Risk (Buildings Under Construction)                                                              | General Industrial                              |
+| Electrical Vehicle Charging Stations (Pole-mounted or Pedestal)                                            | Electric Power Generation - Fossil Fuel (Small) |
+| Solar Panel Arrays - Freestanding (Not on Buildings), Including strut support                              | Electric Power Generation - Hydroelectric       |
+| Wind Turbines (Not on Buildings)                                                                           | Electric Power Generation - Hydroelectric       |
+| Vacant Buildings                                                                                           | Unknown                                         |
+| Billboards and Signs (not on buildings)                                                                    | General Commercial                              |
+| Other Storage                                                                                              | General Industrial                              |
+| Food Storage (including Beverage & Tobacco)                                                                | Food & Beverage                                 |
+| Grain Elevators                                                                                            | Agriculture                                     |
+| Building Supply and Mill Yards                                                                             | General Industrial                              |
+| Oil Distributing, Oil Terminals and LPG Tank Farms                                                         | Petrochemical - Pipelines                       |
+| Food Manufacturing                                                                                         | Food & Beverage                                 |
+| Beverage Manufacturing                                                                                     | Food & Beverage                                 |
+| Tobacco and Tobacco Products Manufacturing                                                                 | Food & Beverage                                 |
+| Cotton Gins and Leather                                                                                    | Light Industrial - General Manufacturing        |
+| Textile Mill Products - Natural and Synthetic                                                              | Light Industrial - General Manufacturing        |
+| Sail Maker Shops (Massachusetts only)                                                                      | Light Industrial - General Manufacturing        |
+| Clothing and Apparel including Furs and Finished Products Manufacturing                                    | Light Industrial - General Manufacturing        |
+| Basic Wood Production including Veneer and Plywood Plants                                                  | Heavy Industrial - Pulp & Paper                 |
+| Furniture and Other Wood Products Manufacturing, N O C                                                     | Light Industrial - General Manufacturing        |
+| Paper and Printing                                                                                         | Heavy Industrial - Pulp & Paper                 |
+| Chemicals and Pharmaceuticals Manufacturing - Low Hazard                                                   | Light Industrial - Pharmaceutical               |
+| Chemicals and Pharmaceuticals Manufacturing - Moderate Hazard                                              | Chemical Processing - Primarily Indoor          |
+| Chemicals and Pharmaceuticals Manufacturing - High Hazard                                                  | Chemical Processing - Primarily Indoor          |
+| Plastic and Rubber                                                                                         | Light Industrial - General Manufacturing        |
+| Stone, Glass, Concrete, Gypsum, Brick, Tile and Clay Products, Abrasives, Plaster and Other Mineral, N O C | Heavy Industrial - Cement                       |
+| Mining                                                                                                     | Heavy Industrial - Mining                       |
+| Heavy Metalworking including Basic Metalwork                                                               | Heavy Industrial - Steel                        |
+| Metalworking, N O C                                                                                        | Heavy Industrial - General                      |
+| Precision Products, Electronic, Radio and Television Manufacturing                                         | High Technology                                 |
+
+ 
+
+ 
+
+
+# Codes
 
 ### TOL Category Check 20_24
 
@@ -1016,4 +1147,71 @@ create table mylib.agg_iso_prop_18_22 as
         eq_risk_color
 ;
 quit;
+```
+
+#### industry data statewide damage ratio
+
+```python
+import pandas as pd
+import os
+import re
+
+# ✅ Folder containing your files
+folder_path = "RMS 2025 CAT"
+
+results = []
+
+# ✅ Loop through all CSV files
+for file in os.listdir(folder_path):
+    if file.endswith(".csv"):
+
+        file_path = os.path.join(folder_path, file)
+
+        # ✅ Extract catastrophe tag from filename
+        # looks for EQ / FF / HU / SCS / WT
+        match = re.search(r'\b(EQ|FF|HU|SCS|WT)\b', file)
+        cat_event = match.group(1) if match else "UNKNOWN"
+
+        print(f"Processing: {file} → {cat_event}")
+
+        # ✅ Load data
+        df = pd.read_csv(file_path)
+        df.columns = df.columns.str.strip()
+
+        # ✅ Convert numeric columns
+        cols = ["TIV", "Location_GU_AAL", "Location_GR_AAL"]
+        df[cols] = df[cols].apply(pd.to_numeric, errors="coerce")
+
+        # ✅ Aggregate by state
+        agg = (
+            df.groupby("STATECODE", dropna=False)
+              .agg(
+                  TIV_sum=("TIV", "sum"),
+                  GU_AAL_sum=("Location_GU_AAL", "sum"),
+                  GR_AAL_sum=("Location_GR_AAL", "sum"),
+              )
+              .reset_index()
+        )
+
+        # ✅ Compute ratios
+        agg["GU_damage_ratio"] = agg["GU_AAL_sum"] / agg["TIV_sum"]
+        agg["GR_damage_ratio"] = agg["GR_AAL_sum"] / agg["TIV_sum"]
+
+        # ✅ Add catastrophe event label
+        agg["cat_event"] = cat_event
+
+        # ✅ Store result
+        results.append(agg)
+
+# ✅ Combine all files
+final_df = pd.concat(results, ignore_index=True)
+
+# ✅ Optional: sort
+final_df = final_df.sort_values(["cat_event", "GU_damage_ratio"], ascending=[True, False])
+
+# ✅ Save output
+output_path = os.path.join(folder_path, "state_damage_ratios_by_cat.csv")
+final_df.to_csv(output_path, index=False)
+
+print("Saved to:", output_path)
 ```
