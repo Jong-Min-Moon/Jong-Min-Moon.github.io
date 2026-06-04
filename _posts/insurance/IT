@@ -3,3 +3,41 @@ BA: translater between IT and business units
 regression test for legacy system
 
 we can only pick 2 out of cheap fast good 
+
+
+
+libname iso "/sas/data/project/EG/ActShared/ISO_DataCube/Scrubbed_DataCube_Tables";
+libname mylib "/sas/data/project/EG/jmun";
+
+/* ========================= */
+/* 1. EXPOSURE + PREMIUM TABLE */
+/* ========================= */
+proc sql;
+    create table miso_exposure_agg_by_state as
+    select
+        YEAR,
+        ST,
+		bg2_terr,
+        county,
+        countyfips,
+        ZIPCD, 
+        COV,
+        SUB,
+
+        sum(EARNED_PREMIUM)  as EARNED_PREMIUM,
+        sum(EARNED_EXPOSURE) as EARNED_EXPOSURE
+
+    from work.iso_exposure  
+
+
+    group by
+        YEAR,
+        ST,
+		bg2_terr,
+        county,
+        countyfips,
+        ZIPCD, 
+        COV,
+        SUB,
+;
+quit;

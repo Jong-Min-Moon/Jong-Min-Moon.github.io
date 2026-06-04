@@ -611,73 +611,293 @@ iso ground up
 
 
 ## category mapping
-  
+- class_minor is 95% similar to iso class variable (ISO data has a very fine-grained class variable: 145 categories, excel file). However, new codes are added by cincy when it's necessary, so they are not identical.
 
-| **Sub Class Group (ISO)**                                                                                  | **O\_DESC (ELT)**                               |
-| ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| Boarding and Lodging Houses, Rooming Houses, Fraternities and Sororities, Dormitories                      | Permanent Dwelling (multi family housing)       |
-| Convents, Monasteries and Rectories, Orphan Homes, Nurses' Homes, Sisters' Homes                           | Health Care Service                             |
-| Dwellings Written in Conjunction with Commercial Risks & Rated from the CLM                                | Permanent Dwelling (multi family housing)       |
-| Large Area Housing Developments (Special Rating Treatment)                                                 | Permanent Dwelling (multi family housing)       |
-| Apartments or Condominiums without Mercantile Occupancies                                                  | Multi-Family Dwelling – Condominium Unit Owner  |
-| Apartments or Condominiums with Mercantile Occupancies                                                     | Multi-Family Dwelling – Homeowners Association  |
-| Special Mercantile Occupancy Classifications - Large Area and/or Multiple Occupancies                      | General Commercial                              |
-| Not Otherwise Classified (N O C)                                                                           | Unknown                                         |
-| Vehicles, Electrical Goods, Hardware and Machinery                                                         | General Commercial                              |
-| Clothing, Shoes, Jewelry and Accessories                                                                   | General Commercial                              |
-| Food, Beverage or Drugs                                                                                    | Food & Beverage                                 |
-| Bars and Taverns                                                                                           | Food & Beverage                                 |
-| Restaurants with Commercial Cooking (includes data for class 0545)                                         | Food & Beverage                                 |
-| Furniture and Home Furnishings other than Appliances                                                       | General Commercial                              |
-| Governmental Offices, Other Public Buildings, Penal Institutions                                           | General Commercial                              |
-| Non-Governmental Offices and Banks                                                                         | Professional, Technical and Business Services   |
-| Motels and Hotels with Restaurant                                                                          | Hotels- Large                                   |
-| Motels and Hotels without Restaurant                                                                       | Hotels- Large                                   |
-| Clubs                                                                                                      | General Commercial                              |
-| Motion Picture Studios                                                                                     | General Commercial                              |
-| Recreational Facilities other than Clubs                                                                   | General Commercial                              |
-| Hospitals                                                                                                  | Health Care Service                             |
-| Nursing and Convalescent Homes                                                                             | Health Care Service                             |
-| Churches and Synagogues                                                                                    | General Commercial                              |
-| Dry Cleaner, Laundries and Related Occupancies                                                             | General Commercial                              |
-| Funeral Homes                                                                                              | General Commercial                              |
-| Auto Parking Garages, Car Washes & Gasoline Service Stations                                               | General Commercial                              |
-| Aircraft Hangars, Motor Vehicle Repairing & Tire Recapping                                                 | Airport (Large)                                 |
-| Museums, Libraries, Art Galleries (non-profit)                                                             | General Commercial                              |
-| Schools, Academic                                                                                          | Universities and Colleges                       |
-| Builder's Risk (Buildings Under Construction)                                                              | General Industrial                              |
-| Electrical Vehicle Charging Stations (Pole-mounted or Pedestal)                                            | Electric Power Generation - Fossil Fuel (Small) |
-| Solar Panel Arrays - Freestanding (Not on Buildings), Including strut support                              | Electric Power Generation - Hydroelectric       |
-| Wind Turbines (Not on Buildings)                                                                           | Electric Power Generation - Hydroelectric       |
-| Vacant Buildings                                                                                           | Unknown                                         |
-| Billboards and Signs (not on buildings)                                                                    | General Commercial                              |
-| Other Storage                                                                                              | General Industrial                              |
-| Food Storage (including Beverage & Tobacco)                                                                | Food & Beverage                                 |
-| Grain Elevators                                                                                            | Agriculture                                     |
-| Building Supply and Mill Yards                                                                             | General Industrial                              |
-| Oil Distributing, Oil Terminals and LPG Tank Farms                                                         | Petrochemical - Pipelines                       |
-| Food Manufacturing                                                                                         | Food & Beverage                                 |
-| Beverage Manufacturing                                                                                     | Food & Beverage                                 |
-| Tobacco and Tobacco Products Manufacturing                                                                 | Food & Beverage                                 |
-| Cotton Gins and Leather                                                                                    | Light Industrial - General Manufacturing        |
-| Textile Mill Products - Natural and Synthetic                                                              | Light Industrial - General Manufacturing        |
-| Sail Maker Shops (Massachusetts only)                                                                      | Light Industrial - General Manufacturing        |
-| Clothing and Apparel including Furs and Finished Products Manufacturing                                    | Light Industrial - General Manufacturing        |
-| Basic Wood Production including Veneer and Plywood Plants                                                  | Heavy Industrial - Pulp & Paper                 |
-| Furniture and Other Wood Products Manufacturing, N O C                                                     | Light Industrial - General Manufacturing        |
-| Paper and Printing                                                                                         | Heavy Industrial - Pulp & Paper                 |
-| Chemicals and Pharmaceuticals Manufacturing - Low Hazard                                                   | Light Industrial - Pharmaceutical               |
-| Chemicals and Pharmaceuticals Manufacturing - Moderate Hazard                                              | Chemical Processing - Primarily Indoor          |
-| Chemicals and Pharmaceuticals Manufacturing - High Hazard                                                  | Chemical Processing - Primarily Indoor          |
-| Plastic and Rubber                                                                                         | Light Industrial - General Manufacturing        |
-| Stone, Glass, Concrete, Gypsum, Brick, Tile and Clay Products, Abrasives, Plaster and Other Mineral, N O C | Heavy Industrial - Cement                       |
-| Mining                                                                                                     | Heavy Industrial - Mining                       |
-| Heavy Metalworking including Basic Metalwork                                                               | Heavy Industrial - Steel                        |
-| Metalworking, N O C                                                                                        | Heavy Industrial - General                      |
-| Precision Products, Electronic, Radio and Television Manufacturing                                         | High Technology                                 |
+- since RMS data do not have a fine grained class variable, it is better to use a coarse variable.
+
+
+- iso: variable `rating_class_group` 21 categories
+- RMS: variable `OCCTPE` and `O_DESC`36 categories
+- CIC: variable `OCCUPANCY_TYPE_CD` and	`OCCUPANCY_TYPE_DESC`: 32 categories
+
+
+
+
+### ISO data class
+Rating Class Group
+Other Habitational
+Apartments or Condominiums
+Other Mercantile
+Restaurants & Bars
+Public Buildings
+Non-Governmental Offices & Banks
+Motels & Hotels
+Recreational Facilities
+Hospitals & Nursing Homes
+Churches and Synagogues
+Other Non-Manufacturing
+Motor Vehicle Risks
+Schools, Academic
+Buildings Under Construction
+Storage
+Food, Beverage, Tobacco Manufacturing
+Other Manufacturing
+Wearing Apparel
+Wood Manufacturing
+Chemical Manufacturing
+Metal Manufacturing
+
+### RMS data class
+
+Unknown
+Permanent Dwelling (single family housing)
+Permanent Dwelling (multi family housing)
+Professional, Technical and Business Services
+Health Care Service
+High Technology
+Agriculture
+General Commercial
+General Industrial
+Multi-Family Dwelling - Homeowners Association
+Multi-Family Dwelling - Condominium Unit Owner
+Hotels- Large
+Universities and Colleges
+Heavy Industrial - Mining
+Heavy Industrial - Cement
+Heavy Industrial - Steel
+Heavy Industrial - Pulp & Paper
+Heavy Industrial - General
+Chemical Processing - Primarily Indoor
+Light Industrial - Pharmaceutical
+Light Industrial - Biomedical
+Light Industrial - Semiconductor
+Light Industrial - General Manufacturing
+Petrochemical - Refineries
+Petrochemical - Pipelines
+Electric Power Generation - Fossil Fuel (Small)
+Electric Power Generation - Fossil Fuel (Medium)
+Electric Power Generation - Fossil Fuel (Large)
+Electric Power Generation - Hydroelectric
+Electric Power Generation - Gas Power (Large)
+Electric Power - Nuclear Power Plant
+Electric Power - Nuclear power plant
+Natural Gas
+Food & Beverage
+Water/Sewage treatment plants
+Airport (Large)
+
+### CIC data category
+32 categories
+
+OCCUPANCY_TYPE_CD	OCCUPANCY_TYPE_DESC
+	
+  00	Unknown
+  01	Permanent Dwelling (single family housing)
+  02	Permanent Dwelling (multi family housing)
+  03	Temporary Lodging
+  04	Group Institutional Housing
+  05	Retail Trade
+  06	Wholesale Trade
+  07	Personal and Repair Services
+  08	Professional, Technical and Business Services
+  09	Health Care Service
+  10	Entertainment and Recreation
+  11	Parking
+  12	Heavy Fabrication and Assembly
+  13	Light Fabrication and Assembly
+  14	Food and Drugs Processing
+  18	Construction
+  19	Petroleum
+  20	Agriculture
+  21	Mining
+  22	Religion and Nonprofit
+  23	General Services
+  25	Education
+  27	Railroad
+  28	Air
+  29	Sea/Water
+  30	Electrical
+  33	Natural Gas
+  37	General Commercial
+  38	General Industrial
+  39	Miscellaneous
+  44	Gasoline Service Stations
+  47	Restaurants
+
 
  
 
+
+##  ISO -> CIC
+
+
+| ISO Rating Class Group                | CIC Code | CIC Description                               |
+| ------------------------------------- | -------- | --------------------------------------------- |
+| Other Habitational                    | 02       | Permanent Dwelling (multi family housing)     |
+| Apartments or Condominiums            | 02       | Permanent Dwelling (multi family housing)     |
+| Motels & Hotels                       | 03       | Temporary Lodging                             |
+| Restaurants & Bars                    | 47       | Restaurants                                   |
+| Other Mercantile                      | 05       | Retail Trade                                  |
+| Non-Governmental Offices & Banks      | 08       | Professional, Technical and Business Services |
+| **Public Buildings**                      | 23   or 08    | General Services **or**     Professional, Technical and Business Services?           |
+| Hospitals & Nursing Homes             | 09       | Health Care Service                           |
+| Recreational Facilities               | 10       | Entertainment and Recreation                  |
+| Churches and Synagogues               | 22       | Religion and Nonprofit                        |
+| Schools, Academic                     | 25       | Education                                     |
+| Buildings Under Construction          | 18       | Construction                                  |
+| **Storage**                               | 06       | Wholesale Trade           |
+| Food, Beverage, Tobacco Manufacturing | 14       | Food and Drugs Processing                     |
+| Chemical Manufacturing                | 12       | Heavy Fabrication and Assembly                |
+| Metal Manufacturing                   | 12       | Heavy Fabrication and Assembly                |
+| Wearing Apparel                       | 13       | Light Fabrication and Assembly                |
+| Wood Manufacturing                    | 13       | Light Fabrication and Assembly                |
+| Other Manufacturing                   | 38       | General Industrial                            |
+| Other Non-Manufacturing               | 37       | General Commercial                            |
+
+
+
+###  Special Case: ISO Motor Vehicle Risks (Needs subclass mapping)
+
+| ISO Subclass Example                             | CIC Code | CIC Description              |
+| ------------------------------------------------ | -------- | ---------------------------- |
+| Auto Parking Garages, Car Washes                 | 11       | Parking                      |
+| Gasoline Service Stations                        | 44       | Gasoline Service Stations    |
+| Aircraft Hangars with Repair / Auto Repair Shops | 07       | Personal and Repair Services |
+| Tire Retreading or Recapping                     | 07       | Personal and Repair Services |
+| **Aircraft Hangars without Repair (940) ** ourdata would not have his        
+          | 11       | Parking ?                    |
+
+ ### examples of public buildings in iso:
+- Penal Institutions
+- Museums
+- Libraries
+- Art Galleries (non-profit)
+- Fire Dept
+- Police
+- Water/Sewer
+
+### examples of storage in iso:
+Piers, Wharves, Bridges
+Freight Terminals
+General Storage Warehouses - Bailee
+Miscellaneous Products Storage - (other than Retail or Wholesale or Cold Storage)
+Household Goods Storage
+Cold Storage Warehouses
+Farm Products (other than Grain, Cotton, Tobacco)
+Grain, Seed, Bean Warehouses
+Cotton Compresses and Storage
+Waste and Reclaimed Material, including Yards
+Whiskey and Liquor Warehouses in Connection with Distilleries
+Tobacco Warehouses, Storage
+Tobacco Sales Warehouses
+Grain Elevators - Terminal
+Grain Elevators - Country
+Building Supply Yards, including Retail Lumberyards, Coal and Coke Yards
+Mill Yards
+Oil Distributing, Oil Terminals and LPG Tank Farms, Including Stock
+Oil Distributing, Oil Terminals and LPG Tank Farms, Excluding Stock
+
+ 
+
+
+
+
+#  CIC Categories with No ISO Match
+
+| ISO Rating Class Group | CIC Code | CIC Description                            |
+| ---------------------- | -------- | ------------------------------------------ |
+| NULL                   | 00       | Unknown                                    |
+| NULL                   | 01       | Permanent Dwelling (single family housing) **check**|
+| NULL                   | 04       | Group Institutional Housing    **check** other habitaitonal            |
+| NULL                   | 19       | Petroleum                                  |
+| NULL                   | 20       | Agriculture                                |
+| NULL                   | 21       | Mining                                     |
+| NULL                   | 27       | Railroad                                   |
+| NULL                   | 28       | Air                                        |
+| NULL                   | 29       | Sea/Water                                  |
+| NULL                   | 30       | Electrical                                 |
+| NULL                   | 33       | Natural Gas                                |
+| NULL                   | 39       | Miscellaneous                              |
+
+
+
+
+
+
+## RMS → CIC Mapping (36 → 32)
+
+
+| RMS Category                                     | CIC Code | CIC Description                               |
+| ------------------------------------------------ | -------- | --------------------------------------------- |
+| Unknown                                          | 00       | Unknown                                       |
+| Permanent Dwelling (single family housing)       | 01       | Permanent Dwelling (single family housing)    |
+| Permanent Dwelling (multi family housing)        | 02       | Permanent Dwelling (multi family housing)     |
+| Multi-Family Dwelling - Homeowners Association   | 02       | Permanent Dwelling (multi family housing)     |
+| Multi-Family Dwelling - Condominium Unit Owner   | 02       | Permanent Dwelling (multi family housing)     |
+| Hotels- Large                                    | 03       | Temporary Lodging                             |
+| Professional, Technical and Business Services    | 08       | Professional, Technical and Business Services |
+| Health Care Service                              | 09       | Health Care Service                           |
+| Universities and Colleges                        | 25       | Education                                     |
+| General Commercial                               | 37       | General Commercial                            |
+| General Industrial                               | 38       | General Industrial                            |
+| Agriculture                                      | 20       | Agriculture                                   |
+| Heavy Industrial - Mining                        | 21       | Mining                                        |
+| Heavy Industrial - Cement                        | 12       | Heavy Fabrication and Assembly                |
+| Heavy Industrial - Steel                         | 12       | Heavy Fabrication and Assembly                |
+| Heavy Industrial - Pulp & Paper                  | 12       | Heavy Fabrication and Assembly                |
+| Heavy Industrial - General                       | 38       | General Industrial                            |
+| Chemical Processing - Primarily Indoor           | 12       | Heavy Fabrication and Assembly                |
+| Light Industrial - General Manufacturing         | 13       | Light Fabrication and Assembly                |
+| Light Industrial - Semiconductor                 | 13       | Light Fabrication and Assembly                |
+| High Technology                                  | 13       | Light Fabrication and Assembly                |
+| Light Industrial - Pharmaceutical                | 14       | Food and Drugs Processing                     |
+| Light Industrial - Biomedical                    | 14       | Food and Drugs Processing                     |
+| Food & Beverage                                  | 14       | Food and Drugs Processing                     |
+| Petrochemical - Refineries                       | 19       | Petroleum                                     |
+| Petrochemical - Pipelines                        | 19       | Petroleum                                     |
+| Electric Power Generation - Fossil Fuel (Small)  | 30       | Electrical                                    |
+| Electric Power Generation - Fossil Fuel (Medium) | 30       | Electrical                                    |
+| Electric Power Generation - Fossil Fuel (Large)  | 30       | Electrical                                    |
+| Electric Power Generation - Hydroelectric        | 30       | Electrical                                    |
+| Electric Power Generation - Gas Power (Large)    | 30       | Electrical                                    |
+| Electric Power - Nuclear Power Plant             | 30       | Electrical                                    |
+| Electric Power - Nuclear power plant             | 30       | Electrical                                    |
+| Natural Gas                                      | 33       | Natural Gas                                   |
+| **Water/Sewage treatment plants**                    | 23       | General Services**                              |
+| **Airport (Large)**                                 | 28       | Air                                           |
+
+
+
+##  CIC categories with **no RMS match**
+
+| RMS Category | CIC Code | CIC Description                                     |
+| ------------ | -------- | --------------------------------------------------- |
+| NULL         | 04       | Group Institutional Housing                         |
+| NULL         | 05       | Retail Trade                                        |
+| NULL         | 06       | Wholesale Trade                                     |
+| NULL         | 07       | Personal and Repair Services                        |
+| NULL         | 10       | Entertainment and Recreation                        |
+| NULL         | 11       | Parking                                             |
+| NULL         | 18       | Construction                                        |
+| NULL         | 22       | Religion and Nonprofit                              |
+| NULL         | 27       | Railroad                                            |
+| NULL         | 29       | Sea/Water                                           |
+| NULL         | 39       | Miscellaneous                                       |
+| NULL         | 44       | Gasoline Service Stations                           |
+| NULL         | 47       | Restaurants                                         |
+
+
+
+
+# meeting 06-01
+done so far:
+- recieved the model data from reinsurance group: perils are EQ+FF, HU, SCS, WT
+- recieved PLR by perils by state from Dan: categories are EQ,	HU,	SCS,	WF, NC.
+- to ensure the non-cat part do not over- or under- represent when we compute the final peril mix, compared, for winterstorm in minnesota:
+  - loss and damage ratio, iso vs model
+
+will do:
+ - compare class/occupancy between ISO and the modeled dat
  
 
 

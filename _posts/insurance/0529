@@ -8,7 +8,7 @@
             - This has a bunch of CIC information available.
             - [ ] Lets aggregate CIC inforce written premiums (WP) to the BGII/EQ territory
             - Inforce is a field in the table you can use as a filter.
-o	/sas/data/project/EG/BICCShare/HAL_SmallBusiness/Production/2026/20260331/cf_exposureview_202603_v01.sas7bdat
+o	`/sas/data/project/EG/BICCShare/HAL_SmallBusiness/Production/2026/20260331/cf_exposureview_202603_v01.sas7bdat`
 	This is a secondary source we can use
 - []	When we have all of the components for the capital allocation factors together, we can show a sample of how the capital allocation factors will work for a single state
 o	We need non-CAT damage ratios for the whole state
