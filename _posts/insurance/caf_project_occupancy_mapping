@@ -1,0 +1,25 @@
+
+# occupancy mapping
+occupancy is a key driver of the damage function in cat modeling. Therefore it is important to adjusts for the occupancy mix since that mix can be differenct between iso, rms and company's data.
+
+## non-cat
+- We use BG1 exposure for non-cat data, as all businesses are insured against fire.
+- We use the occupancy groupings used in rate reviews. These groupings are   used for reporting under BGI Class v15 and BGII Class v15, and include:
+
+    - Habitational
+    - Mercantile
+    - Schools, Hospitals, Public Buildings
+    - Recreational Facilities
+    - Churches
+    - Offices
+    - Hotels and Motels
+    - Self-Service and Other Non-Manufacturing
+    - Warehousing and Storage
+    - Non-Metal Manufacturing
+    - Metalworking
+    - All Others
+
+
+
+- SCL v15 uses a class structure based on these groupings, but at a more aggregated (coarser) level. Therefore, it is sufficient to create a mapping to the occupancy classes listed above.
+ 

@@ -1,0 +1,7 @@
+- damage ratio is too high for iso.
+- damage ratio = LOSS/exposure.
+- Thus either Loss is too high or exposure is too low for ISO data.
+
+# Exposure
+### are we over-counting the exposure (TIV) for RMS data?
+No. TIV value is different accross perils. So we TIV is already divided into perils and we cannot split the TIV of each peril further.

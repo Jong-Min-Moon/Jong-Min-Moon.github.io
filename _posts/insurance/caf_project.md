@@ -307,7 +307,7 @@ We will use these for the non-cat portion of the capital allocation factors.
 
 
 
-## Report
+# Capturing non-CAT portion from ISO
 
 - The purpose of separating ISO data into CAT and Non-CAT components is to enable more reliable modeling of **baseline risk** using the **non-CAT portion** of the data.
 
@@ -318,7 +318,7 @@ We will use these for the non-cat portion of the capital allocation factors.
 - To address this issue, catastrophe risk is instead modeled using **AAL (Average Annual Loss)**, computed from a stochastic catastrophe model.
 - Instead of relying on observed discrete events, the model simulates many years of possible outcomes and derives a smoothed expectation.
  
-
+## Excluding the CAT portion
 
 ### TOL vs CAT_event
 The `TOL` variable contains the following categories:
@@ -594,8 +594,22 @@ swap covereage with subline
 three tables
 
 
-# Integration with industry data
-## produce similar table for 
+# Scale comparisons between ISO and RMS
+
+comparison in Ohio SCS
+
+| Variable           | N    | Mean        | Std Dev     | Minimum        | 1st Pctl    | 5th Pctl    | 25th Pctl  | Median      | 75th Pctl   | 95th Pctl    | 99th Pctl    | Maximum      |
+|--------------------|------|-------------|-------------|----------------|-------------|-------------|------------|-------------|-------------|--------------|--------------|--------------|
+| iso earned_exposure    | 1338 | 464834.93   | 795836.04   | 0              | 45.8330000  | 903.0070000 | 11402.88   | 90412.69    | 642997.16   | 2019014.47   | 3170730.60   | 7744521.31   |
+| iso loss_incurred      | 507  | 90107.59    | 482882.05   | 3.0000000      | 321.0000000 | 1762.00     | 7500.00    | 21770.00    | 55288.00    | 265017.00    | 946214.00    | 9453910.00   |
+| iso damage_ratio   | 507  | 0.3786888   | 1.7265477   | 2.5143807E-6   | 0.000578392 | 0.0018185   | 0.0141434  | 0.0418223   | 0.1660173   | 1.4827292    | 5.6232747    | 31.0825358   |
+| rms tiv                | 1138 | 5242524800  | 7221842245  | 1386549.96     | 14425624.14 | 60350954.66 | 625804948  | 1956799737  | 7470847820  | 20396616531  | 30575829261  | 59773184221  |
+| rms Location_GU_AAL    | 1138 | 1258294.71  | 1734993.82  | 213.8191455    | 3835.15     | 16599.87    | 198519.40  | 523674.18   | 1641872.94  | 4804241.39   | 8157281.50   | 14463048.53  |
+| rms damage_ratio   | 1138 | 0.000285271 | 0.000101462 | 0.000049453    | 0.000093600 | 0.000130112 | 0.000207177| 0.000277313 | 0.000356425 | 0.000463171  | 0.000530662  | 0.000649731  |
+
+
+### Ohio 2025 RMS data
+ 
 
 # obsevaion OH<AK
 KA more variance
@@ -610,7 +624,10 @@ iso ground up
 - [ ] in IL, there are observations where bgII_territory is blank. they have inignorable amount of exposures. maybe they correspond to zip code xxxxx- check it.
 
 
-## category mapping
+
+
+
+## aa
 - class_minor is 95% similar to iso class variable (ISO data has a very fine-grained class variable: 145 categories, excel file). However, new codes are added by cincy when it's necessary, so they are not identical.
 
 - since RMS data do not have a fine grained class variable, it is better to use a coarse variable.
@@ -623,29 +640,6 @@ iso ground up
 
 
 
-### ISO data class
-Rating Class Group
-Other Habitational
-Apartments or Condominiums
-Other Mercantile
-Restaurants & Bars
-Public Buildings
-Non-Governmental Offices & Banks
-Motels & Hotels
-Recreational Facilities
-Hospitals & Nursing Homes
-Churches and Synagogues
-Other Non-Manufacturing
-Motor Vehicle Risks
-Schools, Academic
-Buildings Under Construction
-Storage
-Food, Beverage, Tobacco Manufacturing
-Other Manufacturing
-Wearing Apparel
-Wood Manufacturing
-Chemical Manufacturing
-Metal Manufacturing
 
 ### RMS data class
 

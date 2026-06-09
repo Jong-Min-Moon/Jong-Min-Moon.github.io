@@ -1,0 +1,35 @@
+ - LLM is stochastic. different answer for same prompt
+ - fabrication. 
+
+
+ # completion 
+ very basic prompt. Recall that what LLM does is just next token prediction. without specific orders, it just completes the blank.
+ ```
+ O say can you see
+
+ ```
+ then copilot answers:
+ ```
+ By the dawn’s early light,
+What so proudly we hailed
+At the twilight’s last gleaming?
+ ```
+
+
+ what is galiium?
+ ... answer
+ what follows it?
+
+
+iterate! you can go back in LLM.
+ first step of prompt engineering is being more specific
+then specify the format and length
+
+next step: 'primary contenet' where the answer is probailty actually in there. with this, stochasiticty reduces
+
+netxt: give exmaples of what you want
+
+
+finally create your template
+
+there are prompt examples provided by the providers
