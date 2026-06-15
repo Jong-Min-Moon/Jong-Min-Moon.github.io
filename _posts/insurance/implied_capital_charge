@@ -1,0 +1,90 @@
+
+### input 1: AAL by (region, peril)
+| Region (r)  / peril (p)   | 1 | 2 | 3| 4 |
+|------------|--------:|-------:|-------:|-------:|
+| 1   | AAL(1,1) | AAL(1,2) | 15,000 | 600,000 | 
+| 2  | AAL(2,1)  | 25,000 | 12,500 | 500,000 | 
+| 3   | 300,000 | 20,000 | 160,000| 400,000 | 
+ 
+### Input 2: statewise PLRS by perils
+The following values are assumed given:
+
+| peril(p) | 1 | 2 | 3 | 4 |
+|--------:|-------:|-------:|-------:|-------:|
+| PLR  | PLR(1)  | PLR(2)  | 62.9%  | 52.3%
+
+### input 3 : exposure by (region, peril)
+| Region (r)  / peril (p)   | 1 | 2 | 3| 4 |
+|------------|--------:|-------:|-------:|-------:|
+| 1   | EXP(1,1) | EXP(1,2) | 15,000 | 600,000 | 
+| 2   | EXP(2,1)  | 25,000 | 12,500 | 500,000 | 
+| 3   | 300,000 | 20,000 | 160,000| 400,000 | 
+ 
+## Implied Capital Charge, not accounting for exposure
+
+$$
+\mathrm{ICC}(r) = \frac{
+    \mathrm{State WPLR}
+}{
+    \mathrm{WPLR}(r)
+} 
+$$
+
+$$
+\mathrm{WPLR}(r) = \frac{
+\sum_p \mathrm{AAL}(p,r)
+}{
+    \sum_p \frac{
+        1
+    }{
+        \mathrm{PLR}(p)
+        } \mathrm{AAL}(p,r)
+}
+$$
+
+$$
+\mathrm{State WPLR} = \frac{
+    \sum_r
+\sum_p \mathrm{AAL}(p,r)
+}{
+    \sum_r
+    \sum_p \frac{
+        1
+    }{
+        \mathrm{PLR}(p)
+        } \mathrm{AAL}(p,r)
+}
+$$
+
+## Implied Captial Charge, accounting for exposure
+- Doug’s example applies a binary (zero–one) weighting scheme, where a region’s peril AAL is set to zero if that peril is not covered in the region. 
+- In practice, however, regions rarely have truly zero exposure to a given peril.
+To address this, I suggest using exposure-based weighting.
+
+Given a region $r$, for each peril, define an exposure-adjusted AAL:
+
+$$
+\mathrm{EAAL}(p,r) = \frac{
+    \bigl(
+        \sum_p \mathrm{AAL}(p,r)
+        \bigr) \mathrm{EXP}(p,r)
+}{
+    \sum_p \mathrm{EXP}(p,r) \mathrm{AAL}(p,r)
+} \mathrm{AAL}(p,r).
+$$
+This formulation emphasizes perils with greater exposure while preserving the total AAL at the regional level. Specifically,
+
+$$
+\sum_p
+\mathrm{EAAL}(p,r) = \frac{
+    \bigl(
+        \sum_p \mathrm{AAL}(p,r)
+        \bigr) 
+        \sum_p
+        \mathrm{EXP}(p,r) \mathrm{AAL}(p,r)
+}{
+    \sum_p \mathrm{EXP}(p,r) \mathrm{AAL}(p,r)
+} = 
+ \sum_p \mathrm{AAL}(p,r)
+$$
+and do all calculation of ICC and WPLR with EAAL rather than AAL.

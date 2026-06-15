@@ -1,3 +1,32 @@
+
+
+
+#
+- in insurance, we don't know the cost.
+
+## cost measure
+These measures are observed values. not determined
+### loss ratio
+- loss ratio = loss/premimum. the smaller the better.
+-  Long‑tail lines like workers’ compensation require lower loss ratios because claims take many years to settle, creating much higher uncertainty about ultimate costs. Insurers need extra margin to cover risks from inflation, reserve development, and potential pricing errors that only emerge over time. That lower loss ratio effectively compensates for the longer duration, higher capital requirements, and greater volatility of these lines.
+    - Think of long‑tail insurance like a long‑duration, risky bond where the payoff is uncertain: In a bond, longer maturity → higher yield required because of inflation risk, interest rate risk, and uncertainty over time.
+    - In long‑tail insurance, longer claim duration → lower acceptable loss ratio (i.e., higher underwriting margin) for the same reason—more uncertainty and capital tied up.
+
+Clean analogy
+
+Bond yield ↔ underwriting margin (1 − loss ratio)
+Maturity ↔ claim duration (tail length)
+Credit/interest risk ↔ reserve, inflation, and legal risk
+
+### expense ratio
+expense ratio = expense / premium
+
+### combined ratio
+combined ratio = Loss ratio + expense ratio
+this ratio 1 above or below: determines we are making profit or not.
+
+## target metric: permissible loss ratio
+This includes profit margin. THis is not obseved. this is determined.
 An in force insurance policy is active, with the insurer obligated to cover claims as per the policy’s terms.
 
 A lapsed policy, however, is inactive due to non-payment of premiums within the grace period, suspending coverage and freeing the insurer from claim obligations.

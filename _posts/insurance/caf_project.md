@@ -306,6 +306,43 @@ Using this data, we can get the damage ratios for various segments.
 We will use these for the non-cat portion of the capital allocation factors.
 
 
+# Data preprocessing
+
+## Exposure
+- The “coverage” referenced in the`CAF simplified example` file actually represents exposure by subline (1:bg1, 2:bg2, 3:scl).
+- The `cov` variable in iso means building/content/indivisible/time element. Since the RMS data do not have this classification, we do not use `cov` for aggregation.
+
+| peril | subline | terr      |
+|-------|---------|-----------|
+| WT    | 2       | bg2_terr  |
+| SCS   | 2       | scs_terr  |
+| HU    | 2       | bg2_terr  |
+| eq    | 3       | eq_terr   |
+| ff    | 3       | eq_terr   |
+|non-cat | 1 | bg1_terr|
+
+Based on this, the exposure table to be created is:
+
+| geographical aggregation level | exposure |
+|------------------|----------|
+| bg2_terr         | sub=2    |
+| scs_terr         | sub=2    |
+| eq_terr          | sub=3    |
+| bg1_terr          | sub=1    |
+
+The first three rows are included solely to validate that catastrophic events are being separated correctly; they will not be used in the primary analysis.
+
+## Loss
+- the RMS model has EQ, FF, HU, SCS, WT (winterstorm)
+- In iso, we want to capture these peril, not to use them, but to exclude them and get non-cat portion.
+
+| Peril   | Geographic Aggregation Level |
+|---------|-----------------------------|
+| EQ/FF   | No records on ISO           |
+| HU      | bg2_terr                    |
+| SCS     | bg2_terr                    |
+| WT      | bg2_terr                    |
+| non-cat | bg1_terr                    |
 
 # Capturing non-CAT portion from ISO
 
@@ -643,42 +680,6 @@ iso ground up
 
 ### RMS data class
 
-Unknown
-Permanent Dwelling (single family housing)
-Permanent Dwelling (multi family housing)
-Professional, Technical and Business Services
-Health Care Service
-High Technology
-Agriculture
-General Commercial
-General Industrial
-Multi-Family Dwelling - Homeowners Association
-Multi-Family Dwelling - Condominium Unit Owner
-Hotels- Large
-Universities and Colleges
-Heavy Industrial - Mining
-Heavy Industrial - Cement
-Heavy Industrial - Steel
-Heavy Industrial - Pulp & Paper
-Heavy Industrial - General
-Chemical Processing - Primarily Indoor
-Light Industrial - Pharmaceutical
-Light Industrial - Biomedical
-Light Industrial - Semiconductor
-Light Industrial - General Manufacturing
-Petrochemical - Refineries
-Petrochemical - Pipelines
-Electric Power Generation - Fossil Fuel (Small)
-Electric Power Generation - Fossil Fuel (Medium)
-Electric Power Generation - Fossil Fuel (Large)
-Electric Power Generation - Hydroelectric
-Electric Power Generation - Gas Power (Large)
-Electric Power - Nuclear Power Plant
-Electric Power - Nuclear power plant
-Natural Gas
-Food & Beverage
-Water/Sewage treatment plants
-Airport (Large)
 
 ### CIC data category
 32 categories
@@ -750,16 +751,6 @@ OCCUPANCY_TYPE_CD	OCCUPANCY_TYPE_DESC
 
 
 
-###  Special Case: ISO Motor Vehicle Risks (Needs subclass mapping)
-
-| ISO Subclass Example                             | CIC Code | CIC Description              |
-| ------------------------------------------------ | -------- | ---------------------------- |
-| Auto Parking Garages, Car Washes                 | 11       | Parking                      |
-| Gasoline Service Stations                        | 44       | Gasoline Service Stations    |
-| Aircraft Hangars with Repair / Auto Repair Shops | 07       | Personal and Repair Services |
-| Tire Retreading or Recapping                     | 07       | Personal and Repair Services |
-| **Aircraft Hangars without Repair (940) ** ourdata would not have his        
-          | 11       | Parking ?                    |
 
  ### examples of public buildings in iso:
 - Penal Institutions
