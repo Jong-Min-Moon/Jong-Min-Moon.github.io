@@ -20,8 +20,8 @@ paper_key: tan_distributional_2006
 ### **The Problem: The Unconfoundedness Assumption**
 
 * **Standard ATE Estimation:** Estimating causal effects relies on the "unconfoundedness" assumption—meaning the treatment $T$ is assigned independently of the potential outcomes $(Y_0, Y_1)$ given observed covariates $X$. 
-* Under this assumption, we can use methods like **Outcome Regression** (estimating the outcome based on $X$ and $T$, then averaging over $X$) or **Inverse Probability Weighting (IPW)** (weighting the observed data using the propensity score $\pi(X)$ to balance the covariates).
-* **The Violation:** If there is unmeasured confounding, the true probability of an outcome given a treatment, $P(Y_t|X)$, cannot be perfectly identified from the observed data $P(Y_t|T=t, X)$ because we cannot observe counterfactuals.
+* Under this assumption, we can use methods like **Outcome Regression** (estimating the outcome based on $X$ and $T$, then averaging over $X$) or **Inverse Probability Weighting (IPW)** (weighting the observed data using the propensity score $\pi(X)$ to balance the covariates). These two methods are just change of orders.
+* **The Violation:** If there is unmeasured confounding, the true probability of an outcome given a treatment, $P(Y_t \mid X)$, cannot be perfectly identified from the observed data $P(Y_t \mid T=t, X)$ because we cannot observe counterfactuals.
 
 ---
 
