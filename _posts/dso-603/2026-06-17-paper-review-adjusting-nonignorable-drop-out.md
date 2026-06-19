@@ -12,13 +12,10 @@ authors:
     affiliations:
       name: USC Marshall
 toc:
-  - name: Introduction
-  - name: Key Methodological Contributions
-    subsections:
-      - name: Augmented Inverse Probability Weighting (AIPCW)
-      - name: Sensitivity Analysis Framework
-      - name: Handling High-Dimensional Data
-  - name: Applications and Impact
+  - name: The Problem
+  - name: The Model
+  - name: The Solution
+  - name: "Example: ACTG 175 Study"
 bib_file: dso-603
 paper_key: scharfstein_adjusting_1999
 ---
