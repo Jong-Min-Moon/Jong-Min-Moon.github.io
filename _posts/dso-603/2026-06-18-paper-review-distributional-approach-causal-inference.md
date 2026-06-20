@@ -4,7 +4,7 @@ title: "Paper review: A Distributional Approach for Causal Inference Using Prope
 description: "A review of Tan (2006) on estimating average causal effects and improving upon propensity score methods using a distributional approach."
 date: 2026-06-18
 categories: dso-603 causal-inference statistics
-tags: propensity-score causal-inference doubly-robust
+tags: propensity-score causal-inference linear-programming
 project: dso-603
 authors:
   - name: Jongmin Mun
