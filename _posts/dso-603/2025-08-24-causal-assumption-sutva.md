@@ -118,6 +118,7 @@ In modern tech, interference is the most common and difficult SUTVA violation. T
 - In observational studies, units are not randomly assigned. 
 - People choose to take a treatment, or doctors decide who gets a drug based on their health status. 
 - This leads to **confounding**: the treated group might be different from the control group in ways that also affect the outcome (e.g., wealthier people being more likely to buy a health supplement and also having better general health).
+- When we don't have RCT, simple diff-in-means is not going to work. We need to estimate **nuisance function** to adjust for the covariates. 
 
 ## Ignorability
 To make causal claims from observational data, we need the **Ignorability Assumption** (also known as "Unconfoundedness" or "Selection on Observables"):
