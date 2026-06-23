@@ -24,9 +24,257 @@ _styles: >
   }
 ---
 
+
+# mapping policy
+- unknow takes up a lot of portion in industry RMS, both for loss and TIV. But in-force data has almost zero percentage of unknown. thus. remove unknown occupancy from RMS.
+- remove occupancy = Miscellaneous and 
+
+next step: 
+# daily
+
+### 6/17
+occupancy mapping
+- RMS preprocessing step added: discard O_DESC=
+
+Water/Sewage treatment plants
+Petrochemical - Refineries
+Light Industrial - Biomedical
+Heavy Industrial - Cement
+Heavy Industrial - Pulp & Paper
+Light Industrial - Pharmaceutical
+Light Industrial - Semiconductor
+Electric Power - Nuclear Power Plant
+Electric Power - Nuclear power plant
+
+# joining keys
+- zip code and state is the key for joins, must be super clean
+
+## zip code
+
+- zip_mapping: `zip` is numeric, it discards zeros on the left. no records with zip=00000
+- `iso_prop_18_22`: `zip` is numeric, it discards zeros on the left. 221 records with zip=00000
+- RMS: `postalcode` is numeric, it discards zeros on the left
+- `cinfin_master_adj`: `postalcode` is char.
+  - there are 563 rows with `postalcode`=00000. 21 states, mostly around 200k per state, small relative to statewise total sum. I propose: discard these records.
+
+
+### bg1 mapping
+- `zip_isoterr`: derived from `iso_prop_18_22`. zipcd numeric. terr char3
+- `mapping_isoterr_bg1` : terr char3 derived from excel file. one terr code has different states. thus we should use st-terr pair.
+- `terrdatacube_bg1cic`: terr char3
+
+
+in `iso_prop_18_22`, there are some zip code that have multiple terr code. remedy: choose the terr that has maximum number of counts
 # Data
 
+1. iso data: 10% sample of the whole commercial property insurance market. policy level. 2018-2022 5 years
+2. rms data: zip-level simulation data of the whole (100%) comercial property insurance market for 2025
+3. in-force exposure data: policy level data of cincinnati insurance company for 2025
+4. cf datamart: compnay policy database
+
+## cf datamart
+- `business_unit` = MIDDLE MARKETS
+
+
+## in-force exposure data
+
+### market segements
+- nine categories in column `MarketSegments`:
+  - Commercial Key Construction
+  - Commercial Key General Business
+  - Commercial Middle
+  - Commercial Small
+  - Personal High Net Worth - Admitted
+  - Personal High Net Worth - Non-Admitted
+  - Personal Middle - Admitted
+  - Small Business
+For now we will only use commercial middle. We might revisit this later.
+
+### Peril related columns
+ `Peril` column has the breakdown we need.
+
+| `Peril` | `PerilModel` | `SourcePeril`        |
+|-------|------------|--------------------|
+| CS    | SCS        | OW                 |
+| CS    | SCS        | SCS                |
+| CS    | SCS        | TH                 |
+| EQ    | EQ         | EQ                 |
+| EQ    | EQ         | EQ CovC Only       |
+| EQ    | EQ         | EQ Full Coverage   |
+| FF    | FF         | FF                 |
+| HU    | HU         | HU                 |
+| WF    | WF         | WF                 |
+| WF    | WF         | Wildfire           |
+| WT    | SCS        | Winter             |
+
+### exposure related variables
+`TIV` column sums up everything, so we will use that column
+
+### How to get non-cat exposure from 
+
+- number of locnum $\approx$ 1mil
+- number of rows $\approx$ 4.7mil
+- thus, each property has 4-5 rows on average
+- we take maximum over loc, because the TIV
+
+## occupancy
+occupancy_type_desc in `cf_datamart` and occupancy in `cinfin_master_adj`
+
+Occupancy
+- Agriculture
+- Air
+- Chemicals Processing
+- Communication (Radio and TV)
+- Construction
+- Education
+- Electrical
+- Entertainment and Recreation
+- Food and Drugs Processing
+- Gasoline Service Stations
+- General Commercial
+- General Industrial
+- General Services
+- Group Institutional Housing
+- Health Care Service
+- Heavy Fabrication and Assembly
+- High Technology
+- Highway
+- Light Fabrication and Assembly
+- Metal and Minerals Processing
+- Mining
+- Miscellaneous
+- Natural Gas
+- Permanent Dwelling (multi family housing)
+- Permanent Dwelling (single family housing)
+- Personal and Repair Services
+- Petroleum
+- Professional, Technical and Business Services
+- Railroad
+- Religion and Nonprofit
+- Restaurants
+- Retail Trade
+- Sea/Water
+- Telephone & Telegraph
+- Temporary Lodging
+- Unknown
+- Wholesale Trade
+
+### Sea/water
+- minor_class_desc: Piers, Wharves, Bridges
+- 
+### Petroleum:
+- minor_class_desc in cf_datamart is all `Oil Distributing, Oil Terminals and LPG Tank Farms, Excluding Stock`
+I match 
+
+### railroad
+not manufacturers, but does repair and maintenance
+
+- MINOR_CLASS_DESC: Railroads
+- NAICS_2_DESC: 
+  - Other Public Services (Except Public Administration)
+  - Professional, Scientific, and Technical Services
+  - Transportation and Warehousing
+  - Wholesale Trade
+- NAICS_3_DESC:
+  - Repair and Maintenance
+  - Professional, Scientific, and Technical Services
+  - Support Activities for Transportation
+  - Merchant Wholesalers, Durable Goods
+
+- NAICS_DESC:
+  - Commercial and Industrial Machinery and Equipment (Except Automotive and Electronic) Repair and Maintenance
+  - All Other Professional, Scientific, and Technical Services
+  - Process, Physical Distribution, and Logistics Consulting Services
+  - Support Activities for Rail Transportation
+  - Transportation Equipment and Supplies (Except Motor Vehicles) Merchant Wholesalers
+
+- NAICS_SUPERSECTOR:
+  - Other Services and Public Administration
+  - Professional and Business Services
+  - Trade, Transportation, and Utilities
+
+- NAICS_SUPERSECTOR_SUMMARY:
+  - Other Services and Public Administration
+  - Professional and Business Services
+  - Trade, Transportation, and Utilities
+
+### Parking
+- Classify this as a `general commercial`
+Reasons:
+1. In datamart, the insured do not have manufacturing component (MINOR_CLASS_SPECIFIC_GROUP = NON_MANUFACTURING or  ALL OTHER
+ for all records).
+2. The datamart records indicate that this occupancy is for parking garage for variety of businesses. Thus general is adequate.
+3. The likely losses are minor and limited to low-speed vehicle collisions or incidents such as window breakage and theft. These risks are not related to catastrophic events. In the event of a catastrophe, the parking lot is typically not responsible for damage to parked vehicles.
+4. Instead, potential losses would be limited to property such as gate equipment or possible employee injuries, which are not that expensive.
+
+
+- MINOR_CLASS_DESC:
+  - Auto Parking Garages, Car Washes
+  - Mill Yards
+
+- MINOR_CLASS_SPECIFIC_GROUP:
+  - NON_MANUFACTURING
+  - ALL OTHER
+
+- NAICS_SUPERSECTOR:
+  - Leisure and Hospitality
+  - Professional and Business Services
+  - Natural Resources and Mining
+  - Construction
+  - Education and Health Services
+  - Real Estate and Financial Services
+  - Information
+  - Manufacturing
+  - Trade, Transportation, and Utilities
+  - Other Services and Public Administration
+ 
+ 
+### Personal and Repair Services
+- Classify this as a `general commercial`
+Reasons:
+1. In datamart, the insured do not have manufacturing component (MINOR_CLASS_SPECIFIC_GROUP = NON_MANUFACTURING or  ALL OTHER
+ for all records).
+2. The datamart records indicate that this occupancy is for parking garage for variety of businesses. Thus general is adequate.
+
 - zip_mappings_20260116_sm: lookup table to map zip codes to territory variables (bg2_terr and scs_terr)
+
+### Religion and Nonprofit
+- all datamart records are minor_class_desc = churches and synagogues.
+- provide the money needed to continue your ministry during the restoration period.
+- legal defense costs and damages resulting from allegations or emotional injury due to religious communication, religious activity, or alleged discrimination.
+- https://churchinsurance.brotherhoodmutual.com/
+### Entertainment and Recreation
+
+Bars and Taverns
+Bowling Alleys
+Boys' and Girls' Camps
+Dance Halls, Ballrooms & Discotheques
+Drive-in Theaters
+Golf Clubs, Tennis Clubs and Similar Sports Facilities without Cooking
+Halls and Auditoriums
+Motion Picture Studios
+Museums, Libraries, Art Galleries (non-profit)
+Recreational Facilities Noc
+Recreational Facilities, NOC
+Skating Rinks--Roller Rinks
+Theaters
+
+### Electrical
+all records in datamart has minor_class_desc = `Electric Generating Stations - Public Ut`
+records in data mart do not have nuclear power plant
+
+### Group Institutional Housing
+minor_class_desc = nursing and convalescnet homes or penal institution.
+
+### General services
+minor_class_desc =  `Governmental Offices` or `Other Public Buildings, Fire Dept., Police, Water/Sewer`
+
+### datamart do not have records
+- Communication (Radio and TV)
+- Telephone & Telegraph
+
+
+
 
 ## ISO DataCube™
 

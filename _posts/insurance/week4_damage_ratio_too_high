@@ -5,3 +5,24 @@
 # Exposure
 ### are we over-counting the exposure (TIV) for RMS data?
 No. TIV value is different accross perils. So we TIV is already divided into perils and we cannot split the TIV of each peril further.
+
+
+Exposures
+should not be added across sublines, as it will overstate the exposure amounts.
+
+
+
+
+| Variable           | N    | Mean        | Std Dev     | Minimum   | 1st Pctl   | 5th Pctl   | 25th Pctl | Median   | 75th Pctl | 95th Pctl | 99th Pctl | Maximum        |
+|-------------------|------|-------------|-------------|-----------|------------|------------|-----------|----------|-----------|-----------|-----------|----------------|
+| earned_exposure   | 1263 | 395,930.91  | 687,498.84  | 0         | 39.8340    | 862.1250   | 10,116.48 | 73,025.54| 529,310.04| 1,803,788.66 | 2,919,420.84 | 7,744,521.31  |
+| written_exposure  | 1263 | 427,633.26  | 741,879.62  | 0         | 0          | 600.0000   | 10,712.30 | 78,190.27| 558,701.93| 1,920,931.27 | 3,190,559.33 | 8,483,038.98  |
+| tiv               | 1138 | 5,242,524,800 | 7,221,842,245 | 1,386,549.96 | 14,425,624.14 | 60,350,954.66 | 625,804,948 | 1,956,799,737 | 7,470,847,820 | 20,396,616,531 | 30,575,829,261 | 59,773,184,221 |
+
+
+
+exposure
+EQ 2018 AK 99553 ALEUTIANS EAST BOROUGH
+1129.708 + 164.667 
+ALEUTIANS EAST BOROUGH
+16,133,238
