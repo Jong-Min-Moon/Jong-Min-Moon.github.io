@@ -25,14 +25,233 @@ main portion: bond + dividend
 
 
 
+#  In general, where do the insurance companies invest ?
+https://www.unibocconi.it/en/news/where-do-insurance-companies-invest
+
+## Summary
+Insurance companies have a uniquely stable and predictable funding structure, which allows them to invest heavily in illiquid bonds, particularly corporate bonds. Because these assets offer higher returns (due to their limited tradability), insurers can earn an “illiquidity premium.” In a highly competitive insurance market, part of this extra return is passed on to policyholders in the form of lower insurance premiums.
+
+## Funding Structure of Insurance Companies
+
+- Insurance companies are primarily funded through the underwriting of insurance contracts.
+- They receive premiums upfront and only make payouts later if insured events occur.
+ 
+### Stable inflows:
+- Demand for insurance is relatively steady and largely insensitive to short-term financial market fluctuations.
+- This provides insurers with a consistent stream of incoming funds.
+
+### Predictable outflows:
+- Insurers diversify risk by underwriting many similar contracts, enabling statistical modeling.
+- Using statistical methods, they can estimate expected payouts with high accuracy (e.g., predicting how many homes will be damaged in a given year).
+
+ As a result, insurers have stable, long-term liabilities, unlike mutual funds or banks, which may face sudden withdrawals.
+
+## Investment Strategy: Illiquid Corporate Bonds
+
+- This stable funding structure makes insurers well-suited to invest in illiquid corporate bonds, which are harder to sell quickly and often trade at a discount.
+
+### Why other investors avoid illiquid assets:
+- Investors like open-end mutual funds or banks may face liquidity risk (e.g., redemptions or deposit withdrawals).
+- They may be forced to sell assets quickly, potentially at a loss.
+
+### Why insurers can invest in them:
+- Insurance companies do not face the same withdrawal pressures.
+- They can hold assets to maturity, avoiding forced sales during market stress.
+- This allows them to capture the illiquidity premium, leading to higher expected returns compared to other investors.
 
 
+## asset-driven insurance pricing: Link Between Investments and Insurance Pricing
+- The insurance industry is highly competitive, with firms competing by lowering premiums.
+- Because insurers earn higher returns from illiquid investments, they can share these gains with customers by offering lower premiums, ultimately to get more funding.
 
+ 
+ ## Key Takeaway
+Insurance companies’ ability to invest in illiquid assets—thanks to their predictable funding structure—not only improves their returns but also benefits consumers through lower insurance costs.
+ 
+
+# An example of insurance company's portfolio
+
+
+## Overview: Three Main Asset Buckets
+
+Insurance companies allocate their investment portfolios across three primary asset classes:
+
+* **Fixed Income (Bonds)**
+* **Equities (Public Stocks)**
+* **Private Equity (Illiquid Investments)**
+
+Consistent with their stable funding structure, insurers emphasize **long-term, income-generating assets**.
+
+ 
+
+## 1. Core Strategy: Income Generation (Bonds + Dividends)
+
+* The **major portion of the portfolio** is allocated to:
+  * **Bonds (fixed income)**
+  * **Dividend-paying equities**
+
+### Why focus on income assets:
+
+* These investments provide **stable and predictable cash flows**, matching insurers’ liability structure.
+* **Dividend-paying stocks** are preferred because:
+  * They tend to **outperform non-dividend-paying stocks over the long run**.
+  * They provide regular income in addition to capital appreciation.
+
+### Role of compounding:
+
+* Dividends can be **reinvested to purchase additional shares**, leading to:
+  * **Compounding growth over time**
+  * Increasing income streams as dividends grow
+
+This aligns with insurers’ long-term investment horizon and need for steady returns.
+
+## 2. Equity Investment Strategy
+
+* In equities, the goal is to **outperform the S\&P 500 over the long term**.
+
+### Key principles:
+
+* **Dividend focus:**
+  * Equity investments are not only for price appreciation but also for **dividend income**.
+
+* **Counter-cyclical behavior:**
+  * When markets decline, insurers **buy more stocks** rather than sell.
+  * This reflects their stable funding and long-term outlook (they are not forced sellers).
+
+* **Long-term mindset:**
+  * Avoid attempting to **time the market or chase short-term events**.
+  * Emphasize **consistent, long-term investing**.
+ 
+
+## 3. Risk and Performance Philosophy
+
+* Compared to peers (other insurers or benchmarks):
+  * The strategy may **accept higher volatility**
+  * In exchange for **higher average returns over time**
+
+### Performance metrics:
+
+* Evaluate portfolio performance **relative to peers and benchmarks**.
+* Focus on:
+  * Long-term return generation
+  * Risk-adjusted performance
+
+ 
+
+## 4. Role of Private Equity
+
+* Private equity represents the **illiquid investment component**:
+  * Offers **higher expected returns** (illiquidity premium)
+  * Fits well with insurers’ ability to **hold assets long term**
+
+* Complements fixed income and public equity by:
+  * Enhancing returns
+  * Diversifying the portfolio
+
+ 
+
+## Key Takeaways
+
+* Insurance companies prioritize **income-generating and long-term investments**.
+* Their stable funding allows them to:
+  * Invest in **illiquid assets**
+  * **Buy during downturns** instead of selling
+* The strategy emphasizes:
+  * **Dividends and compounding**
+  * **Long-term outperformance over short-term timing**
+  * Accepting **moderate volatility** for higher returns
+
+
+’m on the insurance side (more on the asset allocation / ALM side rather than product).
+
+## Day to day is quite different from traditional WM:
+
+- A lot of focus on liabilities first (cash flows, duration)
+
+- Portfolio construction is heavily constrained by capital/regulation
+
+- Much more about stability than return maximization
+
+## On investments:
+
+- Fixed income dominates (IG credit, govies, some private credit)
+
+- Equities are usually limited (capital intensive)
+
+- Alts exist, but sized carefully (infra, private credit, some real assets)
+
+## What I like:
+
+- Very structured way of investing
+
+- Clear link between assets and liabilities
+
+- Less “market noise” vs WM
+
+## Challenges:
+
+- Constraints can be frustrating (capital, regulation)
+
+- Less flexibility vs traditional asset management
+
+- Return targets are secondary to solvency / stability
+
+## If you’re coming from WM, the biggest shift is:
+
+- You’re not optimizing for clients — you’re optimizing for the balance sheet.
+
+# insurance company has an conservative investment portfolio
+Every insurance company has an investment portfolio, that’s the whole point of insurance companies. You collect money, hold it, and then pay it out when someone collects insurance. Yes, insurance companies make underwriting profit, the difference between money collected and that paid out. However, the main profit is from using the collected money and invest it and earn returns from the market. Insurance companies together with pensions and churches are some of the biggest non-finance/government institutional investors that exist.
+
+Typically, their portfolios are more conservative relative. Their whole goal is to make steady returns on a HUGE sum of money. A small percentage of a big amount is a big profit. They invest in anything and everything, but conservatively. I haven’t worked for an insurance companies portfolio management, but I’ve worked on the other side (asset management sales trying to get insurances to invest in our fund). We would have to fill in super complex and detailed questionnaires and pass them to even be considered as an investment opportunity, followed by multiple lengthy interviews/discussions.
+
+I’d recommend insurance portfolio management to anyone who loves portfolio management and a good work/life balance, but doesn’t want the intensity of working at an asset manager or hedge fund. From what I’ve seen, the people who work in the investment teams of insurances/pensions/governments/churches/etc. typically stay with the same company for much longer than those at financial services companies.
+
+
+# PIMCO 2026 PhD Summer Internship – Portfolio Management, Quantitative Research Analyst
+
+## Responsibilities
+- PIMCO is a global leader in active fixed income with deep expertise across public and private markets.
+- We invest our clients’ capital across a range of fixed income and credit opportunities, leveraging our decades of experience navigating complex debt markets.
+- Our flexible capital base and deep relationships with issuers have helped us become one of the world’s largest providers of traditional and nontraditional solutions for companies that need financing and investors who seek strong risk-adjusted returns.
+
+
+- Be a Ph.D. candidate from a top program in quantitative fields such as Finance, Economics, Statistics, Computer Science, Operations Research, Physics, or Mathematics.
+- Must be able to begin full time employment at a PIMCO office between January 2027 – August 2027
+- Must be enrolled at a university during the Fall 2026 semester (August 2026 – December 2026)
+- Have business proficiency in English.
+
+### PM Analytics
+- The PM Analytics team collaborates closely with Portfolio Management to **provide quantitative inputs** to PIMCO’s investment process.
+- This includes developing **models for alpha generation and risk management**.
+- Team members may specialize in specific markets (e.g., credit, rates, mortgages) or take on cross-market roles such as asset allocation, portfolio construction, or execution.
+- Key responsibilities involve conducting **econometric analyses of historical returns**, building empirical and risk-neutral valuation models, applying macroeconomic research, and **analyzing extensive transaction data to enhance trade execution**.
+
+### Required skill sets
+Desired candidates should possess the following skills and characteristics:
+
+- A strong interest and background in quantitative disciplines, with knowledge of asset pricing, fixed income markets, economic theory, and optimization methods preferred.
+- Formal training in empirical research, particularly in **time series and panel data econometrics**, with experience in analyzing large datasets preferred.
+- Proficiency in programming, with a strong preference for Python; knowledge of C++ is also beneficial.
+- High energy, a results-driven mindset, and strong analytical, problem-solving, and communication skills.
+  
+ 
 # In less than 250 words, please explain why you want to participate in the Investment's Shadow.
--  they allow households to share risk and protect themselves
-- insurance companies is that they are also major investors in financial assets
+As a PhD intern at PARM working on commercial insurance pricing, my research focuses on the underwriting modeling side of the business, which supports a stable and predictable funding stream of our company. I analyze historical claims and catastrophe simulation data to estimate expected losses and determine premiums across regions. This work has given me a strong understanding of quantitative research supports insurers generate funds through pricing and risk assessment.
+However, I want to complete the picture by understanding how companies use these underwriting-generated funds to create profit. I have learned from our Chief Actuary, Luyang, that investment returns are a major driver of overall profitability. Through  discussions with my team and my boss, Rajesh, I was introduced to the firm’s equity strategy, particularly its focus on dividend-paying stocks.
+As a PhD student at the University of Southern California, I have also connected with professionals at buy-side asset management firms in Southern California, including firms like PIMCO that specialize in long-term, research-driven fixed income investing.
+Insurance companies occupy a unique position: their stable liability structure allows them to invest in illiquid assets and capture returns unavailable to more liquidity-constrained investors. At the same time, their investment strategies may differ from those of firms like PIMCO due to regulatory constraints and the nature of insurance liabilities.
+Participating in the Investment Shadow would allow me to connect my underwriting research with investment strategy, develop a more holistic understanding of the insurance business, and explore how I can apply my quantitative skills to support investment decisions.
 
 
 # In less than 250 words, please explain what you hope to gain/learn by participating in the Investment's Shadow.
+As a PhD student in statistics and operations research, my goal is to identify where and how I can contribute quantitative insights using my technical skill set to support insurance company's investment decisions.  
+Through my current role, I have primarily been exposed to a research-oriented environment within PARM, focusing on underwriting and pricing analytics. Participating in the Investment Shadow would allow me to experience a different side of the business—one that directly drives the company’s profitability.
+This exposure would help me develop a more complete understanding of CIC by connecting underwriting analysis with investment strategy, and potentially uncover meaningful links between risk modeling and portfolio decisions.
+I am also eager to learn more about the unique investment approach of insurance companies, which emphasizes long-term horizons, fixed income, and dividend-generating assets. This approach differs from that of many other market participants and reflects the distinct liability structure of insurers.
+Finally, I believe this experience will help shape my personal investment mindset.
+
+
+
 
 # What recent market trend or economic event has caught your attention and what is your take?
