@@ -1,0 +1,360 @@
+	%-------------------------
+	% Resume in Latex
+	% Author : Jake Gutierrez
+	% Based off of: https://github.com/sb2nov/resume
+	% License : MIT
+	%------------------------
+	
+	\newcommand{\team}{}
+	\newcommand{\position}{}
+	
+	\documentclass[letterpaper,11pt]{article}
+	\usepackage[T1]{fontenc}
+	\usepackage{latexsym}
+	\usepackage[empty]{fullpage}
+	\usepackage{titlesec}
+	\usepackage{marvosym}
+	\usepackage[usenames,dvipsnames]{color}
+	\usepackage{verbatim}
+	\usepackage{enumitem}
+	\usepackage{dirtytalk}
+	\usepackage{fancyhdr}
+	\usepackage[english]{babel}
+	\usepackage{tabularx}
+	%\usepackage[hidelinks]{hyperref}
+	\usepackage{hyperref}[] % hyperlink
+	\hypersetup{
+		colorlinks = true,
+		linkcolor = black, %Colour of internal links
+		filecolor = magenta,
+		urlcolor = black, %Colour for external hyperlinks
+		citecolor = black, %Colour of citations
+		pdfpagemode=UseOutlines
+	}
+	
+	
+	%\input{glyphtounicode}
+	
+	
+	%----------FONT OPTIONS----------
+	% sans-serif
+	% \usepackage[sfdefault]{FiraSans}
+	% \usepackage[sfdefault]{roboto}
+	% \usepackage[sfdefault]{noto-sans}
+	% \usepackage[default]{sourcesanspro}
+	
+	% serif
+	% \usepackage{CormorantGaramond}
+	% \usepackage{charter}
+	
+	
+	\pagestyle{fancy}
+	\fancyhf{} % clear all header and footer fields
+	\fancyfoot{}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+	
+	% Adjust margins
+	%\addtolength{\oddsidemargin}{-0.5in}
+	%\addtolength{\evensidemargin}{-0.5in}
+	%\addtolength{\textwidth}{1in}
+	%\addtolength{\topmargin}{-.5in}
+	%\addtolength{\textheight}{1.0in}
+	\addtolength{\oddsidemargin}{-0.5in}
+	\addtolength{\evensidemargin}{-0.5in}
+	\addtolength{\textwidth}{1.0in}
+	\addtolength{\topmargin}{-0.5in}
+	\addtolength{\textheight}{1.0in}
+	
+	
+	
+	\urlstyle{same}
+	
+	\raggedbottom
+	\raggedright
+	\setlength{\tabcolsep}{0in}
+	
+	% Sections formatting
+	\titleformat{\section}{
+		\vspace{-5.5pt}\scshape\raggedright\large
+	}{}{0em}{}[\color{black}\titlerule \vspace{-6.5pt}]
+	
+	% Ensure that generate pdf is machine readable/ATS parsable
+	%\pdfgentounicode=1
+	%
+	%-------------------------
+	% Custom commands
+	\newcommand{\resumeItem}[1]{
+		\item\small{
+			{#1 \vspace{-2pt}}
+		}
+	}
+	\newcommand{\masterSubheading}[5]{
+		\vspace{-2pt}\item
+		\begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+			\textbf{#1}, #4 #2 \\
+			\small#3  \\
+			\small #5
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\bachelorSubheading}[4]{
+		\vspace{-2pt}\item
+		\begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+			\textbf{#1}, #4  #2 \\
+			\small#3 \\
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\referenceSubheading}[3]{
+		\vspace{-2pt}\item
+		\begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}rr}
+			\textbf{#1}, #2 &{} &{} \\
+			% &{}&{}\\
+			Phone: #3 & {} & {}\\
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\resumeSubheading}[5]{
+		\vspace{-2pt}\item
+		\begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+			\textbf{#1} & #2 \\
+			#3, #4  \\
+			#5
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\workSubheading}[4]{
+		\vspace{-2pt}\item
+		\begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+			\textbf{#1} #2 \\
+			#3   \\
+			#4
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\awardSubheading}[2]{
+		\vspace{-2pt}\item
+		\begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+			#1 & #2 \\
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\resumeSubSubheading}[2]{
+		\item
+		\begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+			\textit{\small#1} & {\small #2} \\
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\resumeProjectHeading}[2]{
+		\item
+		\begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+			#1 & #2 \\
+		\end{tabular*}\vspace{-7pt}
+	}
+	
+	\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+	
+	\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+	
+	\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in, label={}]}
+		\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+	\newcommand{\resumeItemListStart}{\begin{itemize}}
+		\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+	
+	
+	
+	
+	%-------------------------------------------
+	%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	\begin{document}
+	\begin{flushleft}		
+		\Large{\textbf{{\scshape Jongmin Mun} }}
+\hspace{140pt}
+		\normalsize{	\href{mailto:jongminm@usc.edu}{\texttt{jongminm@usc.edu}}
+			\,/\,
+			\href{https://jong-min.org/}{\texttt{jong-min.org}}
+			\,/\,
+	(+1) 984 317 2288}
+		\end{flushleft}
+		\vspace{-5.55pt}
+PhD candidate specializing in \textbf{Causal Inference}, \textbf{Experimental Design}, and \textbf{Marketplace Optimization}. 5+ years of experience developing algorithms for \textbf{dynamic pricing}, privacy-preserving \textbf{A/B testing}, and policy learning. Passionate about leveraging statistical rigor to solve large-scale marketplace problems in ads and offers.\vspace{-7.6pt}
+	\section{Technical Skills}
+\begin{itemize}[leftmargin=0.14in]
+    \item \textbf{Core Competencies:} Causal Inference, A/B Testing, Experimental Design, Revenue Management, Optimization (MIP/SDP, Gurobi), Differential Privacy, Heterogeneous Treatment Effects (HTE).
+    \vspace{-7.55pt}
+    \item \textbf{Programming:} Python (PyTorch, Pandas, NumPy), R (Tidyverse, Caret), SQL, PySpark, Bash.
+    \vspace{-7.55pt}
+    \item \textbf{Tools \& Platforms:} Linux/Slurm, Docker, AWS, Git/GitHub, VS Code, Google Colab.
+    \vspace{-7.55pt}
+    \item \textbf{Packages Built:}
+    \href{https://pypi.org/project/privateAB/}{\textbf{privateAB} (Python/PyTorch; pypi.org/project/privateAB/)},
+    \href{https://github.com/Jong-Min-Moon/FShybridPLS}{\textbf{FShybridPLS} (R; github.com/Jong-Min-Moon/FShybridPLS)}.
+\end{itemize}
+\vspace{-12.55pt}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Research Experience}
+\begin{itemize}[leftmargin=0in, label={}]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+\textbf{Offline Dynamic Pricing \& Policy Learning under Distribution Shift (First author, NeurIPS MLxOR workshop)} \href{https://openreview.net/forum?id=ZL748l6oQG}{openreview.net/forum?id=ZL748l6oQG}
+\\
+\vspace{-5.55pt}
+\begin{itemize}[leftmargin=0.14in]
+	% Addressed the challenge of distributional shift in offline pricing with privacy constraints by developing a twofold pessimistic learning algorithm
+	\item \small 
+	%method
+	Designed \textbf{off-policy transfer learning} algorithm for \textbf{continuous treatment allocation (pricing)}, directly applicable to revenue management and offer targeting.
+	%contribution
+	\vspace{-1.5pt}
+    \item \small %1,
+    Addressed the challenge of \textbf{market shift} (covariate shift) and privacy constraints by implementing a twofold pessimistic estimation of counterfactual response
+\end{itemize}
+\vspace{-11.5pt}
+\item
+\textbf{Privacy-Preserving A/B Testing (first author, Journal of Machine Learning Research and package \texttt{privateAB})}  \href{https://jmlr.org/papers/v26/24-2016.html}{\url{jmlr.org/papers/v26/24-2016.html}}	
+\\\vspace{-5.55pt}
+\begin{itemize}[leftmargin=0.14in]
+	\item \small 
+	%challenge
+	Developed a \textbf{private A/B testing} algorithm using Google's RAPPOR mechanism to enhance the trustworthiness of \textbf{federated analytics}, achieving \textbf{2x higher testing power} compared to prior approaches
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\vspace{-1.5pt}
+	%
+	\vspace{-1.5pt}
+	\item \small %1
+	Leveraged  Slurm-based high-performance computing cluster
+	to quantify   privacy-utility  trade-off
+	via extensive simulations
+	%Evaluated
+	%privacy-utility trade-offs
+	%through extensive simulations on Slurm-based high-performance computing cluster
+\end{itemize}
+\vspace{-11.5pt}
+\item
+\textbf{Heterogeneous Treatment Effect Estimation \& Subgroup Discovery (co-first author, NeuroImage)} \href{https://doi.org/10.1016/j.neuroimage.2024.120956}{doi: \url{10.1016/j.neuroimage.2024.120956}}
+\\
+\vspace{-5.55pt}
+\begin{itemize}[leftmargin=0.14in]
+	% 1) what challenges you have encountered; 2) what methods you've developed and used; and 3) what the contribution is. The context of the problem is less important.
+	\item \small
+	Designed  cluster-aware generative oversampling \textbf{causal inference} method to address severe class imbalance, improving estimation of \textbf{heterogeneous treatment effects} in high-dimensional data
+	\vspace{-1.5pt}
+	\item \small %1	
+	Applied machine learning and statistical modeling to quantify subgroup effects and uncover interpretable patterns
+	\vspace{-1.5pt}
+	\item \small %1	
+	Identified \textbf{4x more brain regions} exhibiting significant heterogeneous treatment effects than conventional methods
+	%
+\end{itemize}
+\vspace{-11.5pt}
+\item
+\textbf{Iterative Exploration-Driven Sparse SDP Clustering via Thompson Sampling (In prepration for Journal of American Statistical Association)} \href{https://arxiv.org/abs/2505.20478}{arxiv.org/abs/2505.20478}
+\\
+\vspace{-5.55pt}
+\begin{itemize}[leftmargin=0.14in]
+	\item \small Developed mixed integer semidefinite programming-based sparse \textbf{clustering} framework with \textbf{reinforcement learning-driven feature selection} to escape local optima and improve robustness in high-dimensional settings
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\vspace{-1.5pt}
+	\item \small 
+Demonstrated superior performance over existing methods on gene expression datasets, enabling accurate breast cancer subtype discovery
+	\vspace{-1.5pt}
+	\item \small %1
+	\href{https://github.com/Jong-Min-Moon/sparse_kmeans}{Implemented  reproducible, object-oriented MATLAB package with rigorous benchmarking (\url{github.com/Jong-Min-Moon/sparse_kmeans})
+	}
+\end{itemize}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%
+	%
+	%
+	%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%
+	%
+	%
+	%
+	%
+	%
+\end{itemize}
+\vspace{-13.55pt}
+%
+%
+\section{Work Experience}
+\begin{itemize}[leftmargin=0in, label={}]
+	\item  Applied Scientist,
+	\textbf{Center for Army Analysis and Simulations}, Gyeryong, South Korea
+	\hfill
+	2020.01~--~2021.07
+	\\
+	Project:  \textbf{Modeling wildfire risk based on Army artillery training data}
+	\vspace{-5.55pt}	
+	\begin{itemize}[leftmargin=0.14in]
+		\item \small 
+		Integrated two datasets (Army   data and Korea Meteorological Administration databases) via temporal and geospatial variables using \textbf{MS SQL}
+		to resolve meteorological data deficiencies
+		\vspace{-2.55pt}
+		\item \small 
+		Used \textbf{cluster-aware generative   oversampling} of wildfire cases
+		to mitigate severe class imbalance 
+		\vspace{-2.55pt}
+		\item \small 
+		Pipeline development and  analysis results published in \textbf{Journal of Classification} (doi:
+		\href{https://doi.org/10.1007/s00357-024-09467-1}{
+			10.1007/s00357-024-09467-1}); As co-first author,  implemented   pipeline in R, led real-data analysis, wrote manuscript,
+		collaborating with Army officers
+		\vspace{-2.55pt}
+		\item \small 
+		\href{https://doi.org/10.1016/j.csda.2024.108078}{
+			Refined method with theoretical analysis, published in \textbf{Computational Statistics \& Data Analysis} (doi:10.1016/j.csda.2024.108078); As first-author, derived theory, designed   experiments and wrote  manuscript}
+		
+		%					
+	\end{itemize}
+\end{itemize}
+\vspace{-12.55pt}
+	\section{Education}
+\begin{itemize}[leftmargin=0in, label={}]{
+		\item
+		Ph.D. in Data Sciences and Operations, University of Southern California, Los Angeles, CA
+		\hfill
+		2023.08~--~2027.05
+		\vspace{-7.55pt}
+		M.A. and B.A.  in  Statistics,
+		Yonsei University, Seoul, South Korea
+		\hfill
+		2014.03~--~2023.02
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%		\vspace{-3.55pt}
+		%		\begin{itemize}[leftmargin=0.14in]
+			% Addressed the challenge of distributional shift in offline pricing with privacy constraints by developing a twofold pessimistic learning algorithm
+			%			\item \small \hspace{-0pt}
+			%			\href{https://jong-min.org/assets/pdf/hybrid_pls_preprint.pdf}{
+				%				Thesis: Hybrid partial least squares regression with multiple functional and scalar
+				%				predictors with application to renal imaging data, submitted to \textit{Biostatistics}}
+			%		\end{itemize}
+}\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+		
+		%-------------------------------------------
+	\end{document}
