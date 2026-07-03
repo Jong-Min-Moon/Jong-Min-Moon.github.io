@@ -19,7 +19,7 @@ social: true  # includes social icons at the bottom of the page
 teaching: true
 ---
 
-I am a third-year PhD student in the [Data Sciences and Operations Department](https://www.marshall.usc.edu/departments/data-sciences-and-operations)
+I am a rising fourth-year PhD student in the [Data Sciences and Operations Department](https://www.marshall.usc.edu/departments/data-sciences-and-operations)
 at the University of Southern California. I am advised by [Prof. Yingying Fan](https://faculty.marshall.usc.edu/yingying-fan/) and [Prof. Paromita Dubey](https://www.paromitadubey.com/). My current research focuses on using reinforcement learning and causal inference to address problems in statistics, operations research and computational neuroscience, including high-dimensional clustering, dynamic pricing and site harmonization. 
 
 Before starting my PhD, I studied:

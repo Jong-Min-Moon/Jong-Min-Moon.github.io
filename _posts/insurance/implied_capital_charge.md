@@ -66,21 +66,19 @@ $$
 $$
 
 
+ 
 
-Great—let’s formalize this in a causal/statistical framework using **potential outcomes, distributions, and propensity weighting**.
 
-***
-
-# 1) Define the statistical objects
+#  Define the statistical objects
 
 Let:
 
-* $$O \in \mathcal{O}$$: occupancy type
-* $$P, R$$: product and region
-* $$S \in \{0,1\}$$: data source
-  * $$S=0$$: industry (RMS)
-  * $$S=1$$: your company
-* $$Y$$: **loss outcome per unit TIV** (= damage ratio)
+* $O \in \mathcal{O}$: occupancy type
+* $P, R$: product and region
+* $S \in \{0,1\}$: data source
+  * $S=0$: industry (RMS)
+  * $S=1$: your company
+* $Y$: **loss outcome per unit TIV** (= damage ratio)
 
 Then:
 
