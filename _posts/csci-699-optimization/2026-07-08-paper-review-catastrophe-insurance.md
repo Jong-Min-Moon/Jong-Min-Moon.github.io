@@ -32,6 +32,7 @@ $$
 
 **Subject to:**
 
+<p>
 $$
 |p_{i,t} - p_{i,t-1}| \leq \gamma_1, \quad \forall i \in [N], t \in [T]
 $$
@@ -43,6 +44,7 @@ $$
 $$
 p_{i,t} \in \mathbb{R}_+, \quad \forall i \in [N], t \in [T]
 $$
+</p>
 
 - Interpretation: collect minimum premium to cover the loss and other expenses ($\delta$)
 # Sources of Uncertainty
