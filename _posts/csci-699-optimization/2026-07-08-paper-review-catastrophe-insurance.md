@@ -17,28 +17,47 @@ bib_file: csci-699-optimization
 paper_key: bertsimas_catastrophe_2024
 ---
 
-# Summary
+* This paper uses a simple linear programming formulation to compute catastrophic insurance premiums.
+* Since the problem parameters—specifically, future losses—are uncertain, the authors employ robust optimization with uncertainty sets.
+* **Punchline 1:** The uncertainty set is the union of two distinct sets: one derived from normal approximations, and the other from machine learning prediction uncertainties.
+* Consequently, the robust optimization problem transforms into a min-max optimization problem, for which the paper derives an equivalent explicit formulation.
+* Finally, the paper introduces a mechanism to incorporate historical data, giving the approach a data-fusion flavor. The resulting problem is then solved via adaptive robust optimization.
 
-The escalating frequency and severity of natural disasters, exacerbated by climate change, underscore the critical role of insurance in facilitating recovery and promoting investments in risk reduction. This paper introduces a novel Adaptive Robust Optimization (ARO) framework tailored for the calculation of catastrophe insurance premiums, with a case study applied to the United States National Flood Insurance Program (NFIP). 
+# LP Formulation
+The formulation requires a demand function $f$.
 
-To the best of our knowledge, it is the first time an ARO approach has been applied to disaster insurance pricing. The methodology is designed to protect against both historical and emerging risks, the latter predicted by machine learning models, thus directly incorporating amplified risks induced by climate change. Using the US flood insurance data as a case study, optimization models demonstrate effectiveness in covering losses and produce surpluses, with a smooth balance transition through parameter fine-tuning. Among tested optimization models, results show ARO models with conservative parameter values achieving a low number of insolvent states with the least insurance premium charged.
+$$
+\min_{p_{i,t}} \sum_{i=1}^N \sum_{t=1}^T f(p_{i,t}) p_{i,t}
+$$
 
-Overall, optimization frameworks offer versatility and generalizability, making them adaptable to a variety of natural disaster scenarios, such as wildfires and droughts. This work not only advances the field of insurance premium modeling but also serves as a vital tool for policymakers and stakeholders in building resilience to the growing risks of natural catastrophes.
+**Subject to:**
 
----
+$$
+|p_{i,t} - p_{i,t-1}| \leq \gamma_1, \quad \forall i \in [N], t \in [T]
+$$
 
-# The Problem
-Traditional catastrophe insurance pricing struggles to adapt to the rapidly changing risk landscapes driven by climate change. As the frequency and severity of natural disasters like floods, wildfires, and droughts increase, static models often fail to capture emerging risks, leading to either under-pricing (which risks insolvency) or over-pricing (which reduces accessibility). A new approach is needed that can dynamically adapt to both historical data and machine learning predictions of future risks.
+$$
+\sum_{t=1}^T f(p_{i,t}) p_{i,t} - \sum_{t=1}^T f(p_{i,t}) l_{i,t} \geq \delta, \quad \forall i \in [N]
+$$
 
----
+$$
+p_{i,t} \in \mathbb{R}_+, \quad \forall i \in [N], t \in [T]
+$$
 
-# The Proposed Method: Adaptive Robust Optimization
+- Interpretation: collect minimum premium to cover the loss and other expenses ($\delta$)
+# Sources of Uncertainty
 
-The authors propose an Adaptive Robust Optimization (ARO) framework to dynamically price catastrophe insurance premiums.
+* The rarity of catastrophic events leads to a lack of comprehensive historical data.
+* Climate change renders the historical data we *do* have increasingly unreliable.
+* Thus, historical data must be supplemented with predictions from machine learning or physics-based models. However, these models are probabilistic and inherently subject to misspecification.
 
-- **Robustness against Uncertainty:** By utilizing robust optimization, the model accounts for the worst-case scenarios within a defined uncertainty set, ensuring that premiums remain sufficient even when losses deviate from historical averages.
-- **Adaptability:** The framework adapts over time by integrating machine learning models that predict emerging risks, allowing the insurance pricing to stay current with climate change impacts.
-- **Application to the NFIP:** In a case study on the US National Flood Insurance Program (NFIP), the ARO approach demonstrated that it could effectively cover losses and generate surpluses. 
-- **Parameter Tuning:** The balance between premium cost and insolvency risk can be smoothly transitioned through parameter fine-tuning. Conservative ARO models achieved the lowest number of insolvent states while charging the minimum necessary premiums.
+# Uncertainty Set 1: Normal Approximation
+* This approach builds on Bertsimas's prior work. 
+* Assuming losses follow a normal distribution, future losses are modeled as values whose sum deviates from the historical mean by a specific number of historical standard deviations.
+* Broadly speaking, leveraging the mean and variance aligns perfectly with standard actuarial principles. Much like standard pricing and risk practices at commercial carriers like Cincinnati Insurance, companies routinely utilize the mean (Average Annual Loss, AAL) and variance (or uncertainty, often embedded in permissible loss ratios) for capital allocation or post-catastrophe model adjustments to premiums.
 
-> **Key Takeaway:** The ARO framework offers a versatile and mathematically rigorous tool for policymakers to build resilient insurance systems against the growing threat of natural catastrophes.
+# Uncertainty Set 2: Machine Learning Prediction
+* **Assumption 1:** A specific catastrophe rarely occurs more than once within a reasonable multi-year timeframe.
+* **Assumption 2:** A peril is considered catastrophic only when the resulting loss exceeds a threshold $\Theta$.
+* The ML model outputs the probabilities of exceeding this threshold. Allowing for an $\epsilon$-margin of error, an uncertainty set of binary indicators is created where the sum of the indicators approximates the sum of these probabilities. The aforementioned assumptions are then used to link these indicator values directly to the projected loss values.
+ 
