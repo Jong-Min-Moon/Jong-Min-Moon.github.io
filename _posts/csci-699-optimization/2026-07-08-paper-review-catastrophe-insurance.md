@@ -26,13 +26,14 @@ paper_key: bertsimas_catastrophe_2024
 # LP Formulation
 The formulation requires a demand function $f$.
 
+<p>
 $$
 \min_{p_{i,t}} \sum_{i=1}^N \sum_{t=1}^T f(p_{i,t}) p_{i,t}
 $$
 
 **Subject to:**
 
-<p>
+
 $$
 |p_{i,t} - p_{i,t-1}| \leq \gamma_1, \quad \forall i \in [N], t \in [T]
 $$
