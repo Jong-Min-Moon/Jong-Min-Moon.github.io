@@ -10,9 +10,7 @@ institution: USC
 course_level: Graduate
 ---
 
-**Instructor:** Sai Praneeth Karimireddy (karimire@usc.edu)  
-**Location:** WPH 102  
-**Time:** Fri 1:00 pm - 4:20 pm  
+
 
 ## Course Description
 This course focuses on the foundations of privacy-preserving machine learning. Extremely personal data is being collected at an unprecedented scale by ML companies. While training ML models on such confidential data can be highly beneficial, it also comes with huge privacy risks. This course addresses the dual challenge of maximizing the utility of machine learning models while protecting individual privacy. We will cover the following topics: differential privacy; private training of ML models; privacy attacks and audits; federated and decentralized machine learning.
@@ -48,14 +46,7 @@ While there are no official prerequisites, knowledge of advanced probability (at
 | **Week 11** | **Theory:** Privacy in Practice; Incentives; Relation to Copyright law. | Brown et al. 2022. *What Does it Mean for a Language Model to Preserve Privacy?*<br>NY Times 2024. *Consent in Crisis*<br>Wei et al. 2024. *Proving membership in LLM pretraining data*<br>Duarte et al. 2024. *DE-COP: Detecting Copyrighted Content*<br>Elkin-Koren et al. 2024. *Can Copyright be Reduced to Privacy?* | |
 | **Weeks 12-15** | Student presentations. In-class presentations. Option to schedule earlier in the semester. | | |
 | **Final** | Final project report | | Report due on final exam date. |
-
-## Grading
-* **Assignments (30%):** 3 assignments. Collaboration is allowed but must be stated. Grades are based on correctness. The theory part should be written in Latex and the coding part in Jupyter Python notebooks.
-* **Course Presentation and Project (55%):**
-    * *Presentations (25%):* Students will be assigned a paper based on their interest and will present it in class for 30 minutes.
-    * *Project (30%):* Students will write a 4-page report on 1-2 papers, which could either be on the paper they presented, supplemented by related readings, or on a different paper(s) of their choice. Pursuing a personal research topic is strongly encouraged.
-* **Discussions and Participation (15%):** This will involve reviewing, commenting, and discussing each other's presentations and projects using the role-playing reading group format.
-
+ 
 ## Resources
 There are no required textbooks. The following writeups are excellent supplemental readings and may be used as references:
 * C. Dwork and A. Roth. *The Algorithmic Foundations of Differential Privacy*. Foundations and Trends in Theoretical Computer Science, 2014. Reference for DP.
