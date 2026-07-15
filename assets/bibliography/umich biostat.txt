@@ -1,0 +1,14 @@
+# Walter Dempsey 
+Associate Professor
+
+students:
+## Yuhua Zhang
+- phd received 2023
+- JASA paper: Node-Level Community Detection within Edge Exchangeable Models for Interaction Processes
+	- Received 11 Jul 2022, Accepted 24 Apr 2024 
+- Harvard biostat postdoc
+## Jieru Shi
+- phd received 2023
+- JASA paper: Incorporating Auxiliary Variables to Improve the Efficiency of Time-Varying Treatment Effect Estimation
+	- Received 16 Aug 2023, Accepted 20 May 2025
+- Postdoc Research Associate at Cambridge University
