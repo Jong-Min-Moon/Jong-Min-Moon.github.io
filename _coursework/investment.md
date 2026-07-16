@@ -1,36 +1,22 @@
 ---
 layout: project
-title: "Causal Inference with Modern Machine Learning Methods"
-description: "Doctoral-level introduction to causal inference at the intersection of machine learning, focusing on theoretical foundations and recent research developments."
+title: "Investment Strategies and Portfolio Management"
+description: "An overview of investment strategies, focusing on asset allocation, portfolio management, and the unique approaches of institutional investors like insurance companies."
 importance: 1
-category: stat
-project_handle: dso-603
-course_number: DSO 603
+category: finance
+project_handle: investment
+course_number: Investment
 institution: USC Marshall
 course_level: Graduate
 ---
 
-## Course Description
--  In contemporary causal inference studies, the data are decidedly large-scale, complex, and high-dimensional. 
-
-- Recently, an exciting set of tools at the intersection of causal inference and machine learning has emerged to tackle these types of questions in these settings. 
-
-- The first 2.5 weeks is spent on Rubin's causl framework and causal ifernce basics at the level of Rubin 2015 book. 
-
-- Then we study recent developments for causal inference using modern machine learning methods. The content will primarily be based on recent research papers.
-
-## Learning Objectives
-Upon successful completion of this course, students will be able to:
-1. Explain the core concepts and challenges in causal inference under the potential outcomes framework;
-2. Apply the most recent developments of modern statistical/machine learning methods to some core causal inference problems;
-3. Demonstrate and improve the ability to develop and justify the statistical/machine learning methods with mathematical rigor when applying/adapting them to causal inference questions.
 
 ---
 
 # Related Posts
 
 <div class="projects">
-{% assign category_posts = site.categories['dso-603'] | reverse %}
+{% assign category_posts = site.categories['investment'] | reverse %}
 
 {% if category_posts.size > 0 %}
   <!-- Collect all unique tags -->
