@@ -65,14 +65,14 @@ equivalnetly, assuming that the probability of response depends on unobservable 
 
 - Define $S(\mu)$ as the distribution over $(X,Y)$ satisfying
 
-$$P_{S(\mu)}(Y=1 \mid X=x)=\mu(x).$$
+<p>$$P_{S(\mu)}(Y=1 \mid X=x)=\mu(x).$$</p>
 
 - $\mu$ can be estimated from the observed data. Therefore it will be fixed after we estimate it. Our learning problem do not optimize over $\mu$.
 
 ### Candidate distribution $Q$
 - In addtion to $\mu$, we add another parameter $\theta$ and define $Q$ based on $\mu$ and $\theta$.
 - (Assumption 1, Lemma 1, and Section 3.1) Let $Q(\theta, \mu)$ denote the distribution over $(X, Y )$ where 
-$$dQ_{Y|X}(\theta, \mu) \propto dS_{Y|X}(\mu) · \exp(\theta^T \eta(x, y))$$
+<p>$$dQ_{Y|X}(\theta, \mu) \propto dS_{Y|X}(\mu) · \exp(\theta^T \eta(x, y))$$</p>
 - We can see that we are not conveniently assuming covariate shift: even conditioned on $X$, the distribution of $Y$ differs between $Q$ and $S$.
 - However, we do assume that the difference in condistional distribution is in the form of exponential tilt, where
 $\eta(x,y)$ is a *known* function that captures the relationship between the unobservable factors and the outcome.
@@ -82,15 +82,15 @@ $\eta(x,y)$ is a *known* function that captures the relationship between the uno
 ### The optimization problem
 - We minimze KL divegence between candidate distribution and $S$, while sticking to the moment condition.
 - To unify the expectation to be with respect to $S$, we use change of variable by introducing 
-$$
+<p>$$
 r(x)
 =
 \frac{dP_X(x)}{dS_X(x)}.
-$$
+$$</p>
 - $r$ can also be estimated from observed data and we will not optimize over $r$.
 - With these definitions, the optimization problem is written as
 
-$$
+<p>$$
 \min_{\theta \in \mathbb{R}^J}
 \;
 \mathbb{E}_S
@@ -102,11 +102,11 @@ Q_{Y|X}(\theta,\mu)
 S_{Y|X}(\mu)
 \right)
 \right]
-$$
+$$</p>
 
 subject to
 
-$$
+<p>$$
 \mathbb{E}_S
 \left[
 r(X)\,
@@ -118,7 +118,7 @@ r(X)\,
 \right]
 =
 \bar{\gamma}_P.
-$$
+$$</p>
 
 - The function $\gamma$ is also a known function and usually a very simple function.
 - The parameter of interest is $\theta$, a finite-dimensional vector. The nuisance functions are $\mu$ and $r$.
@@ -135,14 +135,14 @@ $$
 - If we multiply an expectation over the survey distribution $S$ by $r(X)$, it mathematically transforms it into an expectation over the true population distribution $P$.
 - Noticing this, our opitmizaiton problem is equivlanetly:
 
-$$\min_{\theta} \mathbb{E}_P [\text{KL}(Q_{Y\vert{}X}(\theta) \vert{}\vert{} S_{Y\vert{}X})] \quad \text{subject to} \quad \mathbb{E}_P [\mathbb{E}_{Q(\theta)}[\gamma(X,Y) \vert{} X]] = \bar{\gamma}_P$$
+<p>$$\min_{\theta} \mathbb{E}_P [\text{KL}(Q_{Y\vert{}X}(\theta) \vert{}\vert{} S_{Y\vert{}X})] \quad \text{subject to} \quad \mathbb{E}_P [\mathbb{E}_{Q(\theta)}[\gamma(X,Y) \vert{} X]] = \bar{\gamma}_P$$</p>
 
 - we combine the objective function and the constraint into a single equation by introducing a Lagrange multiplier, $\lambda$, which penalizes the equation if the constraint is violated:
 
-$$
+<p>$$
 \mathcal{L}(\theta, \lambda) =
 \mathbb{E}_P [\text{KL}(Q_{Y\vert{}X}(\theta) \vert{}\vert{} S_{Y\vert{}X})] + \lambda^T \left( \mathbb{E}_P [\mathbb{E}_{Q(\theta)}[\gamma(X, Y) \vert{} X]] - \bar{\gamma}_P \right)
-$$
+$$</p>
 
 - We find the stationary point where the derivatives of $\mathcal{L}$ with respect to $\theta$ and $\lambda$ are exactly zero.
 
@@ -153,32 +153,31 @@ $$
 - By definition, $\text{KL}(Q\vert{}\vert{}S) = \mathbb{E}_Q [\log(dQ/dS)]$.
 - By definition,  the ratio $dQ/dS$ is proportional to $\exp(\theta^T \eta)$. Specifically:
 
-$$\log\left(\frac{dQ}{dS}\right) = \theta^T \eta(X,Y) - A(X, \theta)$$
+<p>$$\log\left(\frac{dQ}{dS}\right) = \theta^T \eta(X,Y) - A(X, \theta)$$</p>
 
 - Here, $A(X, \theta)$ is the log-partition function (a normalizing constant to ensure probabilities sum to 1). 
--
 - If we take the expected value of this under $Q$, we get:
 
-$$\text{KL} = \theta^T \mathbb{E}_Q[\eta(X,Y)\vert{}X] - A(X, \theta)$$
+<p>$$\text{KL} = \theta^T \mathbb{E}_Q[\eta(X,Y)\vert{}X] - A(X, \theta)$$</p>
 
 - $A(X, \theta)$ is not affected because it is a function of $X$ and $Q$ is conditioned on $X$.
 - Now, let's take the derivative of this with respect to $\theta$. Using the product rule on the first part:
 
 
-$$\nabla_\theta (\text{KL}) = \mathbb{E}_Q[\eta] + (\nabla_\theta \mathbb{E}_Q[\eta]) \theta - \nabla_\theta A(X, \theta)$$
+<p>$$\nabla_\theta (\text{KL}) = \mathbb{E}_Q[\eta] + (\nabla_\theta \mathbb{E}_Q[\eta]) \theta - \nabla_\theta A(X, \theta)$$</p>
 
 - Now it becomes evident why the paper assumes exponential tilting and sufficient statistic. **The derivative of the log-partition function is always the expected value of the sufficient statistic**. Therefore, $\nabla_\theta A(X, \theta) = \mathbb{E}_Q[\eta]$.
 
 - Because of this, $\mathbb{E}_Q[\eta]$ and $-\nabla_\theta A(X, \theta)$ cancel each other out perfectly! We are left with:
 
 
-$$\nabla_\theta (\text{KL}) = (\nabla_\theta \mathbb{E}_Q[\eta]) \theta$$
+<p>$$\nabla_\theta (\text{KL}) = (\nabla_\theta \mathbb{E}_Q[\eta]) \theta$$</p>
 
 - Another property of exponential families is that **the derivative of the expectation is the covariance matrix**. Therefore, $\nabla_\theta \mathbb{E}_Q[\eta] = \text{Cov}_Q[\eta(X,Y) \vert{} X]$.
 This gives us the first half of Equation 16:
 
 
-$$\nabla_\theta (\text{KL}) = \text{Cov}_Q[\eta(X,Y) \vert{} X] \theta$$
+<p>$$\nabla_\theta (\text{KL}) = \text{Cov}_Q[\eta(X,Y) \vert{} X] \theta$$</p>
 
 ##### The Constraint Term
 - Next, we take the derivative of the second part of the Lagrangian, $\lambda^T \mathbb{E}_Q[\gamma \vert{} X]$,  with respect to $\theta$.
@@ -188,12 +187,12 @@ $$\nabla_\theta (\text{KL}) = \text{Cov}_Q[\eta(X,Y) \vert{} X] \theta$$
 - Reusing the exponential family property, the derivative of the expectation of *any* function $\gamma$ under our exponential tilt is the covariance between that function and our sufficient statistic $\eta$:
 
 
-$$\nabla_\theta \mathbb{E}_Q[\gamma \vert{} X] = \text{Cov}_Q[\eta(X,Y), \gamma(X,Y) \vert{} X]$$
+<p>$$\nabla_\theta \mathbb{E}_Q[\gamma \vert{} X] = \text{Cov}_Q[\eta(X,Y), \gamma(X,Y) \vert{} X]$$</p>
 
 ##### Conclusion
 Adding these two derivatives together and taking the outer expectation over $P$, we get the exact formula for $DL$ (Equation 16):
 
-$$\nabla_\theta \mathcal{L} = \mathbb{E}_P \left[ \text{Cov}_{Q(\theta, \mu)} [\eta(X,Y) \vert{} X] \theta + \text{Cov}_{Q(\theta, \mu)} [\eta(X,Y), \gamma(X,Y) \vert{} X] \lambda \right] = \text{DL}(\nu; \mu)$$
+<p>$$\nabla_\theta \mathcal{L} = \mathbb{E}_P \left[ \text{Cov}_{Q(\theta, \mu)} [\eta(X,Y) \vert{} X] \theta + \text{Cov}_{Q(\theta, \mu)} [\eta(X,Y), \gamma(X,Y) \vert{} X] \lambda \right] = \text{DL}(\nu; \mu)$$</p>
 
 ---
 
@@ -201,7 +200,7 @@ $$\nabla_\theta \mathcal{L} = \mathbb{E}_P \left[ \text{Cov}_{Q(\theta, \mu)} [\
 
 - Taking the derivative of the Lagrangian with respect to the Lagrange multiplier $\lambda$ simply strips away the $\lambda$ and returns the constraint itself.
 
-$$\nabla_\lambda \mathcal{L} = \mathbb{E}_P [\mathbb{E}_{Q(\theta, \mu)}[\gamma(X, Y) \vert{} X]] - \bar{\gamma}_P = M(\nu; \mu)$$
+<p>$$\nabla_\lambda \mathcal{L} = \mathbb{E}_P [\mathbb{E}_{Q(\theta, \mu)}[\gamma(X, Y) \vert{} X]] - \bar{\gamma}_P = M(\nu; \mu)$$</p>
 
 This perfectly matches Equation 17.
  
@@ -221,7 +220,7 @@ This perfectly matches Equation 17.
 
 - The final population estimating equations are given by $\Psi(\nu; \mu, r) = E_{\mathcal{S}} [\psi(X, Y ; \nu, \mu, r)]$, where $\psi$ is defined as
 
-$$\psi(X, Y; \nu, \mu, r) = \begin{bmatrix} \text{DL}(\nu; \mu) + r(X) \cdot \delta_{\text{DL}}(X; \nu, \mu) \cdot (Y - \mu(X)) \\ M(\nu; \mu) + r(X) \cdot \delta_M(X; \nu, \mu) \cdot (Y - \mu(X)) \end{bmatrix}$$
+<p>$$\psi(X, Y; \nu, \mu, r) = \begin{bmatrix} \text{DL}(\nu; \mu) + r(X) \cdot \delta_{\text{DL}}(X; \nu, \mu) \cdot (Y - \mu(X)) \\ M(\nu; \mu) + r(X) \cdot \delta_M(X; \nu, \mu) \cdot (Y - \mu(X)) \end{bmatrix}$$</p>
 
 - The error-correcting terms $r(X) \cdot \delta_{\text{DL}}(X; \nu, \mu) \cdot (Y - \mu(X))$ and $r(X) \cdot \delta_M(X; \nu, \mu) \cdot (Y - \mu(X))$ 
   are added to the "naive" base terms ($\text{DL}$ and $M$)
@@ -240,27 +239,25 @@ $$\psi(X, Y; \nu, \mu, r) = \begin{bmatrix} \text{DL}(\nu; \mu) + r(X) \cdot \de
 * The "naive" base terms, $\text{DL}(\nu; \mu)$ and $M(\nu; \mu)$, are highly sensitive to estimation errors in $\mu$.
 * The complex additive adjustments act as the orthogonalizing terms. They are specifically engineered so that their derivatives perfectly cancel out the derivatives of the naive terms.
 
-Here is the cleaned-up markdown formatting with proper LaTeX applied to all equations and variables:
-
 ### Error Correcting Term Definitions
 
 * Given a function $g$, define:
-$$\Delta g(X, Y; \nu, \mu) := g(X, Y) - E_{Q(\theta,\mu)}[g(X, Y) \vert X]$$
+<p>$$\Delta g(X, Y; \nu, \mu) := g(X, Y) - E_{Q(\theta,\mu)}[g(X, Y) \vert X]$$</p>
 
 
 * Applying this definition to $\eta$ and $\gamma$ (the sufficient statistic and moment condition transformation function), we define:
-$$\rho(X, Y; \nu, \mu) := \Delta\eta(X, Y; \nu, \mu)^{\otimes 2}\theta + \Delta\eta(X, Y; \nu, \mu) \otimes \Delta\gamma(X, Y; \nu, \mu)\lambda$$
+<p>$$\rho(X, Y; \nu, \mu) := \Delta\eta(X, Y; \nu, \mu)^{\otimes 2}\theta + \Delta\eta(X, Y; \nu, \mu) \otimes \Delta\gamma(X, Y; \nu, \mu)\lambda$$</p>
 
 
 * We also define a tilting function $w(X, Y; \nu, \mu)$ that captures how the conditional probabilities change under the exponential tilting. Here we exploit our binary assumption on $Y$:
-$$w(X, Y; \nu, \mu) = \frac{\exp(\theta^T \eta(X, Y))}{\mu(X) \cdot \exp(\theta^T (\eta(X, 1) - \eta(X, 0))) + \exp(\theta^T \eta(X, 0))}$$
+<p>$$w(X, Y; \nu, \mu) = \frac{\exp(\theta^T \eta(X, Y))}{\mu(X) \cdot \exp(\theta^T (\eta(X, 1) - \eta(X, 0))) + \exp(\theta^T \eta(X, 0))}$$</p>
 
 
 * Finally, the delta functions are defined as:
-$$\delta_{\text{DL}}(X; \nu, \mu) := (\rho(X, 1; \nu, \mu) - \rho(X, 0; \nu, \mu)) \cdot w(X, 1; \nu, \mu) \cdot w(X, 0; \nu, \mu)$$
+<p>$$\delta_{\text{DL}}(X; \nu, \mu) := (\rho(X, 1; \nu, \mu) - \rho(X, 0; \nu, \mu)) \cdot w(X, 1; \nu, \mu) \cdot w(X, 0; \nu, \mu)$$</p>
 
 
-$$\delta_M(X; \nu, \mu) := (\gamma(X, 1) - \gamma(X, 0)) \cdot w(X, 1; \nu, \mu) \cdot w(X, 0; \nu, \mu)$$
+<p>$$\delta_M(X; \nu, \mu) := (\gamma(X, 1) - \gamma(X, 0)) \cdot w(X, 1; \nu, \mu) \cdot w(X, 0; \nu, \mu)$$</p>
 
 ### Strong Orthogonality of Estimating Equations
 
@@ -278,7 +275,7 @@ This stronger property significantly simplifies the mathematical analysis of the
 
 A natural idea is to estimate the parameter by solving the empirical estimating equation,
 
-$$
+<p>$$
 \Psi_n(\nu)
 :=
 \frac{1}{n}
@@ -286,7 +283,7 @@ $$
 \psi(X_i, Y_i; \nu)
 =
 0.
-$$
+$$</p>
 
 This is the standard **Z-estimation** approach: replace the population estimating equation with its empirical counterpart and solve for the parameter.
 
@@ -294,9 +291,9 @@ Unfortunately, this approach does not work for our problem. The optimization pro
 
 Consequently, solving the empirical estimating equation alone may converge to a stationary point that is not the desired global solution. In other words, the solution to
 
-$$
+<p>$$
 \Psi_n(\nu) = 0
-$$
+$$</p>
 
 is not guaranteed to be a **consistent estimator** of the optimizer of Equation (9).
 
@@ -306,24 +303,24 @@ is not guaranteed to be a **consistent estimator** of the optimizer of Equation 
 - We improve this initial estimate by taking **one Newton step**.
 - Let $\dot{\Psi}_\nu$ denote the Jacobian of the estimating function $\psi$ with respect to $\nu$, and define its empirical counterpart by
 
-$$
+<p>$$
 \dot{\Psi}_n(\nu)
 :=
 \frac{1}{n}
 \sum_{i=1}^n
 \dot{\Psi}_\nu(X_i, Y_i; \nu).
-$$
+$$</p>
 
 - The one-step estimator $\hat{\nu}_n$ is obtained by solving the linearized estimating equation
 
-$$
+<p>$$
 \Psi_n(\tilde{\nu}_n)
 +
 \dot{\Psi}_n(\tilde{\nu}_n)
 (\nu-\tilde{\nu}_n)
 =
 0.
-$$
+$$</p>
 
 - The LHS is close to the original $\Psi_n(\nu)$ when $\nu$ is close to $\tilde{\nu}_n$.
 
