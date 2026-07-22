@@ -4,10 +4,15 @@ title: Hawaii
 permalink: /travel/hawaii/
 nav: false
 description: A look at my trip to Hawaii
+toc:
+  - name: Diamond Head
+  - name: Piko Kitchen + Bar
+  - name: Kalākaua Avenue
+  - name: Places I want to go
 ---
 
-# Diamond Head, 2024 Summer
-
+# Diamond Head
+2024 Summer
 {% include figure.html path="assets/img/travel/diamond-top-portrait.jpg" class="img-fluid rounded z-depth-1" caption="at the top" %}
 
 {% include video.html path="assets/video/travel/hawaii.mov" class="img-fluid rounded z-depth-1" controls=true autoplay=true loop=true muted=true caption="heading down from the top" %}
