@@ -31,7 +31,10 @@ paper_key: ho2020denoising
 - So we use neural net to approximate $q(x_0)$. We denote that approximation as $p_\theta(x_0)$ where $\theta$ denotes the neural net weight.
 - Again, we do not aim to write down $p_\theta(x_0)$ for given $x_0$. Instead we want a program that generates samples from $p_\theta(x_0)$.
 
-# Diffusion model is a latent variable model
+# Modeling 1: Reverse Process
+- Let's just forget the name reverse process. This is just all about modeling of the structure of the density function so that the estimation is tractable.
+
+
 - Diffusion models assumes that $p_\theta(x_0)$ can be written as a latent variable model of the form 
 
 $$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$
@@ -46,6 +49,19 @@ $$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$
   - $p(x_T) = \mathcal{N}(x_T; 0, I)$ (start from unconditional pure Gaussian noise)
   - $p_\theta(x_{t-1}|x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))$ ($t-1$ step latent variable is only determined by previous latent variable $x_t$ and timestep $t$. And it is Gaussian distribution)
 - Therefore, $p_\theta(x_{0:T}) := p(x_T) \prod_{t=1}^T p_\theta(x_{t-1}|x_t)$.
+- Our goal is to use neural network to learn functions $\mu_\theta$ and $\Sigma_\theta$.
+- After we learned that, the sample generating program works as:
+  - Generate a random vector from standard multivaraite normal
+  - sequentially draw Guassian random vectors based on previous latent variable sample and timestep.
+- We call the joint distribution $p_\theta(x_{0:T})$ as the *reverse process*.
+
+# Modeling 2: Forward process assumption
+- We add the second assumption on $p_\theta(x_{0:T})$.
+- Let us denote the true joint distribution as $q(x_{0:T})$. So $p_\theta(x_{0:T})$ is an approximation of $q(x_{0:T})$.
+- Since we can observe $x_0$, we can think of $q(x_{1:T}|x_0)$. This is a posterior distribution. This is just a transformation of the estimation target.
+- We assume that this posterior distribution is Guassian markov chain:
+$$q(x_{1:T}|x_0) := \prod_{t=1}^T q(x_t|x_{t-1}), \quad q(x_t|x_{t-1}) := \mathcal{N}(x_t; \sqrt{1 - \beta_t}x_{t-1}, \beta_t\mathbf{I})$$
+where $\beta_t$ is a variance schedule and we assume it is given. We will not learn it.
 
 # Main idea
 If we can incrementally add gaussian noise to obtain completely pure gaussian distribution, then reversely, we can start from pure gaussian distribution sample to recover the original data.
