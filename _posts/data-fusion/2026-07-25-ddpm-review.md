@@ -31,7 +31,7 @@ paper_key: ho2020denoising
 - So we use neural net to approximate $q(x_0)$. We denote that approximation as $p_\theta(x_0)$ where $\theta$ denotes the neural net weight.
 - Again, we do not aim to write down $p_\theta(x_0)$ for given $x_0$. Instead we want a program that generates samples from $p_\theta(x_0)$.
 
-# Diffusion model is latent variable model
+# Diffusion model is a latent variable model
 - Diffusion models assumes that $p_\theta(x_0)$ can be written as a latent variable model of the form 
 
 $$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$
