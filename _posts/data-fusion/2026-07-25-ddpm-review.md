@@ -37,7 +37,7 @@ paper_key: ho2020denoising
 
 - Diffusion models assumes that $p_\theta(x_0)$ can be written as a latent variable model of the form 
 
-$$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$
+<p>$$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$</p>
 
 - So our new task is, statistically:
 > We want to learn the joint distribution $p_\theta(x_{0:T})$ from just observing $x_0$.
@@ -57,44 +57,44 @@ $$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$
 
 # Modeling 2: Forward process assumption
 - We add the second assumption on $p_\theta(x_{0:T})$.
-- Let us denote the true joint distribution as $q(x_{0:T})$. So $p_\theta(x_{0:T})$ is an approximation of $q(x_{0:T})$.
-- Since we can observe $x_0$, we can think of $q(x_{1:T}|x_0)$. This is a posterior distribution. This is just a transformation of the estimation target.
-- We assume that this posterior distribution is Guassian markov chain:
-$$q(x_{1:T}|x_0) := \prod_{t=1}^T q(x_t|x_{t-1}), \quad q(x_t|x_{t-1}) := \mathcal{N}(x_t; \sqrt{1 - \beta_t}x_{t-1}, \beta_t\mathbf{I})$$
+- Because we define a parameterized generative model $p_\theta(x_{0:T})$, it possesses its own true posterior $p_\theta(x_{1:T}\vert{}x_0)$. 
+- However, integrating over high-dimensional continuous latent spaces to find this true posterior is mathematically intractable.
+- We introduce $q(x_{1:T}\vert{}x_0)$ as a tractable, pre-defined distribution (the forward process) to approximate the intractable true posterior. So this part is ASSUMPTION, or modeling. This structure is not learned from data. It came from the author's mind.
+
+<p>$$q(x_{1:T}|x_0) := \prod_{t=1}^T q(x_t|x_{t-1}), \quad q(x_t|x_{t-1}) := \mathcal{N}(x_t; \sqrt{1 - \beta_t}x_{t-1}, \beta_t\mathbf{I})$$</p>
 where $\beta_t$ is a variance schedule and we assume it is given. We will not learn it.
 
-# Main idea
-If we can incrementally add gaussian noise to obtain completely pure gaussian distribution, then reversely, we can start from pure gaussian distribution sample to recover the original data.
 
-This is possible because, if the added noise is gaussian, then for infinitesimally small time interval, reverse process is also gaussian distribution.
+# Training: KL divergence
+- We have samples from posterior, $q(x_{1:T}|x_0)$. Actually we have all samples in the intermediate steps.
+
+- Just as MLE maximizes sample mean of log likelihood, here we minimize sample mean of negative log likelihood.
+
+- The negative log likelihood is hard to compute, so we minimize its upper bound.
+
+- with some algbra, the loss function we minimze is
+<p>$$L = \mathbb{E}_q \left[ DKL(q(x_T |x_0) ‖ p(x_T )) + \sum_{t>1} DKL(q(x_{t-1}|x_t, x_0) ‖ p_\theta(x_{t-1}|x_t)) - \log p_\theta(x_0|x_1) \right]$$</p>
+
  
-# Introduction
-Denoising Diffusion Probabilistic Models (DDPM) introduced by Ho et al. present a class of latent variable models inspired by nonequilibrium thermodynamics. They demonstrated that diffusion models are capable of generating high-quality images that rival and sometimes surpass state-of-the-art Generative Adversarial Networks (GANs).
+- $\mathbb{E}_q$ means sample average from samples drawn from distributon $q$. the forward process.
 
-# The Forward Process
-The forward process, or diffusion process, is a Markov chain that gradually adds Gaussian noise to the data over $T$ timesteps. Given an initial data point $x_0 \sim q(x_0)$, the process defines a sequence of noisy variables $x_1, x_2, \dots, x_T$ according to a fixed variance schedule $\beta_1, \dots, \beta_T$:
+- It is the negative Evidence Lower Bound (ELBO). Let's evaluate the three components:
+  - $D_{KL}(q(x_T \vert{}x_0) \Vert{} p(x_T ))$: This term has no learnable parameters $\theta$. It is the distance between the final noisy data and a standard normal distribution. We assume $\beta_t$ is scheduled such that $q(x_T\vert{}x_0) \approx \mathcal{N}(0, I)$, making this term nearly zero. We ignore it during optimization.
+  - $-\log p_\theta(x_0\vert{}x_1)$: This is the reconstruction term. It is modeled as a discrete decoder in practice, but conceptually, it is just the final step of the reverse process.
+  - $\sum_{t>1} D_{KL}(q(x_{t-1}\vert{}x_t, x_0) \Vert{} p_\theta(x_{t-1}\vert{}x_t))$: This is the core of the diffusion model.
 
-$$q(x_t \mid x_{t-1}) = \mathcal{N}(x_t; \sqrt{1 - \beta_t} x_{t-1}, \beta_t \mathbf{I})$$
+## Gaussian assumption: KL divergence to simple ERM
+To minimize that summation of KL divergences. Notice that both distributions inside the KL divergence are Gaussian:$p_\theta(x_{t-1}\vert{}x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))$$q(x_{t-1}\vert{}x_t, x_0) = \mathcal{N}(x_{t-1}; \tilde{\mu}_t(x_t, x_0), \tilde{\beta}_t I)$
 
-As $t \to T$, the data distribution is completely destroyed, and $x_T$ approximates an isotropic Gaussian distribution.
+Because of the Markov property and properties of Gaussians, the forward process conditioned on $x_0$ has a beautifully tractable closed-form mean:<p>$$\tilde{\mu}_t(x_t, x_0) = \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \bar{\alpha}_t}x_0 + \frac{\sqrt{\alpha_t}(1 - \bar{\alpha}_{t-1})}{1 - \bar{\alpha}_t}x_t$$</p>(where $\alpha_t = 1 - \beta_t$ and $\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$)
 
-# The Reverse Process
-The goal of the generative model is to learn the reverse process, which is also modeled as a Markov chain with learned Gaussian transitions. Starting from $x_T \sim \mathcal{N}(0, \mathbf{I})$, the model denoises the variable step-by-step to recover a sample from the original data distribution:
+Since the KL divergence between two Gaussians with fixed variances is simply proportional to the $L_2$ distance between their means, minimizing the KL divergence is mathematically equivalent to solving the following least squares problem:
+<p>$$\arg\min_\theta \Vert{} \tilde{\mu}_t(x_t, x_0) - \mu_\theta(x_t, t) \Vert{}^2$$</p>
 
-$$p_\theta(x_{t-1} \mid x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))$$
-
-The neural network is tasked with predicting the mean $\mu_\theta$, or equivalently, the noise $\epsilon_\theta$ that was added to the data at timestep $t$.
-
-# Loss Function and Score Matching
-Training the model involves optimizing the variational lower bound (VLB) on the negative log-likelihood. However, the authors proposed a simplified objective that improves sample quality. Instead of predicting the mean directly, the network $\epsilon_\theta$ predicts the noise component:
-
-$$L_{\text{simple}}(\theta) = \mathbb{E}_{t, x_0, \epsilon} \left[ \| \epsilon - \epsilon_\theta(\sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon, t) \|^2 \right]$$
-
-This objective reveals a deep connection between diffusion models and denoising score matching with Langevin dynamics. The network $\epsilon_\theta$ essentially learns the score function $\nabla_x \log p_t(x)$ of the smoothed data distribution.
-
-# Results
-The DDPM model achieved remarkable success in unconditional image synthesis. On the CIFAR-10 dataset, it obtained an Inception score of 9.46 and a state-of-the-art Fréchet Inception Distance (FID) of 3.17. The model also generated high-quality samples on the 256x256 LSUN dataset, proving that diffusion models can produce results comparable to, and structurally superior to, ProgressiveGANs.
+Instead of predicting the mean directly, we can use the reparameterization trick. We know that $x_t$ is just a deterministic combination of $x_0$ and some pure noise $\epsilon \sim \mathcal{N}(0, I)$:<p>$$x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon$$</p>If we substitute $x_0$ out of the $\tilde{\mu}_t$ equation using the formula above, and we parameterize our neural network to predict the noise $\epsilon_\theta(x_t, t)$ rather than predicting the mean $\mu_\theta$, the complex statistical KL divergence collapses into a remarkably simple empirical risk minimization problem:<p>$$L_{simple}(\theta) = \mathbb{E}_{t, x_0, \epsilon} \left[ \Vert{} \epsilon - \epsilon_\theta(x_t, t) \Vert{}^2 \right]$$</p>
 
 
+# My understanding
+The names are forward and reverse. But the paper introduces reverse first, because reverse is the modeling of the density. forward is the modeling of training data generation.
 # References
 - https://velog.io/@js43o/Diffusion-Model-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-with-DDPM
