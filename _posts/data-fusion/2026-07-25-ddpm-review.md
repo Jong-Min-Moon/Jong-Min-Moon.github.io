@@ -21,6 +21,37 @@ bib_file: data-fusion
 paper_key: ho2020denoising
 ---
 
+# The task
+- We want to do nonparametric density estimation. 
+- We want to learn a density $q(x_0)$.
+- Rather than learning a closed form formulation of $q(x_0)$ for given $x_0$. We want a program that generates samples from $q(x_0)$. Having this program is equivalent to having the analytic form of $q(x_0)$.
+
+# Neural network
+- We will be nonparametric. We know that nonparametric methods are actually non nonparametric, they just use complex basis functions.
+- So we use neural net to approximate $q(x_0)$. We denote that approximation as $p_\theta(x_0)$ where $\theta$ denotes the neural net weight.
+- Again, we do not aim to write down $p_\theta(x_0)$ for given $x_0$. Instead we want a program that generates samples from $p_\theta(x_0)$.
+
+# Diffusion model is latent variable model
+- Diffusion models assumes that $p_\theta(x_0)$ can be written as a latent variable model of the form 
+
+$$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$
+
+- So our new task is, statistically:
+> We want to learn the joint distribution $p_\theta(x_{0:T})$ from just observing $x_0$.
+
+- From ML perspective, the task is:
+> We want to use neural net to write a program that draws samples from $p_\theta(x_{0:T})$.
+
+- To simplify the problem we assume Gaussian markov chain structure on $p_\theta(x_{0:T})$. That is:
+  - $p(x_T) = \mathcal{N}(x_T; 0, I)$ (start from unconditional pure Gaussian noise)
+  - $p_\theta(x_{t-1}|x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))$ ($t-1$ step latent variable is only determined by previous latent variable $x_t$ and timestep $t$. And it is Gaussian distribution)
+- Therefore, $p_\theta(x_{0:T}) := p(x_T) \prod_{t=1}^T p_\theta(x_{t-1}|x_t)$.
+
+# Main idea
+If we can incrementally add gaussian noise to obtain completely pure gaussian distribution, then reversely, we can start from pure gaussian distribution sample to recover the original data.
+
+This is possible because, if the added noise is gaussian, then for infinitesimally small time interval, reverse process is also gaussian distribution.
+ 
 # Introduction
 Denoising Diffusion Probabilistic Models (DDPM) introduced by Ho et al. present a class of latent variable models inspired by nonequilibrium thermodynamics. They demonstrated that diffusion models are capable of generating high-quality images that rival and sometimes surpass state-of-the-art Generative Adversarial Networks (GANs).
 
@@ -47,3 +78,7 @@ This objective reveals a deep connection between diffusion models and denoising 
 
 # Results
 The DDPM model achieved remarkable success in unconditional image synthesis. On the CIFAR-10 dataset, it obtained an Inception score of 9.46 and a state-of-the-art Fréchet Inception Distance (FID) of 3.17. The model also generated high-quality samples on the 256x256 LSUN dataset, proving that diffusion models can produce results comparable to, and structurally superior to, ProgressiveGANs.
+
+
+# References
+- https://velog.io/@js43o/Diffusion-Model-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-with-DDPM
