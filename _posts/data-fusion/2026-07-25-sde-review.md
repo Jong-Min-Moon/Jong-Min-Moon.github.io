@@ -20,6 +20,51 @@ bib_file: data-fusion
 paper_key: song_scorebased_2021
 ---
 
+
+# Score-Based Generative Models
+
+**One-Liner:** Knowing the score function is equivalent to knowing the probability density *up to a normalization constant*. Consequently, if we can estimate the score, we can generate samples from the underlying true distribution (subject to discretization error).
+
+## The Score Function
+
+* **Definition:** The "score" is defined as the gradient of the log-likelihood with respect to the data.
+* **Crucial Distinction:** Note that the gradient is taken with respect to the data vector $x$, not the model parameters $\theta$ (unlike the traditional Fisher score).
+* **Geometric Intuition:** The score function acts as a vector field mapping any data point $x$ to a gradient vector that points in the direction of the steepest increase in data likelihood:
+
+$$s(x) := \nabla_x \log p(x)$$
+
+
+
+**2. Continuous Dynamics: Langevin Diffusion**
+The theoretical foundation of sampling via scores relies on a continuous-time Stochastic Differential Equation (SDE) known as Langevin Diffusion:
+
+
+$$dx_t = \nabla_x \log p(x_t) dt + \sqrt{2} dW_t$$
+
+* **Components:** The drift term pulls the data toward high-density regions (using the score), while $W_t$ (standard Brownian motion) injects noise to ensure full exploration of the distribution.
+* **Exact Sampling:** Under mild regularity conditions (e.g., $p(x)$ is strictly log-concave and smooth), the continuous-time process $x_t$ has $p(x)$ as its exact stationary (invariant) distribution. Simulating this SDE as $t \to \infty$ yields exact samples from $p(x)$.
+
+**3. Practical Implementation: Langevin Monte Carlo (LMC)**
+Because we cannot simulate continuous time in practice, we use Langevin Monte Carlo, which is the numerical discretization (Euler-Maruyama method) of the Langevin Diffusion SDE:
+
+
+$$x_k := x_{k-1} + \alpha \nabla_x \log p(x_{k-1}) + \sqrt{2\alpha} u_k, \quad u_k \sim \mathcal{N}(0, I)$$
+
+* **Mechanism:** By sequentially shifting the data in the direction of the score ($\alpha \nabla_x \log p(x_{k-1})$) while simultaneously injecting scaled Gaussian noise ($\sqrt{2\alpha} u_k$), we traverse the space to generate highly plausible samples.
+* *Note: Because of the discrete step size $\alpha > 0$, this introduces a discretization bias, meaning we are sampling from an approximation of $p(x)$ unless Metropolis-Hastings corrections are applied.*
+
+**Conclusion**
+The paradigm of implementing a generative model by training a neural network to approximate this vector field $s(x)$, rather than directly modeling the scalar probability mass $p(x)$, is called a **Score-based Generative Model**.
+
+---
+
+Would you like to expand these notes to include how Score Matching (specifically Denoising Score Matching) is actually used to train the neural network to approximate $s(x)$?
+
+---
+
+**A quick statistical note on the translation:**
+Your text perfectly captures the intuition of **Langevin Dynamics**. In statistical physics and MCMC literature, the term $\alpha \nabla_x \log p(x_{k-1})$ pulls the sample toward the mode of the distribution (Gradient Ascent), while the injected noise $\sqrt{2\alpha} u_k$ prevents the sample from collapsing into a single point (point mass), ensuring it properly explores the full variance of the target distribution $p(x)$.
+
 # Introduction
 Score-Based Generative Modeling through Stochastic Differential Equations (Song et al., 2021) is a seminal paper that elegantly unifies two major classes of generative models: Denoising Diffusion Probabilistic Models (DDPMs) and Noise Conditioned Score Networks (NCSNs). By taking the limit as the number of discrete noise scales approaches infinity, the authors show that both methods are discretizations of a continuous-time Stochastic Differential Equation (SDE).
 

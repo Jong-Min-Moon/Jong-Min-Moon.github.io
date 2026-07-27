@@ -63,5 +63,31 @@ nav: false
         <img src="{{ 'assets/img/travel/michigan-moms-spaghetti-3-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/michigan-moms-spaghetti-3.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
     </div>
 </div>
+
+### Pegasus Taverna
+558 Monroe St, Detroit, MI 48226
+Greek restaurant
+First floor of Hollywood Casino Greektown
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/michigan-pegasus-taverna-1-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/michigan-pegasus-taverna-1.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/michigan-pegasus-taverna-2-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/michigan-pegasus-taverna-2.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/michigan-pegasus-taverna-3-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/michigan-pegasus-taverna-3.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/michigan-pegasus-taverna-4-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/michigan-pegasus-taverna-4.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/michigan-pegasus-taverna-5-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/michigan-pegasus-taverna-5.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+</div>
+
 ## DIA
 

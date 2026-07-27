@@ -166,10 +166,7 @@ $$</p>
 
 <p>$$\nabla_\theta (\text{KL}) = \mathbb{E}_Q[\eta] + (\nabla_\theta \mathbb{E}_Q[\eta]) \theta - \nabla_\theta A(X, \theta)$$</p>
 
-- Now it becomes evident why the paper assumes exponential tilting and sufficient statistic. **The derivative of the log-partition function is always the expected value of the sufficient statistic**. Therefore, $\nabla_\theta A(X, \theta) = \mathbb{E}_Q[\eta]$.
-
-- Because of this, $\mathbb{E}_Q[\eta]$ and $-\nabla_\theta A(X, \theta)$ cancel each other out perfectly! We are left with:
-
+- Now it becomes evident why the paper assumes exponential tilting and sufficient statistic. **The derivative of the log-partition function is always the expected value of the sufficient statistic**. Therefore, $\nabla_\theta A(X, \theta) = \mathbb{E}_Q[\eta]$. This cancels out the first and the third term, leaving us with:
 
 <p>$$\nabla_\theta (\text{KL}) = (\nabla_\theta \mathbb{E}_Q[\eta]) \theta$$</p>
 
