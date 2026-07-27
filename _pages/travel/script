@@ -1,1 +1,1 @@
-./populate_photos.py --state "kentucky" --heading "Galactic Fried Chicken" --photo-dir "/Users/jmmoon/Downloads/New Folder With Items"
+./populate_photos.py --state "north-carolina" --heading "JuJu" --photo-dir "/Users/jmmoon/Downloads/New Folder With Items"
