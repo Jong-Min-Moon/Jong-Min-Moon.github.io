@@ -3,6 +3,8 @@ layout: page
 title: Pennsylvania
 permalink: /travel/pennsylvania/
 nav: false
+favorite_photos:
+  - pennsylvania-frick-park-market-1
 ---
 
 # Pennsylvania

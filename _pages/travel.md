@@ -7,7 +7,7 @@ nav_order: 5
 description: A collection of my travel pictures.
 ---
 
-Welcome to my travel page! Here I will share pictures and stories from my travels across the United States. Click on any state to view photos taken there!
+ 
 
 <div class="favorite-photos-section mt-5 mb-5">
   <h3 class="mb-4">My Favorite Moments</h3>
