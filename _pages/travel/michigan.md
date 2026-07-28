@@ -3,6 +3,9 @@ layout: page
 title: Michigan
 permalink: /travel/michigan/
 nav: false
+favorite_photos:
+  - michigan-moms-spaghetti-1
+  - michigan-pegasus-taverna-2
 ---
 
 # Ann Arbor

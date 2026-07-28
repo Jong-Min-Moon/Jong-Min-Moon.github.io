@@ -9,7 +9,30 @@ description: A collection of my travel pictures.
 
 Welcome to my travel page! Here I will share pictures and stories from my travels across the United States. Click on any state to view photos taken there!
 
+<div class="favorite-photos-section mt-5 mb-5">
+  <h3 class="mb-4">My Favorite Moments</h3>
+  <div class="row">
+  {% for state_page in site.pages %}
+    {% if state_page.url contains '/travel/' and state_page.favorite_photos %}
+      {% for photo in state_page.favorite_photos %}
+        <div class="col-6 col-md-4 mb-4">
+          <a href="{{ state_page.url | relative_url }}" class="favorite-photo-link" title="{{ state_page.title }}">
+            <div class="favorite-photo-wrapper rounded z-depth-1">
+              <img src="{{ 'assets/img/travel/' | append: photo | append: '-thumb.jpg' | relative_url }}" alt="Favorite from {{ state_page.title }}" class="img-fluid w-100 h-100">
+              <div class="favorite-photo-overlay">
+                <span>{{ state_page.title }}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  </div>
+</div>
+
 <style>
+/* Existing Map Styles */
 .us-state-map {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -46,6 +69,39 @@ Welcome to my travel page! Here I will share pictures and stories from my travel
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     text-decoration: none;
 }
+
+/* Favorite Photos Styles */
+.favorite-photo-wrapper {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.favorite-photo-wrapper img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.favorite-photo-link:hover .favorite-photo-wrapper {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+.favorite-photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: white;
+    padding: 10px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+.favorite-photo-link:hover .favorite-photo-overlay {
+    opacity: 1;
+}
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 600px) {
     .us-state-map {

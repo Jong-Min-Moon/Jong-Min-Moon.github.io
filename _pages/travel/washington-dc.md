@@ -3,6 +3,8 @@ layout: page
 title: Washington D.C.
 permalink: /travel/washington-dc/
 nav: false
+favorite_photos:
+  - dc-king-street-oyster-bar-1
 ---
 
 ### King Street Oyster Bar

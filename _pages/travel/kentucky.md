@@ -3,6 +3,9 @@ layout: page
 title: Kentucky
 permalink: /travel/kentucky/
 nav: false
+favorite_photos:
+  - kentucky-galactic-fried-chicken-1
+  - kentucky-newport-8278
 ---
 
 # Louisville
