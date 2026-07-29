@@ -10,7 +10,7 @@ description: A collection of my travel pictures.
  
 
 <div class="favorite-photos-section mt-5 mb-5">
-  <h3 class="mb-4">My Favorite Moments</h3>
+  <h3 class="mb-4">Moments</h3>
   <div class="row">
   {% for state_page in site.pages %}
     {% if state_page.url contains '/travel/' and state_page.favorite_photos %}

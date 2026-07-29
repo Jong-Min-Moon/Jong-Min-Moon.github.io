@@ -4,7 +4,7 @@ title: Washington D.C.
 permalink: /travel/washington-dc/
 nav: false
 favorite_photos:
-  - dc-king-street-oyster-bar-1
+  - washington-dc-washington-monument-2
 ---
 
 ### King Street Oyster Bar
