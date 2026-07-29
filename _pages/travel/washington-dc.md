@@ -27,3 +27,27 @@ favorite_photos:
     </div>
 </div>
 
+### Washington Monument
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/washington-dc-washington-monument-1-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/washington-dc-washington-monument-1.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/washington-dc-washington-monument-2-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/washington-dc-washington-monument-2.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/washington-dc-washington-monument-3-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/washington-dc-washington-monument-3.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include video.html path="assets/video/travel/washington-dc-washington-monument-4.mov" class="img-fluid rounded z-depth-1" controls=true autoplay=true loop=true muted=true %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/washington-dc-washington-monument-5-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/washington-dc-washington-monument-5.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ 'assets/img/travel/washington-dc-washington-monument-6-thumb.jpg' | relative_url }}" data-zoom-src="{{ 'assets/img/travel/washington-dc-washington-monument-6.jpg' | relative_url }}" class="img-fluid rounded z-depth-1" data-zoomable>
+    </div>
+</div>
