@@ -27,36 +27,38 @@ paper_key: ho2020denoising
 
 # Neural network
 - We will be nonparametric. We know that nonparametric methods are actually   parametric, they just use complex basis functions.
-- So we use neural net to approximate $q(x_0)$. We denote that approximation as $p_\theta(x_0)$ where $\theta$ denotes the neural net weight.
-- Again, we do not aim to write down $p_\theta(x_0)$ for given $x_0$. Instead we want a program that generates samples from $p_\theta(\cdot)$.
+- So we use neural net to approximate $q(x_0)$. We denote that approximation as $p_{\theta}(x_0)$ where $\theta$ denotes the neural net weight.
+- Again, we do not aim to write down $p_{\theta}(x_0)$ for given $x_0$. Instead we want a program that generates samples from $p_{\theta}(\cdot)$.
 
-# Modeling 1: Reverse Process
-- For a moment, let's just forget the name \emph{reverse process}. This is just all about modeling of the structure of the density function so that the estimation is tractable.
+# Statistical Modeling: Reverse Process
+- For a moment, let's just forget the name *reverse process*. This is just all about modeling of the structure of the density function so that the estimation is tractable.
+
+- This structure is an assumption on the data generating process. Therefore this part is exactly the statistical modeling. After we learn the parameters of this model, we can generate the data.
 
 
-- Diffusion models assumes that $p_\theta(x_0)$ can be written as a latent variable model of the form 
+- Diffusion models assumes that $p_{\theta}(x_0)$ can be written as a latent variable model of the form 
 
-<p>$$p_\theta(x_0) := \int p_\theta(x_{0:T}) dx_{1:T}$$</p>
+<p>$$p_{\theta}(x_0) := \int p_{\theta}(x_{0:T}) dx_{1:T}$$</p>
 
 - So our new task is, statistically:
-> We want to learn the joint distribution $p_\theta(x_{0:T})$ from just observing $x_0$.
+> We want to learn the joint distribution $p_{\theta}(x_{0:T})$ from just observing $x_0$.
 
 - From ML perspective, the task is:
-> We want to use neural net to write a program that draws samples from $p_\theta(x_{0:T})$.
+> We want to use neural net to write a program that draws samples from $p_{\theta}(x_{0:T})$.
 
-- To simplify the problem, we assume a Gaussian Markov chain structure on $p_\theta(x_{0:T})$. That is:
+- To simplify the problem, we assume a Gaussian Markov chain structure on $p_{\theta}(x_{0:T})$. That is:
   - $p(x_T) = \mathcal{N}(x_T; 0, I)$ (start from unconditional pure Gaussian noise)
-  - $p_\theta(x_{t-1}|x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))$ (the $t-1$ step latent variable is only determined by the previous latent variable $x_t$ and timestep $t$, and it follows a Gaussian distribution)
-- Therefore, $p_\theta(x_{0:T}) := p(x_T) \prod_{t=1}^T p_\theta(x_{t-1}|x_t)$.
+  - $p_{\theta} (x_{t-1}\, | \, x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))$ (the $t-1$ step latent variable is only determined by the previous latent variable $x_t$ and timestep $t$, and it follows a Gaussian distribution)
+- Therefore, $p_{\theta}(x_{0:T}) := p(x_T) \prod_{t=1}^T p_{\theta}(x_{t-1}|x_t)$.
 - Our goal is to use a neural network to learn the functions $\mu_\theta$ and $\Sigma_\theta$.
 - After learning this, the sample generating program works as follows:
   - Generate a random vector from a standard multivariate normal distribution.
   - Sequentially draw Gaussian random vectors based on the previous latent variable sample and timestep.
-- We call the joint distribution $p_\theta(x_{0:T})$ the *reverse process*.
+- We call the joint distribution $p_{\theta}(x_{0:T})$ the *reverse process*.
 
 # Modeling 2: Forward process assumption
-- We add the second assumption on $p_\theta(x_{0:T})$.
-- Because we define a parameterized generative model $p_\theta(x_{0:T})$, it possesses its own true posterior $p_\theta(x_{1:T}\vert{}x_0)$. 
+- We add the second assumption on $p_{\theta}(x_{0:T})$.
+- Because we define a parameterized generative model $p_{\theta}(x_{0:T})$, it possesses its own true posterior $p_{\theta}(x_{1:T}\vert{}x_0)$. 
 - However, integrating over high-dimensional continuous latent spaces to find this true posterior is mathematically intractable.
 - We introduce $q(x_{1:T}\vert{}x_0)$ as a tractable, pre-defined distribution (the forward process) to approximate the intractable true posterior. So this part is ASSUMPTION, or modeling. This structure is not learned from data. It came from the author's mind.
 
@@ -70,19 +72,19 @@ where $\beta_t$ is a variance schedule and we assume it is given. We will not le
 - The negative log-likelihood is hard to compute, so we minimize its upper bound.
 - With some algebra, the loss function we minimize is:
 
-<p>\begin{equation}L = \mathbb{E}_q \left[ D_{KL}(q(x_T |x_0) \Vert p(x_T )) + \sum_{t>1} D_{KL}(q(x_{t-1}|x_t, x_0) \Vert p_\theta(x_{t-1}|x_t)) - \log p_\theta(x_0|x_1) \right]\end{equation}</p>
+<p>\begin{equation}L = \mathbb{E}_q \left[ D_{KL}(q(x_T |x_0) \Vert p(x_T )) + \sum_{t>1} D_{KL}(q(x_{t-1}|x_t, x_0) \Vert p_{\theta}(x_{t-1}|x_t)) - \log p_{\theta}(x_0|x_1) \right]\end{equation}</p>
  
 - $\mathbb{E}_q$ represents the sample average from samples drawn from distribution $q$, the forward process.
 - It is the negative Evidence Lower Bound (ELBO). Let's evaluate the three components:
   - $D_{KL}(q(x_T \vert x_0) \Vert p(x_T ))$: This term has no learnable parameters $\theta$. It is the distance between the final noisy data and a standard normal distribution. We assume $\beta_t$ is scheduled such that $q(x_T \vert x_0) \approx \mathcal{N}(0, I)$, making this term nearly zero. We ignore it during optimization.
-  - $-\log p_\theta(x_0 \vert x_1)$: This is the reconstruction term. It is modeled as a discrete decoder in practice, but conceptually, it is just the final step of the reverse process.
-  - $\sum_{t>1} D_{KL}(q(x_{t-1} \vert x_t, x_0) \Vert p_\theta(x_{t-1} \vert x_t))$: This is the core of the diffusion model.
+  - $-\log p_{\theta}(x_0 \vert x_1)$: This is the reconstruction term. It is modeled as a discrete decoder in practice, but conceptually, it is just the final step of the reverse process.
+  - $\sum_{t>1} D_{KL}(q(x_{t-1} \vert x_t, x_0) \Vert p_{\theta}(x_{t-1} \vert x_t))$: This is the core of the diffusion model.
 
 ## Gaussian Assumption: KL Divergence to Simple ERM
 
 To minimize that summation of KL divergences, notice that both distributions inside the KL divergence are Gaussian:
 
-<p>\begin{equation}p_\theta(x_{t-1} \vert x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))\end{equation}</p>
+<p>\begin{equation}p_{\theta}(x_{t-1} \vert x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))\end{equation}</p>
 
 <p>\begin{equation}q(x_{t-1} \vert x_t, x_0) = \mathcal{N}(x_{t-1}; \tilde{\mu}_t(x_t, x_0), \tilde{\beta}_t I)\end{equation}</p>
 
@@ -104,6 +106,45 @@ If we substitute $x_0$ out of the $\tilde{\mu}_t$ equation using the formula abo
 
 <p>\begin{equation}L_{simple}(\theta) = \mathbb{E}_{t, x_0, \epsilon} \left[ \Vert \epsilon - \epsilon_\theta(x_t, t) \Vert^2 \right]\end{equation}</p>
 
+# Training in Practice
+ - The *training data* is not simply a massive folder of pristine images, audio files, or molecular structures.
+ - While those clean, ground-truth samples ($x_0$) are the foundational source material, they aren't the actual data pairs fed into the neural network during optimization.
+
+If we look under the hood at the neural network itself, the training data is actually a dynamically generated set of **(input, target)** pairs created from that original clean data and pure random noise.
+
+Let's break down exactly what the network "sees" and learns from during a single training step.
+
+### The Input: What the Network Looks At
+
+Unlike a standard image classifier that looks at a clean image, a diffusion model's core network takes in two distinct pieces of information during a forward pass:
+
+1. **The Noisy Data ($x_t$):** This is the corrupted version of the original data.
+2. **The Timestep ($t$):** A scalar value telling the network *how corrupted* the data is (e.g., step 450 out of 1000). The network absolutely needs this context. Pulling noise out of a slightly blurry image requires a completely different mathematical transformation than pulling noise out of pure static.
+
+### The Target: What the Network Tries to Predict
+
+In the simplified empirical risk minimization framework, the network isn't actually trying to predict the original clean image. Instead, its target is:
+
+* **The Actual Noise ($\epsilon$):** The exact, pure Gaussian noise matrix that was added to the clean data to create $x_t$.
+
+### Building the Dataset on the Fly
+
+One of the most elegant aspects of training a diffusion model is that you don't pre-compute and save terabytes of noisy intermediate images. Instead, the training loop generates the neural network's training pairs instantly in memory during every batch.
+
+Here is the step-by-step anatomy of how this data is generated in a training iteration:
+
+1. **Sample the Ground Truth:** Draw a clean, real data point ($x_0$) from your original dataset.
+2. **Select a Timestep:** Randomly pick a timestep $t$ from a uniform distribution (e.g., $t \in [1, T]$).
+3. **Generate the Target:** Sample pure random noise ($\epsilon$) from a standard normal distribution. This will be the ground truth for our loss function.
+4. **Create the Input:** Mathematically mix $x_0$ and $\epsilon$ together using the closed-form forward process formula. Because of the properties of Gaussians, we don't have to simulate every step; we can jump directly to step $t$:
+5. **Feed the Network:** Pass the newly minted noisy data ($x_t$) and the timestep ($t$) into the neural network.
+6. **Calculate the Loss:** The network outputs its prediction of the noise ($\epsilon_\theta$). The loss is simply the Mean Squared Error between the network's prediction and the actual noise ($\epsilon$) drawn in step 3.
+
+### The Infinite Stream
+
+By shifting our perspective to the neural network's specific inputs and outputs, it becomes clear that the original dataset is merely a seed. The actual dataset being pushed through the optimizer is an infinite, constantly generated stream of `(noisy data, timestep) -> actual noise` mappings.
+
+Because the noise and timesteps are sampled randomly, every time the model encounters the same underlying image $x_0$, it sees it corrupted by a completely different noise pattern at a different severity level. This dynamic generation is what prevents severe overfitting and allows the model to robustly learn the full reverse trajectory of generation.
 
 # My understanding
 The names are forward and reverse. But the paper introduces reverse first, because reverse is the modeling of the density. forward is the modeling of training data generation.
