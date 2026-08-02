@@ -108,13 +108,11 @@ If we substitute $x_0$ out of the $\tilde{\mu}_t$ equation using the formula abo
 
 # Training in Practice
  - The *training data* is not simply a massive folder of pristine images, audio files, or molecular structures.
- - While those clean, ground-truth samples ($x_0$) are the foundational source material, they aren't the actual data pairs fed into the neural network during optimization.
+ - Those clean, ground-truth samples ($x_0$) are the foundational source material. However, they aren't the actual data pairs fed into the neural net training.
+- Actaully, we create the training data on the fly: pairs of $(x_t, \epsilon)$ created from that original clean data and pure random noise.
 
-If we look under the hood at the neural network itself, the training data is actually a dynamically generated set of **(input, target)** pairs created from that original clean data and pure random noise.
-
-Let's break down exactly what the network "sees" and learns from during a single training step.
-
-### The Input: What the Network Looks At
+ 
+### What the Pytorch Looks At
 
 Unlike a standard image classifier that looks at a clean image, a diffusion model's core network takes in two distinct pieces of information during a forward pass:
 
@@ -122,8 +120,7 @@ Unlike a standard image classifier that looks at a clean image, a diffusion mode
 2. **The Timestep ($t$):** A scalar value telling the network *how corrupted* the data is (e.g., step 450 out of 1000). The network absolutely needs this context. Pulling noise out of a slightly blurry image requires a completely different mathematical transformation than pulling noise out of pure static.
 
 ### The Target: What the Network Tries to Predict
-
-In the simplified empirical risk minimization framework, the network isn't actually trying to predict the original clean image. Instead, its target is:
+The math in this paper shows that the target label is:
 
 * **The Actual Noise ($\epsilon$):** The exact, pure Gaussian noise matrix that was added to the clean data to create $x_t$.
 
