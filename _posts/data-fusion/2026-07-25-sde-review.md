@@ -21,74 +21,60 @@ paper_key: song_scorebased_2021
 ---
 
 
-# Score-Based Generative Models
+# The task
 
-**One-Liner:** Knowing the score function is equivalent to knowing the probability density *up to a normalization constant*. Consequently, if we can estimate the score, we can generate samples from the underlying true distribution (subject to discretization error).
+* Nonparametric conditional density estimation: we want to learn a conditional density $P(X_0 = x \vert{} y)$. The variable $y$ is our condition (e.g., a class label, or text embedding). A very traditional task.
+* Rather than learning a closed-form formulation of $P(x\vert{}y)$ for a given $x$ and $y$, we want a program that generates samples from $P(\cdot \vert{} y)$. Having this program is equivalent to having the analytic form of the conditional density.
 
-## The Score Function
+# Statistical Modeling: Forward Process
 
-* **Definition:** The "score" is defined as the gradient of the log-likelihood with respect to the data.
-* **Crucial Distinction:** Note that the gradient is taken with respect to the data vector $x$, not the model parameters $\theta$ (unlike the traditional Fisher score).
-* **Geometric Intuition:** The score function acts as a vector field mapping any data point $x$ to a gradient vector that points in the direction of the steepest increase in data likelihood:
+* In standard diffusion models, we used discrete Markov chains. Here, we generalize the data generating process to continuous time using Stochastic Differential Equations (SDEs).
+* This structure is an assumption on the forward data corruption process. We consider adding noise progressively to $X_0$, while leaving the condition $y$ untouched.
+* This corruption is described by a forward Ornstein–Uhlenbeck (OU) process:
 
-$$s(x) := \nabla_x \log p(x)$$
+* Here, $W_t$ is a standard Wiener process.
+* In the infinite-time limit ($t \to \infty$), $X_\infty$ converges to a standard Gaussian distribution $\mathcal{N}(0, I)$, completely wiping out the information from both $x$ and $y$.
+* At any finite time $t$, the transition kernel from $x_0$ to $x_t$ is Gaussian, denoted as $\phi_t(x'\vert{}x_0)$. Its score (the gradient of the log density) has a known closed form: $\nabla_{x'} \log \phi_t(x'\vert{}x_0) = -(x' - \alpha_t x_0)/\sigma_t^2$, where $\alpha_t = e^{-t/2}$ and $\sigma_t^2 = 1 - e^{-t}$.
+
+# Statistical Modeling: Reverse Process
+
+* Just like the discrete case, to generate new samples we must reverse time. By stochastic calculus, the reverse of the forward OU process is another SDE:
+
+* We use the arrow on $\overleftarrow{X}$ and $\overleftarrow{W}$ to emphasize that time is flowing backward from a large terminal time $T$ down to $0$.
+* Look closely at the drift term in the brackets. The only unknown piece in this entire differential equation is the **conditional score function**: $\nabla \log p_{T-t}(X\vert{}y)$.
+* So our new task is, statistically:
+
+> We want to estimate the conditional score function $\nabla \log p_t(x\vert{}y)$ from our data. If we have this, we can solve the SDE backwards to generate samples.
+
+# Neural network & Classifier-free guidance
+
+* We will use a neural network to approximate this conditional score. We denote that estimator as $\hat{s}(x, y, t)$.
+* However, the current state-of-the-art approach introduces **Classifier-Free Guidance (CFG)**.
+* CFG suggests that instead of *just* learning the conditional score, we should simultaneously learn the *unconditional* score. We define two theoretical estimators:
+* $s_1(x, y, t)$ to estimate the conditional score $\nabla \log p_t(x\vert{}y)$
+* $s_2(x, t)$ to estimate the unconditional score $\nabla \log p_t(x)$
 
 
-
-**2. Continuous Dynamics: Langevin Diffusion**
-The theoretical foundation of sampling via scores relies on a continuous-time Stochastic Differential Equation (SDE) known as Langevin Diffusion:
-
-
-$$dx_t = \nabla_x \log p(x_t) dt + \sqrt{2} dW_t$$
-
-* **Components:** The drift term pulls the data toward high-density regions (using the score), while $W_t$ (standard Brownian motion) injects noise to ensure full exploration of the distribution.
-* **Exact Sampling:** Under mild regularity conditions (e.g., $p(x)$ is strictly log-concave and smooth), the continuous-time process $x_t$ has $p(x)$ as its exact stationary (invariant) distribution. Simulating this SDE as $t \to \infty$ yields exact samples from $p(x)$.
-
-**3. Practical Implementation: Langevin Monte Carlo (LMC)**
-Because we cannot simulate continuous time in practice, we use Langevin Monte Carlo, which is the numerical discretization (Euler-Maruyama method) of the Langevin Diffusion SDE:
+* To unify this into a single neural network architecture, we introduce a mask signal $\tau \in \{\emptyset, \text{id}\}$.
+* $\emptyset$ means we drop the guidance $y$.
+* $\text{id}$ means we keep the guidance $y$.
 
 
-$$x_k := x_{k-1} + \alpha \nabla_x \log p(x_{k-1}) + \sqrt{2\alpha} u_k, \quad u_k \sim \mathcal{N}(0, I)$$
+* Now, our neural network is a unified tri-variate function $s(x, \tau y, t)$, where it acts as $s_1$ when the mask is $\text{id}$, and acts as $s_2$ when the mask is $\emptyset$.
 
-* **Mechanism:** By sequentially shifting the data in the direction of the score ($\alpha \nabla_x \log p(x_{k-1})$) while simultaneously injecting scaled Gaussian noise ($\sqrt{2\alpha} u_k$), we traverse the space to generate highly plausible samples.
-* *Note: Because of the discrete step size $\alpha > 0$, this introduces a discretization bias, meaning we are sampling from an approximation of $p(x)$ unless Metropolis-Hastings corrections are applied.*
+# Training in Practice
 
-**Conclusion**
-The paradigm of implementing a generative model by training a neural network to approximate this vector field $s(x)$, rather than directly modeling the scalar probability mass $p(x)$, is called a **Score-based Generative Model**.
+* The true score $\nabla \log p_t(x\vert{}y)$ is intractable, but thanks to score matching theory, minimizing the distance to the true score is mathematically equivalent to minimizing the distance to the score of the forward transition kernel $\nabla_{x'} \log \phi_t(x'\vert{}x_0)$, which we know exactly!
+* During training, we randomly mask out the condition $y$. For simplicity, assume a uniform prior: $P(\tau = \emptyset) = P(\tau = \text{id}) = 0.5$.
+* We integrate over time from an early-stopping time $t_0$ (to prevent the score from blowing up near $t=0$) to $T$. The unified population risk is:
 
----
+* In practice, we don't have the population distribution; we have an i.i.d. dataset of size $n$, $\{(x_i, y_i)\}_{i=1}^n$.
+* For a single data point, the loss function $\ell(x, y; s)$ evaluates the expected score matching error across timesteps and mask signals:
 
-Would you like to expand these notes to include how Score Matching (specifically Denoising Score Matching) is actually used to train the neural network to approximate $s(x)$?
+* Therefore, the Empirical Risk Minimization (ERM) problem we actually feed into our PyTorch optimizer is:
 
----
+# My understanding
 
-**A quick statistical note on the translation:**
-Your text perfectly captures the intuition of **Langevin Dynamics**. In statistical physics and MCMC literature, the term $\alpha \nabla_x \log p(x_{k-1})$ pulls the sample toward the mode of the distribution (Gradient Ascent), while the injected noise $\sqrt{2\alpha} u_k$ prevents the sample from collapsing into a single point (point mass), ensuring it properly explores the full variance of the target distribution $p(x)$.
+The discrete-time formulation frames diffusion as "predicting the noise," while the continuous-time SDE formulation frames it as "score matching." Mathematically, they are sides of the same coin, but the SDE viewpoint makes the transition to conditional generation highly elegant.
 
-# Introduction
-Score-Based Generative Modeling through Stochastic Differential Equations (Song et al., 2021) is a seminal paper that elegantly unifies two major classes of generative models: Denoising Diffusion Probabilistic Models (DDPMs) and Noise Conditioned Score Networks (NCSNs). By taking the limit as the number of discrete noise scales approaches infinity, the authors show that both methods are discretizations of a continuous-time Stochastic Differential Equation (SDE).
-
-# Forward SDE
-In the continuous-time framework, the discrete sequence of noisy variables $x_t$ is replaced by a continuous stochastic process $\{x(t)\}_{t \in [0, T]}$. This process is described by an Itô SDE:
-
-<p>$$dx = f(x, t)dt + g(t)dw$$</p>
-
-- $f(x, t)$ is the drift coefficient.
-- $g(t)$ is the diffusion coefficient.
-- $w$ is standard Brownian motion.
-
-By carefully choosing $f$ and $g$, this SDE slowly perturbs the data distribution $p_0(x)$ at $t=0$ into a tractable prior distribution $p_T(x)$ at $t=T$ (e.g., standard Gaussian).
-
-# Reverse SDE
-The magic of this formulation lies in Anderson's theorem, which states that any SDE has a corresponding reverse-time SDE. Starting from samples in the prior distribution $x(T) \sim p_T(x)$, we can reverse the diffusion process to generate data $x(0) \sim p_0(x)$ by simulating:
-
-<p>$$dx = [f(x, t) - g(t)^2 \nabla_x \log p_t(x)]dt + g(t)d\bar{w}$$</p>
-
-Here, $\bar{w}$ is a reverse-time Brownian motion. The critical term is the score function $\nabla_x \log p_t(x)$. We parameterize a neural network $s_\theta(x, t)$ to approximate this score using a continuous-time score matching objective. 
-
-# Probability Flow ODE
-An astonishing theoretical result of this paper is that for any SDE describing a diffusion process, there exists a deterministic Ordinary Differential Equation (ODE) whose trajectories share the exact same marginal probability densities $p_t(x)$ at every time $t$:
-
-<p>$$dx = \left[ f(x, t) - \frac{1}{2}g(t)^2 \nabla_x \log p_t(x) \right] dt$$</p>
-
-This is known as the Probability Flow ODE. This ODE enables exact likelihood computation using the instantaneous change of variables formula, bridging the gap between diffusion models and continuous normalizing flows!
+Classifier-free guidance essentially acts as a structured data augmentation trick at the architecture level. By randomly zeroing out $y$ during the creation of our on-the-fly training batches, a single neural network is forced to learn both the conditional density and the marginal density simultaneously. At inference time, this allows us to extrapolate between the unconditional and conditional score predictions, pushing the SDE generation stronger in the direction of $y$ without ever needing a separate classifier model.
