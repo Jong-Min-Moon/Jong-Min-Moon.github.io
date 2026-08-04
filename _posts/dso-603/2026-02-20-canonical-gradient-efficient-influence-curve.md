@@ -83,9 +83,9 @@ An asymptotically linear estimator with influence curve equal to the efficient i
   *   The specific value of $\delta$ is not critical. We are only interested in the behavior of the submodel in the immediate neighborhood of $\epsilon=0$.
   *   Defining $h$ itself is a bit flexible. Furthermore, after $P$ and $h$ are fixed, the form of $P^h_{\epsilon}$ is also flexible. Not necessarily $P+ \epsilon h$. We are allowed to invent any $P_\epsilon$ we want, as long as it passes through the true model $P$ at $\epsilon=0$ and stays on the path $h$. 
 
-- We can think of the submodel $P_\epsilon^h$ as constructed by a **curve-drawing machine** 
+- We can think of the submodel $P_\epsilon^h$ as constructed by a **curve-drawing machine**. 
   *   **Input:** We feed it a "drawing parameter" $h$, which determines the style or direction of the curve.
-  *   **Action:** As we vary $\epsilon$, the machine draws a series of dots (probability distributions) inside the model space.
+  *   **Action:** As we vary $\epsilon$, the machine draws a series of dots (probability distributions) inside the model space. In other words, $\epsilon$ is a slider. It is a distance.
   *   **Output:** The collection of these dots forms the curve $\mathcal{M}_h(P)$. By construction, every dot on this curve is a valid probability distribution passing through $P$ at $\epsilon=0$.
 
 ## A special direction: score $S$, given $h$
@@ -97,7 +97,18 @@ S_h(O)=\left . \frac{d}{d\epsilon}\log dP_{\epsilon}^h/dP(O)\right |_{\epsilon=0
 \end{equation*}
 </p>
 
-- Notice that the score is defined as usual. We take the log of the density that is defined with respect to $$P$$ itself. In other words, you choose the path where all the probability distributions are of the same nature as $$P$$ itself so that you can define $$\frac{dP_{\epsilon}}{dP}$$. Then we have a collection of densities because $$\frac{dP_{\epsilon}}{dP} = p_{\epsilon}^h$$ so we have that $$S_h(O)=\frac{d}{d\epsilon}\log p_{\epsilon}^h |_{\epsilon=0}$$.
+- The term $\frac{dP_{\epsilon}^h}{dP}$ (which your text simplifies to $p_{\epsilon}^h$) is a likelihood ratio. 
+  - For any given data point $O$, this ratio asks: "How much more (or less) likely is it to observe this exact data point under the new, nudged distribution compared to the original baseline distribution?"
+  - Or we can view this as taking the log of the density that is defined with respect to $$P$$ itself.
+- The derivative $\frac{d}{d\epsilon}$ evaluated exactly at the starting point ($\epsilon = 0$) measures the instantaneous rate of change.
+
+- Ultimately, the score $S_h(O)$ measures sensitivity. 
+- It tells you exactly how the probability of observing your specific data point $O$ reacts when you start bending the underlying statistical distribution in direction $h$.
+  - If the score is large and positive, it means that nudging the distribution in direction $h$ rapidly makes the data point $O$ more likely to occur.
+  - If the score is large and negative, moving in direction $h$ makes $O$ less likely.
+  - If the score is zero, the likelihood of seeing $O$ is completely unaffected by tiny shifts in that specific direction.
+
+ 
 
 ### Tangent space and Hilbert space
 
