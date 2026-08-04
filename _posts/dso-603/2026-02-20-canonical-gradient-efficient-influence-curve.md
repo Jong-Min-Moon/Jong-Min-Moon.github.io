@@ -188,56 +188,65 @@ with inner product defined as the covariance (since they are centered):
 </p>
 
 - The chain rule implies that we can separate the geometry of the model from the target parameter. 
-- We can pre-compute the "curve part" (the Score $$S_h$$) purely based on the submodel.
+- We can pre-compute the "curve part" (the Score $S_h$) purely based on the submodel.
 - When we combine it with the Gradient via the inner product, we recover the pathwise derivative we need to study efficiency.
 
+## Pathwise Derivative as a Linear Operator
 - The pathwise derivative is defined as: 
 
-$$
+<p>
+\begin{equation*}
 d\Psi(P)(S_h)=\left . \frac{d}{d\epsilon}\Psi(P_{\epsilon}^h)\right |_{\epsilon =0}
-$$
+\end{equation*}
+</p>
 
-*   This is linear operator in its score $$S_h$$. 
-*   Thus, $$d\Psi(P):L^2_0(P)\rightarrow\mathbb{R}^d$$ is a real valued linear operator on a Hilbert space $$L^2_0(P)$$.
+- This is linear operator in its score $S_h$. 
+- Thus, $d\Psi(P):L^2_0(P)\rightarrow\mathbb{R}^d$ is a real valued linear operator on a Hilbert space $L^2_0(P)$.
 
 ### Pathwise differentiability and gradient
 
-*   $$\Psi:\mathcal{M}\rightarrow\mathbb{R}^d$$ is pathwise differentiable at $$P$$ if its pathwise derivative is a **bounded** linear operator. 
-*   By the Riesz-representation theorem, then $$d\Psi(P):L^2_0(P)\rightarrow\mathbb{R}^d$$ can be represented as an inner product of gradient with score:
+- $\Psi:\mathcal{M}\rightarrow\mathbb{R}^d$ is pathwise differentiable at $P$ if its pathwise derivative is a **bounded** linear operator. 
+- By the Riesz-representation theorem, then $d\Psi(P):L^2_0(P)\rightarrow\mathbb{R}^d$ can be represented as an inner product of gradient with score:
 
-$$
+<p>
+\begin{equation*}
 d\Psi(P)(S_h)=E_P D(P)(O)S_h(O)= \langle D(P),S_h\rangle_P 
-$$
+\end{equation*}
+</p>
 
-*   $$D(P)$$ is called a gradient of the pathwise derivative. 
+- $D(P)$ is called a gradient of the pathwise derivative. 
 
 ## Class of gradients
 
 *   A gradient is not necessarily unique.
-*   Let $$T(P)^{\perp}=\{S\in L^2_0(P):P\perp T(P)\}$$ be orthogonal complement of $$T(P)$$.
-*   If $$D(P)$$ is a gradient, then $$D(P)+S$$ with $$S\in T(P)^{\perp}$$ is also a gradient.
+*   Let $T(P)^{\perp}=\{S\in L^2_0(P):P\perp T(P)\}$ be orthogonal complement of $T(P)$.
+*   If $D(P)$ is a gradient, then $D(P)+S$ with $S\in T(P)^{\perp}$ is also a gradient.
 
 ## Canonical gradient is projection of gradient on tangent space
 
-*   There is one unique gradient $$D^*(P)\in T(P)$$ in the tangent space. 
-*   This is called the canonical gradient.
-*   The set of all gradients is $$D^*(P)+S$$ with $$S\in T(P)^{\perp}$$.
-*   If $$D$$ is gradient, then canonical gradient $$D^*(P)$$ is the projection of $$D(P)$$ onto tangent space.
+- There is one unique gradient $D^*(P)\in T(P)$ in the tangent space. 
+- This is called the canonical gradient.
+- The set of all gradients is $D^*(P)+S$ with $S\in T(P)^{\perp}$.
+- If $D$ is gradient, then canonical gradient $D^*(P)$ is the projection of $D(P)$ onto tangent space.
 
 ### Example
 
-*   $$O=T$$, $$\mathcal{M}$$ nonparametric model, $$\Psi(P)=P(T>5)$$.
-*   $$dP_{\epsilon}(T) =(1+\epsilon S(T))dP(T)$$, $$S(T)$$ is score.
-*   
-$$
+- $O=T$, $\mathcal{M}$ nonparametric model, $\Psi(P)=P(T>5)$.
+- $dP_{\epsilon}(T) =(1+\epsilon S(T))dP(T)$, $S(T)$ is score.
+- 
+<p>
+\begin{equation*}
 \left . \frac{d}{d\epsilon}\Psi(P_{\epsilon}^h)\right |_{\epsilon =0} =E_P D(P)(T)S_h(T)
-$$
+\end{equation*}
+</p>
 
 where gradient
 
-$$
+<p>
+\begin{equation*}
 D(P)(T)=I(T>5)-\Psi(P)
-$$
+\end{equation*}
+</p>
 
 ### Nonparametric model has only one gradient
 
@@ -250,9 +259,11 @@ $$T(P)=L_0^2(P)$$ so the orthogonal complement of the tangent space is empty mea
 *   First find a gradient $$D(P)$$ by computing the pathwise derivative for each path $$=E_P[D(P)(O)S(O)]$$.
 *   The canonical gradient equals the projection of $$D(P)$$ onto the tangent space $$T(P)$$:
 
-$$
+<p>
+\begin{equation*}
 D^*(P)=\Pi(D(P)\mid T(P))
-$$
+\end{equation*}
+</p>
 
 
 
@@ -273,38 +284,69 @@ We **define** $$P_\epsilon^h$$ so that $$dP_{\epsilon}(o)=(1+\epsilon h(o)) dP(o
 *   In semi-parametric theory, we are allowed to invent any path $$P_\epsilon$$ we want, as long as it passes through the true model $$P$$ at $$\epsilon=0$$. There is no single "correct" way to draw a line through a probability distribution.
 *   Submodel check 1: density integration to 1
 
-$$
+<p>
+\begin{equation*}
 \int dP_\epsilon(o) = \int (1 + \epsilon h(o)) dP(o)   = \underbrace{\int 1 \, dP(o)}_{=1} + \epsilon \underbrace{\int h(o) \, dP(o)}_{= E_P[h(O)] \text{ should be 0}}
-$$
+\end{equation*}
+</p>
 
 Intuition: To add probability mass to one area (where $$h > 0$$), we must steal it from another area (where $$h < 0$$) to keep the total mass constant.
 
 *   Submodel check 2: nonnegativity. Let's think of a worst case scenario: at some observation $$o$$, $$h(o)$$ takes its most negative possible value; $$h(o) = -\|h\|_\infty$$. Then the scaling factor becomes $$1 + \epsilon (-\|h\|_\infty)$$. We need this factor to stay non-negative:
     
-$$
+<p>
+\begin{equation*}
 1 - \epsilon \|h\|_\infty \ge 0 \iff 1 \ge \epsilon \|h\|_\infty \iff \epsilon \le \frac{1}{\|h\|_\infty}
-$$
+\end{equation*}
+</p>
 
 Therefore, if we restrict $$\epsilon$$ to be smaller than $$\delta = 1/\|h\|_\infty$$, i.e.  $$\epsilon\in (-\delta,\delta)$$ with $$\delta=1/\|h\|_{\infty}$$, this is a submodel $$\mathcal{M}_h(P)$$.
 
 **Score.**
 This construction perfectly yields the score $$h$$. By the construction $$dP_{\epsilon} = (1+\epsilon h) dP$$:
 
-$$
+<p>
+\begin{equation*}
 S(O) = \frac{d}{d\epsilon} \log \big( \frac{(1+\epsilon h(O)) dP(O)}{dP(O)} \big) \bigg|_{\epsilon=0}
-$$
+\end{equation*}
+</p>
 
 The derivative of $$\log(u)$$ is $$u'/u$$:
 
-$$
+<p>
+\begin{equation*}
 S(O) = \frac{h(O)}{1+\epsilon h(O)} \bigg|_{\epsilon=0}
-$$
+\end{equation*}
+</p>
+
+**Score.**
+This construction perfectly yields the score $$h$$. By the construction $$dP_{\epsilon} = (1+\epsilon h) dP$$:
+
+<p>
+\begin{equation*}
+S(O) = \frac{d}{d\epsilon} \log \big( \frac{(1+\epsilon h(O)) dP(O)}{dP(O)} \big) \bigg|_{\epsilon=0}
+\end{equation*}
+</p>
+
+The derivative of $$\log(u)$$ is $$u'/u$$:
+
+<p>
+\begin{equation*}
+S(O) = \frac{h(O)}{1+\epsilon h(O)} \bigg|_{\epsilon=0}
+\end{equation*}
+</p>
 
 Set $$\epsilon=0$$:
 
-$$
+<p>
+\begin{equation*}
 S(O) = \frac{h(O)}{1} = h(O)
-$$
+\end{equation*}
+</p>
 
 **Scores.**
-$$\mathcal{S}$$ is all $$h\in L^2_0(P)$$ with $$\|h\|_{\infty}<\infty$$.
+<p>
+\begin{equation*}
+\mathcal{S} = \{h\in L^2_0(P) : \|h\|_{\infty}<\infty\}.
+\end{equation*}
+</p>
