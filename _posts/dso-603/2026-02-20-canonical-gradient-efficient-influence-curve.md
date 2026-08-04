@@ -113,7 +113,7 @@ S_h(O)=\left . \frac{d}{d\epsilon}\log dP_{\epsilon}^h/dP(O)\right |_{\epsilon=0
  
 
 # Tangent space and Hilbert space
-- Summary: class of paths $h$ is not our choice. It is defined by true distribution $P$.
+ 
 ## Class of paths, Class of Scores (the Tangent Set)
 - Let's fix the submodel formula. Then for each $h$, we have one score random variable $S_h(O)$.
 - We consider a collection of $h$: a set of paths $\mathcal{H}$.
@@ -178,11 +178,13 @@ with inner product defined as the covariance (since they are centered):
 
 # Pathwise derivative
 
-
-
 - The chain rule implies that we can separate the geometry of the model from the target parameter. 
 - We can pre-compute the "curve part" (the Score $S_h$) purely based on the submodel.
 - When we combine it with the Gradient via the inner product, we recover the pathwise derivative we need to study efficiency.
+
+
+* The **Riesz representer** is the Hilbert space element (a random variable and a transformation of $O$) that represents the pathwise derivative operator.
+* The **canonical gradient** (or **efficient influence function**) is the Riesz representer projected onto the tangent space. It is also a random variable and a transformation of $O$.
 
 ## Pathwise Derivative as a Linear Operator
 - The pathwise derivative is defined as: 
