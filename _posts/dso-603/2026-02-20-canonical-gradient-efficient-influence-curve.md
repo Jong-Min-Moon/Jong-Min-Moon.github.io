@@ -27,70 +27,61 @@ toc:
   - name: Canonical gradient is projection of gradient on tangent space
 ---
 
-## Introduction
+# Introduction
 
 An asymptotically linear estimator with influence curve equal to the efficient influence curve is optimal in the sense that there is no other asymptotically linear estimator with influence curve with a smaller variance. We call this estimator asymptotically efficient. 
 
-## Setting
+# Setting
 
-1. **Data and Model:**
+## Data and Model
    $$ O_1, \dots, O_n \overset{iid}{\sim} P_0 \in \mathcal{M}. $$
    Here, $$\mathcal{M}$$ denotes the statistical model, which is the collection of all possible probability distributions $$P$$ that could generate the data.
 
-2. **Target Parameter:**
-   The target parameter is defined as a functional (or operator) $$\Psi: \mathcal{M} \to \mathbb{R}$$. This mapping takes a probability distribution $$P$$ as input and returns a scalar value representing a specific feature of that distribution (e.g., the mean, the risk difference).
+## Target Parameter
+   - The target parameter is defined as a functional (or operator) $\Psi: \mathcal{M} \to \mathbb{R}$. 
+   - This mapping takes a probability distribution $$P$$ as input and returns a scalar value representing a specific feature of that distribution (e.g., the mean, the risk difference).
+   - Usually, target paramter is simple. Scalar or low dimensional vector. It is rarely a regression function.
+   
 
-3. **Estimand:**
-   The true value of the parameter, often denoted as $$\psi_0 = \Psi(P_0)$$, is the **estimand**. This is an unknown quantity because the true data-generating distribution $$P_0$$ is unknown.
+## Estimand
+   - The true value of the parameter, often denoted as $\psi_0 = \Psi(P_0)$, is the **estimand**. 
+   - This is an unknown quantity because the true data-generating distribution $P_0$ is unknown.
 
-## Insight: The Geometry of Pathwise Derivatives
+# Goal
+- We want to build a best possible estimator of $\psi_0$.
+- To build a best estimator, we have to know the fundamental limi of estimation accuracy. The best estimator is what achieves this limit.
+- The properties of the functional $\Psi$ itself dictate the difficulty of the estimation problem. 
+ 
+# Local Perturbations
+- To quantify this difficulty, we analyze the behavior of $\Psi$ under local perturbations.
+- We ask: "If the true distribution $P_0$ changes slightly, how much does the parameter $\Psi(P_0)$ change?"
+- This concept is analogous to a derivative in calculus. 
+- The steepness of this functional derivative (formally captured by the *Efficient Influence Function*) determines the *Information Bound*. 
+- A steeper functional implies that the parameter is more sensitive to fluctuations in the data, resulting in a harder estimation problem (higher minimum variance).
 
-**The Problem: The "Straight Line" Fallacy.**
-We want to measure the sensitivity ("steepness") of the functional $$\Psi$$ at the distribution $$P$$. In standard calculus, we would simply take a derivative along a straight line ($$P + \epsilon Q$$). However, the space of probability distributions is curved, not flat (it is not a vector space). If we try to walk in a straight line off of $$P$$, we immediately land in "invalid territory" (e.g., generating negative probabilities or measures that do not sum to one).
+# Parametric submodels and scores
 
-**The Solution: The Curve-Drawing Machine.**
-To stay within the valid distribution space, we approach $$P$$ along smooth curves. We utilize a **parametric submodel**, constructed by a **curve-drawing machine** $$P_\epsilon^h$$.
-*   **Input:** We feed it a "drawing parameter" $$h$$ (a function), which determines the style or direction of the curve.
-*   **Action:** As we vary $$\epsilon$$, the machine draws a series of dots (probability distributions) inside the model space.
-*   **Output:** The collection of these dots forms the curve $$\mathcal{M}_h(P)$$. By construction, every dot on this curve is a valid probability distribution passing through $$P$$ at $$\epsilon=0$$.
+## Motivation: Valid Directions
+- When defining the derivative of $\Psi$, we cannot simply look at arbitrary perturbations $P + \epsilon h$ (as in standard calculus).
+- The resulting object $P + \epsilon h$ might not be a valid probability distribution (e.g., it might not integrate to 1 or could be negative). 
+- Therefore, we must restrict our attention to perturbations within the space of valid probabilities. 
+- We achieve this by defining *parametric submodels*.
 
-**The Mechanism: The Chain Rule Analogy.**
-We want to calculate how the parameter $$\Psi$$ changes as we move along this curve. We can understand this via a **Chain Rule Analogy**. While the formal calculus of functionals is more complex, the intuition parallels standard calculus ($$\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$$):
+## Parametric submodel, given h
 
-$$
-\underbrace{\frac{d}{d\epsilon} \Psi(P^h_\epsilon)}_{\text{Total Change}}\bigg|_{\epsilon=0} \approx \underbrace{\text{"Operator Change"}}_{\frac{d\Psi}{dP}} \cdot \underbrace{\text{"Curve Change"}}_{\frac{dP}{d\epsilon}}
-$$
+- For a specific path $h$, we define a one-dimensional parametric submodel passing through the true distribution $P$:
 
-However, mathematically, the components are defined more precisely in the Hilbert space $$L_2(P)$$.
-
-**Conclusion.**
-The beauty of this approach is that we can separate the geometry of the model from the target parameter. We can pre-compute the "curve part" (the Score $$S_h$$) purely based on the submodel. When we combine it with the Gradient via the inner product, we recover the pathwise derivative we need to study efficiency.
-
-## Goal
-
-Our primary objective is to estimate the unknown quantity $$\psi_0 = \Psi(P_0)$$ and to understand the fundamental limits of estimation accuracy. The properties of the functional $$\Psi$$ itself dictate the difficulty of the estimation problem.
-
-*   **Local Perturbations:** To quantify this difficulty, we analyze the behavior of $$\Psi$$ under local perturbations. We ask: "If the true distribution $$P_0$$ changes slightly, how much does the parameter $$\Psi(P_0)$$ change?"
-*   **Derivatives and Variance:** This concept is analogous to a derivative in calculus. The "steepness" of this functional derivative (formally captured by the *Efficient Influence Function*) determines the *Information Bound*. A "steeper" functional implies that the parameter is more sensitive to fluctuations in the data, resulting in a harder estimation problem (higher minimum variance).
-
-## Parametric submodels and scores
-
-**Motivation: Valid Directions.**
-When defining the derivative of a target parameter, we cannot simply look at arbitrary perturbations $$P + \epsilon h$$ (as in standard calculus). The resulting object $$P + \epsilon h$$ might not be a valid probability distribution (e.g., it might not integrate to 1 or could be negative). Therefore, we must restrict our attention to perturbations within the space of valid probabilities. We achieve this by defining *parametric submodels*.
-
-### Parametric submodel, given h
-
-For a specific path $$h$$, we define a one-dimensional parametric submodel passing through the true distribution $$P$$:
-
-$$
+<p>
+\begin{equation*}
 \mathcal{M}_h(P) = \{ P^h_{\epsilon} : \epsilon \in (-\delta, \delta) \} \subset \mathcal{M}
-$$
+\end{equation*}
+</p>
 
-This submodel (collection of distributions) is a curve within the large model $$\mathcal{M}$$ such that:
-*   At $$\epsilon = 0$$, the distribution is the true data-generating distribution: $$P^h_{\epsilon=0} = P$$.
-*   For $$\epsilon>0$$, we move away from $$P$$ by $$\epsilon$$ in the direction $$h$$, while remaining inside the model $$\mathcal{M}$$.
-*   The specific value of $$\delta$$ is not critical. We are only interested in the behavior of the submodel in the immediate neighborhood of $$\epsilon=0$$.
-*   Form of $$P^h_{\epsilon}$$ is quite flexible. Not necessarily $$P+ \epsilon h$$. We are allowed to invent any path $$P_\epsilon$$ we want, as long as it passes through the true model $$P$$ at $$\epsilon=0$$. There is no single "correct" way to draw a line through a probability distribution.
+- This submodel (collection of distributions) is a curve within the large model $\mathcal{M}$ such that:
+  *   At $\epsilon = 0$, the distribution is the true data-generating distribution: $P^h_{\epsilon=0} = P$.
+  *   For $\epsilon > 0$, we move away from $P$ by $\epsilon$ in the direction $h$, while remaining inside the model $\mathcal{M}$.
+  *   The specific value of $\delta$ is not critical. We are only interested in the behavior of the submodel in the immediate neighborhood of $\epsilon=0$.
+  *   Form of $P^h_{\epsilon}$ is quite flexible. Not necessarily $P+ \epsilon h$. We are allowed to invent any path $P_\epsilon$ we want, as long as it passes through the true model $P$ at $\epsilon=0$. There is no single "correct" way to draw a line through a probability distribution.
 
 ### Score, given h
 
