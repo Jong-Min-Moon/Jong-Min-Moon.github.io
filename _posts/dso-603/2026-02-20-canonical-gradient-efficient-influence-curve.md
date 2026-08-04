@@ -91,12 +91,13 @@ An asymptotically linear estimator with influence curve equal to the efficient i
 ## A special direction: score $S$, given $h$
 - The only direction we care about each submodel, $\mathcal{M}_h(P)$, is its score. 
 - Given a path $h$, its score $S_h$ is defined as a transformation of an observation: 
-
-$$
+<p>
+\begin{equation*}
 S_h(O)=\left . \frac{d}{d\epsilon}\log dP_{\epsilon}^h/dP(O)\right |_{\epsilon=0}
-$$
+\end{equation*}
+</p>
 
-Notice that the score is defined as usual. We take the log of the density that is defined with respect to $$P$$ itself. In other words, you choose the path where all the probability distributions are of the same nature as $$P$$ itself so that you can define $$\frac{dP_{\epsilon}}{dP}$$. Then we have a collection of densities because $$\frac{dP_{\epsilon}}{dP} = p_{\epsilon}^h$$ so we have that $$S_h(O)=\frac{d}{d\epsilon}\log p_{\epsilon}^h |_{\epsilon=0}$$.
+- Notice that the score is defined as usual. We take the log of the density that is defined with respect to $$P$$ itself. In other words, you choose the path where all the probability distributions are of the same nature as $$P$$ itself so that you can define $$\frac{dP_{\epsilon}}{dP}$$. Then we have a collection of densities because $$\frac{dP_{\epsilon}}{dP} = p_{\epsilon}^h$$ so we have that $$S_h(O)=\frac{d}{d\epsilon}\log p_{\epsilon}^h |_{\epsilon=0}$$.
 
 ### Tangent space and Hilbert space
 
