@@ -183,7 +183,19 @@ with inner product defined as the covariance (since they are centered):
 
 <p>
 \begin{equation*}
-\underbrace{\frac{d}{d\epsilon} \Psi(P^h_\epsilon)}_{\text{Total Change}}\bigg|_{\epsilon=0} \approx \underbrace{\text{"Operator Change"}}_{\frac{d\Psi}{dP}} \cdot \underbrace{\text{"Curve Change"}}_{\frac{dP}{d\epsilon}}
+\underbrace{\frac{d}{d\epsilon} \Psi(P^h_\epsilon)}_{\text{Total Change}}\bigg|_{\epsilon=0} 
+\approx 
+\underbrace{
+\frac{d\Psi}{dP}
+}_{
+\text{"Operator Change"}
+} 
+\cdot
+\underbrace{
+\frac{dP}{d\epsilon}
+}_{
+\text{"Curve Change"}
+}
 \end{equation*}
 </p>
 
@@ -214,7 +226,7 @@ d\Psi(P)(S_h)=E_P D(P)(O)S_h(O)= \langle D(P),S_h\rangle_P
 \end{equation*}
 </p>
 
-- $D(P)$ is called a gradient of the pathwise derivative. 
+- $D(P)$ is called a gradient of the pathwise derivative. It is also an element of the Hilbert space.
 
 ## Class of gradients
 
