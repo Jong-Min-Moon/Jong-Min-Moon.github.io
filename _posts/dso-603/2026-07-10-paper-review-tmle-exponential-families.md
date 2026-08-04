@@ -25,50 +25,39 @@ paper_key: diaz_targeted_2015
 
 ### The Breakdown of Simple Estimators Under Missing Data
 - Estimating a simple parameter, like the marginal mean of an outcome $Y$, is trivial under perfect observation.
-- The sample mean is unbiased, and by the Central Limit Theorem (CLT), it is asymptotically normal, allowing for straightforward confidence intervals. However, in causal inference and missing data problems, the data-generating process complicates this reality. When $Y$ is only partially observed and the missingness ($M$) depends on side information $X$, the simple sample mean is no longer an unbiased estimator.
+- The sample mean is unbiased, and by the Central Limit Theorem (CLT), it is asymptotically normal, allowing for straightforward confidence intervals. 
+- However, in causal inference and missing data problems, the data-generating process complicates this reality.
+- When $Y$ is only partially observed and the missingness ($M$) depends on side information $X$, the simple sample mean is no longer an unbiased estimator.
 
 ### The MAR Assumption and High Dimensionality
 
-To proceed, we must account for the missingness mechanism by conditioning on the covariates $X$. The standard requirement is the Missing At Random (MAR) assumption, which states that conditional on $X$, the missingness indicator $M$ is independent of $Y$:
+- To proceed, we must account for the missingness mechanism by conditioning on the covariates $X$.
+- The standard requirement is the Missing At Random (MAR) assumption, which states that conditional on $X$, the missingness indicator $M$ is independent of $Y$:
+<p>
+\begin{equation}
+P(M = m \mid X, Y) = P(M = m \mid X)
+\end{equation}
+</p>
 
-Under MAR, the marginal mean of $Y$ can be identified via standard standardization (G-computation):
-
-1. Estimate the conditional outcome regression $\mu(X) = E(Y \mid M = 1, X)$.
-2. Integrate this conditional expectation over the marginal distribution of $X$.
-
-The practical hurdle is that for the MAR assumption to be scientifically plausible in observational data, $X$ must capture all relevant confounders, making it inherently high-dimensional.
+- Under MAR, the marginal mean of $Y$ can be identified via standard standardization (G-computation):
+    1. Estimate the conditional outcome regression $\mu(X) = E(Y \mid M = 1, X)$.
+    2. Integrate this conditional expectation over the marginal distribution of $X$.
+- The practical hurdle is that for the MAR assumption to be scientifically plausible in observational data, $X$ must capture all relevant confounders, making it inherently high-dimensional.
 
 ### The Flaw in Plug-in ML Estimators
-
-High-dimensional regression requires sophisticated machine learning algorithms (e.g., Lasso, random forests, neural networks) to avoid overfitting. However, these algorithms achieve predictive power through regularization, which deliberately trades variance for bias to minimize overall Mean Squared Error (MSE).
-
-Consequently, these machine learning estimators converge at a rate slower than $n^{-1/2}$. If we simply plug these biased predictions into our integration step, the regularization bias propagates directly to our final estimate of the mean. This destroys $\sqrt{n}$-consistency (asymptotic unbiasedness) and renders our standard confidence intervals completely invalid.
+- High-dimensional regression requires sophisticated machine learning algorithms (e.g., Lasso, random forests, neural networks) to avoid overfitting. 
+- However, these algorithms achieve predictive power through regularization, which deliberately trades variance for bias to minimize overall Mean Squared Error (MSE).
+- Consequently, these machine learning estimators converge at a rate slower than $n^{-1/2}$. 
+- If we simply plug these biased predictions into our integration step, the regularization bias propagates directly to our final estimate of the mean. 
+- This destroys $\sqrt{n}$-consistency (asymptotic unbiasedness) and renders our standard confidence intervals completely invalid.
 
 ### The TMLE Correction
-
-Targeted Maximum Likelihood Estimation (TMLE) resolves this by explicitly correcting the bias of the initial ML regression. It achieves this by modeling a second nuisance parameter: the missingness mechanism, or propensity score, $p_M(X) = P(M = 1 \mid X)$.
-
-TMLE utilizes a targeted update step that fluctuates the initial, biased outcome estimates using a "clever covariate" derived from the inverse of this propensity score:
-
-This targeting step forces the final estimate to solve the efficient influence function (EIF) estimating equation. By doing so, TMLE provides two critical statistical guarantees for the target parameter:
-
-1. **Double Robustness:** The final estimate remains consistent if either the outcome regression model *or* the propensity score model is correctly specified.
-2. **Asymptotic Efficiency & Normality:** By shrinking the regularized bias fast enough, the estimator achieves $\sqrt{n}$-consistency. This ensures that the Central Limit Theorem holds, allowing for valid statistical inference even when utilizing complex, black-box machine learning algorithms under the hood.
-
-
-- In causal inference and missing data problem, an estimator that looks rather simple cannot be estimated due to the form of the data generating process.
-- For example, when we estimate the mean of $Y$, all we have to do is just take the sample mean of $Y$. It is unbiased. By CLT, it is asumptotically noraml and we can build a confidence interval.
-- However, if we know that we are only observing a subset of $Y$, and that masking is not completely random and depends on some side information $X$, things get complicated. Simple sample mean is not an unbiased estimator anymore.
-- Then things get complicated. We need to assume something and estimate some nuisance parameter.
-- An easy assumption is missing at random. Conditioned on the side information $X$, the probability of missing is constant. In other words missing probability only depends on $X$, not on $Y$.
-- Under this assumption, the estimation of the mean of $Y$ is, 
-  1. Estimate the conditional expectation $E(Y \mid M = 1, X)$.
-  2. integrate it over $X$ using the marginal density of $X$, $P(X)$.
-- So to estimte a scalar value (mean), we need to run regresison and integrate it, what a hassle.
-- The problem is, for the missing at random asusmption to be realistic, $X$ has to be ultra high dimensional. 
-- WHen X is high dimensional the regression is not easy. Most of the major algorithm is reugliazied, paying bias for prediction power. Lasso and neural net. 
-- That's why we need TMLE or DML. Our purpose is estiating a simple parater like sample mean. For that we need to run fancy high dimensional regulaizd regression, which is designed for prediciton, thus is biased.
-- TMLE is correcting ths bias of this fancy regresssion algorithm, targetting the unbiasedness, asymptotic efficiency, and asympotitc normality of the target parameter.    
+- Targeted Maximum Likelihood Estimation (TMLE) resolves this by explicitly correcting the bias of the initial ML regression.
+- TMLE uses a targeted update step that fluctuates the initial, biased outcome estimates using a "clever covariate".
+- This targeting step forces the final estimate to solve the efficient influence function (EIF) estimating equation.
+- By doing so, TMLE provides two critical statistical guarantees for the target parameter:
+    1. **Double Robustness:** The final estimate remains consistent if either the outcome regression model *or* the propensity score model is correctly specified.
+    2. **Asymptotic Efficiency & Normality:** By shrinking the regularized bias fast enough, the estimator achieves $\sqrt{n}$-consistency. This ensures that the Central Limit Theorem holds, allowing for valid statistical inference even when utilizing complex, black-box machine learning algorithms under the hood.
 
 
 ---
