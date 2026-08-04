@@ -113,7 +113,7 @@ S_h(O)=\left . \frac{d}{d\epsilon}\log dP_{\epsilon}^h/dP(O)\right |_{\epsilon=0
  
 
 # Tangent space and Hilbert space
-
+- Summary: class of paths $h$ is not our choice. It is defined by true distribution $P$.
 ## Class of paths, Class of Scores (the Tangent Set)
 - Let's fix the submodel formula. Then for each $h$, we have one score random variable $S_h(O)$.
 - We consider a collection of $h$: a set of paths $\mathcal{H}$.
@@ -167,13 +167,14 @@ with inner product defined as the covariance (since they are centered):
 
 
 ## Tangent Space, T(P)
+- We have that the score is an element of the Hilbert space $L^2_0(P)$, because score has  zero mean and finite variance.
+- Let $T(P)\subset L^2_0(P)$ be the closure of the linear span of the set of scores $\mathcal{S}$ of our class of paths.
+  - closure of the linear span means that any function you can approximate as an a limit of such linear combinations
+- This is a sub-Hilbert space of $L^2_0(P)$.
+- It is called the tangent space at $P$.
+- The tangent space for a *nonparametric* model is the whole $L^2_0(P)$. We say that the model is locally saturated at $P$. 
 
-*   Let $$T(P)\subset L^2_0(P)$$ be the closure of the linear span of the set of scores $$\mathcal{S}$$ of our class of paths.
-*   This is a sub-Hilbert space of $$L^2_0(P)$$.
-*   It is called the tangent space at $$P$$.
-*   The tangent space for a *nonparametric* model is the whole $$L^2_0(P)$$. We say that the model is locally saturated at $$P$$. 
 
-We have that the score is an element of the Hilbert space and we have a collection of scores that correspond with this class of paths, generating a sub-Hilbert space of $$L_0^2(P)$$. We might take any linear combination of all the scores and the closure (any function you can approximate as an a limit of such linear combinations of all these scores is also additive) and that creates a sub-Hilbert space, $$H$$ of $$L_0^2(P)$$. $$H$$ is the tangent space corresponding with this class of paths.
 
 ## Problem with standard directional derivative of target parameter
 
