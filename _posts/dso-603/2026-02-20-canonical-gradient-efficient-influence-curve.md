@@ -178,8 +178,23 @@ with inner product defined as the covariance (since they are centered):
 
 # Pathwise derivative
 
-## The Chain Rule Analogy
-- While the formal calculus of functionals is more complex, the intuition parallels standard calculus ($\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$). 
+
+
+- The chain rule implies that we can separate the geometry of the model from the target parameter. 
+- We can pre-compute the "curve part" (the Score $S_h$) purely based on the submodel.
+- When we combine it with the Gradient via the inner product, we recover the pathwise derivative we need to study efficiency.
+
+## Pathwise Derivative as a Linear Operator
+- The pathwise derivative is defined as: 
+
+<p>
+\begin{equation*}
+d\Psi(P)(S_h)=\left . \frac{d}{d\epsilon}\Psi(P_{\epsilon}^h)\right |_{\epsilon =0}
+\end{equation*}
+</p>
+
+- This is linear operator in its score $S_h$.
+- Why linear? While the formal calculus of functionals is more complex, the intuition parallels standard calculus ($\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$). 
 
 <p>
 \begin{equation*}
@@ -197,22 +212,7 @@ with inner product defined as the covariance (since they are centered):
 \text{"Curve Change"}
 }
 \end{equation*}
-</p>
-
-- The chain rule implies that we can separate the geometry of the model from the target parameter. 
-- We can pre-compute the "curve part" (the Score $S_h$) purely based on the submodel.
-- When we combine it with the Gradient via the inner product, we recover the pathwise derivative we need to study efficiency.
-
-## Pathwise Derivative as a Linear Operator
-- The pathwise derivative is defined as: 
-
-<p>
-\begin{equation*}
-d\Psi(P)(S_h)=\left . \frac{d}{d\epsilon}\Psi(P_{\epsilon}^h)\right |_{\epsilon =0}
-\end{equation*}
-</p>
-
-- This is linear operator in its score $S_h$. 
+</p> 
 - Thus, $d\Psi(P):L^2_0(P)\rightarrow\mathbb{R}^d$ is a real valued linear operator on a Hilbert space $L^2_0(P)$.
 
 ### Pathwise differentiability and gradient
