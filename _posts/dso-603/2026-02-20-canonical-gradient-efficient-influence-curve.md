@@ -174,23 +174,24 @@ with inner product defined as the covariance (since they are centered):
 - It is called the tangent space at $P$.
 - The tangent space for a *nonparametric* model is the whole $L^2_0(P)$. We say that the model is locally saturated at $P$. 
 
+ 
 
+# Pathwise derivative
 
-## Problem with standard directional derivative of target parameter
+## The Chain Rule Analogy
+- While the formal calculus of functionals is more complex, the intuition parallels standard calculus ($\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$). 
 
-*   We want to define a type of differentiability of $$\Psi:\mathcal{M}\rightarrow\mathbb{R}^d$$.
-*   We could use the definition of a directional derivative in direction $$h$$:
+<p>
+\begin{equation*}
+\underbrace{\frac{d}{d\epsilon} \Psi(P^h_\epsilon)}_{\text{Total Change}}\bigg|_{\epsilon=0} \approx \underbrace{\text{"Operator Change"}}_{\frac{d\Psi}{dP}} \cdot \underbrace{\text{"Curve Change"}}_{\frac{dP}{d\epsilon}}
+\end{equation*}
+</p>
 
-$$
-d\Psi(P)(h)=\left . \frac{d}{d\epsilon}\Psi(P+\epsilon h)\right |_{\epsilon =0}
-$$
+- The chain rule implies that we can separate the geometry of the model from the target parameter. 
+- We can pre-compute the "curve part" (the Score $$S_h$$) purely based on the submodel.
+- When we combine it with the Gradient via the inner product, we recover the pathwise derivative we need to study efficiency.
 
-*   However, $$P+\epsilon h$$ is not a path within $$\mathcal{M}$$, so this could be ill defined.
-*   Therefore, we define a derivative along paths that are submodels of $$\mathcal{M}$$.
-
-## Pathwise derivative
-
-*   The pathwise derivative is defined as: 
+- The pathwise derivative is defined as: 
 
 $$
 d\Psi(P)(S_h)=\left . \frac{d}{d\epsilon}\Psi(P_{\epsilon}^h)\right |_{\epsilon =0}
