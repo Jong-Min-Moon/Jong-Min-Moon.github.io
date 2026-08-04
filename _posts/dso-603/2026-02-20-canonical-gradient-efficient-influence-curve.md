@@ -69,7 +69,7 @@ An asymptotically linear estimator with influence curve equal to the efficient i
 
 ## Parametric submodel, given h
 
-- For a specific path $h$, we define a one-dimensional parametric submodel passing through the true distribution $P$:
+- For a specific **path** $h$ (a function in a Hilbert space), we define a one-dimensional parametric submodel passing through the true distribution $P$:
 
 <p>
 \begin{equation*}
@@ -79,13 +79,18 @@ An asymptotically linear estimator with influence curve equal to the efficient i
 
 - This submodel (collection of distributions) is a curve within the large model $\mathcal{M}$ such that:
   *   At $\epsilon = 0$, the distribution is the true data-generating distribution: $P^h_{\epsilon=0} = P$.
-  *   For $\epsilon > 0$, we move away from $P$ by $\epsilon$ in the direction $h$, while remaining inside the model $\mathcal{M}$.
+  *   For $\epsilon > 0$, we move away from $P$ by $\epsilon$ along the path $h$, while remaining inside the model $\mathcal{M}$.
   *   The specific value of $\delta$ is not critical. We are only interested in the behavior of the submodel in the immediate neighborhood of $\epsilon=0$.
-  *   Form of $P^h_{\epsilon}$ is quite flexible. Not necessarily $P+ \epsilon h$. We are allowed to invent any path $P_\epsilon$ we want, as long as it passes through the true model $P$ at $\epsilon=0$. There is no single "correct" way to draw a line through a probability distribution.
+  *   Defining $h$ itself is a bit flexible. Furthermore, after $P$ and $h$ are fixed, the form of $P^h_{\epsilon}$ is also flexible. Not necessarily $P+ \epsilon h$. We are allowed to invent any $P_\epsilon$ we want, as long as it passes through the true model $P$ at $\epsilon=0$ and stays on the path $h$. 
 
-### Score, given h
+- We can think of the submodel $P_\epsilon^h$ as constructed by a **curve-drawing machine** 
+  *   **Input:** We feed it a "drawing parameter" $h$, which determines the style or direction of the curve.
+  *   **Action:** As we vary $\epsilon$, the machine draws a series of dots (probability distributions) inside the model space.
+  *   **Output:** The collection of these dots forms the curve $\mathcal{M}_h(P)$. By construction, every dot on this curve is a valid probability distribution passing through $P$ at $\epsilon=0$.
 
-The only direction we care about each submodel, $$\mathcal{M}_h(P)$$, is its score. For a path $$h$$, its score $$S_h$$ is defined as a transformation of an observation: 
+## A special direction: score $S$, given $h$
+- The only direction we care about each submodel, $\mathcal{M}_h(P)$, is its score. 
+- Given a path $h$, its score $S_h$ is defined as a transformation of an observation: 
 
 $$
 S_h(O)=\left . \frac{d}{d\epsilon}\log dP_{\epsilon}^h/dP(O)\right |_{\epsilon=0}
