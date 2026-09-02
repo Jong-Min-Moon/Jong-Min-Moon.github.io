@@ -16,11 +16,15 @@ authors:
 # Two pointers
 
 ## Same Direction Traversal
+One always moves, another sometimes moves
 
+### One array
 1. [Leetcode 283: Move Zeroes](https://jong-min.org/blog/2018/move-zeroes/)
 2. [Leetcode 27: Remove Element](https://leetcode.com/problems/remove-element/description/) exactly same as 283: move zeros. compare to val instead of 0.
 3. [Leetcode 26: Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/) exactly same as Leetcode 283: Move Zeroes, but here we compare the current element to the previous element. Also, start from index 1 rather than 0. one liner: include number the first time we see it, becuase last time is not clear.
-4. [Leetcode 392: Is Subsequence](https://jong-min.org/blog/2018/is-subsequence/)
+
+### Two arrays
+4. [Leetcode 392: Is Subsequence](https://jong-min.org/blog/2018/is-subsequence/): end cases for each of s and t. use while loop for two end cases.
 
 
 

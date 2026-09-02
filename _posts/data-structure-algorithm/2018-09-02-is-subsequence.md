@@ -4,7 +4,7 @@ title: "Leetcode 392: Is Subsequence"
 description: "A two-pointer approach to check if one string is a subsequence of another"
 tags: algorithms two-pointers strings same-direction-traversal
 categories: data-structure-algorithm
-date: 2018-09-20
+date: 2018-09-02
 featured: false
 project: data-structure-algorithm
 authors:
