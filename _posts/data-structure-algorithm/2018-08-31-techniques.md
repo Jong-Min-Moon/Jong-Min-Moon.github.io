@@ -31,10 +31,14 @@ One always moves, another sometimes moves
 
 
 ## Squeezing
-
-
 1. [Leetcode 125. Valid Palindrome](https://jong-min.org/blog/2018/leedcode-125-valid-palindrome/): cleaned_s = ''.join(c.lower() for c in s if c.isalnum()) and squeezing. synchronous steps.
 2. [Leetcode 977: Squares of a Sorted Array](https://jong-min.org/blog/2018/leetcode-977-squares-of-a-sorted-array/): asynchronous steps.
+
+
+## Sliding windows
+
+
+
 
 ## Unidirectional traversal
 
