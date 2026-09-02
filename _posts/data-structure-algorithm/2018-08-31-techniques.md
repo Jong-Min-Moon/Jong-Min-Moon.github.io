@@ -22,120 +22,19 @@ One always moves, another sometimes moves
 1. [Leetcode 283: Move Zeroes](https://jong-min.org/blog/2018/move-zeroes/)
 2. [Leetcode 27: Remove Element](https://leetcode.com/problems/remove-element/description/) exactly same as 283: move zeros. compare to val instead of 0.
 3. [Leetcode 26: Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/) exactly same as Leetcode 283: Move Zeroes, but here we compare the current element to the previous element. Also, start from index 1 rather than 0. one liner: include number the first time we see it, becuase last time is not clear.
+4. [Leetcode 905: Sort Array by Parity](https://leetcode.com/problems/sort-array-by-parity/description/): two-pass algorithm with new array. Alternatively, quicksort for in-place.
 
 ### Two arrays
-4. [Leetcode 392: Is Subsequence](https://jong-min.org/blog/2018/is-subsequence/): end cases for each of s and t. use while loop for two end cases.
+1. [Leetcode 392: Is Subsequence](https://jong-min.org/blog/2018/is-subsequence/): end cases for each of s and t. use while loop for two end cases. A deep problem with many solutions.
 
 
 
 
-
-# Easy
-
-## [Leetcode 125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/description/)
-
-### Intuition
-
-- We need to compare left and right elements so obviously we need two pointers and they move toward the center.
-- We place one pointer at the beginning (`left`) and one at the end (`right`).
-- We systematically **squeeze** them towards the center, functioning as a `comparer`.
-- If the characters at the `left` and `right` pointers ever mismatch, the string is not a palindrome.
-- If the pointers cross each other without a mismatch, the string is a valid palindrome!
-
-### String Handling
-
-- First we remove blanks and non-alphanumeric characters and convert the string to lowercase using `isalnum()` and `lower()`.
-- We use **list comprehension**  to **filter and format** the string.
-- Finally use `''.join()` to join the filtered characters into a string.
-
-```python
-cleaned_s = ''.join(c.lower() for c in s if c.isalnum())
-```
-
-> **Note**: While filtering the string upfront is very clean, an optimized solution would do this filtering *on the fly* during the two-pointer traversal to save $O(n)$ space.
-
-### Initialization
-
-- `left` points to `0` (the first character).
-- `right` points to `len(cleaned_s) - 1` (the last character).
-
-### Main loop
-
-- We use a `while` loop that continues as long as `left < right`.
-- At each step, we compare `cleaned_s[left]` and `cleaned_s[right]`.
-- If they are not equal, we immediately return `False`.
-- If they are equal, we move `left` to the right by 1 and `right` to the left by 1 (squeezing inwards).
-
-### Termination
-
-- If the loop finishes without returning `False`, it means all corresponding characters matched. We then return `True`.
-
-### My solution
-
-```python
-class Solution:
-    def isPalindrome(self, s: str) -> bool:
-        s = [c.lower() for c in s if c.isalnum()]
-        s = ''.join(s)
-
-        left = 0
-        right = len(s)-1
-        while left < right:
-            if s[left] == s[right]:
-                left += 1
-                right -= 1
-            else:
-                return False
-        return True
-```
-
-## [Leetcode 977. Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/description/)
-
-### Intuition
-
-- The brute force approach:  squaring takes $O(N)$ time and then sorting takes $O(N \log N)$. So the total time complexity is $O(N \log N)$. 
-- However, this is a stupid approach because it does not use the fact that the **original array is sorted**. The follow-up question calls for $O(N)$ time complexity.
-
- 
-- What we fear is signs; If the numbers are all positive or all negative, the problem is trivial.
-- Let's assume the array contains both positive and negative numbers.
--  Since the array is pre-sorted, `nums[0]` is the negative number with the largest magnitude. `nums[n-1]` is the positive number with the largest magnitude.
-- As we move the pointer inward by one index, we encounter the next largest magnitude number.
-- So we can compare the absolute values of the elements at the `left` and `right` pointers. We square the larger one, place it at the result array from the end, and move the corresponding pointer inward.
-
-### When do we stop?
-- if negative or positive numbers are exhausted, the problem becomes trivial. But there's no harm in continuing the loop until the pointers cross each other.
-
-### Code (Python)
-
-```python
-class Solution:
-    def sortedSquares(self, nums: List[int]) -> List[int]:
-        n  = len(nums)
-        result = [0]*n
-        left = 0
-        right = n-1
-        while left <= right:
-            sq_left = nums[left]**2
-            sq_right = nums[right]**2
-            index_result = right-left
-            if sq_left < sq_right:
-                result[index_result] = sq_right
-                right -=1
-            else:
-                result[index_result] = sq_left
-                left += 1
-        return result
-            
-```
-
-### Complexity
-- **Time Complexity:** $O(N)$ because calculating the squares and placing them in the correct spot requires exactly one pass over the array.
-- **Space Complexity:** $O(N)$ because we are allocating a new array of size $N$ to store the result, as required by the problem statement.
+## Squeezing
 
 
-### References
-- [How to Solve Squares of a Sorted Array Efficiently in One Go!](https://youtu.be/KyKeW6PZiWo?si=apgkBtA99pbZWm-7)
+1. [Leetcode 125. Valid Palindrome](https://jong-min.org/blog/2018/leedcode-125-valid-palindrome/): cleaned_s = ''.join(c.lower() for c in s if c.isalnum()) and squeezing. synchronous steps.
+2. [Leetcode 977: Squares of a Sorted Array](https://jong-min.org/blog/2018/leetcode-977-squares-of-a-sorted-array/): asynchronous steps.
 
 ## Unidirectional traversal
 
