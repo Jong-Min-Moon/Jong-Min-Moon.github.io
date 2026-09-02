@@ -4,7 +4,7 @@ title: "Leetcode 283: Move Zeroes"
 description: "A two-pointer approach to move all non-zero elements to the front of an array"
 tags: algorithms two-pointers arrays same-direction-traversal taxi
 categories: data-structure-algorithm
-date: 2018-09-20
+date: 2018-09-01
 featured: false
 project: data-structure-algorithm
 authors:
@@ -12,27 +12,43 @@ authors:
     url: "https://jongminmoon.github.io"
 ---
 
-# Two-pointer approach
+# If new array is allowed
+- The problem becomes trivial.
+- Linearly read the array, if the element is nonzero, then append it to the new array. Finally, append the remaining zeros to the new array.
 
-- We need one pointer (`read`) to read the new number and decide whether it is 0 or not.
-- If it is nonzero, we need to move it to the front. However we need to keep the order of the non-zero elements and we don't want to overwrite.
-- Thus we need a second pointer (`record`) to keep track of the position where the next non-zero element should be placed.
-- This is the basic idea of same-direction-traversal two-pointer approach.
+# Two-pointer approach: reader and writer
+- In-place restriction requires two pointers.
 
-## Initialization
+
+## Core logic
+* We need a pointer (`read`) that traverses linearly to check if the current number is 0.
+* If the number at `read` is nonzero, we move it. Since computers don't physically move data, this is accomplished through copying and deleting.
+* We explicitly copy the number. Deletion is implicit (handled by overwriting).
+* To maintain the order of non-zero elements without improperly overwriting them, we need a second pointer (`record`).
+* `record` tracks where the next non-zero element should be placed, advancing only when a number is copied to it.
+* This is the basic idea of the same-direction two-pointer approach.
+
+## To prevent overwriting
+1. Reader always moves forward, writer sometimes moves forward, thus reader>=writer
+2. We write EVERY non-zero value observed (no exception)
+Therefore, any non-zero value that is overwritten by the writer was previously read and written too!
+
+## Algorithm Steps
+Initialization - main loop - termination - post processing
+### Initialization
 - `read` obviously starts from 0.
 - The first nonzero element would be placed at index 0, so `record` starts from 0.
 
-## Main loop
+### Main loop
 - `read` proceeds by for loop.
 `record` only proceeds when `nums[read]` is nonzero.
 - Thus `record` is always less than or equal to `read`
 - Thus we don't need to worry about overwriting or interval between the pointers
 
-## Terminination
+### Terminination
 Easy. When `read` reaches the end of the array.
 
-## Post processing
+### Post processing
 Easy. Fill the remaining positions in the array (from `record` to the end) with zeros.
 
 ## Caveats
