@@ -35,10 +35,25 @@ One always moves, another sometimes moves
 2. [Leetcode 977: Squares of a Sorted Array](https://jong-min.org/blog/2018/leetcode-977-squares-of-a-sorted-array/): asynchronous steps.
 
 
-## Sliding windows
+## Sliding Windows
+
+1. [leetcode 26: roman to integer](https://jong-min.org/blog/2018/roman-to-integer/): 
 
 
 
+
+# Dynamic Programming  
+
+## 1d
+
+### Binary Search
+
+1. [Leetcode 704: Binary Search](https://jong-min.org/blog/2018/binary-search/): inward-traversal two-pointer search on sorted arrays in O(log n) time.
+
+### 1d with memoization
+
+1. [Leetcode 70: Climbing Stairs](https://jong-min.org/blog/2018/climbing-stairs/): recursion with memoization to prune overlapping subproblems in O(n) time.
+2. Min Cost Climbing Stairs (LeetCode 746): TODO: read the solution again. internal function can be 'starting from' or 'end to'. Use dictionary instead of array to memoize.
 
 ## Unidirectional traversal
 
