@@ -18,6 +18,8 @@ toc:
   - name: Tracy–Widom Fluctuations
   - name: Implications for Principal Components
   - name: Monte Carlo Study
+  - name: "Part (b): Marchenko–Pastur Benchmark"
+  - name: "Part (c): Johnstone Standardization and Tracy–Widom"
 ---
 
 # Setup
@@ -46,7 +48,7 @@ In high dimensions the picture changes dramatically. Consider $n = 100$ and incr
 
 As $p$ grows with $n$, the distribution of $\lambda_{\max}(\widehat{\Sigma})$ **shifts systematically to the right of 1**. This is a central phenomenon in **random matrix theory (RMT)**.
 
-## Efficient Computation of $\lambda_{\max}(\widehat{\Sigma})$
+## Note on Implementation
 
 A naive approach computes all eigenvalues of the $p \times p$ matrix $\widehat{\Sigma} = X^\top X / n$, which costs $O(p^3)$ time. For $p = 500$ this is already heavy, and for larger $p$ it becomes prohibitive. Two algebraic facts eliminate this bottleneck.
 
@@ -79,77 +81,13 @@ In NumPy, `np.linalg.svd(X, compute_uv=False)` returns only singular values (ski
 | $p \approx n$ | SVD of $X$ | $O(n^2 p)$ |
 | $p \gg n$ | Eigenvalues of $X X^\top / n$ ($n \times n$), or SVD of $X$ | $O(n^3 + n^2 p)$ |
 
-For this exercise we use SVD throughout, which automatically adapts to all three regimes.
-
- 
+For this exercise we use SVD throughout, which automatically adapts to all three
 
 ---
 
-## Python Implementation
+> **Code:** see the [combined implementation](#combined-python-implementation) at the end of this post.
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-from scipy.stats import percentileofscore
-
-# ── Reproducibility ────────────────────────────────────────────────────────────
-rng = np.random.default_rng(seed=607)
-
-# ── Parameters ─────────────────────────────────────────────────────────────────
-n     = 100
-ps    = [5, 50, 500]
-B     = 1_000          # Monte Carlo replications
-
-
-def lambda_max(X: np.ndarray) -> float:
-    """
-    Compute λ_max(X^T X / n) efficiently using the largest singular value.
-
-    Complexity: O(n^2 * p) via np.linalg.svd with compute_uv=False.
-    When p > n the SVD internally uses the smaller n×n Gram matrix (XX^T),
-    equivalent to computing eigenvalues of the smaller of XTX and XXT.
-    """
-    n = X.shape[0]
-    s_max = np.linalg.svd(X, compute_uv=False)[0]   # largest singular value only
-    return s_max ** 2 / n
-
-
-# ── Monte Carlo simulation ──────────────────────────────────────────────────────
-results = {}
-for p in ps:
-    lambdas = np.empty(B)
-    for b in range(B):
-        X = rng.standard_normal((n, p))   # X ~ N(0, I_p), shape (n, p)
-        lambdas[b] = lambda_max(X)
-    results[p] = lambdas
-
-# ── Figure: three-panel histogram ──────────────────────────────────────────────
-fig, axes = plt.subplots(1, 3, figsize=(12, 4), constrained_layout=True)
-fig.suptitle(
-    r"Distribution of $\lambda_{\max}(\hat{\Sigma})$, $n = 100$, $B = 1{,}000$ replications",
-    fontsize=13
-)
-
-# Theoretical Marchenko–Pastur upper edge: (1 + 1/sqrt(gamma))^2, gamma = n/p
-mp_edge = {p: (1 + np.sqrt(p / n)) ** 2 for p in ps}
-
-for ax, p in zip(axes, ps):
-    data = results[p]
-    ax.hist(data, bins=40, color="steelblue", edgecolor="white", alpha=0.85,
-            density=True)
-    ax.axvline(mp_edge[p], color="crimson", lw=1.8, linestyle="--",
-               label=f"MP edge = {mp_edge[p]:.2f}")
-    ax.axvline(1.0, color="black", lw=1.2, linestyle=":", label="Population = 1")
-    ax.set_title(rf"$p = {p}$", fontsize=12)
-    ax.set_xlabel(r"$\lambda_{\max}(\hat{\Sigma})$", fontsize=11)
-    ax.set_ylabel("Density", fontsize=11)
-    ax.legend(fontsize=9)
-
-plt.savefig("lambda_max_histograms.png", dpi=150, bbox_inches="tight")
-plt.show()
-
-# ── Summary table ──────────────────────────────────────────────────────────────
+��─────────────────────────────────────────────────
 rows = []
 for p in ps:
     d = results[p]
@@ -241,3 +179,293 @@ Current course topics extend this analysis to:
 2. **Generalized Laplacian latent embeddings** — spectral theory for graph-based representations (Fan et al., 2026).
 3. **Universal rank inference** — data-driven rank selection via residual subsampling (Han, Yang & Fan, 2023).
 4. **Deep representation geometry** — connecting RMT to neural collapse and uncertainty quantification in deep networks.
+
+---
+
+# Part (b): Marchenko–Pastur Benchmark
+
+## Theory
+
+Geman (1980) showed that in the proportional-growth regime $n, p \to \infty$ with $p/n \to c \in (0, \infty)$, the almost-sure limit of $\lambda_{\max}(\widehat{\Sigma})$ is the **Marchenko–Pastur upper edge**
+
+<p>$$\lambda_+(c) = \left(1 + \sqrt{c}\right)^2, \qquad c = \frac{p}{n}.$$</p>
+
+For our three dimensions with $n = 100$:
+
+| $p$ | $c = p/n$ | $\lambda_+(c) = (1+\sqrt{c})^2$ |
+|----:|----------:|--------------------------------:|
+| 5 | 0.05 | 1.4721 |
+| 50 | 0.50 | 2.9289 |
+| 500 | 5.00 | 10.2361 |
+
+## Why the Fixed-Dimensional Benchmark $\lambda = 1$ Is Misleading
+
+The naive benchmark $\lambda_{\max}(\widehat{\Sigma}) \approx 1$ is valid only in the **fixed-$p$, growing-$n$** regime ($c \to 0$). It fails in high dimensions for two reinforcing reasons:
+
+1. **Systematic bias, not sampling noise.** The shift of the empirical distribution away from 1 is a **deterministic limit** — it does not shrink as $B \to \infty$. More replications cannot correct it; only more observations $n$ relative to $p$ can.
+
+2. **Magnitude grows with $c = p/n$.**
+   - At $p/n = 0.05$, $\lambda_+$ exceeds 1 by only 47 %. A practitioner might attribute this to randomness.
+   - At $p/n = 0.5$, the excess is $\approx 193\%$.
+   - At $p/n = 5$, $\lambda_+$ is **more than $10\times$** the population value. Using the benchmark 1 would lead to declaring a wildly inflated signal when none exists.
+
+3. **Tail contamination.** Even the 5th percentile of $\lambda_{\max}(\widehat{\Sigma})$ at $p = 500$ ($\approx 9.8$) far exceeds the MP edge at $p = 5$ ($\approx 1.47$). Any fixed threshold calibrated at small $p$ is useless at large $p$.
+
+**Practical consequence.** A hypothesis test or model-selection criterion that compares $\lambda_{\max}(\widehat{\Sigma})$ to the fixed-dimensional null of 1 will produce a wildly inflated false discovery rate in high dimensions. The correct reference distribution is either $\lambda_+(p/n)$ (for the center) or the Tracy–Widom law (for tail probabilities).
+
+
+> **Code:** see the [combined implementation](#combined-python-implementation) at the end of this post.
+
+---
+
+# Part (c): Johnstone Standardization and Tracy–Widom
+
+## Theory: The Johnstone Standardization
+
+Geman's result gives the almost-sure *location* of $\lambda_{\max}$, but says nothing about its *distributional shape*. Johnstone (2001) identified the correct centering $\mu_{np}$ and scale $\sigma_{np}$ such that
+
+<p>$$Z_{n,p} = \frac{n\,\lambda_{\max}(\widehat{\Sigma}) - \mu_{np}}{\sigma_{np}} \xrightarrow{D} \mathrm{TW}_1,$$</p>
+
+where
+
+<p>$$\mu_{np} = \bigl(\sqrt{n-1} + \sqrt{p}\bigr)^2, \qquad \sigma_{np} = \bigl(\sqrt{n-1} + \sqrt{p}\bigr)\left(\frac{1}{\sqrt{n-1}} + \frac{1}{\sqrt{p}}\right)^{1/3}.$$</p>
+
+**Note on the $n-1$ correction.** Johnstone's original paper uses $n-1$ in both $\mu_{np}$ and $\sigma_{np}$ rather than $n$, accounting for the zero-mean normalization in $\widehat{\Sigma} = X^\top X / n$. Using $n$ instead introduces a small but detectable finite-sample bias in $Z_{n,p}$.
+
+## Why a Non-Gaussian Shape Is Consistent with Asymptotic Theory
+
+Students sometimes expect $Z_{n,p}$ to look normal for large $n$. This is a misconception for two reasons:
+
+1. **The CLT does not apply here.** $\lambda_{\max}(\widehat{\Sigma})$ is the maximum of correlated eigenvalues, not a sample mean. Extreme-value-type limits (like Tracy–Widom) arise from the correlation structure of the eigenvalues near the spectral edge, not from averaging.
+
+2. **Tracy–Widom $\mathrm{TW}_1$ is inherently right-skewed.** It has mean $\approx -1.21$, variance $\approx 1.61$, and skewness $\approx 0.29$. Even in the limit, the distribution is *not* symmetric — downward fluctuations (below the MP edge) are harder than upward fluctuations because the bulk spectrum provides a floor.
+
+3. **Finite-sample skewness is an artifact of $n$, not a failure of the limit.** At $n = 100$, the convergence to $\mathrm{TW}_1$ is visibly incomplete: the empirical skewness will be positive and larger than the theoretical $\approx 0.29$. As $n$ grows, the empirical distribution converges toward $\mathrm{TW}_1$, not toward a normal.
+
+**Bottom line.** A visually non-Gaussian $Z_{n,p}$ at $n = 100$ is precisely what Tracy–Widom theory predicts. It is evidence *for* the theory, not against it.
+
+## Implementation Remarks
+
+- **Standardization is purely scalar arithmetic** applied to the $\lambda_{\max}$ samples already collected — no new Monte Carlo is needed.
+- **Empirical skewness** is computed via `scipy.stats.skew`, which uses the Fisher–Pearson coefficient $g_1 = \frac{1}{B}\sum_b (Z_b - \bar Z)^3 / s^3$.
+- **Normal Q–Q plot** is drawn with `scipy.stats.probplot`. Deviations from the 45° reference line reveal non-Gaussianity: right-skew appears as an S-curve bowing upward at the right tail.
+- Only $p \in \{50, 500\}$ are plotted (as specified), since both moderate and large $p/n$ are instructive.
+
+> **Code:** see the [combined implementation](#combined-python-implementation) at the end of this post.
+
+## Expected Output and Interpretation
+
+| $p$ | Emp. mean | Emp. std | Emp. skewness | TW$_1$ skewness (theory) |
+|----:|----------:|---------:|--------------:|-------------------------:|
+| 50 | ≈ −1.0 | ≈ 1.3 | ≈ 0.45–0.65 | 0.2935 |
+| 500 | ≈ −1.1 | ≈ 1.2 | ≈ 0.35–0.50 | 0.2935 |
+
+- **Mean and std**: not yet at the TW$_1$ mean $\approx -1.21$ and std $\approx 1.27$; finite-sample convergence is slow.
+- **Skewness trend**: empirical skewness decreases toward the theoretical value of $0.2935$ as $p$ increases from 50 to 500, consistent with convergence to TW$_1$.
+- **Q–Q plot**: the right tail bows above the normal reference line (heavy right tail) while the left tail bows below (lighter left tail). This S-shaped pattern is the hallmark of TW$_1$ and is **more pronounced at $p=50$**, where finite-sample effects are larger.
+
+---
+
+# Combined Python Implementation
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import pandas as pd
+
+# ──────────────────────────────────────────────────────────────────────────
+# Setup
+# ──────────────────────────────────────────────────────────────────────────
+rng = np.random.default_rng(seed=607)
+n   = 100
+ps  = [5, 50, 500]
+B   = 1_000          # Monte Carlo replications
+
+
+def lambda_max_svd(X: np.ndarray) -> float:
+    """
+    Compute λ_max(XᵀX / n) via the largest singular value of X.
+
+    Cost: O(min(n,p)² · max(n,p))  —  automatically picks the cheaper
+    of XᵀX and XXᵀ without any explicit branching.
+    """
+    return np.linalg.svd(X, compute_uv=False)[0] ** 2 / X.shape[0]
+
+
+def johnstone_params(n: int, p: int):
+    """Centering μ_{np} and scale σ_{np} from Johnstone (2001), using n-1."""
+    a     = np.sqrt(n - 1)
+    b     = np.sqrt(p)
+    mu    = (a + b) ** 2
+    sigma = (a + b) * (1 / a + 1 / b) ** (1 / 3)
+    return mu, sigma
+
+
+def standardize(lambdas: np.ndarray, n: int, p: int) -> np.ndarray:
+    """Z_{n,p} = (n λ_max - μ_{np}) / σ_{np}."""
+    mu, sigma = johnstone_params(n, p)
+    return (n * lambdas - mu) / sigma
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Part (a)  —  Monte Carlo simulation
+# ──────────────────────────────────────────────────────────────────────────
+results = {}
+for p in ps:
+    lambdas = np.empty(B)
+    for b in range(B):
+        X = rng.standard_normal((n, p))   # X ~ N(0, I_p)
+        lambdas[b] = lambda_max_svd(X)
+    results[p] = lambdas
+
+# Marchenko–Pastur upper edge λ_+(c) = (1 + sqrt(c))^2,  c = p/n
+mp_edge = {p: (1 + np.sqrt(p / n)) ** 2 for p in ps}
+
+# Figure (a): raw distributions, one panel per p
+fig_a, axes_a = plt.subplots(1, 3, figsize=(12, 4), constrained_layout=True)
+fig_a.suptitle(
+    r"Part (a) — $\lambda_{\max}(\hat{\Sigma})$, $n=100$, $B=1{,}000$ replications",
+    fontsize=13
+)
+for ax, p in zip(axes_a, ps):
+    d = results[p]
+    ax.hist(d, bins=40, color="steelblue", edgecolor="white", alpha=0.82, density=True)
+    ax.axvline(mp_edge[p], color="crimson",  lw=1.8, ls="--",
+               label=rf"$\lambda_+={mp_edge[p]:.2f}$")
+    ax.axvline(1.0,        color="black",    lw=1.2, ls=":",
+               label="Pop. value = 1")
+    ax.set_title(rf"$p={p}$", fontsize=12)
+    ax.set_xlabel(r"$\lambda_{\max}(\hat{\Sigma})$", fontsize=11)
+    ax.set_ylabel("Density", fontsize=11)
+    ax.legend(fontsize=9)
+plt.savefig("fig_a_distributions.png", dpi=150, bbox_inches="tight")
+plt.show()
+
+# Table (a): descriptive statistics
+rows_a = []
+for p in ps:
+    d = results[p]
+    rows_a.append({
+        "p"       : p,
+        "Mean"    : round(float(np.mean(d)), 4),
+        "Std"     : round(float(np.std(d)),  4),
+        "Median"  : round(float(np.median(d)), 4),
+        "5th pct" : round(float(np.percentile(d,  5)), 4),
+        "95th pct": round(float(np.percentile(d, 95)), 4),
+        "MP edge" : round(mp_edge[p], 4),
+    })
+print("=== Part (a): Summary Statistics ===")
+print(pd.DataFrame(rows_a).set_index("p").to_string())
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Part (b)  —  Marchenko–Pastur benchmark overlay + comparison table
+# ──────────────────────────────────────────────────────────────────────────
+# (reuses `results` and `mp_edge` from Part (a))
+
+fig_b, axes_b = plt.subplots(1, 3, figsize=(12, 4), constrained_layout=True)
+fig_b.suptitle(
+    r"Part (b) — $\lambda_{\max}(\hat{\Sigma})$ with MP benchmark, $n=100$",
+    fontsize=13
+)
+for ax, p in zip(axes_b, ps):
+    d    = results[p]
+    edge = mp_edge[p]
+    ax.hist(d, bins=40, color="steelblue", edgecolor="white", alpha=0.80, density=True)
+    ax.axvline(edge, color="crimson", lw=2.0, ls="--",
+               label=rf"$\lambda_+(p/n)={edge:.2f}$")
+    ax.axvline(1.0,  color="black",   lw=1.4, ls=":",
+               label="Null benchmark = 1")
+    ax.set_title(rf"$p={p}$", fontsize=12)
+    ax.set_xlabel(r"$\lambda_{\max}(\hat{\Sigma})$", fontsize=11)
+    ax.set_ylabel("Density", fontsize=11)
+    ax.legend(fontsize=8.5)
+plt.savefig("fig_b_mp_benchmark.png", dpi=150, bbox_inches="tight")
+plt.show()
+
+# Table (b): benchmark vs. empirical
+rows_b = []
+for p in ps:
+    d    = results[p]
+    edge = mp_edge[p]
+    rows_b.append({
+        "p"            : p,
+        "c = p/n"      : round(p / n, 4),
+        "MP edge"      : round(edge, 4),
+        "Emp. mean"    : round(float(np.mean(d)), 4),
+        "Emp. 95th pct": round(float(np.percentile(d, 95)), 4),
+        "Bias vs. 1"   : f"{(edge - 1) * 100:.1f}%",
+    })
+print("\n=== Part (b): Benchmark vs. Empirical ===")
+print(pd.DataFrame(rows_b).set_index("p").to_string())
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Part (c)  —  Johnstone standardization, skewness, Q–Q plots
+# ──────────────────────────────────────────────────────────────────────────
+# (reuses `results` from Part (a))
+ps_plot = [50, 500]
+Z = {p: standardize(results[p], n, p) for p in ps_plot}
+
+# Figure (c): 2×2 grid — row 0: histograms,  row 1: Q–Q plots
+fig_c, axes_c = plt.subplots(2, 2, figsize=(11, 8), constrained_layout=True)
+fig_c.suptitle(
+    r"Part (c) — Johnstone-standardized $Z_{n,p}$: histogram & Normal Q–Q"
+    f"  ($n={n}$, $B={B}$)",
+    fontsize=13
+)
+
+for col, p in enumerate(ps_plot):
+    z    = Z[p]
+    skew = float(stats.skew(z))
+    mu_z = float(np.mean(z))
+    sd_z = float(np.std(z))
+
+    # Histogram
+    ax_h   = axes_c[0, col]
+    x_grid = np.linspace(z.min() - 0.5, z.max() + 0.5, 300)
+    ax_h.hist(z, bins=40, color="mediumseagreen", edgecolor="white",
+              alpha=0.80, density=True, label="Empirical")
+    ax_h.plot(x_grid, stats.norm.pdf(x_grid, mu_z, sd_z),
+              color="navy", lw=1.6, ls="--",
+              label=rf"$\mathcal{{N}}(\bar z,\,s^2)$")
+    ax_h.axvline(0, color="gray", lw=1.0, ls=":")
+    ax_h.set_title(rf"$p={p}$,  $\hat g_1={skew:.3f}$", fontsize=11)
+    ax_h.set_xlabel(r"$Z_{n,p}$", fontsize=11)
+    ax_h.set_ylabel("Density", fontsize=11)
+    ax_h.legend(fontsize=9)
+
+    # Q–Q plot
+    ax_q = axes_c[1, col]
+    (osm, osr), (slope, intercept, _) = stats.probplot(z, dist="norm")
+    ax_q.scatter(osm, osr, s=12, alpha=0.6, color="mediumseagreen",
+                 label="Sample quantiles")
+    xl = np.array([osm[0], osm[-1]])
+    ax_q.plot(xl, slope * xl + intercept,
+              color="crimson", lw=1.8, label="Normal reference")
+    ax_q.set_title(rf"Normal Q–Q: $p={p}$", fontsize=11)
+    ax_q.set_xlabel("Theoretical normal quantiles", fontsize=10)
+    ax_q.set_ylabel(r"Ordered $Z_{n,p}$", fontsize=10)
+    ax_q.legend(fontsize=9)
+
+plt.savefig("fig_c_tracy_widom.png", dpi=150, bbox_inches="tight")
+plt.show()
+
+# Table (c): empirical moments vs. theoretical TW1
+rows_c = []
+for p in ps_plot:
+    z          = Z[p]
+    mu_np, s_np = johnstone_params(n, p)
+    rows_c.append({
+        "p"            : p,
+        "mu_np"        : round(mu_np, 2),
+        "sigma_np"     : round(s_np, 3),
+        "Emp. mean"    : round(float(np.mean(z)), 4),
+        "Emp. std"     : round(float(np.std(z)),  4),
+        "Emp. skewness": round(float(stats.skew(z)), 4),
+        "TW1 skewness" : 0.2935,
+    })
+print("\n=== Part (c): Moments of Standardized Statistics ===")
+print(pd.DataFrame(rows_c).set_index("p").to_string())
+```
