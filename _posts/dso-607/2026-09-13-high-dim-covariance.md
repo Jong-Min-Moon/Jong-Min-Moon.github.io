@@ -13,13 +13,17 @@ authors:
       name: USC Marshall
 toc:
   - name: Setup
-  - name: Failure of Classical Concentration
-  - name: Almost-Sure Limit of the Largest Eigenvalue
-  - name: Tracy–Widom Fluctuations
-  - name: Implications for Principal Components
-  - name: Monte Carlo Study
-  - name: "Part (b): Marchenko–Pastur Benchmark"
-  - name: "Part (c): Johnstone Standardization and Tracy–Widom"
+    subsections:
+      - name: Upper Bound of the Largest Eigenvalue
+      - name: Tracy–Widom Fluctuations
+  - name: Monte Carlo Simulations
+    subsections:
+      - name: 1. Simulation Setup
+      - name: 2. Empirical Distributions of the Largest Eigenvalue
+      - name: 3. Tracy–Widom Behavior
+      - name: Note on Implementation
+      - name: Result
+  - name: Python Implementation
 ---
 
 # Setup
@@ -217,7 +221,7 @@ In NumPy, `np.linalg.svd(X, compute_uv=False)` returns only singular values (ski
 ## Result 
 
 <figure class="l-page">
-  <img src="cov_image_1.png" alt="Empirical distributions of the largest eigenvalue for p = 5, 50, and 500, with the Marchenko–Pastur upper edge overlaid." />
+  <img src="/assets/img/cov_image_1.png" alt="Empirical distributions of the largest eigenvalue for p = 5, 50, and 500, with the Marchenko–Pastur upper edge overlaid." />
   <figcaption>
     <strong>Figure 1.</strong> Empirical distributions of \(\lambda_{\max}(\widehat{\Sigma})\) across \(B = 1{,}000\) replications for \(p \in \{5, 50, 500\}\) with \(n = 100\). The dashed crimson line marks the Marchenko–Pastur upper edge \(\lambda_+(p/n) = (1+\sqrt{p/n})^2\); the dotted line marks the population value \(1\). As \(p/n\) grows, the entire distribution shifts far to the right of the population value.
   </figcaption>
@@ -240,7 +244,7 @@ In NumPy, `np.linalg.svd(X, compute_uv=False)` returns only singular values (ski
 | 500 | 5.00 | 10.4721 | 10.2357 | 10.6079 | 947.2% |
 
 <figure class="l-page">
-  <img src="cov_image_2.png" alt="Histograms and normal Q–Q plots of the Johnstone-standardized statistic Z_{n,p} for p = 50 and p = 500." />
+  <img src="/assets/img/cov_image_2.png" alt="Histograms and normal Q–Q plots of the Johnstone-standardized statistic Z_{n,p} for p = 50 and p = 500." />
   <figcaption>
     <strong>Figure 2.</strong> Empirical distributions (top) and normal Q–Q plots (bottom) of the Johnstone-standardized statistic \(Z_{n,p}\) for \(p = 50\) (left) and \(p = 500\) (right). The dashed curve is a fitted normal density. Both distributions exhibit positive skewness and an S-shaped Q–Q deviation, consistent with the Tracy–Widom \(\mathrm{TW}_1\) limit.
   </figcaption>
