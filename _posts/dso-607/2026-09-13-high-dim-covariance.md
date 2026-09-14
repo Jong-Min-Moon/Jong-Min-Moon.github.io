@@ -211,4 +211,236 @@ Therefore
 <p>$$\lambda_{\max}(\widehat{\Sigma}) = \frac{s_{\max}(X)^2}{n}.$$</p>
 
 In NumPy, `np.linalg.svd(X, compute_uv=False)` returns only singular values (skipping the expensive $U, V$ computation) in $O(n^2 p)$ time for $n \leq p$, automatically selecting the efficient path. This is the cleanest one-liner for large-scale Monte Carlo.
- 
+
+---
+
+## Result 
+
+<figure class="l-page">
+  <img src="cov_image_1.png" alt="Empirical distributions of the largest eigenvalue for p = 5, 50, and 500, with the Marchenko–Pastur upper edge overlaid." />
+  <figcaption>
+    <strong>Figure 1.</strong> Empirical distributions of \(\lambda_{\max}(\widehat{\Sigma})\) across \(B = 1{,}000\) replications for \(p \in \{5, 50, 500\}\) with \(n = 100\). The dashed crimson line marks the Marchenko–Pastur upper edge \(\lambda_+(p/n) = (1+\sqrt{p/n})^2\); the dotted line marks the population value \(1\). As \(p/n\) grows, the entire distribution shifts far to the right of the population value.
+  </figcaption>
+</figure>
+
+**Table 1.** Empirical summary statistics of \(\lambda_{\max}(\widehat{\Sigma})\) and the theoretical Marchenko–Pastur upper edge (\(n = 100\), \(B = 1{,}000\)).
+
+| $p$ | Mean | Std | Median | 5th pct | 95th pct | MP edge $(1+\sqrt{p/n})^2$ |
+|----:|-----:|----:|-------:|--------:|---------:|---------------------------:|
+| 5   | 1.3342 | 0.1253 | 1.3273 | 1.1456 | 1.5477 | 1.4972 |
+| 50  | 2.7737 | 0.1356 | 2.7654 | 2.5702 | 2.9967 | 2.9142 |
+| 500 | 10.2357 | 0.2130 | 10.2291 | 9.9054 | 10.6079 | 10.4721 |
+
+**Table 2.** Marchenko–Pastur benchmark versus empirical center and upper tail. "Bias vs. 1" reports $(\lambda_+ - 1)\times 100\%$.
+
+| $p$ | $c = p/n$ | MP edge | Emp. mean | Emp. 95th pct | Bias vs. 1 |
+|----:|----------:|--------:|----------:|--------------:|-----------:|
+| 5   | 0.05 | 1.4972 | 1.3342 | 1.5477 | 49.7% |
+| 50  | 0.50 | 2.9142 | 2.7737 | 2.9967 | 191.4% |
+| 500 | 5.00 | 10.4721 | 10.2357 | 10.6079 | 947.2% |
+
+<figure class="l-page">
+  <img src="cov_image_2.png" alt="Histograms and normal Q–Q plots of the Johnstone-standardized statistic Z_{n,p} for p = 50 and p = 500." />
+  <figcaption>
+    <strong>Figure 2.</strong> Empirical distributions (top) and normal Q–Q plots (bottom) of the Johnstone-standardized statistic \(Z_{n,p}\) for \(p = 50\) (left) and \(p = 500\) (right). The dashed curve is a fitted normal density. Both distributions exhibit positive skewness and an S-shaped Q–Q deviation, consistent with the Tracy–Widom \(\mathrm{TW}_1\) limit.
+  </figcaption>
+</figure>
+
+**Table 3.** Empirical moments of \(Z_{n,p}\) compared with the theoretical Tracy–Widom \(\mathrm{TW}_1\) skewness of \(0.2935\).
+
+| $p$ | $\mu_{np}$ | $\sigma_{np}$ | Emp. mean | Emp. std | Emp. skewness | TW$_1$ skewness |
+|----:|-----------:|--------------:|----------:|---------:|--------------:|----------------:|
+| 50  | 289.71 | 10.606 | −1.1635 | 1.279 | 0.3187 | 0.2935 |
+| 500 | 1043.97 | 16.983 | −1.2015 | 1.254 | 0.3381 | 0.2935 |
+
+
+## Python Implementation
+
+## Setup and Helper Functions
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import pandas as pd
+
+# ── Simulation parameters ──────────────────────────────────────────────────
+rng = np.random.default_rng(seed=607)
+n   = 100                   # sample size (fixed throughout)
+ps  = [5, 50, 500]          # three dimension settings
+B   = 1_000                 # number of Monte Carlo replications
+
+
+def lambda_max_svd(X: np.ndarray) -> float:
+    """
+    Compute λ_max(XᵀX / n) via the largest singular value of X.
+
+    Uses the identity λ_max(XᵀX/n) = s_max(X)² / n.
+    Cost: O(min(n,p)² · max(n,p)) — automatically picks the cheaper
+    path between XᵀX and XXᵀ without any explicit branching.
+    """
+    return np.linalg.svd(X, compute_uv=False)[0] ** 2 / X.shape[0]
+
+
+def johnstone_params(n: int, p: int):
+    """
+    Centering μ_{np} and scale σ_{np} from Johnstone (2001).
+
+    Uses (n-1) instead of n, matching the zero-mean normalization
+    Σ̂ = XᵀX / n.  Using n instead introduces a detectable
+    finite-sample bias in Z_{n,p}.
+    """
+    a     = np.sqrt(n - 1)
+    b     = np.sqrt(p)
+    mu    = (a + b) ** 2
+    sigma = (a + b) * (1 / a + 1 / b) ** (1 / 3)
+    return mu, sigma
+
+
+def standardize(lambdas: np.ndarray, n: int, p: int) -> np.ndarray:
+    """Return Z_{n,p} = (n · λ_max - μ_{np}) / σ_{np}."""
+    mu, sigma = johnstone_params(n, p)
+    return (n * lambdas - mu) / sigma
+```
+
+## Part 1 — Monte Carlo Simulation: Empirical Distributions of λ_max
+
+```python
+# ── Run the Monte Carlo ────────────────────────────────────────────────────
+results = {}
+for p in ps:
+    lambdas = np.empty(B)
+    for b in range(B):
+        X = rng.standard_normal((n, p))   # rows x_i ~ N(0, I_p)
+        lambdas[b] = lambda_max_svd(X)
+    results[p] = lambdas
+
+# Marchenko–Pastur (Geman) upper edge: λ₊(c) = (1 + √c)², c = p/n
+mp_edge = {p: (1 + np.sqrt(p / n)) ** 2 for p in ps}
+
+# ── Figure: one histogram panel per p ─────────────────────────────────────
+fig, axes = plt.subplots(1, 3, figsize=(13, 4), constrained_layout=True)
+fig.suptitle(
+    r"Empirical distribution of $\lambda_{\max}(\widehat{\Sigma})$,"
+    rf" $n={n}$, $B={B}$ replications",
+    fontsize=13,
+)
+for ax, p in zip(axes, ps):
+    d = results[p]
+    ax.hist(d, bins=40, color="steelblue", edgecolor="white",
+            alpha=0.82, density=True)
+    # Geman/MP theoretical limit
+    ax.axvline(mp_edge[p], color="crimson", lw=1.8, ls="--",
+               label=rf"$\lambda_+={mp_edge[p]:.2f}$")
+    # Population value (null hypothesis)
+    ax.axvline(1.0, color="black", lw=1.2, ls=":",
+               label="Pop. value = 1")
+    ax.set_title(rf"$p={p}$", fontsize=12)
+    ax.set_xlabel(r"$\lambda_{\max}(\widehat{\Sigma})$", fontsize=11)
+    ax.set_ylabel("Density", fontsize=11)
+    ax.legend(fontsize=9)
+plt.savefig("fig1_lambda_max.png", dpi=150, bbox_inches="tight")
+    rf" $n={n}$",
+    fontsize=13,
+)
+for ax, p in zip(axes, ps):
+    d    = results[p]
+    edge = mp_edge[p]
+    ax.hist(d, bins=40, color="steelblue", edgecolor="white",
+            alpha=0.80, density=True)
+    ax.axvline(edge, color="crimson", lw=2.0, ls="--",
+               label=rf"$\lambda_+(p/n)={edge:.2f}$")
+    ax.axvline(1.0,  color="black",   lw=1.4, ls=":",
+               label="Null benchmark = 1")
+    ax.set_title(rf"$p={p}$", fontsize=12)
+    ax.set_xlabel(r"$\lambda_{\max}(\widehat{\Sigma})$", fontsize=11)
+    ax.set_ylabel("Density", fontsize=11)
+    ax.legend(fontsize=8.5)
+plt.savefig("fig2_mp_benchmark.png", dpi=150, bbox_inches="tight")
+plt.show()
+
+# ── Benchmark comparison table ─────────────────────────────────────────────
+rows_b = []
+for p in ps:
+    d    = results[p]
+    edge = mp_edge[p]
+    rows_b.append({
+        "p"             : p,
+        "c = p/n"       : round(p / n, 4),
+        "MP edge"       : round(edge, 4),
+        "Emp. mean"     : round(float(np.mean(d)), 4),
+        "Emp. 95th pct" : round(float(np.percentile(d, 95)), 4),
+        "Bias vs. 1"    : f"{(edge - 1) * 100:.1f}%",
+    })
+print("\n=== Part 2: MP Benchmark vs. Empirical ===")
+print(pd.DataFrame(rows_b).set_index("p").to_string())
+```
+
+## Part 3 — Johnstone Standardization and Tracy–Widom Behavior
+
+```python
+# ── Standardize λ_max to Z_{n,p} for p = 50 and p = 500 ──────────────────
+ps_tw = [50, 500]
+Z = {p: standardize(results[p], n, p) for p in ps_tw}
+
+# ── Figure: 2×2 grid (histograms top, Q–Q plots bottom) ───────────────────
+fig, axes = plt.subplots(2, 2, figsize=(11, 8), constrained_layout=True)
+fig.suptitle(
+    r"Johnstone-standardized $Z_{n,p}$: histogram and Normal Q–Q"
+    rf"  ($n={n}$, $B={B}$)",
+    fontsize=13,
+)
+
+for col, p in enumerate(ps_tw):
+    z    = Z[p]
+    skew = float(stats.skew(z))
+    mu_z = float(np.mean(z))
+    sd_z = float(np.std(z))
+
+    # ── Row 0: histogram vs fitted normal ───────────────────────────────
+    ax_h   = axes[0, col]
+    x_grid = np.linspace(z.min() - 0.5, z.max() + 0.5, 300)
+    ax_h.hist(z, bins=40, color="mediumseagreen", edgecolor="white",
+              alpha=0.80, density=True, label="Empirical")
+    ax_h.plot(x_grid, stats.norm.pdf(x_grid, mu_z, sd_z),
+              color="navy", lw=1.6, ls="--",
+              label=rf"$\mathcal{{N}}(\bar z,\,s^2)$")
+    ax_h.axvline(0, color="gray", lw=1.0, ls=":")   # TW₁ is left of 0
+    ax_h.set_title(rf"$p={p}$,  $\hat g_1={skew:.3f}$", fontsize=11)
+    ax_h.set_xlabel(r"$Z_{n,p}$", fontsize=11)
+    ax_h.set_ylabel("Density", fontsize=11)
+    ax_h.legend(fontsize=9)
+
+    # ── Row 1: normal Q–Q plot ───────────────────────────────────────────
+    ax_q = axes[1, col]
+    (osm, osr), (slope, intercept, _) = stats.probplot(z, dist="norm")
+    ax_q.scatter(osm, osr, s=12, alpha=0.6, color="mediumseagreen",
+                 label="Sample quantiles")
+    xl = np.array([osm[0], osm[-1]])
+    ax_q.plot(xl, slope * xl + intercept,
+              color="crimson", lw=1.8, label="Normal reference")
+    ax_q.set_title(rf"Normal Q–Q: $p={p}$", fontsize=11)
+    ax_q.set_xlabel("Theoretical normal quantiles", fontsize=10)
+    ax_q.set_ylabel(r"Ordered $Z_{n,p}$", fontsize=10)
+    ax_q.legend(fontsize=9)
+
+plt.savefig("fig3_tracy_widom.png", dpi=150, bbox_inches="tight")
+plt.show()
+
+# ── Moments table: empirical vs. TW₁ theory ───────────────────────────────
+rows_c = []
+for p in ps_tw:
+    z            = Z[p]
+    mu_np, s_np  = johnstone_params(n, p)
+    rows_c.append({
+        "p"             : p,
+        "mu_np"         : round(mu_np, 2),
+        "sigma_np"      : round(s_np, 3),
+        "Emp. mean"     : round(float(np.mean(z)), 4),
+        "Emp. std"      : round(float(np.std(z)),  4),
+        "Emp. skewness" : round(float(stats.skew(z)), 4),
+        "TW₁ skewness"  : 0.2935,   # theoretical value
+    })
+print("\n=== Part 3: Moments of Z_{n,p} vs. Tracy–Widom TW₁ ===")
+print(pd.DataFrame(rows_c).set_index("p").to_string())
+```
