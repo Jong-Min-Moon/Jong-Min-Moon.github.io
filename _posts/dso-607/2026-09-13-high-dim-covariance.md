@@ -56,7 +56,7 @@ As \(\gamma\to\infty\) (equivalently, \(p/n\to 0\)), the upper edge approaches \
 <p>\[
 (1+1)^2=4,
 \]</p>
-which is substantially larger than the population eigenvalue \(1\).
+which is substantially larger than the population eigenvalue \(1\). As $p/n$ goes larger, the upper limit grows polynomially.
 
 Thus, in high dimensions, the largest sample eigenvalue can be systematically inflated even when the true covariance matrix is \(I_p\). This is not a small-sample artifact: the discrepancy persists asymptotically when \(p\) and \(n\) grow at comparable rates. In particular, when \(p/n\to 1\), the largest eigenvalue converges to \(4\), rather than \(1\).
 
