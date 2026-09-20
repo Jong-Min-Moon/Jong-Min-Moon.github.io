@@ -6,6 +6,7 @@ img: assets/img/pomdp.png
 importance: 9
 category: [insurance, applied statistics]
 project_handle: insurance
+permalink: /projects/insurance/
 ---
 
 This project explores property insurance data provided by ISO (Insurance Services Office), focusing on the analysis of earned premiums and loss-adjusted expenses (LAE) across geographic granularities (state and ZIP code) and peril types (type of loss, TOL).
