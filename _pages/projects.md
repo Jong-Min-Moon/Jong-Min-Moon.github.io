@@ -5,7 +5,7 @@ permalink: /projects/
 description: Working papers that have not yet been published in journals, conferences, or on arXiv, often originating from course projects or personal explorations.  Also includes data analysis projects that are featured in the published research.
 nav: true
 nav_order: 2
-display_categories: [causal inference, reinforcement learning/bandits, computational neuroscience, differential privacy, nonparametric statistics, high-dimensional statistics, class imbalance]
+display_categories: [causal inference, reinforcement learning/bandits, computational neuroscience, differential privacy, time series forecasting, nonparametric statistics, high-dimensional statistics, class imbalance]
 horizontal: true
 ---
 
