@@ -1,0 +1,10 @@
+- OCCUPANCY is the fact or condition of holding, possessing, or residing in or on something
+
+ 
+
+- Occupancy class is the most commonly reported primary risk characteristic and is one of the four main primary risk characteristics used to differentiate vulnerability in a catastrophe model.
+    - Vulnerability: The vulnerability module quantifies the expected damage for the underlying exposures from an event based on the building characteristics and local event intensity using damage functions. Damage functions are essentially equations that are used to compute the amount of expected damage for a given hazard intensity (such as windspeeds) based on characteristics (e.g., construction, occupancy, building height) of the property at risk.
+# References
+- https://www.insuedot.com/insurance-glossary/insurance-glossary-occupancy/
+- https://content.naic.org/cipr-topics/catastrophe-models-property
+- https://www.catriskcredentials.org/wp-content/uploads/2020/05/Exam-3c-Study-Note-Occupancy-Class.pdf

@@ -1,0 +1,129 @@
+Reinsurance data
+
+
+The company uses Moody's RMS catastrphe model. RMS was a catastrophe risk modelling firm and was acquired by Moody's  in 2021 (20 billion dollors)
+
+Five catastrophes:
+- eq
+- ff (fire after earthquake)
+- hu (hurricane)
+- wt (winterstorm)
+- scs (severe convective storm)
+
+
+# Moody's RMS catastrphes
+https://www.moodys.com/web/en/us/capabilities/catastrophe-modeling.html
+- Agriculture
+- Builders Risk
+- Cyber
+- **Earthquake**
+- Inland Flood
+- **HWind**
+- Industrial Facilities Model
+- LifeRisks Infectious Disease, Excess Mortality, Longevity
+- Marine Cargo and Specie Risk
+- Probabilistic Terrorism Model
+- Severe Convective Storm
+- Terrorism
+- Tropical Cyclone
+- Windstorm (European windstorm; https://en.wikipedia.org/wiki/European_windstorm, https://www.moodys.com/web/en/us/capabilities/catastrophe-modeling/windstorm.html)
+- Winterstorm
+- Wildfire
+- Workers’ Compensation
+
+## Earthquake
+Earthquake itself and Sub-peril modeling such as fire-following earthquakes
+https://www.moodys.com/web/en/us/capabilities/catastrophe-modeling/earthquake-models.html
+
+## Winterstorm
+Moody’s RMS US and Canada Winterstorm Model
+### Specialized vulnerability curves
+- component-based vulnerability module has over 500 unique vulnerability functions, with additional sub-peril-specific secondary modifiers.
+- vulnerability curves to account for all key winterstorm damage modes — such as roof collapse under snow, ice damming, wind damage, icing causing treefall, burst pipes, and basement flooding
+- it also considers regional variation in damageability due to differing local design codes and construction practices.
+
+### Catastrophic and non-catastrophic event sets
+- The model uses a stochastic event set that represents 30,000 years of winterstorm activity produced using a combination of numerical and statistical modeling techniques.
+- The model includes functionality to distinguish between catastrophic and non-catastrophic events in the larger stochastic event set;
+- this gives users the flexibility to activate or deactivate these distinct event sets, allowing for loss isolation or aggregation.
+
+### Flexible sub-peril modeling
+- The model examine losses from snow, ice (or freezing rain), freeze, and extratropical winds separately or together in any desired combination.
+- Moody’s built in explicit considerations to avoid double- or triple-counting when combining damages from multiple sub-perils.
+- Also implemented similar measures to avoid overlap between this model and the Moody’s RMS US and Canada Severe Convective Storm Model.
+- This is possible because although extra-tropical weather systems can give rise to both winterstorm and severe convective storm perils, the meteorological conditions necessary for each type of storm are sufficiently distinct to allow for their separation. 
+(Extratropical means occurring or originating outside Earth's tropical regions.)
+# Catastrophe modeling framework
+The basic framework for modeling the impacts of natural hazards on building inventories can be broken down into the following four modules:
+
+## Severe convective storm
+Advanced hybrid modeling
+Our severe convective storm models use a hybrid methodology that combines the strengths of statistical and numerical modeling techniques with historical data and claims analysis.
+
+This approach helps you fill in the gaps and biases arising from incomplete claims and historical data records and to assess potential future losses in regions that have yet to sustain losses.
+
+Catastrophic and non-catastrophic event sets
+Our models are among the first on the market with separate event sets for both cat and non-cat events, providing you with a view of possible causes of losses.
+
+Cat events are reflected within a low-frequency, high-severity event set, while non-cat events are reflected within a high-frequency, low-severity event set. Thanks to the models’ flexibility, users can activate or deactivate these distinct event sets, allowing for the isolation or aggregation of losses.
+
+Flexible sub-peril modeling
+Our models help you examine losses from hail, tornado, and straight-line wind separately or together in any desired combination.
+
+## Variables
+Name	Type	Length	Format	Informat	Label
+PORTNAME	Character	33	$CHAR33.	$CHAR33.	
+ANLSID	Numeric	8	BEST1.	BEST1.	
+	
+LOBNAME	Character	20	$CHAR20.	$CHAR20.	
+
+ 
+ 
+Construction	Character	24	$CHAR24.	$CHAR24.	
+ 	
+ 
+O_DESC	Character	48	$CHAR48.	$CHAR48.	
+YEARBUILT	Date	8	DATETIME18.	DATETIME18.	
+NUMSTORIES	Numeric	8	BEST1.	BEST1.	
+FLOORAREA	Numeric	8	BEST1.	BEST1.	
+TIV	Numeric	8	BEST16.	BEST16.	
+Location_GU_AAL	Numeric	8	BEST20.	BEST20.	
+Location_GR_AAL	Numeric	8	BEST20.	BEST20.	
+
+### AAL 
+- The average annual loss (AAL), sometimes called pure premium or burn cost, is the expected value of the modeled loss distribution.
+- It is the loss one would expect to see in a year on average. Since the AAL represents only an average, the actual annual losses will fluctuate around the AAL in any given year.
+- AAL does not include expenses, non-modeled loss, profit, or risk load.
+- One may be interested in AAL for ground-up, gross, net of reinsurance, or other views of risk.
+(https://developer.rms.com/risk-modeler/docs/location-aal-metrics)
+## Event module
+Catastrophe modeling starts with the creation of a stochastic event set — a compilation of scenario events characterized by their strength, location, and probability of occurrence. This process involves simulating thousands of potential scenarios using realistic parameters and historical data to probabilistically forecast future events over time.
+
+### Variables contained in the location source file
+- OCCSCHEME
+- OCCTYPE
+- BLDGSCHEME
+- BLDGCLASS
+
+### seems to be locations:
+- STREETNAME	 
+- CITY	 	
+- STATECODE 
+- POSTALCODE	 
+- COUNTY	 
+- LATITUDE	 
+- LONGITUDE	 
+- ADDRMATCH	 
+- LOCID	
+- LOCNUM	
+- LOCNAME		
+## Hazard module
+The hazard module assesses the level of physical hazard across a geographical area at risk. For example, a hurricane model calculates the strength of the winds around a storm, considering the region’s terrain and built environment.
+
+
+## Vulnerability module
+The vulnerability module assesses the degree to which structures, their contents, and other insured properties are likely to be damaged by the hazard. It offers specific damage curves for different areas, accounting for local architectural styles and building codes.
+
+
+## Financial module
+The financial module translates the expected physical damage into monetary loss. It takes the damage to a building and its contents and estimates who is responsible for paying. The results of that determination are then interpreted by the model user and applied to business decisions.
