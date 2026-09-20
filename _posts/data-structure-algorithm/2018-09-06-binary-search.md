@@ -4,7 +4,7 @@ title: "Leetcode 704: Binary Search"
 description: "A foundational $O(\\log n)$ search algorithm for sorted arrays."
 tags: algorithms binary-search arrays dynamic-programming dp-1d
 categories: data-structure-algorithm
-date: 2018-09-20
+date: 2018-09-06
 featured: false
 project: data-structure-algorithm
 authors:

@@ -4,7 +4,7 @@ title: "Leetcode 125: Valid Palindrome"
 description: "A two-pointer approach to check if a string is a valid palindrome"
 tags: algorithms two-pointers(inward) strings
 categories: data-structure-algorithm
-date: 2018-09-20
+date: 2018-09-03
 featured: false
 project: data-structure-algorithm
 authors:

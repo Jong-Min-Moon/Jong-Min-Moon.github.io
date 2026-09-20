@@ -4,7 +4,7 @@ title: "Leetcode 13: Roman to Integer"
 description: ""
 tags: algorithms strings arrays two-pointers sliding-window
 categories: data-structure-algorithm
-date: 2018-09-20
+date: 2018-09-05
 featured: false
 project: data-structure-algorithm
 authors:
@@ -16,7 +16,7 @@ authors:
 # Sliding window approach
 - Let's just write down to see the pattern: I, II, III, IV, V, VI, VII, VIII, IX, X, ...
 - The changepoint is IV, IX, as pointed out in the problem.
-- One number can be represented by up to 4 characters. However, the punchine is we don't need to count based on one number.
+- One number can be represented by up to 4 characters. However, the punchine is **we don't need to count based on one number**.
 - We can naturally add when small number is to the right of large number. 
     - We need not treat the added number as one number.
     - We can treat them as separate. For example, treat `III` is 1+1+1, not as 3.
